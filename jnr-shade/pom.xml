@@ -60,12 +60,10 @@
 						<configuration>
 							<artifactSet>
 								<includes>
-									<include>*</include>
+									<include>consulo.internal:jnr</include>
+									<include>consulo.internal:jnr-java8-impl</include>
+									<include>consulo.internal:jnr-java9-impl</include>
 								</includes>
-								<excludes>
-									<exclude>consulo:consulo-annotations</exclude>
-									<exclude>com.google.code.findbugs:jsr305</exclude>
-								</excludes>
 							</artifactSet>
 						</configuration>
 					</execution>

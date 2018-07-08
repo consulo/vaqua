@@ -47,6 +47,10 @@
 		<module>jnr-shade</module>
 
 		<module>vaqua</module>
+		<module>vaqua/java8-impl</module>
+		<module>vaqua/java9-impl</module>
+		<module>vaqua-shade</module>
+
 		<module>java9-stub</module>
 	</modules>
 </project>
