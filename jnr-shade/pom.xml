@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>consulo.internal</groupId>
-	<artifactId>jnr</artifactId>
+	<artifactId>jnr-shade</artifactId>
 	<version>6.0-SNAPSHOT</version>
 
 	<repositories>
@@ -47,21 +47,44 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>*</include>
+								</includes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.jetbrains</groupId>
-			<artifactId>annotations</artifactId>
-			<version>16.0.2</version>
-			<scope>provided</scope>
+			<groupId>consulo.internal</groupId>
+			<artifactId>jnr</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>consulo.internal</groupId>
-			<artifactId>eawtstub</artifactId>
-			<version>2-SNAPSHOT</version>
-			<scope>provided</scope>
+			<artifactId>jnr-java8-impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>consulo.internal</groupId>
+			<artifactId>jnr-java9-impl</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>
