@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Alan Snyder.
+ * Copyright (c) 2015-2018 Alan Snyder.
  * All rights reserved.
  *
  * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
@@ -12,8 +12,6 @@ import java.awt.geom.Rectangle2D;
 
 import org.jetbrains.annotations.*;
 
-import apple.laf.JRSUIConstants;
-import apple.laf.JRSUIState;
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.Painter;
@@ -27,6 +25,9 @@ import org.violetlib.jnr.impl.BasicRendererDescription;
 import org.violetlib.jnr.impl.Renderer;
 import org.violetlib.jnr.impl.RendererDescription;
 import org.violetlib.jnr.impl.ReusableCompositor;
+import org.violetlib.jnr.impl.jrs.JRSUIConstants;
+import org.violetlib.jnr.impl.jrs.JRSUIControl;
+import org.violetlib.jnr.impl.jrs.JRSUIState;
 
 /**
 	A painter that renders Aqua widgets using the native rendering used by the Aqua look and feel, by way of the JDK
@@ -45,16 +46,11 @@ public class JRSPainter
 	{
 		super(rendererDescriptions);
 
-		// This renderer depends upon the JDK native support being loaded and initialized.
-
 		try {
-			// The following will ensure that the native library is loaded (if possible).
-			com.apple.laf.AquaNativeResources.getWindowBackgroundColorUIResource();
-
-			// The following will ensure that the native library has been initialized (if possible).
-			apple.laf.JRSUIControl.initJRSUI();
+			// The following will ensure that the native library support has been initialized (if possible).
+			JRSUIControl.initJRSUI();
 		} catch (Exception ex) {
-			throw new UnsupportedOperationException("Unable to load or initialize the native library: " + ex);
+			throw new UnsupportedOperationException("Unable to initialize the native library: " + ex);
 		}
 
 		maker = new JRSRendererMaker();
@@ -196,6 +192,8 @@ public class JRSPainter
 		State st = g.getState();
 		ButtonState bs = g.getButtonState();
 
+		boolean hasRolloverEffect = false;
+
 		switch (bw) {
 			case BUTTON_PUSH:
 				maker.set(JRSUIConstants.Widget.BUTTON_PUSH);
@@ -223,10 +221,11 @@ public class JRSPainter
 				break;
 			case BUTTON_RECESSED:
 
-				// A recessed button does not paint a background when OFF unless ROLLOVER or PRESSED
-				if (bs == ButtonState.OFF && st != State.ROLLOVER && st != State.PRESSED) {
+				if (!shouldPaintRecessedBackground(st, bs)) {
 					return NULL_RENDERER;
 				}
+
+				hasRolloverEffect = true;
 
 				if (st == State.ACTIVE_DEFAULT || st == State.INACTIVE || st == State.DISABLED || st == State.DISABLED_INACTIVE) {
 					// these states render incorrectly on Yosemite
@@ -261,6 +260,10 @@ public class JRSPainter
 				break;
 			default:
 				throw new UnsupportedOperationException();
+		}
+
+		if (st == State.ROLLOVER && !hasRolloverEffect) {
+			st = State.ACTIVE;
 		}
 
 		// Rounded rect and rounded bevel buttons use PRESSED instead of VALUE to indicate selection (when enabled)
@@ -629,8 +632,13 @@ public class JRSPainter
 				throw new UnsupportedOperationException();
 		}
 
+		State st = g.getState();
+		if (st == State.ROLLOVER) {
+			st = State.ACTIVE;
+		}
+
 		configureSize(g.getSize());
-		configureState(g.getState());
+		configureState(st);
 		configureLayoutDirection(g.getLayoutDirection());
 
 		return Renderer.create(maker.getRenderer(), rd);
@@ -733,6 +741,8 @@ public class JRSPainter
 
 		maker.reset();
 
+		boolean hasRolloverEffect = false;
+
 		switch (g.getPopupButtonWidget()) {
 			case BUTTON_POP_DOWN:
 				maker.set(JRSUIConstants.Widget.BUTTON_POP_DOWN);
@@ -762,6 +772,7 @@ public class JRSPainter
 					return null;
 				}
 
+				hasRolloverEffect = true;
 				maker.set(JRSUIConstants.Widget.BUTTON_PUSH_SCOPE);
 				break;
 
@@ -789,6 +800,10 @@ public class JRSPainter
 
 			default:
 				throw new UnsupportedOperationException();
+		}
+
+		if (st == State.ROLLOVER && !hasRolloverEffect) {
+			st = State.ACTIVE;
 		}
 
 		maker.set(JRSUIConstants.IndicatorOnly.NO);
@@ -1209,5 +1224,11 @@ public class JRSPainter
 
 		maker.set(g.getState() == State.ACTIVE ? JRSUIConstants.State.ACTIVE : JRSUIConstants.State.INACTIVE);
 		return Renderer.create(maker.getRenderer(), rd);
+	}
+
+	@Override
+	public @NotNull String toString()
+	{
+		return "JRS";
 	}
 }

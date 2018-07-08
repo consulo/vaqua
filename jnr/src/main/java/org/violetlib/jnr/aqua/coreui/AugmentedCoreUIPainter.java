@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Alan Snyder.
+ * Copyright (c) 2015-2017 Alan Snyder.
  * All rights reserved.
  *
  * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
@@ -8,11 +8,11 @@
 
 package org.violetlib.jnr.aqua.coreui;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget.BUTTON_POP_DOWN_RECESSED;
+import static org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget.BUTTON_POP_UP_RECESSED;
 
-import org.jetbrains.annotations.*;
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.violetlib.jnr.aqua.ButtonConfiguration;
 import org.violetlib.jnr.aqua.PopupButtonConfiguration;
 import org.violetlib.jnr.aqua.SegmentedButtonConfiguration;
@@ -25,15 +25,9 @@ import org.violetlib.jnr.aqua.impl.PopUpArrowPainter;
 import org.violetlib.jnr.aqua.impl.PullDownArrowPainter;
 import org.violetlib.jnr.aqua.impl.TableColumnHeaderCellPainterExtension;
 import org.violetlib.jnr.aqua.impl.ThinSplitPaneDividerPainterExtension;
-import org.violetlib.jnr.impl.BasicRenderer;
-import org.violetlib.jnr.impl.BasicRendererDescription;
 import org.violetlib.jnr.impl.PainterExtension;
 import org.violetlib.jnr.impl.Renderer;
-import org.violetlib.jnr.impl.RendererDescription;
 import org.violetlib.jnr.impl.ReusableCompositor;
-import org.violetlib.jnr.impl.TrivialRendererDescription;
-
-import static org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget.*;
 
 /**
 	This class augments the Core UI native painting code to work around its deficiencies.

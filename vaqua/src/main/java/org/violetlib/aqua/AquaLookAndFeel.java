@@ -1,5 +1,5 @@
 /*
- * Changes copyright (c) 2015-2016 Alan Snyder.
+ * Changes copyright (c) 2015-2018 Alan Snyder.
  * All rights reserved.
  *
  * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
@@ -33,27 +33,37 @@
 
 package org.violetlib.aqua;
 
-import org.violetlib.aqua.fc.AquaBrowserSizeHandleIcon;
-import org.violetlib.aqua.fc.OSXFile;
-import org.violetlib.jnr.aqua.AquaNativeRendering;
+import static javax.swing.UIDefaults.LazyValue;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.KeyboardFocusManager;
+import java.awt.Point;
+import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.plaf.*;
+import javax.swing.plaf.ActionMapUIResource;
+import javax.swing.plaf.BorderUIResource;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.DimensionUIResource;
+import javax.swing.plaf.InsetsUIResource;
 import javax.swing.plaf.basic.BasicBorders;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 
-import static javax.swing.UIDefaults.LazyValue;
+import org.violetlib.aqua.fc.AquaBrowserSizeHandleIcon;
+import org.violetlib.aqua.fc.OSXFile;
+import org.violetlib.jnr.aqua.AquaNativeRendering;
 
 @SuppressWarnings("serial") // Superclass is not serializable across versions
 public class AquaLookAndFeel extends BasicLookAndFeel {
@@ -95,7 +105,10 @@ public class AquaLookAndFeel extends BasicLookAndFeel {
 
         // Popups must be heavy to use the vibrant background
         if (popupFactory == null) {
-            popupFactory = new AquaPopupFactory();
+            popupFactory = JavaSupport.createPopupFactory();
+        }
+
+        if (PopupFactory.getSharedInstance() != popupFactory) {
             PopupFactory.setSharedInstance(popupFactory);
         }
 
@@ -175,7 +188,9 @@ public class AquaLookAndFeel extends BasicLookAndFeel {
                     // display a focus ring for the current focus owner, if any.
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
-                            focusRingManager.install();
+                            if (focusRingManager != null) {
+                                focusRingManager.install();
+                            }
                         }
                     });
                 }
@@ -1222,7 +1237,7 @@ public class AquaLookAndFeel extends BasicLookAndFeel {
 
         table.putDefaults(defaults);
 
-        AquaUtils.installAATextInfo(table);
+        JavaSupport.installAATextInfo(table);
     }
 
     protected void initSystemColorDefaults(final UIDefaults table) {

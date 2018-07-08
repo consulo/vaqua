@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Alan Snyder.
+ * Copyright (c) 2015-2018 Alan Snyder.
  * All rights reserved.
  *
  * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
@@ -220,8 +220,7 @@ public class AquaNativePainter
 		}
 
 		if (widget == ButtonWidget.BUTTON_RECESSED) {
-			// A recessed button does not paint a background when OFF unless ROLLOVER or PRESSED
-			if (bs == ButtonState.OFF && st != State.ROLLOVER && st != State.PRESSED) {
+			if (!shouldPaintRecessedBackground(st, bs)) {
 				return NULL_RENDERER;
 			}
 		}
@@ -1090,10 +1089,9 @@ public class AquaNativePainter
 
 	private static @NotNull Rectangle[] obtainTitleBarButtonLayoutInfo(@NotNull TitleBarWidget bw)
 	{
-		int[] data = new int[4 * 3];
-
 		int windowType = toWindowType(bw);
-		if (nativeGetTitleBarButtonLayoutInfo(data, windowType)) {
+		int[] data = nativeGetTitleBarButtonLayoutInfo(windowType);
+		if (data != null) {
 			Rectangle close = new Rectangle(data[0], data[1], data[2], data[3]);
 			Rectangle minimize = new Rectangle(data[4], data[5], data[6], data[7]);
 			Rectangle resize = new Rectangle(data[8], data[9], data[10], data[11]);
@@ -1111,6 +1109,12 @@ public class AquaNativePainter
 			Rectangle resize = new Rectangle(x, y, w, h);
 			return new Rectangle[] { close, minimize, resize };
 		}
+	}
+
+	@Override
+	public @NotNull String toString()
+	{
+		return "NSView";
 	}
 
 	private static native void nativePaintIndeterminateProgressIndicator(int[] data, int rw, int rh, float w, float h, int size, int state, int orientation, boolean isSpinner, int frame);
@@ -1131,7 +1135,7 @@ public class AquaNativePainter
 	private static native void nativePaintTitleBar(int[] data, int rw, int rh, float w, float h, int windowType, int state, int closeState, int minimizeState, int resizeState, boolean resizeIsFullScreen, boolean isDirty);
 	private static native void nativePaintScrollBar(int[] data, int rw, int rh, float w, float h, int type, int size, int state, float thumbPosition, float thumbExtent);
 
-	private static native boolean nativeGetTitleBarButtonLayoutInfo(int[] data, int windowType);
+	private static native int[] nativeGetTitleBarButtonLayoutInfo(int windowType);
 	private static native void nativeGetSliderThumbBounds(float[] a, float w, float h, int sliderType, int size, double value, int numberOfTickMarks, int position);
 
 	// The following methods represent a failed experiment. Although I am not sure why, asking a view for its size

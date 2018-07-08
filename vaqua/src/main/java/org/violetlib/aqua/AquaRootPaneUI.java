@@ -1,5 +1,5 @@
 /*
- * Changes Copyright (c) 2015-2016 Alan Snyder.
+ * Changes Copyright (c) 2015-2018 Alan Snyder.
  * All rights reserved.
  *
  * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
@@ -41,12 +41,9 @@ import javax.swing.*;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.MenuBarUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicRootPaneUI;
-
-// I have commented out the code that refers to AquaMenuBarUI, as that class at present cannot be cloned without losing
-// support for the screen menu bar. The commented out code appears to handle the case where the application installs
-// its own layered pane.
 
 public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener, WindowListener, ContainerListener {
 
@@ -57,7 +54,7 @@ public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener,
     //final static int kDefaultButtonPaintDelayBetweenFrames = 50;
 //    JButton fCurrentDefaultButton = null;
 //    Timer fTimer = null;
-    //static final boolean sUseScreenMenuBar = AquaMenuBarUI.getScreenMenuBarProperty();
+    static final boolean sUseScreenMenuBar = AquaUtils.getScreenMenuBarProperty();
 
     public static ComponentUI createUI(final JComponent c) {
         return new AquaRootPaneUI();
@@ -131,13 +128,15 @@ public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener,
             }
         }
 
-//        // for <rdar://problem/3750909> OutOfMemoryError swapping menus.
-//        // Listen for layered pane/JMenuBar updates if the screen menu bar is active.
-//        if (sUseScreenMenuBar) {
-//            final JRootPane root = (JRootPane)c;
-//            root.addContainerListener(this);
-//            root.getLayeredPane().addContainerListener(this);
-//        }
+        // for <rdar://problem/3750909> OutOfMemoryError swapping menus.
+        // Listen for layered pane/JMenuBar updates if the screen menu bar is active.
+        if (sUseScreenMenuBar) {
+            final JRootPane root = (JRootPane)c;
+            root.addContainerListener(this);
+            root.getLayeredPane().addContainerListener(this);
+        }
+
+        configure();
     }
 
     public void uninstallUI(final JComponent c) {
@@ -147,13 +146,14 @@ public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener,
         uninstallCustomWindowStyle();
         removeVisualEffectView();
 
-//        if (sUseScreenMenuBar) {
-//            final JRootPane root = (JRootPane)c;
-//            root.removeContainerListener(this);
-//            root.getLayeredPane().removeContainerListener(this);
-//        }
+        if (sUseScreenMenuBar) {
+            final JRootPane root = (JRootPane)c;
+            root.removeContainerListener(this);
+            root.getLayeredPane().removeContainerListener(this);
+        }
 
         isInitialized = false;
+        vibrantStyle = -1;
 
         super.uninstallUI(c);
     }
@@ -190,20 +190,21 @@ public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener,
                 final JLayeredPane layered = root.getLayeredPane();
                 layered.addContainerListener(this);
             }
-//        } else {
-//            if (e.getChild() instanceof JMenuBar) {
-//                final JMenuBar jmb = (JMenuBar)e.getChild();
-//                final MenuBarUI mbui = jmb.getUI();
-//
-//                if (mbui instanceof AquaMenuBarUI) {
-//                    final Window owningWindow = SwingUtilities.getWindowAncestor(jmb);
-//
-//                    // Could be a JDialog, and may have been added to a JRootPane not yet in a window.
-//                    if (owningWindow != null && owningWindow instanceof JFrame) {
-//                        ((AquaMenuBarUI)mbui).setScreenMenuBar((JFrame)owningWindow);
-//                    }
-//                }
-//            }
+        } else {
+            if (e.getChild() instanceof JMenuBar) {
+                final JMenuBar jmb = (JMenuBar)e.getChild();
+                final MenuBarUI mbui = jmb.getUI();
+
+                if (mbui.getClass().getName().equals("com.apple.laf.AquaMenuBarUI")) {
+                    final Window owningWindow = SwingUtilities.getWindowAncestor(jmb);
+
+                    // Could be a JDialog, and may have been added to a JRootPane not yet in a window.
+                    if (owningWindow instanceof JFrame) {
+                        JFrame fr = (JFrame)owningWindow;
+                        AquaUtils.setScreenMenuBar(fr, mbui);
+                    }
+                }
+            }
         }
     }
 
@@ -218,20 +219,21 @@ public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener,
                 final JLayeredPane layered = root.getLayeredPane();
                 layered.removeContainerListener(this);
             }
-//        } else {
-//            if (e.getChild() instanceof JMenuBar) {
-//                final JMenuBar jmb = (JMenuBar)e.getChild();
-//                final MenuBarUI mbui = jmb.getUI();
-//
-//                if (mbui instanceof AquaMenuBarUI) {
-//                    final Window owningWindow = SwingUtilities.getWindowAncestor(jmb);
-//
-//                    // Could be a JDialog, and may have been added to a JRootPane not yet in a window.
-//                    if (owningWindow != null && owningWindow instanceof JFrame) {
-//                        ((AquaMenuBarUI)mbui).clearScreenMenuBar((JFrame)owningWindow);
-//                    }
-//                }
-//            }
+        } else {
+            if (e.getChild() instanceof JMenuBar) {
+                final JMenuBar jmb = (JMenuBar)e.getChild();
+                final MenuBarUI mbui = jmb.getUI();
+
+                if (mbui.getClass().getName().equals("com.apple.laf.AquaMenuBarUI")) {
+                    final Window owningWindow = SwingUtilities.getWindowAncestor(jmb);
+
+                    // Could be a JDialog, and may have been added to a JRootPane not yet in a window.
+                    if (owningWindow instanceof JFrame) {
+                        JFrame fr = (JFrame)owningWindow;
+                        AquaUtils.clearScreenMenuBar(fr, mbui);
+                    }
+                }
+            }
         }
     }
 
@@ -264,10 +266,16 @@ public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener,
             }
         } else if (AquaVibrantSupport.BACKGROUND_STYLE_KEY.equals(prop)) {
             Object o = e.getNewValue();
-            setupBackgroundStyle(o, true);
+            setupBackgroundStyle(o);
         } else if (AQUA_WINDOW_STYLE_KEY.equals(prop) || AQUA_WINDOW_TOP_MARGIN_KEY.equals(prop) || AQUA_WINDOW_BOTTOM_MARGIN_KEY.equals(prop)) {
             uninstallCustomWindowStyle();
             installCustomWindowStyle();
+        } else if ("ancestor".equals(prop)) {
+            Component parent = rootPane.getParent();
+            if (parent instanceof Window) {
+                Window w = (Window) parent;
+                KeyWindowPatch.applyPatchIfNeeded(w);
+            }
         }
     }
 
@@ -446,6 +454,11 @@ public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener,
 
     @Override
     public final void update(final Graphics g, final JComponent c) {
+
+        if (!isInitialized) {
+            configure();
+        }
+
         if (customStyledWindow != null) {
             customStyledWindow.paintBackground(g);
         } else if (c.isOpaque() || vibrantStyle >= 0) {
@@ -466,8 +479,8 @@ public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener,
     }
 
     /**
-     * Configure or reconfigure the window based on root pane client properties.
-     * This method has no effect if the root pane parent is not displayable.
+     * Configure or reconfigure the window based on root pane client properties and popup client properties, if
+     * appropriate. This method has no effect if the root pane parent is not displayable.
      */
     public void configure() {
         if (rootPane.getParent() != null && rootPane.getParent().isDisplayable()) {
@@ -489,7 +502,7 @@ public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener,
                     if (c instanceof JComponent) {
                         JComponent jc = (JComponent) c;
                         Object o = jc.getClientProperty(AquaVibrantSupport.POPUP_BACKGROUND_STYLE_KEY);
-                        setupBackgroundStyle(o, false);
+                        setupBackgroundStyle(o);
                         o = jc.getClientProperty(AquaVibrantSupport.POPUP_CORNER_RADIUS_KEY);
                         setupCornerRadius(o);
                     }
@@ -498,12 +511,12 @@ public class AquaRootPaneUI extends BasicRootPaneUI implements AncestorListener,
         }
     }
 
-    protected void setupBackgroundStyle(Object o, boolean update) {
+    protected void setupBackgroundStyle(Object o) {
         int style = AquaVibrantSupport.parseVibrantStyle(o, false);
         if (style != vibrantStyle) {
             vibrantStyle = style;
             rootPane.setBackground(vibrantStyle >= 0 ? new Color(0, 0, 0, 0) : null);
-            if (isInitialized && update) {
+            if (isInitialized) {
                 updateVisualEffectView();
             }
         }

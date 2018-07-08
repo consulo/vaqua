@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Alan Snyder.
+ * Copyright (c) 2015-2018 Alan Snyder.
  * All rights reserved.
  *
  * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
@@ -83,6 +83,11 @@ public class AquaComboBoxUI extends BasicComboBoxUI implements AquaUtilControlSi
     protected Dimension cachedPreferredSize = new Dimension( 0, 0 );
     protected AquaComboBoxButton arrowButton;
     protected HierarchyListener hierarchyListener;
+    protected JList currentValueListBox;
+
+    public AquaComboBoxUI() {
+        currentValueListBox = new JList();
+    }
 
     public void installUI(final JComponent c) {
         super.installUI(c);
@@ -291,12 +296,11 @@ public class AquaComboBoxUI extends BasicComboBoxUI implements AquaUtilControlSi
         }
 
         // fake it out! not renderPressed
-        Component c = renderer.getListCellRendererComponent(listBox, displayedItem, -1, false, false);
+        currentValueListBox.setBackground(new Color(0, 0, 0, 0));
+        currentValueListBox.setForeground(comboBox.getForeground());
+        Component c = renderer.getListCellRendererComponent(currentValueListBox, displayedItem, -1, false, false);
         // System.err.println("Renderer: " + renderer);
         c.setFont(currentValuePane.getFont());
-
-        Color foreground = arrowButton.getForeground();
-        c.setForeground(foreground);
 
         // Sun Fix for 4238829: should lay out the JPanel.
         boolean shouldValidate = false;
@@ -475,8 +479,8 @@ public class AquaComboBoxUI extends BasicComboBoxUI implements AquaUtilControlSi
             if (e.isTextured) {
                 boolean showInactive = false;
                 if (arrowButton != null) {
-                    ComboBoxConfiguration bg = (ComboBoxConfiguration) arrowButton.getConfiguration();
-                    showInactive = (bg.getState() == AquaUIPainter.State.INACTIVE);
+                    AquaUIPainter.State state = arrowButton.getState();
+                    showInactive = (state == AquaUIPainter.State.INACTIVE);
                 }
 
                 String prefix = "ComboBox.textured";
@@ -542,18 +546,14 @@ public class AquaComboBoxUI extends BasicComboBoxUI implements AquaUtilControlSi
             }
 
             if (arrowButton != null) {
-                ComboBoxConfiguration bg = (ComboBoxConfiguration) arrowButton.getConfiguration();
-                if (bg.getState() == AquaUIPainter.State.INACTIVE) {
-                    AquaUIPainter.ComboBoxWidget w = bg.getWidget();
-                    if (w == AquaUIPainter.ComboBoxWidget.BUTTON_COMBO_BOX_TEXTURED || w == AquaUIPainter.ComboBoxWidget.BUTTON_COMBO_BOX_TEXTURED_TOOLBAR) {
-                        // Textured combo boxes change background color when inactive
-                        int width = editor.getWidth();
-                        int height = editor.getHeight();
-                        Color c = new Color(245, 245, 245);
-                        g.setColor(c);
-                        g.fillRect(0, 0, width, height);
-                        return;
-                    }
+                if (arrowButton.getState() == AquaUIPainter.State.INACTIVE && isTextured()) {
+                    // Textured combo boxes change background color when inactive
+                    int width = editor.getWidth();
+                    int height = editor.getHeight();
+                    Color c = new Color(245, 245, 245);
+                    g.setColor(c);
+                    g.fillRect(0, 0, width, height);
+                    return;
                 }
             }
 
@@ -562,10 +562,8 @@ public class AquaComboBoxUI extends BasicComboBoxUI implements AquaUtilControlSi
 
         protected boolean isTextured() {
             if (arrowButton != null) {
-                arrowButton.configure(null);
-                ComboBoxConfiguration bg = (ComboBoxConfiguration) arrowButton.getConfiguration();
-                AquaUIPainter.ComboBoxWidget w = bg.getWidget();
-                return w == AquaUIPainter.ComboBoxWidget.BUTTON_COMBO_BOX_TEXTURED || w == AquaUIPainter.ComboBoxWidget.BUTTON_COMBO_BOX_TEXTURED_TOOLBAR;
+                //arrowButton.configure(null);
+                return arrowButton.isTextured();
             }
             return false;
         }
@@ -705,12 +703,12 @@ public class AquaComboBoxUI extends BasicComboBoxUI implements AquaUtilControlSi
 
         public void configure(AquaUIPainter.ComboBoxWidget widget) {
             if (widget == AquaUIPainter.ComboBoxWidget.BUTTON_COMBO_BOX_CELL) {
-                setBackground(Color.WHITE);
-                setOpaque(true);
+                setBackground(new ColorUIResource(Color.WHITE));
+                LookAndFeel.installProperty(this, "opaque", Boolean.TRUE);
             } else {
                 // On 10.11, a textured editable combo box has a gradient background. See TextEdit.
-                setBackground(new Color(0, 0, 0, 0));
-                setOpaque(false);
+                setBackground(new ColorUIResource(new Color(0, 0, 0, 0)));
+                LookAndFeel.installProperty(this, "opaque", Boolean.FALSE);
             }
         }
 
