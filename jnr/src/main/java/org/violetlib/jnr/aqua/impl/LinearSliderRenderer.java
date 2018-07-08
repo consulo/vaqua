@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua.impl;
 
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.aqua.SliderConfiguration;
@@ -25,19 +25,25 @@ import org.violetlib.jnr.impl.ReusableCompositor;
 public class LinearSliderRenderer
 	extends Renderer
 {
-	protected final @NotNull SliderConfiguration g;
-	protected final @NotNull Renderer trackRenderer;
-	protected final @NotNull Insetter trackInsets;
-	protected final @Nullable Renderer tickMarkRenderer;
-	protected final @NotNull Renderer thumbRenderer;
-	protected final @NotNull Insetter thumbInsets;
+	protected final @Nonnull
+	SliderConfiguration g;
+	protected final @Nonnull
+	Renderer trackRenderer;
+	protected final @Nonnull
+	Insetter trackInsets;
+	protected final @Nullable
+	Renderer tickMarkRenderer;
+	protected final @Nonnull
+	Renderer thumbRenderer;
+	protected final @Nonnull
+	Insetter thumbInsets;
 
-	public LinearSliderRenderer(@NotNull SliderConfiguration g,
-															@NotNull Renderer trackRenderer,
-															@NotNull Insetter trackInsets,
+	public LinearSliderRenderer(@Nonnull SliderConfiguration g,
+															@Nonnull Renderer trackRenderer,
+															@Nonnull Insetter trackInsets,
 															@Nullable Renderer tickMarkRenderer,
-															@NotNull Renderer thumbRenderer,
-															@NotNull Insetter thumbInsets)
+															@Nonnull Renderer thumbRenderer,
+															@Nonnull Insetter thumbInsets)
 	{
 		this.g = g;
 		this.trackRenderer = trackRenderer;
@@ -48,7 +54,7 @@ public class LinearSliderRenderer
 	}
 
 	@Override
-	public void composeTo(@NotNull ReusableCompositor compositor)
+	public void composeTo(@Nonnull ReusableCompositor compositor)
 	{
 		float w = compositor.getWidth();
 		float h = compositor.getHeight();

@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.ButtonWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -26,16 +26,18 @@ public class ButtonConfiguration
 	extends ButtonLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State state;
+	private final @Nonnull
+	State state;
 	private final boolean isFocused;
-	private final @NotNull ButtonState buttonState;
+	private final @Nonnull
+	ButtonState buttonState;
 
-	public ButtonConfiguration(@NotNull ButtonWidget bw,
-														 @NotNull Size size,
-														 @NotNull State state,
+	public ButtonConfiguration(@Nonnull ButtonWidget bw,
+														 @Nonnull Size size,
+														 @Nonnull State state,
 														 boolean isFocused,
-														 @NotNull ButtonState buttonState,
-														 @NotNull UILayoutDirection ld
+														 @Nonnull ButtonState buttonState,
+														 @Nonnull UILayoutDirection ld
 	)
 	{
 		super(bw, size, ld);
@@ -53,15 +55,16 @@ public class ButtonConfiguration
 		this.buttonState = buttonState;
 	}
 
-	public ButtonConfiguration(@NotNull ButtonLayoutConfiguration g,
-														 @NotNull State state,
+	public ButtonConfiguration(@Nonnull ButtonLayoutConfiguration g,
+														 @Nonnull State state,
 														 boolean isFocused,
-														 @NotNull ButtonState buttonState)
+														 @Nonnull ButtonState buttonState)
 	{
 		this(g.getButtonWidget(), g.getSize(), state, isFocused, buttonState, g.getLayoutDirection());
 	}
 
-	public @NotNull State getState()
+	public @Nonnull
+	State getState()
 	{
 		return state;
 	}
@@ -71,7 +74,8 @@ public class ButtonConfiguration
 		return isFocused;
 	}
 
-	public @NotNull ButtonState getButtonState()
+	public @Nonnull
+	ButtonState getButtonState()
 	{
 		return buttonState;
 	}
@@ -93,7 +97,8 @@ public class ButtonConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String fs = isFocused ? " focused" : "";
 		return super.toString() + " " + state + " " + buttonState + fs;

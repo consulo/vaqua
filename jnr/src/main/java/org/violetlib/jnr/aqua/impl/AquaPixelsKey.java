@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.aqua.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.Configuration;
 import org.violetlib.jnr.impl.ImageCache;
@@ -26,9 +26,10 @@ public class AquaPixelsKey
 	private final int scaleFactor;
 	private final int w;
 	private final int h;
-	private final @NotNull Configuration g;
+	private final @Nonnull
+	Configuration g;
 
-	public AquaPixelsKey(int scaleFactor, int w, int h, @NotNull Configuration g)
+	public AquaPixelsKey(int scaleFactor, int w, int h, @Nonnull Configuration g)
 	{
 		this.pixelCount = w * h;
 		this.scaleFactor = scaleFactor;

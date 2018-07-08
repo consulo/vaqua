@@ -16,7 +16,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.AquaUILayoutInfo;
 import org.violetlib.jnr.aqua.AquaUIPainter;
@@ -31,9 +31,12 @@ import org.violetlib.jnr.impl.PainterExtension;
 public class OverlayScrollBarPainterExtension
 	implements PainterExtension
 {
-	private final @NotNull AquaUILayoutInfo uiLayout;
-	private final @NotNull ScrollBarConfiguration g;
-	private final @NotNull ScrollBarKnobWidget kw;
+	private final @Nonnull
+	AquaUILayoutInfo uiLayout;
+	private final @Nonnull
+	ScrollBarConfiguration g;
+	private final @Nonnull
+	ScrollBarKnobWidget kw;
 	private final boolean isRollover;
 
 	private final Color LIGHT_TRACK = new Color(68, 68, 68, 217);
@@ -47,7 +50,7 @@ public class OverlayScrollBarPainterExtension
 	private final Color DARK_TRACK = new Color(250, 250, 250, 191);
 	private final Color DARK_TRACK_BORDER = new Color(220, 220, 220, 200);
 
-	public OverlayScrollBarPainterExtension(@NotNull AquaUILayoutInfo uiLayout, @NotNull ScrollBarConfiguration g)
+	public OverlayScrollBarPainterExtension(@Nonnull AquaUILayoutInfo uiLayout, @Nonnull ScrollBarConfiguration g)
 	{
 		this.uiLayout = uiLayout;
 		this.g = g;
@@ -56,7 +59,7 @@ public class OverlayScrollBarPainterExtension
 	}
 
 	@Override
-	public void paint(@NotNull Graphics2D g, float width, float height)
+	public void paint(@Nonnull Graphics2D g, float width, float height)
 	{
 		g = (Graphics2D) g.create();
 		g.clip(new Rectangle2D.Float(0, 0, width, height));
@@ -122,7 +125,8 @@ public class OverlayScrollBarPainterExtension
 		g.dispose();
 	}
 
-	protected @NotNull Shape createThumbShape(float width, float height)
+	protected @Nonnull
+	Shape createThumbShape(float width, float height)
 	{
 		boolean isVertical = height > width;
 
@@ -142,7 +146,8 @@ public class OverlayScrollBarPainterExtension
 		}
 	}
 
-	protected @NotNull Color getTrackBorderColor()
+	protected @Nonnull
+	Color getTrackBorderColor()
 	{
 		switch (kw) {
 			case LIGHT:
@@ -172,7 +177,8 @@ public class OverlayScrollBarPainterExtension
 		}
 	}
 
-	protected @NotNull Color getTrackBackgroundColor()
+	protected @Nonnull
+	Color getTrackBackgroundColor()
 	{
 		switch (kw) {
 			case LIGHT:
@@ -182,7 +188,8 @@ public class OverlayScrollBarPainterExtension
 		}
 	}
 
-	protected @NotNull Color getThumbColor()
+	protected @Nonnull
+	Color getThumbColor()
 	{
 		switch (kw) {
 			case LIGHT:
@@ -192,7 +199,8 @@ public class OverlayScrollBarPainterExtension
 		}
 	}
 
-	protected @Nullable Color getThumbBorderColor()
+	protected @Nullable
+	Color getThumbBorderColor()
 	{
 		switch (kw) {
 			case LIGHT:

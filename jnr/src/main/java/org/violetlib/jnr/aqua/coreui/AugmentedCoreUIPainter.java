@@ -11,8 +11,9 @@ package org.violetlib.jnr.aqua.coreui;
 import static org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget.BUTTON_POP_DOWN_RECESSED;
 import static org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget.BUTTON_POP_UP_RECESSED;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.violetlib.jnr.aqua.ButtonConfiguration;
 import org.violetlib.jnr.aqua.PopupButtonConfiguration;
 import org.violetlib.jnr.aqua.SegmentedButtonConfiguration;
@@ -58,13 +59,15 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	public @NotNull AugmentedCoreUIPainter copy()
+	public @Nonnull
+	AugmentedCoreUIPainter copy()
 	{
 		return new AugmentedCoreUIPainter(useJRS);
 	}
 
 	@Override
-	protected @NotNull Renderer getButtonRenderer(@NotNull ButtonConfiguration g)
+	protected @Nonnull
+	Renderer getButtonRenderer(@Nonnull ButtonConfiguration g)
 	{
 		Renderer r = super.getButtonRenderer(g);
 		if (g.getButtonWidget() == ButtonWidget.BUTTON_COLOR_WELL) {
@@ -74,7 +77,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g)
+	protected @Nonnull
+	Renderer getSegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g)
 	{
 		Renderer r = super.getSegmentedButtonRenderer(g);
 		if (isCustomSegmentedButtonRendererNeeded(g)) {
@@ -84,7 +88,7 @@ public class AugmentedCoreUIPainter
 		}
 	}
 
-	protected boolean isCustomSegmentedButtonRendererNeeded(@NotNull SegmentedButtonConfiguration g)
+	protected boolean isCustomSegmentedButtonRendererNeeded(@Nonnull SegmentedButtonConfiguration g)
 	{
 		// The CoreUI rendering of segmented cells assumes a particular style of use, the result of which is that dividers
 		// are painted one pixel wide and at 1x only right side dividers are painted. We want dividers to be one point wide,
@@ -102,8 +106,9 @@ public class AugmentedCoreUIPainter
 			|| g.getRightDividerState() != SegmentedButtonConfiguration.DividerState.NONE);
 	}
 
-	protected @NotNull Renderer createCustomSegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g,
-																																	@NotNull Renderer r)
+	protected @Nonnull
+	Renderer createCustomSegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g,
+																																	@Nonnull Renderer r)
 	{
 		return new MySegmentedButtonRenderer(g, r);
 	}
@@ -111,17 +116,19 @@ public class AugmentedCoreUIPainter
 	protected class MySegmentedButtonRenderer
 		extends Renderer
 	{
-		private final @NotNull SegmentedButtonConfiguration g;
-		private final @NotNull Renderer r;
+		private final @Nonnull
+		SegmentedButtonConfiguration g;
+		private final @Nonnull
+		Renderer r;
 
-		public MySegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g, @NotNull Renderer r)
+		public MySegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g, @Nonnull Renderer r)
 		{
 			this.g = g;
 			this.r = r;
 		}
 
 		@Override
-		public void composeTo(@NotNull ReusableCompositor compositor)
+		public void composeTo(@Nonnull ReusableCompositor compositor)
 		{
 			// This code is sensitive to the behavior of the CoreUI segment cell rendering, which is resolution dependent.
 			// It may not work for displays with a scale factor other than 1 or 2, which is all we have tested.
@@ -175,7 +182,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSplitPaneDividerRenderer(@NotNull SplitPaneDividerConfiguration g)
+	protected @Nonnull
+	Renderer getSplitPaneDividerRenderer(@Nonnull SplitPaneDividerConfiguration g)
 	{
 		if (g.getWidget() == DividerWidget.THIN_DIVIDER) {
 			PainterExtension px = new ThinSplitPaneDividerPainterExtension(g);
@@ -186,7 +194,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	public @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g)
+	public @Nonnull
+	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g)
 	{
 		// Do not use the native renderer. Use our simulation instead.
 
@@ -195,7 +204,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSliderRenderer(@NotNull SliderConfiguration g)
+	protected @Nonnull
+	Renderer getSliderRenderer(@Nonnull SliderConfiguration g)
 	{
 		Renderer r = super.getSliderRenderer(g);
 		if (g.getWidget() == SliderWidget.SLIDER_CIRCULAR) {
@@ -206,7 +216,7 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @Nullable Renderer getSliderTickMarkRenderer(@NotNull SliderConfiguration g)
+	protected @Nullable Renderer getSliderTickMarkRenderer(@Nonnull SliderConfiguration g)
 	{
 		if (g.getWidget() != SliderWidget.SLIDER_CIRCULAR && g.hasTickMarks()) {
 			return Renderer.create(new LinearSliderPainterExtension(uiLayout, g));
@@ -216,7 +226,7 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	public @Nullable Renderer getPopupArrowRenderer(@NotNull PopupButtonConfiguration g)
+	public @Nullable Renderer getPopupArrowRenderer(@Nonnull PopupButtonConfiguration g)
 	{
 		Renderer r = super.getPopupArrowRenderer(g);
 		if (isArrowNeeded(g)) {
@@ -229,7 +239,7 @@ public class AugmentedCoreUIPainter
 		return r;
 	}
 
-	private boolean isArrowNeeded(@NotNull PopupButtonConfiguration g)
+	private boolean isArrowNeeded(@Nonnull PopupButtonConfiguration g)
 	{
 		PopupButtonWidget w = g.getPopupButtonWidget();
 		// Correct arrow color for recessed style

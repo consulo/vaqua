@@ -13,7 +13,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.StringTokenizer;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	Platform support that varies based on the Java version.
@@ -23,18 +23,19 @@ public class JavaSupport
 {
 	public interface JavaSupportImpl
 	{
-		int getScaleFactor(@NotNull Graphics g);
-		Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @NotNull BufferedImage im);
+		int getScaleFactor(@Nonnull Graphics g);
+		Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im);
 	}
 
 	private final static JavaSupportImpl impl = findImpl();
 
-	public static int getScaleFactor(@NotNull Graphics g)
+	public static int getScaleFactor(@Nonnull Graphics g)
 	{
 		return impl.getScaleFactor(g);
 	}
 
-	public static @NotNull Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @NotNull BufferedImage im)
+	@Nonnull
+	public static Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im)
 	{
 		return impl.createMultiResolutionImage(baseImageWidth, baseImageHeight, im);
 	}

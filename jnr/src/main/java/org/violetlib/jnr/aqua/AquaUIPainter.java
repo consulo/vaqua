@@ -12,7 +12,7 @@ import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.Painter;
 
@@ -499,7 +499,8 @@ public interface AquaUIPainter
 		Create a new instance with the same implementation.
 	*/
 
-	@NotNull AquaUIPainter copy();
+	@Nonnull
+	AquaUIPainter copy();
 
 	/**
 		Configure the generic parameters for the next request.
@@ -517,14 +518,16 @@ public interface AquaUIPainter
 		@throws UnsupportedOperationException if the configuration is not supported.
 	*/
 
-	@NotNull Painter getPainter(@NotNull Configuration g)
+	@Nonnull
+	Painter getPainter(@Nonnull Configuration g)
 		throws UnsupportedOperationException;
 
 	/**
 		Return a provider of layout information.
 	*/
 
-	@NotNull AquaUILayoutInfo getLayoutInfo();
+	@Nonnull
+	AquaUILayoutInfo getLayoutInfo();
 
 	/**
 		Return the visible outline of a widget based on the configured width and height. The returned shape can be used to
@@ -535,7 +538,8 @@ public interface AquaUIPainter
 		@return the outline.
 	*/
 
-	@Nullable Shape getOutline(@NotNull LayoutConfiguration g);
+	@Nullable
+	Shape getOutline(@Nonnull LayoutConfiguration g);
 
 	/**
 		Return the bounds of the editor area of a combo box based on the configured width and height. The bounds of the
@@ -544,7 +548,8 @@ public interface AquaUIPainter
 		@param g This parameter specifies the layout configuration of the combo box.
 	*/
 
-	@NotNull Rectangle2D getComboBoxEditorBounds(@NotNull ComboBoxLayoutConfiguration g);
+	@Nonnull
+	Rectangle2D getComboBoxEditorBounds(@Nonnull ComboBoxLayoutConfiguration g);
 
 	/**
 		Return the bounds of the indicator within the combo box based on the configured width and height.
@@ -552,7 +557,8 @@ public interface AquaUIPainter
 		@param g This parameter specifies the layout configuration of the segmented button.
 	*/
 
-	@NotNull Rectangle2D getComboBoxIndicatorBounds(@NotNull ComboBoxLayoutConfiguration g);
+	@Nonnull
+	Rectangle2D getComboBoxIndicatorBounds(@Nonnull ComboBoxLayoutConfiguration g);
 
 	/**
 		Return the bounds of the content area of a pop up button based on the configured width and height. The bounds of the
@@ -561,7 +567,8 @@ public interface AquaUIPainter
 		@param g This parameter specifies the layout configuration of the pop up button.
 	*/
 
-	@NotNull Rectangle2D getPopupButtonContentBounds(@NotNull PopupButtonLayoutConfiguration g);
+	@Nonnull
+	Rectangle2D getPopupButtonContentBounds(@Nonnull PopupButtonLayoutConfiguration g);
 
 	/**
 		Return the bounds of the thumb area based on the configured width and height.
@@ -571,7 +578,8 @@ public interface AquaUIPainter
 			in the range 0 to 1 (inclusive). Thumb position 0 corresponds to the lowest slider value.
 	*/
 
-	@NotNull Rectangle2D getSliderThumbBounds(@NotNull SliderLayoutConfiguration g, double thumbPosition);
+	@Nonnull
+	Rectangle2D getSliderThumbBounds(@Nonnull SliderLayoutConfiguration g, double thumbPosition);
 
 	/**
 	  Map a mouse coordinate to a slider thumb position. This method relies on the previously configured widget size.
@@ -585,7 +593,7 @@ public interface AquaUIPainter
 				than 1 if the coordinate is outside the slider range in the area corresponding to high values.
 	*/
 
-	double getSliderThumbPosition(@NotNull SliderLayoutConfiguration g, int x, int y);
+	double getSliderThumbPosition(@Nonnull SliderLayoutConfiguration g, int x, int y);
 
 	/**
 		Map a major axis coordinate of a scroll bar to a thumb position along the scroll bar track. This method relies on
@@ -603,7 +611,7 @@ public interface AquaUIPainter
 		The scroll bar track is the portion of the widget that the thumb can occupy.
 	*/
 
-	float getScrollBarThumbPosition(@NotNull ScrollBarThumbLayoutConfiguration g, boolean useExtent);
+	float getScrollBarThumbPosition(@Nonnull ScrollBarThumbLayoutConfiguration g, boolean useExtent);
 
 	/**
 		Determine whether a major axis coordinate of a scroll bar corresponds to the visible thumb. This method relies on
@@ -617,7 +625,7 @@ public interface AquaUIPainter
 		The scroll bar track is the portion of the widget that the thumb can occupy.
 	*/
 
-	int getScrollBarThumbHit(@NotNull ScrollBarThumbConfiguration g);
+	int getScrollBarThumbHit(@Nonnull ScrollBarThumbConfiguration g);
 
 	/**
 		Return the recommended bounds for a label corresponding to a given thumb position. This method relies on the
@@ -630,5 +638,6 @@ public interface AquaUIPainter
 		@return the recommended bounds for the label.
 	*/
 
-	@NotNull Rectangle2D getSliderLabelBounds(@NotNull SliderLayoutConfiguration g, double thumbPosition, @NotNull Dimension size);
+	@Nonnull
+	Rectangle2D getSliderLabelBounds(@Nonnull SliderLayoutConfiguration g, double thumbPosition, @Nonnull Dimension size);
 }

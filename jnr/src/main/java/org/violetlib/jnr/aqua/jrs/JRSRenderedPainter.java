@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.aqua.jrs;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.impl.jrs.JRSUIState;
 import org.violetlib.jnr.impl.CachingRendererPainter;
@@ -22,10 +22,11 @@ import org.violetlib.jnr.impl.Renderer;
 public class JRSRenderedPainter
 	extends CachingRendererPainter
 {
-	private final @NotNull JRSUIState state;
+	private final @Nonnull
+	JRSUIState state;
 
-	public JRSRenderedPainter(@NotNull JRSUIState state,
-														@NotNull Renderer r,
+	public JRSRenderedPainter(@Nonnull JRSUIState state,
+														@Nonnull Renderer r,
 														float width,
 														float height)
 	{
@@ -35,7 +36,8 @@ public class JRSRenderedPainter
 	}
 
 	@Override
-	protected @Nullable ImageCache.PixelsKey createKey(int scaleFactor, int rasterWidth, int rasterHeight)
+	protected @Nullable
+	ImageCache.PixelsKey createKey(int scaleFactor, int rasterWidth, int rasterHeight)
 	{
 		return new JRSPixelsKey(scaleFactor, rasterWidth, rasterHeight, state);
 	}

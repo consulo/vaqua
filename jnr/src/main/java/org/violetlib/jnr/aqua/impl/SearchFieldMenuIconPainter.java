@@ -14,7 +14,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.aqua.AquaUIPainter;
@@ -29,19 +29,21 @@ import org.violetlib.jnr.impl.PainterExtension;
 public class SearchFieldMenuIconPainter
 	implements PainterExtension
 {
-	protected final @NotNull TextFieldConfiguration tg;
-	protected final @NotNull Insetter searchButtonInsets;
+	protected final @Nonnull
+	TextFieldConfiguration tg;
+	protected final @Nonnull
+	Insetter searchButtonInsets;
 
 	protected Color ICON_COLOR = new Color(89, 89, 89);
 
-	public SearchFieldMenuIconPainter(@NotNull TextFieldConfiguration g, @NotNull Insetter searchButtonInsets)
+	public SearchFieldMenuIconPainter(@Nonnull TextFieldConfiguration g, @Nonnull Insetter searchButtonInsets)
 	{
 		this.searchButtonInsets = searchButtonInsets;
 		this.tg = g;
 	}
 
 	@Override
-	public void paint(@NotNull Graphics2D g, float width, float height)
+	public void paint(@Nonnull Graphics2D g, float width, float height)
 	{
 		Rectangle2D bounds = searchButtonInsets.applyToBounds2D(new Rectangle2D.Float(0, 0, width, height));
 		g.setColor(ICON_COLOR);

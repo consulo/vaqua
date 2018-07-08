@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	Instances of this class provide information about individual native renderers.
@@ -52,7 +52,8 @@ public interface RendererDescription
 			and the translation needed to align the rendering properly with the specified target region.
 	*/
 
-	@NotNull RasterDescription getRasterBounds(@NotNull Rectangle2D target, int scaleFactor);
+	@Nonnull
+	RasterDescription getRasterBounds(@Nonnull Rectangle2D target, int scaleFactor);
 
 	/**
 		Indicate whether the renderer has no offset or raster size adjustment.

@@ -12,7 +12,7 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.LayoutInfo;
@@ -43,7 +43,8 @@ public abstract class AquaUIPainterAbstractBase
 	protected boolean isAlignmentEnabled = true;
 
 	// Layout related state
-	protected @Nullable LayoutInfo layoutInfo;
+	protected @Nullable
+	LayoutInfo layoutInfo;
 
 	// The following variables define the current rendering bounds. The bounds may be different only if the widget
 	// specifies a fixed width or height that is smaller than the client specified bounds. The client specified bounds
@@ -53,8 +54,10 @@ public abstract class AquaUIPainterAbstractBase
 	protected float pWidth;					// the width of the painted area, limited by the widget fixed width (if any)
 	protected float pHeight;				// the height of the painted area, limited by the widget fixed height (if any)
 
-	protected static final @NotNull AquaUILayoutInfo uiLayout;
-	protected static final @NotNull UIOutliner uiOutliner;
+	protected static final @Nonnull
+	AquaUILayoutInfo uiLayout;
+	protected static final @Nonnull
+	UIOutliner uiOutliner;
 
 	static {
 		int platformVersion = JNRPlatformUtils.getPlatformVersion();
@@ -62,7 +65,8 @@ public abstract class AquaUIPainterAbstractBase
 		uiOutliner = new YosemiteOutliner((YosemiteLayoutInfo) uiLayout);
 	}
 
-	private static @NotNull AquaUILayoutInfo findLayoutInfo(int platformVersion)
+	private static @Nonnull
+	AquaUILayoutInfo findLayoutInfo(int platformVersion)
 	{
 		if (platformVersion >= 101200) {
 			return new SierraLayoutInfo();
@@ -88,13 +92,15 @@ public abstract class AquaUIPainterAbstractBase
 	}
 
 	@Override
-	public @NotNull AquaUILayoutInfo getLayoutInfo()
+	public @Nonnull
+	AquaUILayoutInfo getLayoutInfo()
 	{
 		return uiLayout;
 	}
 
 	@Override
-	public final @NotNull Rectangle2D getComboBoxEditorBounds(@NotNull ComboBoxLayoutConfiguration g)
+	public final @Nonnull
+	Rectangle2D getComboBoxEditorBounds(@Nonnull ComboBoxLayoutConfiguration g)
 	{
 		LayoutInfo layoutInfo = uiLayout.getLayoutInfo(g);
 		Rectangle2D bounds = getCenteredBounds(layoutInfo);
@@ -103,7 +109,8 @@ public abstract class AquaUIPainterAbstractBase
 	}
 
 	@Override
-	public final @NotNull Rectangle2D getComboBoxIndicatorBounds(@NotNull ComboBoxLayoutConfiguration g)
+	public final @Nonnull
+	Rectangle2D getComboBoxIndicatorBounds(@Nonnull ComboBoxLayoutConfiguration g)
 	{
 		LayoutInfo layoutInfo = uiLayout.getLayoutInfo(g);
 		Rectangle2D bounds = getCenteredBounds(layoutInfo);
@@ -112,7 +119,8 @@ public abstract class AquaUIPainterAbstractBase
 	}
 
 	@Override
-	public final @NotNull Rectangle2D getPopupButtonContentBounds(@NotNull PopupButtonLayoutConfiguration g)
+	public final @Nonnull
+	Rectangle2D getPopupButtonContentBounds(@Nonnull PopupButtonLayoutConfiguration g)
 	{
 		LayoutInfo layoutInfo = uiLayout.getLayoutInfo(g);
 		Rectangle2D bounds = getCenteredBounds(layoutInfo);
@@ -121,7 +129,7 @@ public abstract class AquaUIPainterAbstractBase
 	}
 
 	@Override
-	public float getScrollBarThumbPosition(@NotNull ScrollBarThumbLayoutConfiguration g, boolean useExtent)
+	public float getScrollBarThumbPosition(@Nonnull ScrollBarThumbLayoutConfiguration g, boolean useExtent)
 	{
 		LayoutInfo layoutInfo = uiLayout.getLayoutInfo(g);
 		Rectangle2D bounds = getCenteredBounds(layoutInfo);
@@ -129,7 +137,7 @@ public abstract class AquaUIPainterAbstractBase
 	}
 
 	@Override
-	public int getScrollBarThumbHit(@NotNull ScrollBarThumbConfiguration g)
+	public int getScrollBarThumbHit(@Nonnull ScrollBarThumbConfiguration g)
 	{
 		LayoutInfo layoutInfo = uiLayout.getLayoutInfo(g);
 		Rectangle2D bounds = getCenteredBounds(layoutInfo);
@@ -137,7 +145,8 @@ public abstract class AquaUIPainterAbstractBase
 	}
 
 	@Override
-	public final @NotNull Rectangle2D getSliderThumbBounds(@NotNull SliderLayoutConfiguration g, double thumbPosition)
+	public final @Nonnull
+	Rectangle2D getSliderThumbBounds(@Nonnull SliderLayoutConfiguration g, double thumbPosition)
 	{
 		LayoutInfo layoutInfo = uiLayout.getLayoutInfo(g);
 		Rectangle2D bounds = getCenteredBounds(layoutInfo);
@@ -145,9 +154,10 @@ public abstract class AquaUIPainterAbstractBase
 	}
 
 	@Override
-	public final @NotNull Rectangle2D getSliderLabelBounds(@NotNull SliderLayoutConfiguration g,
+	public final @Nonnull
+	Rectangle2D getSliderLabelBounds(@Nonnull SliderLayoutConfiguration g,
 																												 double thumbPosition,
-																												 @NotNull Dimension size)
+																												 @Nonnull Dimension size)
 	{
 		if (thumbPosition < 0 || thumbPosition > 1) {
 			return new Rectangle(0, 0, 0, 0);
@@ -169,15 +179,15 @@ public abstract class AquaUIPainterAbstractBase
 			if the slider is vertical.
 	*/
 
-	public final double getSliderThumbCenter(@NotNull Rectangle2D bounds,
-																					 @NotNull SliderLayoutConfiguration g,
+	public final double getSliderThumbCenter(@Nonnull Rectangle2D bounds,
+																					 @Nonnull SliderLayoutConfiguration g,
 																					 double thumbPosition)
 	{
 		return uiLayout.getSliderThumbCenter(bounds, g, thumbPosition);
 	}
 
 	@Override
-	public final double getSliderThumbPosition(@NotNull SliderLayoutConfiguration g, int x, int y)
+	public final double getSliderThumbPosition(@Nonnull SliderLayoutConfiguration g, int x, int y)
 	{
 		LayoutInfo layoutInfo = uiLayout.getLayoutInfo(g);
 		Rectangle2D bounds = getCenteredBounds(layoutInfo);
@@ -224,7 +234,8 @@ public abstract class AquaUIPainterAbstractBase
 	 	fixed sizes.
 	*/
 
-	protected @NotNull Rectangle2D getCenteredBounds(@Nullable LayoutInfo layoutInfo)
+	protected @Nonnull
+	Rectangle2D getCenteredBounds(@Nullable LayoutInfo layoutInfo)
 	{
 		float x = 0;
 		float y = 0;

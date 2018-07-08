@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.util.Arrays;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 /**
 	A compositor that renders into an INT_ARGB_PRE raster from various sources. Multiple renderings can be composed into
@@ -40,10 +40,12 @@ public class ReusableCompositor
 {
 	// TBD: would it be faster to turn everything into an Image and use graphics operations?
 
-	private @Nullable int[] data;	// the actual raster buffer, reallocated as needed to contain at least the required number of pixels.
+	private @Nullable
+	int[] data;	// the actual raster buffer, reallocated as needed to contain at least the required number of pixels.
 		// May be null if the raster has zero size.
 
-	private @Nullable BufferedImage b;	// an image using the raster buffer, created on demand and released when the raster buffer is replaced.
+	private @Nullable
+	BufferedImage b;	// an image using the raster buffer, created on demand and released when the raster buffer is replaced.
 		// May be null if the raster has zero size.
 
 	private boolean isConfigured;	// true if the raster dimensions have been changed but the raster has not been updated
@@ -66,7 +68,7 @@ public class ReusableCompositor
 			@param compositor The compositor.
 		*/
 
-		void composeTo(@NotNull ReusableCompositor compositor);
+		void composeTo(@Nonnull ReusableCompositor compositor);
 	}
 
 	/**
@@ -81,7 +83,8 @@ public class ReusableCompositor
 		Return the INT_ARGB_PRE color model.
 	*/
 
-	public static @NotNull ColorModel getColorModel()
+	public static @Nonnull
+	ColorModel getColorModel()
 	{
 		return BasicImageSupport.getColorModel();
 	}
@@ -186,7 +189,7 @@ public class ReusableCompositor
 		@param scaleFactor The scale factor that relates raster pixels to device independent pixels.
 	*/
 
-	public void render(@NotNull BasicRenderer r, int rasterWidth, int rasterHeight, int scaleFactor)
+	public void render(@Nonnull BasicRenderer r, int rasterWidth, int rasterHeight, int scaleFactor)
 	{
 		reset(rasterWidth, rasterHeight, scaleFactor);
 		ensureConfigured();
@@ -206,7 +209,7 @@ public class ReusableCompositor
 			that supports the {@link PixelSource} interface.
 	*/
 
-	public void compose(@NotNull Object o)
+	public void compose(@Nonnull Object o)
 	{
 		if (o instanceof BasicRenderer) {
 			BasicRenderer br = (BasicRenderer) o;
@@ -231,7 +234,7 @@ public class ReusableCompositor
 		@param r The renderer that provides the pixels.
 	*/
 
-	public void composeRenderer(@NotNull BasicRenderer r)
+	public void composeRenderer(@Nonnull BasicRenderer r)
 	{
 		ensureConfigured();
 		if (data != null) {
@@ -256,7 +259,7 @@ public class ReusableCompositor
 		@param dh The height of the raster region.
 	*/
 
-	public void composeRenderer(@NotNull BasicRenderer r, int dx, int dy, int dw, int dh)
+	public void composeRenderer(@Nonnull BasicRenderer r, int dx, int dy, int dw, int dh)
 	{
 		if (dw > 0 && dh > 0) {
 			ReusableCompositor temp = new ReusableCompositor();
@@ -275,7 +278,7 @@ public class ReusableCompositor
 		@param dh The height of the raster region.
 	*/
 
-	public void composePainter(@NotNull PainterExtension px, int dx, int dy, int dw, int dh)
+	public void composePainter(@Nonnull PainterExtension px, int dx, int dy, int dw, int dh)
 	{
 		if (dw > 0 && dh > 0) {
 			ReusableCompositor temp = new ReusableCompositor();
@@ -295,7 +298,7 @@ public class ReusableCompositor
 		@param dh The height of the raster region.
 	*/
 
-	public void composeFrom(@NotNull ReusableCompositor source, int dx, int dy, int dw, int dh)
+	public void composeFrom(@Nonnull ReusableCompositor source, int dx, int dy, int dw, int dh)
 	{
 		ensureConfigured();
 
@@ -339,7 +342,7 @@ public class ReusableCompositor
 		@param dh The height of the region.
 	*/
 
-	public void composeFrom(@NotNull ReusableCompositor source, int sx, int sy, int dx, int dy, int dw, int dh)
+	public void composeFrom(@Nonnull ReusableCompositor source, int sx, int sy, int dx, int dy, int dw, int dh)
 	{
 		ensureConfigured();
 
@@ -377,7 +380,7 @@ public class ReusableCompositor
 		Render a painter extension into the raster, composing with existing contents.
 	*/
 
-	public void composePainter(@NotNull PainterExtension px, float x, float y)
+	public void composePainter(@Nonnull PainterExtension px, float x, float y)
 	{
 		BufferedImage im = getImage();	// this method configures the raster buffer and the buffered image
 
@@ -397,7 +400,7 @@ public class ReusableCompositor
 		A very special case. Allows direct manipulation of the pixels, not just composing.
 	*/
 
-	public void renderFrom(@NotNull BasicRenderer r)
+	public void renderFrom(@Nonnull BasicRenderer r)
 	{
 		ensureConfigured();
 
@@ -441,7 +444,8 @@ public class ReusableCompositor
 		@return the image, or null if the raster has zero size.
 	*/
 
-	public @Nullable BufferedImage getImage()
+	public @Nullable
+	BufferedImage getImage()
 	{
 		ensureConfigured();
 
@@ -457,7 +461,7 @@ public class ReusableCompositor
 		@param g The graphics context.
 	*/
 
-	public void paint(@NotNull Graphics2D g)
+	public void paint(@Nonnull Graphics2D g)
 	{
 		BufferedImage im = getImage();
 

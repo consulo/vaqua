@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.ButtonWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -25,16 +25,17 @@ import org.violetlib.jnr.aqua.AquaUIPainter.UILayoutDirection;
 public class AnimatedButtonConfiguration
 	extends ButtonConfiguration
 {
-	private final @NotNull ButtonState previousButtonState;
+	private final @Nonnull
+	ButtonState previousButtonState;
 	private final float transition;
 
-	public AnimatedButtonConfiguration(@NotNull ButtonWidget bw,
-																		 @NotNull Size size,
-																		 @NotNull State state,
+	public AnimatedButtonConfiguration(@Nonnull ButtonWidget bw,
+																		 @Nonnull Size size,
+																		 @Nonnull State state,
 																		 boolean isFocused,
-																		 @NotNull ButtonState buttonState,
-																		 @NotNull UILayoutDirection ld,
-																		 @NotNull ButtonState previousButtonState,
+																		 @Nonnull ButtonState buttonState,
+																		 @Nonnull UILayoutDirection ld,
+																		 @Nonnull ButtonState previousButtonState,
 																		 float transition)
 	{
 		super(bw, size, state, isFocused, buttonState, ld);
@@ -47,7 +48,8 @@ public class AnimatedButtonConfiguration
 		this.previousButtonState = previousButtonState;
 	}
 
-	public @NotNull ButtonState getPreviousButtonState()
+	public @Nonnull
+	ButtonState getPreviousButtonState()
 	{
 		return previousButtonState;
 	}

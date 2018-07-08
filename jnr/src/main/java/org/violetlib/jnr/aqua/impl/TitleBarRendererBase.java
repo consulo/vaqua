@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua.impl;
 
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.aqua.AquaUIPainter;
@@ -27,14 +27,19 @@ import org.violetlib.jnr.impl.ReusableCompositor;
 public abstract class TitleBarRendererBase
 	extends Renderer
 {
-	protected final @NotNull TitleBarConfiguration g;
-	protected final @NotNull RendererDescription rd;
-	protected final @Nullable Insetter closeButtonInsets;
-	protected final @Nullable Insetter minimizeButtonInsets;
-	protected final @Nullable Insetter resizeButtonInsets;
+	protected final @Nonnull
+	TitleBarConfiguration g;
+	protected final @Nonnull
+	RendererDescription rd;
+	protected final @Nullable
+	Insetter closeButtonInsets;
+	protected final @Nullable
+	Insetter minimizeButtonInsets;
+	protected final @Nullable
+	Insetter resizeButtonInsets;
 
-	protected TitleBarRendererBase(@NotNull TitleBarConfiguration g,
-																 @NotNull RendererDescription rd,
+	protected TitleBarRendererBase(@Nonnull TitleBarConfiguration g,
+																 @Nonnull RendererDescription rd,
 																 @Nullable Insetter closeButtonInsets,
 																 @Nullable Insetter minimizeButtonInsets,
 																 @Nullable Insetter resizeButtonInsets)
@@ -47,7 +52,7 @@ public abstract class TitleBarRendererBase
 	}
 
 	@Override
-	public void composeTo(@NotNull ReusableCompositor compositor)
+	public void composeTo(@Nonnull ReusableCompositor compositor)
 	{
 		float w = compositor.getWidth();
 		float h = compositor.getHeight();
@@ -80,7 +85,9 @@ public abstract class TitleBarRendererBase
 		}
 	}
 
-	protected abstract @NotNull BasicRenderer getBasicTitleBarRenderer(float w, float h);
+	protected abstract @Nonnull
+	BasicRenderer getBasicTitleBarRenderer(float w, float h);
 
-	protected abstract @NotNull Renderer getButtonRenderer(@NotNull AquaUIPainter.TitleBarButtonWidget bw);
+	protected abstract @Nonnull
+	Renderer getButtonRenderer(@Nonnull AquaUIPainter.TitleBarButtonWidget bw);
 }

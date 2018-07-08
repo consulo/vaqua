@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -25,24 +25,26 @@ public class PopupButtonConfiguration
 	extends PopupButtonLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State state;
+	private final @Nonnull
+	State state;
 
-	public PopupButtonConfiguration(@NotNull PopupButtonWidget bw,
-																	@NotNull Size size,
-																	@NotNull State state,
-																	@NotNull UILayoutDirection ld)
+	public PopupButtonConfiguration(@Nonnull PopupButtonWidget bw,
+																	@Nonnull Size size,
+																	@Nonnull State state,
+																	@Nonnull UILayoutDirection ld)
 	{
 		super(bw, size, ld);
 
 		this.state = state;
 	}
 
-	public PopupButtonConfiguration(@NotNull PopupButtonLayoutConfiguration g, @NotNull State state)
+	public PopupButtonConfiguration(@Nonnull PopupButtonLayoutConfiguration g, @Nonnull State state)
 	{
 		this(g.getPopupButtonWidget(), g.getSize(), state, g.getLayoutDirection());
 	}
 
-	public @NotNull State getState()
+	public @Nonnull
+	State getState()
 	{
 		return state;
 	}
@@ -64,7 +66,8 @@ public class PopupButtonConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return super.toString() + " " + state;
 	}

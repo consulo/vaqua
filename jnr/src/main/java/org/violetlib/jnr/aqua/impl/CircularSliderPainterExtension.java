@@ -11,7 +11,7 @@ package org.violetlib.jnr.aqua.impl;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.SliderConfiguration;
@@ -25,17 +25,18 @@ import org.violetlib.jnr.impl.PainterExtension;
 public class CircularSliderPainterExtension
 	implements PainterExtension
 {
-	protected final @NotNull SliderConfiguration sg;
+	protected final @Nonnull
+	SliderConfiguration sg;
 
 	protected Color TICK_COLOR = new Color(10, 10, 10, 110);
 
-	public CircularSliderPainterExtension(@NotNull SliderConfiguration g)
+	public CircularSliderPainterExtension(@Nonnull SliderConfiguration g)
 	{
 		this.sg = g;
 	}
 
 	@Override
-	public void paint(@NotNull Graphics2D g, float width, float height)
+	public void paint(@Nonnull Graphics2D g, float width, float height)
 	{
 		AquaUIPainter.SliderWidget sw = sg.getWidget();
 
@@ -47,7 +48,7 @@ public class CircularSliderPainterExtension
 		}
 	}
 
-	protected void paintCircularTickMarks(@NotNull Graphics2D g, float width, float height)
+	protected void paintCircularTickMarks(@Nonnull Graphics2D g, float width, float height)
 	{
 		double x = width / 2.0;
 		double y = height / 2.0;
@@ -61,7 +62,7 @@ public class CircularSliderPainterExtension
 		p.paint(g);
 	}
 
-	protected void paintCircularIndicator(@NotNull Graphics2D g, float width, float height)
+	protected void paintCircularIndicator(@Nonnull Graphics2D g, float width, float height)
 	{
 		double x = width / 2.0;
 		double y = height / 2.0;

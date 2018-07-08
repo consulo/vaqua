@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.aqua.jrs;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.ComboBoxConfiguration;
 import org.violetlib.jnr.aqua.PopupButtonConfiguration;
@@ -36,13 +36,15 @@ public class AugmentedJRSPainter
 	extends JRSPainter
 {
 	@Override
-	public @NotNull AugmentedJRSPainter copy()
+	public @Nonnull
+	AugmentedJRSPainter copy()
 	{
 		return new AugmentedJRSPainter();
 	}
 
 	@Override
-	public @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g)
+	public @Nonnull
+	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g)
 	{
 		// Do not use the native renderer. Use our simulation instead.
 
@@ -51,7 +53,8 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSplitPaneDividerRenderer(@NotNull SplitPaneDividerConfiguration g)
+	protected @Nonnull
+	Renderer getSplitPaneDividerRenderer(@Nonnull SplitPaneDividerConfiguration g)
 	{
 		if (g.getWidget() == DividerWidget.THICK_DIVIDER) {
 			PainterExtension px = new ThickSplitPaneDividerPainterExtension(g);
@@ -65,7 +68,8 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getComboBoxButtonRenderer(@NotNull ComboBoxConfiguration g)
+	protected @Nonnull
+	Renderer getComboBoxButtonRenderer(@Nonnull ComboBoxConfiguration g)
 	{
 		ComboBoxWidget bw = g.getWidget();
 		if (bw == ComboBoxWidget.BUTTON_COMBO_BOX_CELL) {
@@ -77,7 +81,8 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	public @Nullable Renderer getPopupArrowRenderer(@NotNull PopupButtonConfiguration g)
+	public @Nullable
+	Renderer getPopupArrowRenderer(@Nonnull PopupButtonConfiguration g)
 	{
 		Renderer r = super.getPopupArrowRenderer(g);
 		if (isArrowNeeded(g)) {
@@ -90,7 +95,7 @@ public class AugmentedJRSPainter
 		return r;
 	}
 
-	private boolean isArrowNeeded(@NotNull PopupButtonConfiguration g)
+	private boolean isArrowNeeded(@Nonnull PopupButtonConfiguration g)
 	{
 		PopupButtonWidget w = g.getPopupButtonWidget();
 
@@ -111,7 +116,8 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getScrollBarRenderer(@NotNull ScrollBarConfiguration g)
+	protected @Nonnull
+	Renderer getScrollBarRenderer(@Nonnull ScrollBarConfiguration g)
 	{
 		ScrollBarWidget sw = g.getWidget();
 
@@ -123,7 +129,8 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSliderRenderer(@NotNull SliderConfiguration g)
+	protected @Nonnull
+	Renderer getSliderRenderer(@Nonnull SliderConfiguration g)
 	{
 		Renderer r = super.getSliderRenderer(g);
 		if (g.getWidget() == SliderWidget.SLIDER_CIRCULAR) {
@@ -134,7 +141,8 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	protected @Nullable Renderer getSliderTickMarkRenderer(@NotNull SliderConfiguration g)
+	protected @Nullable
+	Renderer getSliderTickMarkRenderer(@Nonnull SliderConfiguration g)
 	{
 		if (g.getWidget() != SliderWidget.SLIDER_CIRCULAR && g.hasTickMarks()) {
 			return Renderer.create(new LinearSliderPainterExtension(uiLayout, g));
@@ -144,7 +152,8 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return "Augmented " + super.toString();
 	}

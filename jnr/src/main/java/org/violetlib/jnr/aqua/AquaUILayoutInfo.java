@@ -12,17 +12,16 @@ import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
-
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.LayoutInfo;
-import org.violetlib.jnr.aqua.*;
 import org.violetlib.jnr.aqua.impl.PopupArrowConfiguration;
 import org.violetlib.jnr.aqua.impl.SliderThumbConfiguration;
 import org.violetlib.jnr.impl.BasicLayoutInfo;
 import org.violetlib.jnr.impl.CombinedInsetter;
 
 import static org.violetlib.jnr.aqua.AquaUIPainter.TitleBarButtonWidget;
+
+import javax.annotation.*;
 
 /**
 	Provides layout information for widgets based on the platform UI.
@@ -36,7 +35,8 @@ public abstract class AquaUILayoutInfo
 		@return the layout information for the specified configuration.
 	*/
 
-	public @NotNull LayoutInfo getLayoutInfo(@NotNull LayoutConfiguration g)
+	public @Nonnull
+	LayoutInfo getLayoutInfo(@Nonnull LayoutConfiguration g)
 		throws UnsupportedOperationException
 	{
 		if (g instanceof ButtonLayoutConfiguration) {
@@ -146,7 +146,8 @@ public abstract class AquaUILayoutInfo
 		@return the content insets, or null if the specified configuration does not support contents.
 	*/
 
-	public @Nullable Insetter getContentInsets(@NotNull LayoutConfiguration g)
+	public @Nullable
+	Insetter getContentInsets(@Nonnull LayoutConfiguration g)
 	{
 		if (g instanceof ButtonLayoutConfiguration) {
 			ButtonLayoutConfiguration gg = (ButtonLayoutConfiguration) g;
@@ -193,7 +194,8 @@ public abstract class AquaUILayoutInfo
 		@return an insetter that can be used to determine the label area, or null if the button has no label area.
 	*/
 
-	public abstract @Nullable Insetter getButtonLabelInsets(@NotNull ButtonLayoutConfiguration g);
+	public abstract @Nullable
+	Insetter getButtonLabelInsets(@Nonnull ButtonLayoutConfiguration g);
 
 	/**
 		Indicate where a segmented button label should be painted, based on the specified parameters.
@@ -202,7 +204,8 @@ public abstract class AquaUILayoutInfo
 		@return an insetter that can be used to determine the label area, or null if the button has no label area.
 	*/
 
-	public abstract @NotNull Insetter getSegmentedButtonLabelInsets(@NotNull SegmentedButtonLayoutConfiguration g);
+	public abstract @Nonnull
+	Insetter getSegmentedButtonLabelInsets(@Nonnull SegmentedButtonLayoutConfiguration g);
 
 	/**
 		Return the (dynamic) insets of the indicator within the combo box.
@@ -211,7 +214,8 @@ public abstract class AquaUILayoutInfo
 		@return the insets.
 	*/
 
-	public abstract @NotNull Insetter getComboBoxIndicatorInsets(@NotNull ComboBoxLayoutConfiguration g);
+	public abstract @Nonnull
+	Insetter getComboBoxIndicatorInsets(@Nonnull ComboBoxLayoutConfiguration g);
 
 	/**
 		Return the insets that define the editor area in a properly sized combo box.
@@ -220,7 +224,8 @@ public abstract class AquaUILayoutInfo
 		@return the insets.
 	*/
 
-	public abstract @NotNull Insetter getComboBoxEditorInsets(@NotNull ComboBoxLayoutConfiguration g);
+	public abstract @Nonnull
+	Insetter getComboBoxEditorInsets(@Nonnull ComboBoxLayoutConfiguration g);
 
 	/**
 		Return the insets that define the arrow area in a properly sized pop up button. For internal use.
@@ -229,7 +234,8 @@ public abstract class AquaUILayoutInfo
 		@return the insets.
 	*/
 
-	public abstract @NotNull Insetter getPopUpArrowInsets(@NotNull PopupButtonConfiguration g);
+	public abstract @Nonnull
+	Insetter getPopUpArrowInsets(@Nonnull PopupButtonConfiguration g);
 
 	/**
 		Return the insets that define the content area in a properly sized pop up button.
@@ -238,7 +244,8 @@ public abstract class AquaUILayoutInfo
 		@return the insets.
 	*/
 
-	public abstract @NotNull Insetter getPopupButtonContentInsets(@NotNull PopupButtonLayoutConfiguration g);
+	public abstract @Nonnull
+	Insetter getPopupButtonContentInsets(@Nonnull PopupButtonLayoutConfiguration g);
 
 	/**
 		Return the insets that define the content area in a text field.
@@ -247,7 +254,8 @@ public abstract class AquaUILayoutInfo
 		@return the insets.
 	*/
 
-	public abstract @NotNull Insetter getTextFieldTextInsets(@NotNull TextFieldLayoutConfiguration g);
+	public abstract @Nonnull
+	Insetter getTextFieldTextInsets(@Nonnull TextFieldLayoutConfiguration g);
 
 	/**
 		Return the insets that define the active area corresponding to the search button in a search field.
@@ -256,7 +264,8 @@ public abstract class AquaUILayoutInfo
 		@return the insets, or null if there is no search button in the specified configuration.
 	*/
 
-	public abstract @Nullable Insetter getSearchButtonInsets(@NotNull TextFieldLayoutConfiguration g);
+	public abstract @Nullable
+	Insetter getSearchButtonInsets(@Nonnull TextFieldLayoutConfiguration g);
 
 	/**
 		Return the insets that define the active area corresponding to the cancel button in a search field.
@@ -265,7 +274,8 @@ public abstract class AquaUILayoutInfo
 		@return the insets, or null if there is no cancel button in the specified configuration.
 	*/
 
-	public abstract @Nullable Insetter getCancelButtonInsets(@NotNull TextFieldLayoutConfiguration g);
+	public abstract @Nullable
+	Insetter getCancelButtonInsets(@Nonnull TextFieldLayoutConfiguration g);
 
 	/**
 		Return the insets that define the search button rendering region in a search field.
@@ -274,7 +284,8 @@ public abstract class AquaUILayoutInfo
 		@return the insets, or null if there is no search button in the specified configuration.
 	*/
 
-	public abstract @Nullable Insetter getSearchButtonPaintingInsets(@NotNull TextFieldLayoutConfiguration g);
+	public abstract @Nullable
+	Insetter getSearchButtonPaintingInsets(@Nonnull TextFieldLayoutConfiguration g);
 
 	/**
 		Return the insets that define the cancel button rendering region in a search field.
@@ -283,7 +294,8 @@ public abstract class AquaUILayoutInfo
 		@return the insets, or null if there is no cancel button in the specified configuration.
 	*/
 
-	public abstract @Nullable Insetter getCancelButtonPaintingInsets(@NotNull TextFieldLayoutConfiguration g);
+	public abstract @Nullable
+	Insetter getCancelButtonPaintingInsets(@Nonnull TextFieldLayoutConfiguration g);
 
 	/**
 		Return the layout info for the search button in a search field.
@@ -292,7 +304,8 @@ public abstract class AquaUILayoutInfo
 		@return the layout info, or null if there is no search button in the specified configuration.
 	*/
 
-	public abstract @Nullable LayoutInfo getSearchButtonLayoutInfo(@NotNull TextFieldLayoutConfiguration g);
+	public abstract @Nullable
+	LayoutInfo getSearchButtonLayoutInfo(@Nonnull TextFieldLayoutConfiguration g);
 
 	/**
 		Return the layout info for the cancel button in a search field.
@@ -301,7 +314,8 @@ public abstract class AquaUILayoutInfo
 		@return the layout info, or null if there is no cancel button in the specified configuration.
 	*/
 
-	public abstract @Nullable LayoutInfo getCancelButtonLayoutInfo(@NotNull TextFieldLayoutConfiguration g);
+	public abstract @Nullable
+	LayoutInfo getCancelButtonLayoutInfo(@Nonnull TextFieldLayoutConfiguration g);
 
 	/**
 		Map a major axis coordinate of a scroll bar to a thumb position along the scroll bar track.
@@ -319,8 +333,8 @@ public abstract class AquaUILayoutInfo
 		The scroll bar track is the portion of the widget that the thumb can occupy.
 	*/
 
-	public abstract float getScrollBarThumbPosition(@NotNull Rectangle2D bounds,
-																									@NotNull ScrollBarThumbLayoutConfiguration g,
+	public abstract float getScrollBarThumbPosition(@Nonnull Rectangle2D bounds,
+																									@Nonnull ScrollBarThumbLayoutConfiguration g,
 																									boolean useExtent);
 
 	/**
@@ -333,8 +347,9 @@ public abstract class AquaUILayoutInfo
 		@return the visible bounds of the scroll bar thumb.
 	*/
 
-	public abstract @NotNull Rectangle2D getScrollBarThumbBounds(@NotNull Rectangle2D bounds,
-																															 @NotNull ScrollBarConfiguration g);
+	public abstract @Nonnull
+	Rectangle2D getScrollBarThumbBounds(@Nonnull Rectangle2D bounds,
+																															 @Nonnull ScrollBarConfiguration g);
 
 	/**
 		Determine whether a major axis coordinate of a scroll bar corresponds to the visible thumb.
@@ -347,8 +362,8 @@ public abstract class AquaUILayoutInfo
 		The scroll bar track is the portion of the widget that the thumb can occupy.
 	*/
 
-	public abstract int getScrollBarThumbHit(@NotNull Rectangle2D bounds,
-																					 @NotNull ScrollBarThumbConfiguration g);
+	public abstract int getScrollBarThumbHit(@Nonnull Rectangle2D bounds,
+																					 @Nonnull ScrollBarThumbConfiguration g);
 
 	/**
 		Return the layout info for the thumb of a slider.
@@ -358,7 +373,8 @@ public abstract class AquaUILayoutInfo
 	*/
 
 	// this method supports evaluation
-	public abstract @NotNull LayoutInfo getSliderThumbLayoutInfo(@NotNull SliderLayoutConfiguration g);
+	public abstract @Nonnull
+	LayoutInfo getSliderThumbLayoutInfo(@Nonnull SliderLayoutConfiguration g);
 
 	/**
 		Return the bounds of the thumb of a slider for the purposes of hit detection.
@@ -369,8 +385,9 @@ public abstract class AquaUILayoutInfo
 		@return the thumb insets.
 	*/
 
-	public abstract @NotNull Rectangle2D getSliderThumbBounds(@NotNull Rectangle2D bounds,
-																														@NotNull SliderLayoutConfiguration g,
+	public abstract @Nonnull
+	Rectangle2D getSliderThumbBounds(@Nonnull Rectangle2D bounds,
+																														@Nonnull SliderLayoutConfiguration g,
 																														double thumbPosition);
 
 	/**
@@ -380,7 +397,8 @@ public abstract class AquaUILayoutInfo
 		@return the track insets.
 	*/
 
-	public abstract @NotNull Insetter getSliderTrackPaintingInsets(@NotNull SliderLayoutConfiguration g);
+	public abstract @Nonnull
+	Insetter getSliderTrackPaintingInsets(@Nonnull SliderLayoutConfiguration g);
 
 	/**
 		Return the insets of the thumb of a slider for the purposes of outlining or highlighting. The returned insets do not
@@ -391,7 +409,8 @@ public abstract class AquaUILayoutInfo
 		@return the thumb insets.
 	*/
 
-	public abstract @NotNull Insetter getSliderThumbInsets(@NotNull SliderLayoutConfiguration g, double thumbPosition);
+	public abstract @Nonnull
+	Insetter getSliderThumbInsets(@Nonnull SliderLayoutConfiguration g, double thumbPosition);
 
 	/**
 		Return the insets of the thumb of a slider for the purposes of painting the thumb. The returned insets include
@@ -403,7 +422,8 @@ public abstract class AquaUILayoutInfo
 	*/
 
 	// insets rather than bounds are needed for evaluation because we supply a variety of raster sizes
-	public abstract @NotNull Insetter getSliderThumbPaintingInsets(@NotNull SliderLayoutConfiguration g, double thumbPosition);
+	public abstract @Nonnull
+	Insetter getSliderThumbPaintingInsets(@Nonnull SliderLayoutConfiguration g, double thumbPosition);
 
 	/**
 		Return the suggested region for painting a label next to a slider.
@@ -415,10 +435,11 @@ public abstract class AquaUILayoutInfo
 		@return the bounds of the suggested label region.
 	*/
 
-	public abstract @NotNull Rectangle2D getSliderLabelBounds(@NotNull Rectangle2D bounds,
-																														@NotNull SliderLayoutConfiguration g,
+	public abstract @Nonnull
+	Rectangle2D getSliderLabelBounds(@Nonnull Rectangle2D bounds,
+																														@Nonnull SliderLayoutConfiguration g,
 																														double thumbPosition,
-																														@NotNull Dimension labelSize);
+																														@Nonnull Dimension labelSize);
 
 	/**
 		Return the location along the major axis of the center of the thumb for a given thumb position. This method is
@@ -431,8 +452,8 @@ public abstract class AquaUILayoutInfo
 			if the slider is vertical.
 	*/
 
-	public abstract double getSliderThumbCenter(@NotNull Rectangle2D bounds,
-																							@NotNull SliderLayoutConfiguration g,
+	public abstract double getSliderThumbCenter(@Nonnull Rectangle2D bounds,
+																							@Nonnull SliderLayoutConfiguration g,
 																							double thumbPosition);
 
 	/**
@@ -445,8 +466,8 @@ public abstract class AquaUILayoutInfo
 		@return the thumb position corresponding to the specified location.
 	*/
 
-	public abstract double getSliderThumbPosition(@NotNull Rectangle2D bounds,
-																								@NotNull SliderLayoutConfiguration g, int x, int y);
+	public abstract double getSliderThumbPosition(@Nonnull Rectangle2D bounds,
+																								@Nonnull SliderLayoutConfiguration g, int x, int y);
 
 	/**
 		Return the insets of the sort indicator of a table header cell for the purposes of painting the sort indicator.
@@ -455,7 +476,8 @@ public abstract class AquaUILayoutInfo
 		@return the sort indicator insets, or null if no sort indicator is displayed in the specified configuration.
 	*/
 
-	public abstract @Nullable Insetter getTableColumnHeaderSortArrowInsets(@NotNull TableColumnHeaderLayoutConfiguration g);
+	public abstract @Nullable
+	Insetter getTableColumnHeaderSortArrowInsets(@Nonnull TableColumnHeaderLayoutConfiguration g);
 
 	/**
 		Return the insets of the label area of a table header cell for the purposes of painting the label. If the
@@ -465,7 +487,8 @@ public abstract class AquaUILayoutInfo
 		@return the label insets.
 	*/
 
-	public abstract @NotNull Insetter getTableColumnHeaderLabelInsets(@NotNull TableColumnHeaderLayoutConfiguration g);
+	public abstract @Nonnull
+	Insetter getTableColumnHeaderLabelInsets(@Nonnull TableColumnHeaderLayoutConfiguration g);
 
 	/**
 		Return the insets of a title bar button.
@@ -475,8 +498,9 @@ public abstract class AquaUILayoutInfo
 		@return the button insets.
 	*/
 
-	public abstract @NotNull Insetter getTitleBarButtonInsets(@NotNull TitleBarLayoutConfiguration g,
-																														@NotNull TitleBarButtonWidget bw);
+	public abstract @Nonnull
+	Insetter getTitleBarButtonInsets(@Nonnull TitleBarLayoutConfiguration g,
+																														@Nonnull TitleBarButtonWidget bw);
 
 	/**
 		Return the shape of a title bar button, for painting. This method is for internal use.
@@ -487,9 +511,10 @@ public abstract class AquaUILayoutInfo
 		@return the button shape.
 	*/
 
-	public abstract @NotNull Shape getTitleBarButtonShape(@NotNull Rectangle2D bounds,
-																												@NotNull TitleBarLayoutConfiguration g,
-																												@NotNull TitleBarButtonWidget bw);
+	public abstract @Nonnull
+	Shape getTitleBarButtonShape(@Nonnull Rectangle2D bounds,
+																												@Nonnull TitleBarLayoutConfiguration g,
+																												@Nonnull TitleBarButtonWidget bw);
 
 	/**
 		Return the insets of the title bar label area. The label area is used for the window title and icon.
@@ -498,7 +523,8 @@ public abstract class AquaUILayoutInfo
 		@return the label area insets.
 	*/
 
-	public abstract @Nullable Insetter getTitleBarLabelInsets(@NotNull TitleBarLayoutConfiguration g);
+	public abstract @Nullable
+	Insetter getTitleBarLabelInsets(@Nonnull TitleBarLayoutConfiguration g);
 
 	/**
 		Map a location in a title bar to the corresponding button. This method is used for hit detection.
@@ -511,39 +537,56 @@ public abstract class AquaUILayoutInfo
 			not correspond to a button.
 	*/
 
-	public abstract @Nullable TitleBarButtonWidget identifyTitleBarButton(@NotNull Rectangle2D bounds,
-																																				@NotNull TitleBarLayoutConfiguration g,
+	public abstract @Nullable
+	TitleBarButtonWidget identifyTitleBarButton(@Nonnull Rectangle2D bounds,
+																																				@Nonnull TitleBarLayoutConfiguration g,
 																																				int x, int y);
 
-	protected abstract @NotNull LayoutInfo getButtonLayoutInfo(@NotNull ButtonLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getButtonLayoutInfo(@Nonnull ButtonLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getSegmentedButtonLayoutInfo(@NotNull SegmentedButtonLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getSegmentedButtonLayoutInfo(@Nonnull SegmentedButtonLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getComboBoxLayoutInfo(@NotNull ComboBoxLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getComboBoxLayoutInfo(@Nonnull ComboBoxLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getPopUpButtonLayoutInfo(@NotNull PopupButtonLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getPopUpButtonLayoutInfo(@Nonnull PopupButtonLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getToolBarItemWellLayoutInfo(@NotNull ToolBarItemWellLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getToolBarItemWellLayoutInfo(@Nonnull ToolBarItemWellLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getTitleBarLayoutInfo(@NotNull TitleBarLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getTitleBarLayoutInfo(@Nonnull TitleBarLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getSliderLayoutInfo(@NotNull SliderLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getSliderLayoutInfo(@Nonnull SliderLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getSpinnerArrowsLayoutInfo(@NotNull SpinnerArrowsLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getSpinnerArrowsLayoutInfo(@Nonnull SpinnerArrowsLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getSplitPaneDividerLayoutInfo(@NotNull SplitPaneDividerLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getSplitPaneDividerLayoutInfo(@Nonnull SplitPaneDividerLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getGroupBoxLayoutInfo(@NotNull GroupBoxLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getGroupBoxLayoutInfo(@Nonnull GroupBoxLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getListBoxLayoutInfo(@NotNull ListBoxLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getListBoxLayoutInfo(@Nonnull ListBoxLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getTextFieldLayoutInfo(@NotNull TextFieldLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getTextFieldLayoutInfo(@Nonnull TextFieldLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getScrollBarLayoutInfo(@NotNull ScrollBarLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getScrollBarLayoutInfo(@Nonnull ScrollBarLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getScrollColumnSizerLayoutInfo(@NotNull ScrollColumnSizerLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getScrollColumnSizerLayoutInfo(@Nonnull ScrollColumnSizerLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getProgressIndicatorLayoutInfo(@NotNull ProgressIndicatorLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getProgressIndicatorLayoutInfo(@Nonnull ProgressIndicatorLayoutConfiguration g);
 
-	protected abstract @NotNull LayoutInfo getTableColumnHeaderLayoutInfo(@NotNull TableColumnHeaderLayoutConfiguration g);
+	protected abstract @Nonnull
+	LayoutInfo getTableColumnHeaderLayoutInfo(@Nonnull TableColumnHeaderLayoutConfiguration g);
 }

@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.aqua.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.aqua.ScrollBarConfiguration;
@@ -26,13 +26,15 @@ public class AugmentedAquaNativePainter
 	extends AquaNativePainter
 {
 	@Override
-	public @NotNull AugmentedAquaNativePainter copy()
+	public @Nonnull
+	AugmentedAquaNativePainter copy()
 	{
 		return new AugmentedAquaNativePainter();
 	}
 
 	@Override
-	public @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g)
+	public @Nonnull
+	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g)
 	{
 		// Do not use the native renderer. Use our simulation instead.
 
@@ -41,7 +43,8 @@ public class AugmentedAquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getTitleBarRenderer(@NotNull TitleBarConfiguration g)
+	protected @Nonnull
+	Renderer getTitleBarRenderer(@Nonnull TitleBarConfiguration g)
 	{
 		Renderer r = super.getTitleBarRenderer(g);
 		PainterExtension px = getTitleBarButtonPainter(g);
@@ -52,13 +55,15 @@ public class AugmentedAquaNativePainter
 		return Renderer.createCompositeRenderer(r, pr);
 	}
 
-	protected @Nullable PainterExtension getTitleBarButtonPainter(@NotNull TitleBarConfiguration g)
+	protected @Nullable
+	PainterExtension getTitleBarButtonPainter(@Nonnull TitleBarConfiguration g)
 	{
 		return new TitleBarPainterExtension(getTitleBarLayoutInfo(), g);
 	}
 
 	@Override
-	protected @NotNull Renderer getScrollBarRenderer(@NotNull ScrollBarConfiguration g)
+	protected @Nonnull
+	Renderer getScrollBarRenderer(@Nonnull ScrollBarConfiguration g)
 	{
 		ScrollBarWidget sw = g.getWidget();
 
@@ -71,7 +76,8 @@ public class AugmentedAquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getTextFieldRenderer(@NotNull TextFieldConfiguration g)
+	protected @Nonnull
+	Renderer getTextFieldRenderer(@Nonnull TextFieldConfiguration g)
 	{
 		Renderer r = super.getTextFieldRenderer(g);
 		TextFieldWidget w = g.getWidget();
@@ -87,7 +93,8 @@ public class AugmentedAquaNativePainter
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return "Augmented " + super.toString();
 	}

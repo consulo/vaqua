@@ -16,7 +16,7 @@ import java.awt.image.ImageProducer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 
@@ -26,9 +26,10 @@ public class JNR9MultiResolutionImage extends Image implements java.awt.image.Mu
 {
 	private final int baseImageWidth;
 	private final int baseImageHeight;
-	private final @NotNull BufferedImage im;
+	private final @Nonnull
+	BufferedImage im;
 
-	public JNR9MultiResolutionImage(int baseImageWidth, int baseImageHeight, @NotNull BufferedImage im)
+	public JNR9MultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im)
 	{
 		this.baseImageWidth = baseImageWidth;
 		this.baseImageHeight = baseImageHeight;

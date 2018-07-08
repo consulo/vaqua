@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.awt.Graphics;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.Painter;
 
@@ -21,11 +21,12 @@ import org.violetlib.jnr.Painter;
 public class OffsetPainter
 	implements Painter
 {
-	private final @NotNull Painter p;
+	private final @Nonnull
+	Painter p;
 	private final float xOffset;
 	private final float yOffset;
 
-	public OffsetPainter(@NotNull Painter p, float xOffset, float yOffset)
+	public OffsetPainter(@Nonnull Painter p, float xOffset, float yOffset)
 	{
 		this.p = p;
 		this.xOffset = xOffset;
@@ -33,7 +34,7 @@ public class OffsetPainter
 	}
 
 	@Override
-	public void paint(@NotNull Graphics g, float x, float y)
+	public void paint(@Nonnull Graphics g, float x, float y)
 	{
 		p.paint(g, x + xOffset, y + yOffset);
 	}

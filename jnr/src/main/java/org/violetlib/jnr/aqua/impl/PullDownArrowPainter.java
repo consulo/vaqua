@@ -13,7 +13,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.PopupButtonConfiguration;
@@ -27,13 +27,13 @@ public class PullDownArrowPainter
 	extends PopUpArrowPainterBase
 	implements PainterExtension
 {
-	public PullDownArrowPainter(@NotNull PopupButtonConfiguration g)
+	public PullDownArrowPainter(@Nonnull PopupButtonConfiguration g)
 	{
 		super(g);
 	}
 
 	@Override
-	public void paint(@NotNull Graphics2D g, float width, float height)
+	public void paint(@Nonnull Graphics2D g, float width, float height)
 	{
 		AquaUIPainter.Size sz = gg.getSize();
 		double h = 2.5;

@@ -12,7 +12,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.aqua.AquaUILayoutInfo;
 import org.violetlib.jnr.aqua.AquaUIPainter;
@@ -27,19 +27,21 @@ import org.violetlib.jnr.impl.PainterExtension;
 public class LinearSliderPainterExtension
 	implements PainterExtension
 {
-	protected final @NotNull AquaUILayoutInfo uiLayout;
-	protected final @NotNull SliderConfiguration sg;
+	protected final @Nonnull
+	AquaUILayoutInfo uiLayout;
+	protected final @Nonnull
+	SliderConfiguration sg;
 
 	protected Color TICK_COLOR = new Color(10, 10, 10, 110);
 
-	public LinearSliderPainterExtension(@NotNull AquaUILayoutInfo uiLayout, @NotNull SliderConfiguration g)
+	public LinearSliderPainterExtension(@Nonnull AquaUILayoutInfo uiLayout, @Nonnull SliderConfiguration g)
 	{
 		this.uiLayout = uiLayout;
 		this.sg = g;
 	}
 
 	@Override
-	public void paint(@NotNull Graphics2D g, float width, float height)
+	public void paint(@Nonnull Graphics2D g, float width, float height)
 	{
 		AquaUIPainter.SliderWidget sw = sg.getWidget();
 
@@ -48,7 +50,7 @@ public class LinearSliderPainterExtension
 		}
 	}
 
-	protected void paintLinearTickMarks(@NotNull Graphics2D g, float width, float height)
+	protected void paintLinearTickMarks(@Nonnull Graphics2D g, float width, float height)
 	{
 		AquaUIPainter.SliderWidget sw = sg.getWidget();
 		AquaUIPainter.Size sz = sg.getSize();

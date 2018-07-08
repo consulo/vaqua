@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.aqua.jrs;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.SegmentedButtonConfiguration;
@@ -26,7 +26,8 @@ public class JRSRendererDescriptions
 	extends CoreUIRendererDescriptions
 {
 	@Override
-	public @NotNull RendererDescription getSegmentedButtonRendererDescription(@NotNull SegmentedButtonConfiguration g)
+	public @Nonnull
+	RendererDescription getSegmentedButtonRendererDescription(@Nonnull SegmentedButtonConfiguration g)
 	{
 		boolean compress = false;
 

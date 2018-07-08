@@ -15,7 +15,7 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	Java platform specific support for Java 9 and later.
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.*;
 public class Java9Support implements JavaSupport.JavaSupportImpl
 {
 	@Override
-	public int getScaleFactor(@NotNull Graphics g)
+	public int getScaleFactor(@Nonnull Graphics g)
 	{
 		// This works in Java 9. Before that, it returned 1.
 		Graphics2D gg = (Graphics2D) g;
@@ -36,7 +36,7 @@ public class Java9Support implements JavaSupport.JavaSupportImpl
 	}
 
 	@Override
-	public Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @NotNull BufferedImage im)
+	public Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im)
 	{
 		return new JNR9MultiResolutionImage(baseImageWidth, baseImageHeight, im);
 	}

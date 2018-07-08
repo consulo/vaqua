@@ -13,7 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.SplitPaneDividerConfiguration;
@@ -26,17 +26,18 @@ import org.violetlib.jnr.impl.PainterExtension;
 public class ThinSplitPaneDividerPainterExtension
 	implements PainterExtension
 {
-	protected final @NotNull SplitPaneDividerConfiguration dg;
+	protected final @Nonnull
+	SplitPaneDividerConfiguration dg;
 
 	protected Color COLOR = new Color(0, 0, 0, 24);
 
-	public ThinSplitPaneDividerPainterExtension(@NotNull SplitPaneDividerConfiguration g)
+	public ThinSplitPaneDividerPainterExtension(@Nonnull SplitPaneDividerConfiguration g)
 	{
 		this.dg = g;
 	}
 
 	@Override
-	public void paint(@NotNull Graphics2D g, float width, float height)
+	public void paint(@Nonnull Graphics2D g, float width, float height)
 	{
 		float d = 1;
 		Shape s;

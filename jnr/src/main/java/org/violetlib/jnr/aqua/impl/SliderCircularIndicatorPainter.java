@@ -13,7 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	Paint tick marks for a horizontal slider.
@@ -43,7 +43,7 @@ public class SliderCircularIndicatorPainter
 		this.p = p;
 	}
 
-	public void paint(@NotNull Graphics2D g)
+	public void paint(@Nonnull Graphics2D g)
 	{
 		// TBD: looks more like a gradient
 		double d = 5;

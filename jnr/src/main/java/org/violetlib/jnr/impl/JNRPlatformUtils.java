@@ -12,7 +12,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.StringTokenizer;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 /**
 	Platform dependent utilities used by the Java Native Rendering library.
@@ -20,7 +20,8 @@ import org.jetbrains.annotations.*;
 
 public class JNRPlatformUtils
 {
-	private static @Nullable String platformVersionString;
+	private static @Nullable
+	String platformVersionString;
 	private static int platformVersion = 0;
 
 	public static synchronized int getPlatformVersion()
@@ -57,7 +58,7 @@ public class JNRPlatformUtils
 		return platformVersion;
 	}
 
-	private static int parseComponent(@NotNull String s)
+	private static int parseComponent(@Nonnull String s)
 	{
 		try {
 			int n = Integer.parseInt(s);
@@ -69,7 +70,8 @@ public class JNRPlatformUtils
 		return 0;
 	}
 
-	public static @Nullable Graphics2D toGraphics2D(@NotNull Graphics g)
+	public static @Nullable
+	Graphics2D toGraphics2D(@Nonnull Graphics g)
 	{
 		// Ideally should be able to extract a Graphics2D from a printer graphics
 		try {

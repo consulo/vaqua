@@ -8,8 +8,6 @@
 
 package org.violetlib.jnr.aqua.coreui;
 
-import org.jetbrains.annotations.*;
-
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.ButtonConfiguration;
 import org.violetlib.jnr.aqua.ComboBoxConfiguration;
@@ -23,10 +21,11 @@ import org.violetlib.jnr.impl.BasicRendererDescription;
 import org.violetlib.jnr.impl.JNRPlatformUtils;
 import org.violetlib.jnr.impl.JNRUtils;
 import org.violetlib.jnr.impl.MultiResolutionRendererDescription;
-import org.violetlib.jnr.impl.Renderer;
 import org.violetlib.jnr.impl.RendererDescription;
 
 import static org.violetlib.jnr.impl.JNRUtils.*;
+
+import javax.annotation.*;
 
 /**
 	Renderer descriptions for Core UI based rendering on OS X 10.10 (Yosemite). This mostly includes rendering via the
@@ -37,7 +36,8 @@ public class CoreUIRendererDescriptions
 	extends ViewRendererDescriptions
 {
 	@Override
-	public @NotNull RendererDescription getSplitPaneDividerRendererDescription(@NotNull SplitPaneDividerConfiguration g)
+	public @Nonnull
+	RendererDescription getSplitPaneDividerRendererDescription(@Nonnull SplitPaneDividerConfiguration g)
 	{
 		AquaUIPainter.DividerWidget dw = g.getWidget();
 		AquaUIPainter.Orientation o = g.getOrientation();
@@ -55,7 +55,8 @@ public class CoreUIRendererDescriptions
 	}
 
 	@Override
-	public @NotNull RendererDescription getButtonRendererDescription(@NotNull ButtonConfiguration g)
+	public @Nonnull
+	RendererDescription getButtonRendererDescription(@Nonnull ButtonConfiguration g)
 	{
 		AquaUIPainter.ButtonWidget bw = toCanonicalButtonStyle(g.getButtonWidget());
 		AquaUIPainter.Size sz = g.getSize();
@@ -87,7 +88,8 @@ public class CoreUIRendererDescriptions
 	}
 
 	@Override
-	public @NotNull RendererDescription getSegmentedButtonRendererDescription(@NotNull SegmentedButtonConfiguration g)
+	public @Nonnull
+	RendererDescription getSegmentedButtonRendererDescription(@Nonnull SegmentedButtonConfiguration g)
 	{
 		int platformVersion = JNRPlatformUtils.getPlatformVersion();
 
@@ -153,9 +155,10 @@ public class CoreUIRendererDescriptions
 		return adjustSegmentedRendererDescription(g, rd, extraWidth, xOffset, yOffset, leftOffset, leftExtraWidth, rightExtraWidth, extraHeight);
 	}
 
-	protected @NotNull RendererDescription getTexturedSeparatedRendererDescription(
-		@NotNull SegmentedButtonConfiguration g,
-		@NotNull RendererDescription rd,
+	protected @Nonnull
+	RendererDescription getTexturedSeparatedRendererDescription(
+		@Nonnull SegmentedButtonConfiguration g,
+		@Nonnull RendererDescription rd,
 		float yOffset)
 	{
 		float extraWidth1 = 0;
@@ -203,9 +206,10 @@ public class CoreUIRendererDescriptions
 		return new MultiResolutionRendererDescription(d1, d2);
 	}
 
-	protected @NotNull RendererDescription getSegmentedSeparatedRendererDescription(
-		@NotNull SegmentedButtonConfiguration g,
-		@NotNull RendererDescription rd,
+	protected @Nonnull
+	RendererDescription getSegmentedSeparatedRendererDescription(
+		@Nonnull SegmentedButtonConfiguration g,
+		@Nonnull RendererDescription rd,
 		float yOffset,
 		float xOffset
 	)
@@ -241,9 +245,10 @@ public class CoreUIRendererDescriptions
 		}
 	}
 
-	protected @NotNull RendererDescription adjustSegmentedRendererDescription(
-		@NotNull SegmentedButtonConfiguration g,
-		@NotNull RendererDescription rd,
+	protected @Nonnull
+	RendererDescription adjustSegmentedRendererDescription(
+		@Nonnull SegmentedButtonConfiguration g,
+		@Nonnull RendererDescription rd,
 		float extraWidth,
 		float xOffset,
 		float yOffset,
@@ -295,7 +300,8 @@ public class CoreUIRendererDescriptions
 	}
 
 	@Override
-	public @NotNull RendererDescription getComboBoxRendererDescription(@NotNull ComboBoxConfiguration g)
+	public @Nonnull
+	RendererDescription getComboBoxRendererDescription(@Nonnull ComboBoxConfiguration g)
 	{
 		AquaUIPainter.ComboBoxWidget bw = g.getWidget();
 		AquaUIPainter.Size sz = g.getSize();
@@ -340,7 +346,8 @@ public class CoreUIRendererDescriptions
 	}
 
 	@Override
-	public @NotNull RendererDescription getPopupButtonRendererDescription(@NotNull PopupButtonConfiguration g)
+	public @Nonnull
+	RendererDescription getPopupButtonRendererDescription(@Nonnull PopupButtonConfiguration g)
 	{
 		AquaUIPainter.PopupButtonWidget bw = g.getPopupButtonWidget();
 		AquaUIPainter.Size sz = g.getSize();
@@ -363,8 +370,9 @@ public class CoreUIRendererDescriptions
 		return super.getPopupButtonRendererDescription(g);
 	}
 
-	public @Nullable RendererDescription getPopUpArrowRendererDescription(@NotNull PopupButtonConfiguration g,
-																																				@NotNull AquaUIPainter.Size arrowSize)
+	public @Nullable
+	RendererDescription getPopUpArrowRendererDescription(@Nonnull PopupButtonConfiguration g,
+																																				@Nonnull AquaUIPainter.Size arrowSize)
 	{
 		float left = JNRUtils.size2D(arrowSize, 1, 0, 2);
 		float top = JNRUtils.size2D(arrowSize, 3, 1, 1);
@@ -373,12 +381,14 @@ public class CoreUIRendererDescriptions
 		return new BasicRendererDescription(-left, -top, w, h);
 	}
 
-	public @NotNull RendererDescription getPullDownArrowRendererDescription(@NotNull PopupButtonConfiguration g)
+	public @Nonnull
+	RendererDescription getPullDownArrowRendererDescription(@Nonnull PopupButtonConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
-	public @NotNull RendererDescription getScrollBarThumbRendererDescription(@NotNull ScrollBarConfiguration g)
+	public @Nonnull
+	RendererDescription getScrollBarThumbRendererDescription(@Nonnull ScrollBarConfiguration g)
 	{
 		// NSScroller leaves a 3 point gap at the ends for legacy, apparently 2 points for overlay.
 		// CoreUI leaves a 1 point gap at the ends.

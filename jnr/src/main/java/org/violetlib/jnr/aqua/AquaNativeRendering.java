@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.impl.HybridAquaUIPainter;
 import org.violetlib.jnr.aqua.impl.NativeSupport;
@@ -28,7 +28,8 @@ public class AquaNativeRendering
 {
 	private static boolean isInitialized;
 
-	private static @Nullable AquaUIPainter preferredPainter;
+	private static @Nullable
+	AquaUIPainter preferredPainter;
 
 	/**
 		Create a native painter. The painter class is determined by the available implementations. The best available
@@ -39,7 +40,8 @@ public class AquaNativeRendering
 		@throws UnsupportedOperationException if there are no available implementations.
 	*/
 
-	public static @NotNull AquaUIPainter createPainter()
+	public static @Nonnull
+	AquaUIPainter createPainter()
 		throws UnsupportedOperationException
 	{
 		if (!isInitialized) {
@@ -66,21 +68,24 @@ public class AquaNativeRendering
 	/**
 		Return a string identifying the release of this library.
 	*/
-	public static @NotNull String getReleaseName() {
+	public static @Nonnull
+	String getReleaseName() {
 		return getStringResource("RELEASE.txt");
 	}
 
 	/**
 		Return a string identifying the build of this library.
 	*/
-	public static @NotNull String getBuildID() {
+	public static @Nonnull
+	String getBuildID() {
 		return getStringResource("BUILD.txt");
 	}
 
 	/**
 		Return a string identifying the version of this library.
 	*/
-	public static @NotNull String getVersionString() {
+	public static @Nonnull
+	String getVersionString() {
 		return "VAquaRendering: release " + getReleaseName() + " (build " + getBuildID() + ")";
 	}
 
@@ -91,7 +96,8 @@ public class AquaNativeRendering
 		System.err.println("VAquaRendering: release " + getReleaseName() + ", build " + getBuildID());
 	}
 
-	private static @NotNull String getStringResource(@NotNull String name)
+	private static @Nonnull
+	String getStringResource(@Nonnull String name)
 	{
 		InputStream s = AquaNativeRendering.class.getResourceAsStream(name);
 		if (s != null) {
@@ -158,14 +164,15 @@ public class AquaNativeRendering
 		}
 	}
 
-	protected static void debug(@NotNull String s)
+	protected static void debug(@Nonnull String s)
 	{
 		if (false) {
 			System.err.println(s);
 		}
 	}
 
-	protected static @Nullable AquaUIPainter getPainter(@NotNull String name, @Nullable Boolean parameter)
+	protected static @Nullable
+	AquaUIPainter getPainter(@Nonnull String name, @Nullable Boolean parameter)
 	{
 		Class c = getClass(name);
 		if (c != null) {
@@ -191,7 +198,8 @@ public class AquaNativeRendering
 		return null;
 	}
 
-	protected static @Nullable Class getClass(@NotNull String name)
+	protected static @Nullable
+	Class getClass(@Nonnull String name)
 	{
 		ClassLoader loader = AquaNativeRendering.class.getClassLoader();
 		try {

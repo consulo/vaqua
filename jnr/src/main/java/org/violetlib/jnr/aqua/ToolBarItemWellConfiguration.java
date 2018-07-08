@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
 
@@ -23,10 +23,11 @@ public class ToolBarItemWellConfiguration
 	extends ToolBarItemWellLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State state;
+	private final @Nonnull
+	State state;
 	private final boolean isFrameOnly;
 
-	public ToolBarItemWellConfiguration(@NotNull State state, boolean isFrameOnly)
+	public ToolBarItemWellConfiguration(@Nonnull State state, boolean isFrameOnly)
 	{
 		// In Yosemite, there are only two cases: active and inactive.
 
@@ -34,7 +35,8 @@ public class ToolBarItemWellConfiguration
 		this.isFrameOnly = isFrameOnly;
 	}
 
-	public @NotNull State getState()
+	public @Nonnull
+	State getState()
 	{
 		return state;
 	}
@@ -60,7 +62,8 @@ public class ToolBarItemWellConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String frs = isFrameOnly ? " frame only" : "";
 		return super.toString() + frs + " " + state;

@@ -14,7 +14,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	An outline shape that can be expanded to create the shape or boundary of a focus ring. A goal of the expansion is that
@@ -27,8 +27,10 @@ public abstract class ExpandableOutline
 {
 	public interface ExpandableShape
 	{
-		@NotNull Shape createExpandedShape(float offset);
-		@NotNull Shape createTranslatedShape(double x, double y);
+		@Nonnull
+		Shape createExpandedShape(float offset);
+		@Nonnull
+		Shape createTranslatedShape(double x, double y);
 	}
 
 	/**
@@ -39,7 +41,8 @@ public abstract class ExpandableOutline
 		@return the outline, altered as specified.
 	*/
 
-	public abstract @NotNull Shape getShape(float offset);
+	public abstract @Nonnull
+	Shape getShape(float offset);
 
 	/**
 		Convert a shape to the equivalent expandable outline.
@@ -48,7 +51,8 @@ public abstract class ExpandableOutline
 		@return an expandable outline equivalent to {@code s}.
 	*/
 
-	public static @NotNull ExpandableOutline fromShape(@NotNull Shape s)
+	public static @Nonnull
+	ExpandableOutline fromShape(@Nonnull Shape s)
 	{
 		if (s instanceof RoundRectangle2D) {
 			return new ExpandableRoundRectOutline((RoundRectangle2D) s);
@@ -72,7 +76,8 @@ public abstract class ExpandableOutline
 		@return the translated version of {@code s}.
 	*/
 
-	public static @NotNull Shape createTranslatedShape(@NotNull Shape s, double x, double y)
+	public static @Nonnull
+	Shape createTranslatedShape(@Nonnull Shape s, double x, double y)
 	{
 		if (s instanceof RoundRectangle2D) {
 			RoundRectangle2D rr = (RoundRectangle2D) s;
@@ -95,15 +100,17 @@ public abstract class ExpandableOutline
 	private static class ExpandableShapeOutline
 		extends ExpandableOutline
 	{
-		private final @NotNull ExpandableShape s;
+		private final @Nonnull
+		ExpandableShape s;
 
-		public ExpandableShapeOutline(@NotNull ExpandableShape s)
+		public ExpandableShapeOutline(@Nonnull ExpandableShape s)
 		{
 			this.s = s;
 		}
 
 		@Override
-		public @NotNull Shape getShape(float offset)
+		public @Nonnull
+		Shape getShape(float offset)
 		{
 			return s.createExpandedShape(offset);
 		}
@@ -112,15 +119,17 @@ public abstract class ExpandableOutline
 	private static class GenericOutline
 		extends ExpandableOutline
 	{
-		private final @NotNull Shape s;
+		private final @Nonnull
+		Shape s;
 
-		public GenericOutline(@NotNull Shape s)
+		public GenericOutline(@Nonnull Shape s)
 		{
 			this.s = s;
 		}
 
 		@Override
-		public @NotNull Shape getShape(float offset)
+		public @Nonnull
+		Shape getShape(float offset)
 		{
 			Rectangle2D bounds = s.getBounds2D();
 			double cx = bounds.getCenterX();

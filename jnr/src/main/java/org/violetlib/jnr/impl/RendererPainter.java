@@ -15,7 +15,7 @@ import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.Painter;
 
@@ -26,7 +26,8 @@ import org.violetlib.jnr.Painter;
 public abstract class RendererPainter
 	implements Painter
 {
-	protected final @NotNull Renderer r;
+	protected final @Nonnull
+	Renderer r;
 	protected final float width;
 	protected final float height;
 
@@ -38,7 +39,7 @@ public abstract class RendererPainter
 		@param height The height of the rendering, in device independent pixels.
 	*/
 
-	public RendererPainter(@NotNull Renderer r, float width, float height)
+	public RendererPainter(@Nonnull Renderer r, float width, float height)
 	{
 		this.r = r;
 		this.width = width;
@@ -46,7 +47,7 @@ public abstract class RendererPainter
 	}
 
 	@Override
-	public void paint(@NotNull Graphics gg, float x, float y)
+	public void paint(@Nonnull Graphics gg, float x, float y)
 	{
 		int scaleFactor = JavaSupport.getScaleFactor(gg);
 		int w = (int) Math.ceil(width);
@@ -64,12 +65,14 @@ public abstract class RendererPainter
 		}
 	}
 
-	protected @Nullable Image getImage(int scaleFactor, int width, int height)
+	protected @Nullable
+	Image getImage(int scaleFactor, int width, int height)
 	{
 		return createImage(scaleFactor, width, height);
 	}
 
-	protected @Nullable Image createImage(int scaleFactor, int width, int height)
+	protected @Nullable
+	Image createImage(int scaleFactor, int width, int height)
 	{
 		// Because we know the scale factor, we can create the image now rather than waiting for the multiresolution image
 		// to ask for it.

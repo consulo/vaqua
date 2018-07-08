@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.aqua.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.*;
 import org.violetlib.jnr.impl.RendererDescription;
@@ -19,45 +19,66 @@ import org.violetlib.jnr.impl.RendererDescription;
 
 public interface RendererDescriptions
 {
-	@NotNull RendererDescription getButtonRendererDescription(@NotNull ButtonConfiguration g);
+	@Nonnull
+	RendererDescription getButtonRendererDescription(@Nonnull ButtonConfiguration g);
 
-	@NotNull RendererDescription getSegmentedButtonRendererDescription(@NotNull SegmentedButtonConfiguration g);
+	@Nonnull
+	RendererDescription getSegmentedButtonRendererDescription(@Nonnull SegmentedButtonConfiguration g);
 
-	@NotNull RendererDescription getComboBoxRendererDescription(@NotNull ComboBoxConfiguration g);
+	@Nonnull
+	RendererDescription getComboBoxRendererDescription(@Nonnull ComboBoxConfiguration g);
 
-	@NotNull RendererDescription getPopupButtonRendererDescription(@NotNull PopupButtonConfiguration g);
+	@Nonnull
+	RendererDescription getPopupButtonRendererDescription(@Nonnull PopupButtonConfiguration g);
 
-	@Nullable RendererDescription getBasicPopupButtonRendererDescription(@NotNull PopupButtonConfiguration g);
+	@Nullable
+	RendererDescription getBasicPopupButtonRendererDescription(@Nonnull PopupButtonConfiguration g);
 
-	@NotNull RendererDescription getToolBarItemWellRendererDescription(@NotNull ToolBarItemWellConfiguration g);
+	@Nonnull
+	RendererDescription getToolBarItemWellRendererDescription(@Nonnull ToolBarItemWellConfiguration g);
 
-	@NotNull RendererDescription getTitleBarRendererDescription(@NotNull TitleBarConfiguration g);
+	@Nonnull
+	RendererDescription getTitleBarRendererDescription(@Nonnull TitleBarConfiguration g);
 
-	@NotNull RendererDescription getSliderRendererDescription(@NotNull SliderConfiguration g);
+	@Nonnull
+	RendererDescription getSliderRendererDescription(@Nonnull SliderConfiguration g);
 
-	@NotNull RendererDescription getSliderTrackRendererDescription(@NotNull SliderConfiguration g);
+	@Nonnull
+	RendererDescription getSliderTrackRendererDescription(@Nonnull SliderConfiguration g);
 
-	@NotNull RendererDescription getSliderThumbRendererDescription(@NotNull SliderConfiguration g);
+	@Nonnull
+	RendererDescription getSliderThumbRendererDescription(@Nonnull SliderConfiguration g);
 
-	@NotNull RendererDescription getSpinnerArrowsRendererDescription(@NotNull SpinnerArrowsConfiguration g);
+	@Nonnull
+	RendererDescription getSpinnerArrowsRendererDescription(@Nonnull SpinnerArrowsConfiguration g);
 
-	@NotNull RendererDescription getSplitPaneDividerRendererDescription(@NotNull SplitPaneDividerConfiguration g);
+	@Nonnull
+	RendererDescription getSplitPaneDividerRendererDescription(@Nonnull SplitPaneDividerConfiguration g);
 
-	@NotNull RendererDescription getGroupBoxRendererDescription(@NotNull GroupBoxConfiguration g);
+	@Nonnull
+	RendererDescription getGroupBoxRendererDescription(@Nonnull GroupBoxConfiguration g);
 
-	@NotNull RendererDescription getListBoxRendererDescription(@NotNull ListBoxConfiguration g);
+	@Nonnull
+	RendererDescription getListBoxRendererDescription(@Nonnull ListBoxConfiguration g);
 
-	@NotNull RendererDescription getTextFieldRendererDescription(@NotNull TextFieldConfiguration g);
+	@Nonnull
+	RendererDescription getTextFieldRendererDescription(@Nonnull TextFieldConfiguration g);
 
-	@NotNull RendererDescription getScrollBarRendererDescription(@NotNull ScrollBarConfiguration g);
+	@Nonnull
+	RendererDescription getScrollBarRendererDescription(@Nonnull ScrollBarConfiguration g);
 
-	@NotNull RendererDescription getScrollColumnSizerRendererDescription(@NotNull ScrollColumnSizerConfiguration g);
+	@Nonnull
+	RendererDescription getScrollColumnSizerRendererDescription(@Nonnull ScrollColumnSizerConfiguration g);
 
-	@NotNull RendererDescription getProgressIndicatorRendererDescription(@NotNull ProgressIndicatorConfiguration g);
+	@Nonnull
+	RendererDescription getProgressIndicatorRendererDescription(@Nonnull ProgressIndicatorConfiguration g);
 
-	@NotNull RendererDescription getIndeterminateProgressIndicatorRendererDescription(@NotNull IndeterminateProgressIndicatorConfiguration g);
+	@Nonnull
+	RendererDescription getIndeterminateProgressIndicatorRendererDescription(@Nonnull IndeterminateProgressIndicatorConfiguration g);
 
-	@NotNull RendererDescription getTableColumnHeaderRendererDescription(@NotNull TableColumnHeaderConfiguration g);
+	@Nonnull
+	RendererDescription getTableColumnHeaderRendererDescription(@Nonnull TableColumnHeaderConfiguration g);
 
-	@NotNull RendererDescription getGradientRendererDescription(@NotNull GradientConfiguration g);
+	@Nonnull
+	RendererDescription getGradientRendererDescription(@Nonnull GradientConfiguration g);
 }

@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.util.Arrays;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A renderer that vertically flips the effect of a base raster. Not thread safe.
@@ -19,7 +19,8 @@ import org.jetbrains.annotations.*;
 public class FlipVerticalRenderer
 	implements BasicRenderer
 {
-	private final @NotNull BasicRenderer r;
+	private final @Nonnull
+	BasicRenderer r;
 
 	private static int[] temp;
 
@@ -30,13 +31,13 @@ public class FlipVerticalRenderer
 		@param r The renderer to invoke.
 	*/
 
-	public FlipVerticalRenderer(@NotNull BasicRenderer r)
+	public FlipVerticalRenderer(@Nonnull BasicRenderer r)
 	{
 		this.r = r;
 	}
 
 	@Override
-	public void render(@NotNull int[] data, int rw, int rh, float w, float h)
+	public void render(@Nonnull int[] data, int rw, int rh, float w, float h)
 	{
 		int requiredSize = rw * rh;
 		if (requiredSize > 0) {

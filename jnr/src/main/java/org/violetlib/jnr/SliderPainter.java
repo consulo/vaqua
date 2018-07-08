@@ -12,7 +12,7 @@ import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	This interface defines additional methods that may be supported by a painter for sliders.
@@ -25,13 +25,15 @@ public interface SliderPainter
 		Return the bounds of the thumb area based on the configured parameters.
 	*/
 
-	@NotNull Rectangle2D getThumbBounds();
+	@Nonnull
+	Rectangle2D getThumbBounds();
 
 	/**
 		Return the outline of the thumb based on the configured parameters.
 	*/
 
-	@NotNull Shape getThumbOutline();
+	@Nonnull
+	Shape getThumbOutline();
 
 	/**
 	  Map a mouse coordinate to a slider thumb position. This method relies on the previously configured widget size.
@@ -56,5 +58,6 @@ public interface SliderPainter
 		@return the recommended bounds for the label.
 	*/
 
-	@NotNull Rectangle2D getLabelBounds(double value, @NotNull Dimension size);
+	@Nonnull
+	Rectangle2D getLabelBounds(double value, @Nonnull Dimension size);
 }

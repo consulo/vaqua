@@ -62,6 +62,10 @@
 								<includes>
 									<include>*</include>
 								</includes>
+								<excludes>
+									<exclude>consulo:consulo-annotations</exclude>
+									<exclude>com.google.code.findbugs:jsr305</exclude>
+								</excludes>
 							</artifactSet>
 						</configuration>
 					</execution>

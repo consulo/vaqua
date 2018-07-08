@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.text.DecimalFormat;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
@@ -20,13 +20,14 @@ import org.violetlib.jnr.aqua.AquaUIPainter;
 
 public class JNRUtils
 {
-	static final @NotNull DecimalFormat df2 = new DecimalFormat("0.00");
+	static final @Nonnull
+	DecimalFormat df2 = new DecimalFormat("0.00");
 
 	static {
 		df2.setDecimalSeparatorAlwaysShown(true);
 	}
 
-	public static int size(@NotNull AquaUIPainter.Size sz, int regular, int small, int mini)
+	public static int size(@Nonnull AquaUIPainter.Size sz, int regular, int small, int mini)
 	{
 		switch (sz) {
 			case SMALL:
@@ -38,7 +39,7 @@ public class JNRUtils
 		}
 	}
 
-	public static float size2D(@NotNull AquaUIPainter.Size sz, float regular, float small, float mini)
+	public static float size2D(@Nonnull AquaUIPainter.Size sz, float regular, float small, float mini)
 	{
 		switch (sz) {
 			case SMALL:
@@ -50,12 +51,14 @@ public class JNRUtils
 		}
 	}
 
-	public static @NotNull String format2(double v)
+	public static @Nonnull
+	String format2(double v)
 	{
 		return df2.format(v);
 	}
 
-	public static @Nullable BasicRendererDescription toBasicRendererDescription(@NotNull RendererDescription rd)
+	public static @Nullable
+	BasicRendererDescription toBasicRendererDescription(@Nonnull RendererDescription rd)
 	{
 		if (rd instanceof BasicRendererDescription) {
 			return (BasicRendererDescription) rd;
@@ -70,7 +73,8 @@ public class JNRUtils
 		@return the basic renderer description corresponding to {@code rd}, or null if not determinable.
 	*/
 
-	public static @Nullable BasicRendererDescription toBasicRendererDescription(@NotNull RendererDescription rd, int scaleFactor)
+	public static @Nullable
+	BasicRendererDescription toBasicRendererDescription(@Nonnull RendererDescription rd, int scaleFactor)
 	{
 		if (rd instanceof BasicRendererDescription) {
 			return (BasicRendererDescription) rd;
@@ -84,7 +88,8 @@ public class JNRUtils
 		return null;
 	}
 
-	public static @NotNull RendererDescription adjustRendererDescription(@NotNull RendererDescription rd,
+	public static @Nonnull
+	RendererDescription adjustRendererDescription(@Nonnull RendererDescription rd,
 																																			 float deltaX, float deltaY, float deltaWA, float deltaHA)
 		throws UnsupportedOperationException
 	{
@@ -113,7 +118,8 @@ public class JNRUtils
 
 	public static final float NO_CHANGE = -123456;
 
-	public static @NotNull RendererDescription changeRendererDescription(@NotNull RendererDescription rd,
+	public static @Nonnull
+	RendererDescription changeRendererDescription(@Nonnull RendererDescription rd,
 																																			 float x, float y, float wa, float ha)
 		throws UnsupportedOperationException
 	{
@@ -140,7 +146,8 @@ public class JNRUtils
 		throw new UnsupportedOperationException("Renderer description cannot be changed");
 	}
 
-	private static @NotNull BasicRendererDescription change(@NotNull BasicRendererDescription brd, float x, float y, float wa, float ha)
+	private static @Nonnull
+	BasicRendererDescription change(@Nonnull BasicRendererDescription brd, float x, float y, float wa, float ha)
 	{
 		float nx = x == NO_CHANGE ? brd.getXOffset() : x;
 		float ny = y == NO_CHANGE ? brd.getYOffset() : y;

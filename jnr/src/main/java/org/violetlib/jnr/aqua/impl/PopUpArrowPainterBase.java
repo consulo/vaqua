@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua.impl;
 
 import java.awt.Color;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
@@ -22,17 +22,21 @@ import org.violetlib.jnr.aqua.PopupButtonConfiguration;
 
 public abstract class PopUpArrowPainterBase
 {
-	protected @NotNull Color ACTIVE_COLOR = new Color(7, 7, 7, 150);
-	protected @NotNull Color DISABLED_COLOR = new Color(0, 0, 0, 64);
+	protected @Nonnull
+	Color ACTIVE_COLOR = new Color(7, 7, 7, 150);
+	protected @Nonnull
+	Color DISABLED_COLOR = new Color(0, 0, 0, 64);
 
-	protected final @NotNull PopupButtonConfiguration gg;
+	protected final @Nonnull
+	PopupButtonConfiguration gg;
 
-	public PopUpArrowPainterBase(@NotNull PopupButtonConfiguration gg)
+	public PopUpArrowPainterBase(@Nonnull PopupButtonConfiguration gg)
 	{
 		this.gg = gg;
 	}
 
-	protected @NotNull Color getColor()
+	protected @Nonnull
+	Color getColor()
 	{
 		State st = gg.getState();
 		PopupButtonWidget w = gg.getPopupButtonWidget();

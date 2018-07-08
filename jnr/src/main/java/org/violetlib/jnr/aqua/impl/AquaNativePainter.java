@@ -14,7 +14,7 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.security.PrivilegedAction;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.*;
 import org.violetlib.jnr.impl.BasicImageSupport;
@@ -172,9 +172,11 @@ public class AquaNativePainter
 		});
 	}
 
-	protected static @Nullable TitleBarLayoutInfo titleBarLayoutInfo;
+	protected static @Nullable
+	TitleBarLayoutInfo titleBarLayoutInfo;
 
-	public static @NotNull TitleBarLayoutInfo getTitleBarLayoutInfo()
+	public static @Nonnull
+	TitleBarLayoutInfo getTitleBarLayoutInfo()
 	{
 		if (titleBarLayoutInfo == null) {
 			titleBarLayoutInfo = obtainTitleBarLayoutInfo();
@@ -182,7 +184,8 @@ public class AquaNativePainter
 		return titleBarLayoutInfo;
 	}
 
-	private static final @NotNull ViewRendererDescriptions rendererDescriptions = new ViewRendererDescriptions();
+	private static final @Nonnull
+	ViewRendererDescriptions rendererDescriptions = new ViewRendererDescriptions();
 
 	public AquaNativePainter()
 	{
@@ -190,13 +193,15 @@ public class AquaNativePainter
 	}
 
 	@Override
-	public @NotNull AquaNativePainter copy()
+	public @Nonnull
+	AquaNativePainter copy()
 	{
 		return new AquaNativePainter();
 	}
 
 	@Override
-	protected @NotNull Renderer getButtonRenderer(@NotNull ButtonConfiguration g)
+	protected @Nonnull
+	Renderer getButtonRenderer(@Nonnull ButtonConfiguration g)
 	{
 		ButtonWidget widget = g.getButtonWidget();
 		State st = g.getState();
@@ -238,7 +243,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getScrollColumnSizerRenderer(@NotNull ScrollColumnSizerConfiguration g)
+	protected @Nonnull
+	Renderer getScrollColumnSizerRenderer(@Nonnull ScrollColumnSizerConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getScrollColumnSizerRendererDescription(g);
 
@@ -247,7 +253,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getScrollBarRenderer(@NotNull ScrollBarConfiguration g)
+	protected @Nonnull
+	Renderer getScrollBarRenderer(@Nonnull ScrollBarConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getScrollBarRendererDescription(g);
 
@@ -269,7 +276,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getToolBarItemWellRenderer(@NotNull ToolBarItemWellConfiguration g)
+	protected @Nonnull
+	Renderer getToolBarItemWellRenderer(@Nonnull ToolBarItemWellConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getToolBarItemWellRendererDescription(g);
 
@@ -279,7 +287,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getGroupBoxRenderer(@NotNull GroupBoxConfiguration g)
+	protected @Nonnull
+	Renderer getGroupBoxRenderer(@Nonnull GroupBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getGroupBoxRendererDescription(g);
 
@@ -289,7 +298,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getListBoxRenderer(@NotNull ListBoxConfiguration g)
+	protected @Nonnull
+	Renderer getListBoxRenderer(@Nonnull ListBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getListBoxRendererDescription(g);
 
@@ -299,7 +309,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getTextFieldRenderer(@NotNull TextFieldConfiguration g)
+	protected @Nonnull
+	Renderer getTextFieldRenderer(@Nonnull TextFieldConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTextFieldRendererDescription(g);
 
@@ -352,7 +363,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getComboBoxButtonRenderer(@NotNull ComboBoxConfiguration g)
+	protected @Nonnull
+	Renderer getComboBoxButtonRenderer(@Nonnull ComboBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getComboBoxRendererDescription(g);
 
@@ -366,7 +378,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getPopupButtonRenderer(@NotNull PopupButtonConfiguration g)
+	protected @Nonnull
+	Renderer getPopupButtonRenderer(@Nonnull PopupButtonConfiguration g)
 	{
 		// On Yosemite, the square style bombs if the mini size is selected.
 		// This restriction is currently handled in the configuration.
@@ -385,7 +398,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getTitleBarRenderer(@NotNull TitleBarConfiguration g)
+	protected @Nonnull
+	Renderer getTitleBarRenderer(@Nonnull TitleBarConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTitleBarRendererDescription(g);
 
@@ -409,7 +423,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getIndeterminateProgressIndicatorRenderer(@NotNull IndeterminateProgressIndicatorConfiguration g)
+	protected @Nonnull
+	Renderer getIndeterminateProgressIndicatorRenderer(@Nonnull IndeterminateProgressIndicatorConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getIndeterminateProgressIndicatorRendererDescription(g);
 
@@ -429,7 +444,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getProgressIndicatorRenderer(@NotNull ProgressIndicatorConfiguration g)
+	protected @Nonnull
+	Renderer getProgressIndicatorRenderer(@Nonnull ProgressIndicatorConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getProgressIndicatorRendererDescription(g);
 
@@ -441,7 +457,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSliderRenderer(@NotNull SliderConfiguration g)
+	protected @Nonnull
+	Renderer getSliderRenderer(@Nonnull SliderConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSliderRendererDescription(g);
 
@@ -470,7 +487,8 @@ public class AquaNativePainter
 		return Renderer.create(r, rd);
 	}
 
-	protected @NotNull Shape getSliderThumbOutline(@NotNull Rectangle2D bounds, @NotNull SliderThumbLayoutConfiguration g)
+	protected @Nonnull
+	Shape getSliderThumbOutline(@Nonnull Rectangle2D bounds, @Nonnull SliderThumbLayoutConfiguration g)
 	{
 		SliderLayoutConfiguration sg = g.getSliderLayoutConfiguration();
 		double thumbPosition = g.getThumbPosition();
@@ -505,13 +523,15 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSliderThumbRenderer(@NotNull SliderConfiguration g)
+	protected @Nonnull
+	Renderer getSliderThumbRenderer(@Nonnull SliderConfiguration g)
 	{
 		return NULL_RENDERER;
 	}
 
 	@Override
-	protected @NotNull Renderer getSpinnerArrowsRenderer(@NotNull SpinnerArrowsConfiguration g)
+	protected @Nonnull
+	Renderer getSpinnerArrowsRenderer(@Nonnull SpinnerArrowsConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSpinnerArrowsRendererDescription(g);
 
@@ -522,7 +542,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSplitPaneDividerRenderer(@NotNull SplitPaneDividerConfiguration g)
+	protected @Nonnull
+	Renderer getSplitPaneDividerRenderer(@Nonnull SplitPaneDividerConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSplitPaneDividerRendererDescription(g);
 
@@ -534,7 +555,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @NotNull Renderer getGradientRenderer(@NotNull GradientConfiguration g)
+	protected @Nonnull
+	Renderer getGradientRenderer(@Nonnull GradientConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getGradientRendererDescription(g);
 
@@ -553,7 +575,8 @@ public class AquaNativePainter
 	public static final int DEBUG_SEGMENT_RIGHT_INSET = 7;
 
 	@Override
-	protected @NotNull Renderer getSegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g)
+	protected @Nonnull
+	Renderer getSegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSegmentedButtonRendererDescription(g);
 
@@ -570,7 +593,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nullable RendererDebugInfo getSegmentedButtonRendererDebugInfo(@NotNull SegmentedButtonConfiguration g,
+	protected @Nullable
+	RendererDebugInfo getSegmentedButtonRendererDebugInfo(@Nonnull SegmentedButtonConfiguration g,
 																																						int scaleFactor, int width, int height)
 	{
 		int size = toSize(g.getSize());
@@ -617,7 +641,7 @@ public class AquaNativePainter
 	public static final int SEGMENT_POSITION_LAST = 2;
 	public static final int SEGMENT_POSITION_ONLY = 3;
 
-	private int toSegmentPosition(@NotNull Position segmentPosition)
+	private int toSegmentPosition(@Nonnull Position segmentPosition)
 	{
 		switch (segmentPosition) {
 			case FIRST:
@@ -638,7 +662,7 @@ public class AquaNativePainter
 	public static final int SEGMENT_FLAG_DRAW_LEADING_SEPARATOR = 8;
 	public static final int SEGMENT_FLAG_DRAW_TRAILING_SEPARATOR = 16;
 
-	private int toSegmentFlags(@NotNull SegmentedButtonConfiguration g)
+	private int toSegmentFlags(@Nonnull SegmentedButtonConfiguration g)
 	{
 		int flags = 0;
 
@@ -661,7 +685,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	public @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g)
+	public @Nonnull
+	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTableColumnHeaderRendererDescription(g);
 
@@ -676,7 +701,7 @@ public class AquaNativePainter
 		return Renderer.create(r, rd);
 	}
 
-	protected int toSize(@NotNull Size sz)
+	protected int toSize(@Nonnull Size sz)
 	{
 		switch (sz)
 		{
@@ -696,7 +721,7 @@ public class AquaNativePainter
 		Map the specified state to the integer encoding used by native code. All states are supported.
 	*/
 
-	protected int toState(@NotNull State st)
+	protected int toState(@Nonnull State st)
 	{
 		switch (st)
 		{
@@ -723,7 +748,7 @@ public class AquaNativePainter
 		supported.
 	*/
 
-	protected int toActiveState(@NotNull State st)
+	protected int toActiveState(@Nonnull State st)
 	{
 		switch (st)
 		{
@@ -737,7 +762,7 @@ public class AquaNativePainter
 		return ActiveState;
 	}
 
-	protected int toDirection(@NotNull ColumnSortArrowDirection d)
+	protected int toDirection(@Nonnull ColumnSortArrowDirection d)
 	{
 		switch (d)
 		{
@@ -752,7 +777,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toDirection(@NotNull Direction d)
+	protected int toDirection(@Nonnull Direction d)
 	{
 		switch (d)
 		{
@@ -771,7 +796,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toOrientation(@NotNull Orientation o)
+	protected int toOrientation(@Nonnull Orientation o)
 	{
 		switch (o)
 		{
@@ -783,13 +808,13 @@ public class AquaNativePainter
 		throw new UnsupportedOperationException();
 	}
 
-	public int getSideInset(@NotNull SegmentedButtonWidget bw)
+	public int getSideInset(@Nonnull SegmentedButtonWidget bw)
 	{
 		int style = toSegmentedStyle(bw);
 		return getSideInsetFromSegmentStyle(style);
 	}
 
-	public int getDividerWidth(@NotNull SegmentedButtonWidget bw)
+	public int getDividerWidth(@Nonnull SegmentedButtonWidget bw)
 	{
 		int style = toSegmentedStyle(bw);
 		return getDividerWidthFromSegmentStyle(style);
@@ -818,7 +843,7 @@ public class AquaNativePainter
 		return 1;
 	}
 
-	protected int toSegmentedStyle(@NotNull SegmentedButtonWidget bw)
+	protected int toSegmentedStyle(@Nonnull SegmentedButtonWidget bw)
 	{
 		switch (bw) {
 			case BUTTON_TAB:
@@ -847,7 +872,7 @@ public class AquaNativePainter
 	}
 
 	// Note: This is an internal hack; NSComboBox does not use bezel style.
-	protected int toBezelStyle(@NotNull ComboBoxWidget w)
+	protected int toBezelStyle(@Nonnull ComboBoxWidget w)
 	{
 		switch (w) {
 			case BUTTON_COMBO_BOX:
@@ -862,7 +887,7 @@ public class AquaNativePainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected int toBezelStyle(@NotNull PopupButtonWidget bw)
+	protected int toBezelStyle(@Nonnull PopupButtonWidget bw)
 	{
 		switch (bw) {
 			case BUTTON_POP_DOWN:
@@ -904,7 +929,7 @@ public class AquaNativePainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected int toBezelStyle(@NotNull ButtonWidget bw)
+	protected int toBezelStyle(@Nonnull ButtonWidget bw)
 	{
 		switch (bw) {
 			case BUTTON_PUSH:
@@ -943,7 +968,7 @@ public class AquaNativePainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected int toButtonType(@NotNull ButtonWidget bw)
+	protected int toButtonType(@Nonnull ButtonWidget bw)
 	{
 		switch (bw) {
 			case BUTTON_CHECK_BOX:
@@ -961,7 +986,7 @@ public class AquaNativePainter
 		return NSMomentaryLightButton;
 	}
 
-	protected int toButtonValue(@NotNull ButtonState bs)
+	protected int toButtonValue(@Nonnull ButtonState bs)
 	{
 		switch (bs)
 		{
@@ -974,7 +999,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toUILayoutDirection(@NotNull UILayoutDirection d)
+	protected int toUILayoutDirection(@Nonnull UILayoutDirection d)
 	{
 		switch (d)
 		{
@@ -987,7 +1012,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toSliderType(@NotNull SliderWidget w)
+	protected int toSliderType(@Nonnull SliderWidget w)
 	{
 		switch (w)
 		{
@@ -1006,7 +1031,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toTickMarkPosition(@NotNull TickMarkPosition p)
+	protected int toTickMarkPosition(@Nonnull TickMarkPosition p)
 	{
 		switch (p)
 		{
@@ -1023,7 +1048,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toDividerType(@NotNull DividerWidget w)
+	protected int toDividerType(@Nonnull DividerWidget w)
 	{
 		switch (w)
 		{
@@ -1038,7 +1063,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toComboBoxType(@NotNull ComboBoxWidget bw)
+	protected int toComboBoxType(@Nonnull ComboBoxWidget bw)
 	{
 		switch (bw)
 		{
@@ -1050,7 +1075,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected static int toWindowType(@NotNull TitleBarWidget bw)
+	protected static int toWindowType(@Nonnull TitleBarWidget bw)
 	{
 		switch (bw)
 		{
@@ -1063,7 +1088,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected static int toScrollBarType(@NotNull ScrollBarWidget bw)
+	protected static int toScrollBarType(@Nonnull ScrollBarWidget bw)
 	{
 		switch (bw)
 		{
@@ -1078,7 +1103,8 @@ public class AquaNativePainter
 		}
 	}
 
-	private static @NotNull TitleBarLayoutInfo obtainTitleBarLayoutInfo()
+	private static @Nonnull
+	TitleBarLayoutInfo obtainTitleBarLayoutInfo()
 	{
 		// Not sure how useful this is, but we can get button locations from native code.
 
@@ -1087,7 +1113,8 @@ public class AquaNativePainter
 		return new TitleBarLayoutInfo(documentButtonBounds, utilityButtonBounds);
 	}
 
-	private static @NotNull Rectangle[] obtainTitleBarButtonLayoutInfo(@NotNull TitleBarWidget bw)
+	private static @Nonnull
+	Rectangle[] obtainTitleBarButtonLayoutInfo(@Nonnull TitleBarWidget bw)
 	{
 		int windowType = toWindowType(bw);
 		int[] data = nativeGetTitleBarButtonLayoutInfo(windowType);
@@ -1112,7 +1139,8 @@ public class AquaNativePainter
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return "NSView";
 	}

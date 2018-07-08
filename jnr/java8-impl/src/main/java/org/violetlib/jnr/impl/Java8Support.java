@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.Field;
 import java.util.WeakHashMap;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	Java platform specific support for Java 8 and later.
@@ -25,7 +25,7 @@ import org.jetbrains.annotations.*;
 public class Java8Support implements JavaSupport.JavaSupportImpl
 {
 	@Override
-	public int getScaleFactor(@NotNull Graphics g)
+	public int getScaleFactor(@Nonnull Graphics g)
 	{
 		// Is it fair to assume that a graphics context always is associated with the same device,
 		// in other words, they are not reused in some sneaky way?
@@ -48,9 +48,10 @@ public class Java8Support implements JavaSupport.JavaSupportImpl
 		return scaleFactor;
 	}
 
-	private static final @NotNull WeakHashMap<Graphics,Integer> scaleMap = new WeakHashMap<>();
+	@Nonnull
+	private static final WeakHashMap<Graphics,Integer> scaleMap = new WeakHashMap<>();
 
-	private static int getScaleFactor(@NotNull GraphicsConfiguration gc)
+	private static int getScaleFactor(@Nonnull GraphicsConfiguration gc)
 	{
 		GraphicsDevice device = gc.getDevice();
 		Object scale = null;
@@ -71,7 +72,7 @@ public class Java8Support implements JavaSupport.JavaSupportImpl
 	}
 
 	@Override
-	public Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @NotNull BufferedImage im)
+	public Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im)
 	{
 		return new JNR8MultiResolutionImage(baseImageWidth, baseImageHeight, im);
 	}

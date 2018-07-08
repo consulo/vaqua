@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.aqua.jrs;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.impl.jrs.JRSUIConstants;
 import org.violetlib.jnr.impl.jrs.JRSUIControl;
@@ -22,16 +22,19 @@ import org.violetlib.jnr.impl.BasicRenderer;
 public class JRSRenderer
 	implements BasicRenderer
 {
-	protected final @NotNull JRSUIControl control;
-	protected final @NotNull JRSUIState state;
+	protected final @Nonnull
+	JRSUIControl control;
+	protected final @Nonnull
+	JRSUIState state;
 
-	public JRSRenderer(@NotNull JRSUIControl control, @NotNull JRSUIState state)
+	public JRSRenderer(@Nonnull JRSUIControl control, @Nonnull JRSUIState state)
 	{
 		this.control = control;
 		this.state = state;
 	}
 
-	public @Nullable JRSUIState getControlState()
+	public @Nullable
+	JRSUIState getControlState()
 	{
 		return state;
 	}
@@ -42,7 +45,7 @@ public class JRSRenderer
 	}
 
 	@Override
-	public void render(@NotNull int[] data, int rw, int rh, float w, float h)
+	public void render(@Nonnull int[] data, int rw, int rh, float w, float h)
 	{
 		// Apparently JRS does not expect fractional sizes in 1x
 		float ww = (float) Math.ceil(w);

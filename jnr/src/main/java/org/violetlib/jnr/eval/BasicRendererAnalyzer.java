@@ -11,7 +11,7 @@ package org.violetlib.jnr.eval;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.*;
 
 import org.violetlib.jnr.aqua.impl.NativeSupport;
 import org.violetlib.jnr.impl.BasicRenderer;
@@ -27,19 +27,21 @@ public class BasicRendererAnalyzer
 	public static final int DEFAULT_WIDTH = 200;
 	public static final int DEFAULT_HEIGHT = 100;
 
-	protected final @NotNull Renderer r;
+	protected final @Nonnull
+	Renderer r;
 	protected final int scaleFactor;
 	protected final int testWidth;
 	protected final int testHeight;
 
-	protected final @Nullable RendererAnalysisResults results;
+	protected final @Nullable
+	RendererAnalysisResults results;
 
-	public BasicRendererAnalyzer(@NotNull Renderer r, int scaleFactor, boolean forceVertical)
+	public BasicRendererAnalyzer(@Nonnull Renderer r, int scaleFactor, boolean forceVertical)
 	{
 		this(r, scaleFactor, forceVertical ? DEFAULT_HEIGHT : DEFAULT_WIDTH, forceVertical ? DEFAULT_WIDTH : DEFAULT_HEIGHT);
 	}
 
-	public BasicRendererAnalyzer(@NotNull Renderer r, int scaleFactor, int testWidth, int testHeight)
+	public BasicRendererAnalyzer(@Nonnull Renderer r, int scaleFactor, int testWidth, int testHeight)
 	{
 		if (scaleFactor <= 0 | scaleFactor > 16) {
 			throw new IllegalArgumentException("Invalid or unsupported scale factor");
@@ -57,12 +59,14 @@ public class BasicRendererAnalyzer
 		results = analyze();
 	}
 
-	public @Nullable RendererAnalysisResults getResults()
+	public @Nullable
+	RendererAnalysisResults getResults()
 	{
 		return results;
 	}
 
-	protected @Nullable RendererAnalysisResults analyze()
+	protected @Nullable
+	RendererAnalysisResults analyze()
 	{
 		int w = scaleFactor * testWidth;
 		int h = scaleFactor * testHeight;
@@ -169,7 +173,8 @@ public class BasicRendererAnalyzer
 		@return the analysis.
 	*/
 
-	protected @NotNull ImageAnalyzer analyzeRendering(@NotNull Renderer r, int w, int h)
+	protected @Nonnull
+	ImageAnalyzer analyzeRendering(@Nonnull Renderer r, int w, int h)
 	{
 		ReusableCompositor rc = new ReusableCompositor();
 		rc.reset(w, h, scaleFactor);
