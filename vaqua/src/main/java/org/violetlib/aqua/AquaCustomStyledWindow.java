@@ -151,13 +151,13 @@ public class AquaCustomStyledWindow {
                 break;
             case STYLE_TRANSPARENT:
                 titleBarStyle = TITLE_BAR_TRANSPARENT;
-                isTopMarginPainted = getTopMarginHeight() > 0;
+                isTopMarginPainted = getTopMarginHeight() != -1;
                 isBottomMarginPainted = getBottomMarginHeight() > 0;
                 isTextured = false;
                 break;
             case STYLE_HIDDEN:
                 titleBarStyle = TITLE_BAR_HIDDEN;
-                isTopMarginPainted = getTopMarginHeight() > 0;
+                isTopMarginPainted = getTopMarginHeight() != -1;
                 isBottomMarginPainted = getBottomMarginHeight() > 0;
                 isTextured = false;
                 break;

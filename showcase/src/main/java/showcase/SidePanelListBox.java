@@ -1,6 +1,7 @@
 package showcase;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -24,6 +25,10 @@ public class SidePanelListBox {
 
         JPanel panel = new JPanel(new BorderLayout());
         fr.setContentPane(panel);
+
+        JRootPane rootPane = fr.getRootPane();
+        rootPane.putClientProperty("Aqua.windowTopMargin", 0);
+        rootPane.putClientProperty("Aqua.windowStyle", "transparentTitleBar");
 
         JList jlist = new JList(new DefaultListModel());
         jlist.addListSelectionListener(new ListSelectionListener() {
@@ -54,6 +59,7 @@ public class SidePanelListBox {
         comp.setBorder(null);
 
         JPanel w = new JPanel(new BorderLayout());
+        w.setBorder(new EmptyBorder(22, 0, 0, 0));
         w.setPreferredSize(new Dimension(300, -1));
         w.putClientProperty("Aqua.backgroundStyle", "vibrantPopover");
         w.add(comp);
