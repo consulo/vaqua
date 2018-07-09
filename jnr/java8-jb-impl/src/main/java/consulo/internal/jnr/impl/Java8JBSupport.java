@@ -1,12 +1,4 @@
-/*
- * Copyright (c) 2016 Alan Snyder.
- * All rights reserved.
- *
- * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
- * accompanying license terms.
- */
-
-package org.violetlib.jnr.impl;
+package consulo.internal.jnr.impl;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,18 +9,20 @@ import java.awt.image.BufferedImage;
 
 import javax.annotation.Nonnull;
 
-/**
-	Java platform specific support for Java 9 and later.
-*/
+import org.violetlib.jnr.impl.JavaSupportImpl;
 
-public class Java9Support implements JavaSupportImpl
+/**
+ * @author VISTALL
+ * @since 2018-07-09
+ */
+public class Java8JBSupport implements JavaSupportImpl
 {
 	@Override
 	public boolean isAvaliable()
 	{
 		try
 		{
-			return Class.forName("java.lang.Module") != null &&  Class.forName("java.awt.image.MultiResolutionImage") != null;
+			return Class.forName("java.lang.Module") == null &&  Class.forName("java.awt.image.MultiResolutionImage") != null;
 		}
 		catch(ClassNotFoundException e)
 		{
@@ -51,6 +45,6 @@ public class Java9Support implements JavaSupportImpl
 	@Override
 	public Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im)
 	{
-		return new JNR9MultiResolutionImage(baseImageWidth, baseImageHeight, im);
+		return new JNR8JBMultiResolutionImage(baseImageWidth, baseImageHeight, im);
 	}
 }

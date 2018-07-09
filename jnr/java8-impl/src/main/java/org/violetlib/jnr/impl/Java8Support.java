@@ -22,8 +22,21 @@ import javax.annotation.Nonnull;
 /**
 	Java platform specific support for Java 8 and later.
 */
-public class Java8Support implements JavaSupport.JavaSupportImpl
+public class Java8Support implements JavaSupportImpl
 {
+	@Override
+	public boolean isAvaliable()
+	{
+		try
+		{
+			return Class.forName("sun.awt.image.MultiResolutionImage") != null;
+		}
+		catch(ClassNotFoundException e)
+		{
+			return false;
+		}
+	}
+
 	@Override
 	public int getScaleFactor(@Nonnull Graphics g)
 	{

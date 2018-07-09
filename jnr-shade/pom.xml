@@ -62,9 +62,13 @@
 								<includes>
 									<include>consulo.internal:jnr</include>
 									<include>consulo.internal:jnr-java8-impl</include>
+									<include>consulo.internal:jnr-java8-jb-impl</include>
 									<include>consulo.internal:jnr-java9-impl</include>
 								</includes>
 							</artifactSet>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+							</transformers>
 						</configuration>
 					</execution>
 				</executions>
@@ -81,6 +85,11 @@
 		<dependency>
 			<groupId>consulo.internal</groupId>
 			<artifactId>jnr-java8-impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>consulo.internal</groupId>
+			<artifactId>jnr-java8-jb-impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
