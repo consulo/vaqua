@@ -8,20 +8,21 @@
 
 package org.violetlib.aqua;
 
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.function.Consumer;
 import javax.accessibility.AccessibleContext;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.FileChooserUI;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.function.Consumer;
 
 import static org.violetlib.aqua.AquaCustomStyledWindow.STYLE_UNIFIED;
 import static org.violetlib.aqua.AquaUtils.execute;
+import static org.violetlib.aqua.AquaUtils.syslog;
 
 /**
  * Support for displaying windows as sheets.
@@ -228,7 +229,7 @@ public class AquaSheetSupport {
                 if (sw != null) {
                     int style = sw.getStyle();
                     if (style == STYLE_UNIFIED) {
-                        JComponent tb = sw.getWindowToolbar();
+                        JToolBar tb = sw.getWindowToolbar();
                         if (tb != null) {
                             Border b = tb.getBorder();
                             if (b instanceof AquaCustomStyledWindow.CustomToolbarBorder) {
