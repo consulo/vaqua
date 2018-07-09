@@ -8,6 +8,7 @@ Author: Alan Snyder (https://github.com/cbfiddle)
 
 # Custom changes
 
+## Support JetBrains JDK 8 (which contains JDK 9 hidpi changes)
 
 ## List UI support vibrant effects
 
