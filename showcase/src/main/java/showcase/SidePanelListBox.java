@@ -22,8 +22,8 @@ public class SidePanelListBox {
 
     private static void invoke() {
         JFrame fr = new JFrame("Side ListBox");
-
-        JPanel panel = new JPanel(new BorderLayout());
+        fr.setResizable(false);
+        JPanel panel = new JPanel(new CardLayout());
         fr.setContentPane(panel);
 
         JRootPane rootPane = fr.getRootPane();
@@ -59,13 +59,25 @@ public class SidePanelListBox {
         comp.setBorder(null);
 
         JPanel w = new JPanel(new BorderLayout());
+
+        JTextField field = new JTextField();
+        field.setOpaque(false);
+        field.setVisible(false);
+        w.add(field, BorderLayout.NORTH);
+
         w.setBorder(new EmptyBorder(22, 0, 0, 0));
-        w.setPreferredSize(new Dimension(300, -1));
+        w.setPreferredSize(new Dimension(300, 400));
         w.putClientProperty("Aqua.backgroundStyle", "vibrantPopover");
         w.add(comp);
 
-        panel.add(w, BorderLayout.WEST);
-        panel.add(new JLabel("test"), BorderLayout.CENTER);
+        JPanel main = new JPanel(new BorderLayout());
+        main.add(w, BorderLayout.WEST);
+        JPanel er = new JPanel();
+        er.setOpaque(false);
+        er.add(new JLabel("dasd"));
+        main.add(er, BorderLayout.CENTER);
+
+        panel.add(main, "test");
 
         fr.setLocationRelativeTo(null);
         fr.setLocationByPlatform(true);
