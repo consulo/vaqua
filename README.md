@@ -11,8 +11,12 @@ Author: Alan Snyder (https://github.com/cbfiddle)
 
 ## List UI support vibrant effects
 
-### Prev
-!()[/images/listui-no-vibrant.png]
+| Prev          | target        |
+| ------------- |:-------------:|
+| ![](/images/listui-no-vibrant.png)    | ![](/images/listui-vibrant.png) |
 
-### After
-!()[/images/listui-vibrant.png]
+## Transparent title bar allow zero top margin
+
+| Prev          | target        |
+| ------------- |:-------------:|
+| ![](/images/transparentTitleBar-no-top-margin.png)    | ![](/images/transparentTitleBar-top-margin-zero.png) |
