@@ -33,23 +33,24 @@
 
 package org.violetlib.aqua;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.Serializable;
-
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.MouseInputListener;
-import javax.swing.plaf.*;
-import javax.swing.plaf.basic.BasicToolBarUI;
-
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.aqua.AquaUtils.RecyclableSingletonFromDefaultConstructor;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.ButtonLayoutConfiguration;
 import org.violetlib.jnr.aqua.LayoutConfiguration;
+
+import javax.swing.*;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
+import javax.swing.event.MouseInputListener;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.UIResource;
+import javax.swing.plaf.basic.BasicToolBarUI;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 
 public class AquaToolBarUI extends BasicToolBarUI implements SwingConstants {
 
@@ -186,7 +187,7 @@ public class AquaToolBarUI extends BasicToolBarUI implements SwingConstants {
      * Determine if the toolbar contains a tall format button. A tall format button is a toggle button that uses the
      * toolbar item button style. A tall format button should have no space below it in the toolbar.
      */
-    public static boolean isTallFormat(JToolBar tb) {
+    public static boolean isTallFormat(JComponent tb) {
         int count = tb.getComponentCount();
         for (int i = 0; i < count; i++) {
             Component c = tb.getComponent(i);
