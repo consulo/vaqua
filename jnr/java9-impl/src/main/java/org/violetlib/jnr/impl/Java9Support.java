@@ -42,6 +42,6 @@ public class Java9Support implements JavaSupportImpl {
 
     @Override
     public Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im) {
-        return new JNR9MultiResolutionImage(baseImageWidth, baseImageHeight, im);
+        return JNR9MultiResolutionImage.create(baseImageWidth, baseImageHeight, im);
     }
 }

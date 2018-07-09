@@ -76,6 +76,6 @@ public class Java8Support implements JavaSupportImpl {
 
     @Override
     public Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im) {
-        return new JNR8MultiResolutionImage(baseImageWidth, baseImageHeight, im);
+        return JNR8MultiResolutionImage.create(baseImageWidth, baseImageHeight, im);
     }
 }
