@@ -33,19 +33,21 @@
 
 package org.violetlib.aqua;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import org.violetlib.jnr.aqua.AquaUIPainter.GradientWidget;
+import org.violetlib.jnr.aqua.AquaUIPainter.State;
+import org.violetlib.jnr.aqua.GradientConfiguration;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicListUI;
-
-import org.violetlib.jnr.aqua.AquaUIPainter.State;
-import org.violetlib.jnr.aqua.AquaUIPainter.GradientWidget;
-import org.violetlib.jnr.aqua.GradientConfiguration;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * A Mac L&F implementation of JList
@@ -105,7 +107,7 @@ public class AquaListUI extends BasicListUI {
          * For a Home action, scrolls to the top. Otherwise, scroll to the end.
          */
         public void actionPerformed(final ActionEvent e) {
-            final JList<?> list = (JList<?>)e.getSource();
+            final JList<?> list = (JList<?>) e.getSource();
 
             if (fHomeAction) {
                 list.ensureIndexIsVisible(0);
@@ -195,6 +197,9 @@ public class AquaListUI extends BasicListUI {
 
     @Override
     public void paint(Graphics g, JComponent c) {
+        if (c.isOpaque() || AquaVibrantSupport.isVibrant(c)) {
+            AquaUtils.fillRect(g, c, AquaUtils.ERASE_IF_TEXTURED | AquaUtils.ERASE_IF_VIBRANT);
+        }
         paintStripes(g, c);
         super.paint(g, c);
     }
@@ -332,7 +337,7 @@ public class AquaListUI extends BasicListUI {
         final Component rendererComponent = renderer.getListCellRendererComponent(list, value, selectedIndex, selected, true);
         if (rendererComponent == null) return;
 
-        final AquaComboBoxRenderer aquaRenderer = renderer instanceof AquaComboBoxRenderer ? (AquaComboBoxRenderer)renderer : null;
+        final AquaComboBoxRenderer aquaRenderer = renderer instanceof AquaComboBoxRenderer ? (AquaComboBoxRenderer) renderer : null;
         if (aquaRenderer != null) aquaRenderer.setDrawCheckedItem(false);
         rendererPane.paintComponent(list.getGraphics().create(), rendererComponent, list, rowBounds.x, rowBounds.y, rowBounds.width, rowBounds.height, true);
         if (aquaRenderer != null) aquaRenderer.setDrawCheckedItem(true);
@@ -375,7 +380,7 @@ public class AquaListUI extends BasicListUI {
         }
 
         public void paintBorder(final Component c, final Graphics g, final int x, final int y, final int w, final int h) {
-            final JComponent jc = c instanceof JComponent ? (JComponent)c : null;
+            final JComponent jc = c instanceof JComponent ? (JComponent) c : null;
             State state = jc != null && !AquaFocusHandler.isActive(jc) ? State.ACTIVE : State.INACTIVE;
             painter.configure(w, h);
             GradientConfiguration bg = new GradientConfiguration(gw, state);
