@@ -29,9 +29,9 @@ public class Java8Support implements JavaSupportImpl {
     @Override
     public boolean isAvaliable() {
         try {
-            return Class.forName("sun.awt.image.MultiResolutionImage") != null;
-        }
-        catch (ClassNotFoundException e) {
+            Class.forName("sun.awt.image.MultiResolutionImage");
+            return true;
+        } catch (ClassNotFoundException e) {
             return false;
         }
     }
@@ -50,8 +50,7 @@ public class Java8Support implements JavaSupportImpl {
             Graphics2D gg = (Graphics2D) g;
             GraphicsConfiguration gc = gg.getDeviceConfiguration();
             scaleFactor = getScaleFactor(gc);
-        }
-        else {
+        } else {
             scaleFactor = 1;
         }
 
@@ -72,8 +71,7 @@ public class Java8Support implements JavaSupportImpl {
                 field.setAccessible(true);
                 scale = field.get(device);
             }
-        }
-        catch (Exception ignore) {
+        } catch (Exception ignore) {
         }
 
         if (scale instanceof Integer) {
@@ -91,8 +89,7 @@ public class Java8Support implements JavaSupportImpl {
         }
         try {
             return Boolean.TRUE.equals(method.invoke(c, OPAQUE_SET_FLAG));
-        }
-        catch (final Throwable ignored) {
+        } catch (final Throwable ignored) {
             return false;
         }
     }
@@ -110,8 +107,7 @@ public class Java8Support implements JavaSupportImpl {
                                         "getFlag", new Class<?>[]{int.class});
                                 method.setAccessible(true);
                                 return method;
-                            }
-                            catch (final Throwable ignored) {
+                            } catch (final Throwable ignored) {
                                 return null;
                             }
                         }
@@ -155,12 +151,12 @@ public class Java8Support implements JavaSupportImpl {
 
     @Override
     public AquaMultiResolutionImage createMultiResolutionImage(BufferedImage im) {
-        return new Aqua8MultiResolutionImage(im);
+        return Aqua8MultiResolutionImage.create(im);
     }
 
     @Override
     public AquaMultiResolutionImage createMultiResolutionImage(BufferedImage im1, BufferedImage im2) {
-        return new Aqua8MultiResolutionImage2(im1, im2);
+        return Aqua8MultiResolutionImage2.create(im1, im2);
     }
 
     @Override
@@ -209,8 +205,7 @@ public class Java8Support implements JavaSupportImpl {
                         }
                     };
                     m.invoke(image, observer);
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     System.err.println("Unable to preload image: " + ex);
                 }
             }

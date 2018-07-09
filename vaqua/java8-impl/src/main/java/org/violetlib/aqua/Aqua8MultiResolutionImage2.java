@@ -8,22 +8,26 @@
 
 package org.violetlib.aqua;
 
+import sun.awt.image.MultiResolutionImage;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import sun.awt.image.MultiResolutionImage;
-
 /**
  * A multi-resolution image with a 1x and a 2x representation. This class is designed for Java 8.
  */
 public class Aqua8MultiResolutionImage2 extends AquaMultiResolutionImage implements MultiResolutionImage {
+    public static AquaMultiResolutionImage create(BufferedImage im1, BufferedImage im2) {
+        return new Aqua8MultiResolutionImage2(im1, im2);
+    }
+
     private final BufferedImage im1;
     private final BufferedImage im2;
 
-    public Aqua8MultiResolutionImage2(BufferedImage im1, BufferedImage im2) {
+    private Aqua8MultiResolutionImage2(BufferedImage im1, BufferedImage im2) {
         super(im1);
         this.im1 = im1;
         this.im2 = im2;

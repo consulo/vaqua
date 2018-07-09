@@ -28,9 +28,15 @@ public class Java8JBSupport implements JavaSupportImpl {
     @Override
     public boolean isAvaliable() {
         try {
-            return Class.forName("java.lang.Module") == null && Class.forName("java.awt.image.MultiResolutionImage") != null;
+            Class.forName("java.lang.Module");
+            return false;
+        } catch (ClassNotFoundException ignored) {
         }
-        catch (ClassNotFoundException e) {
+
+        try {
+            Class.forName("java.awt.image.MultiResolutionImage");
+            return true;
+        } catch (ClassNotFoundException e) {
             return false;
         }
     }
@@ -53,8 +59,7 @@ public class Java8JBSupport implements JavaSupportImpl {
         }
         try {
             return Boolean.TRUE.equals(method.invoke(c, OPAQUE_SET_FLAG));
-        }
-        catch (final Throwable ignored) {
+        } catch (final Throwable ignored) {
             return false;
         }
     }
@@ -72,8 +77,7 @@ public class Java8JBSupport implements JavaSupportImpl {
                                         "getFlag", new Class<?>[]{int.class});
                                 method.setAccessible(true);
                                 return method;
-                            }
-                            catch (final Throwable ignored) {
+                            } catch (final Throwable ignored) {
                                 return null;
                             }
                         }
@@ -171,8 +175,7 @@ public class Java8JBSupport implements JavaSupportImpl {
                         }
                     };
                     m.invoke(image, observer);
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     System.err.println("Unable to preload image: " + ex);
                 }
             }

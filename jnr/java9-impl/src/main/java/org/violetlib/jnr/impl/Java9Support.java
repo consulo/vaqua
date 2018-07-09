@@ -20,7 +20,9 @@ public class Java9Support implements JavaSupportImpl {
     @Override
     public boolean isAvaliable() {
         try {
-            return Class.forName("java.lang.Module") != null && Class.forName("java.awt.image.MultiResolutionImage") != null;
+            Class.forName("java.lang.Module");
+            Class.forName("java.awt.image.MultiResolutionImage");
+            return true;
         }
         catch (ClassNotFoundException e) {
             return false;
