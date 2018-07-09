@@ -14,22 +14,21 @@ import sun.swing.SwingUtilities2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.*;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.util.WeakHashMap;
 import java.util.function.Function;
 
 /**
- * Support for Java 8
+ * Support for Java 8 JetBrains JDK
  */
-public class Java8Support implements JavaSupportImpl {
+public class Java8JBSupport implements JavaSupportImpl {
     @Override
     public boolean isAvaliable() {
         try {
-            return Class.forName("sun.awt.image.MultiResolutionImage") != null;
+            return Class.forName("java.lang.Module") == null && Class.forName("java.awt.image.MultiResolutionImage") != null;
         }
         catch (ClassNotFoundException e) {
             return false;
@@ -38,49 +37,12 @@ public class Java8Support implements JavaSupportImpl {
 
     @Override
     public int getScaleFactor(Graphics g) {
-        // Is it fair to assume that a graphics context always is associated with the same device,
-        // in other words, they are not reused in some sneaky way?
-        Integer n = scaleMap.get(g);
-        if (n != null) {
-            return n;
-        }
-
-        int scaleFactor;
-        if (g instanceof Graphics2D) {
-            Graphics2D gg = (Graphics2D) g;
-            GraphicsConfiguration gc = gg.getDeviceConfiguration();
-            scaleFactor = getScaleFactor(gc);
-        }
-        else {
-            scaleFactor = 1;
-        }
-
-        scaleMap.put(g, scaleFactor);
-
-        return scaleFactor;
-    }
-
-    private static final WeakHashMap<Graphics, Integer> scaleMap = new WeakHashMap<>();
-
-    private static int getScaleFactor(GraphicsConfiguration gc) {
-        GraphicsDevice device = gc.getDevice();
-        Object scale = null;
-
-        try {
-            Field field = device.getClass().getDeclaredField("scale");
-            if (field != null) {
-                field.setAccessible(true);
-                scale = field.get(device);
-            }
-        }
-        catch (Exception ignore) {
-        }
-
-        if (scale instanceof Integer) {
-            return (Integer) scale;
-        }
-
-        return 1;
+        Graphics2D gg = (Graphics2D) g;
+        GraphicsConfiguration gc = gg.getDeviceConfiguration();
+        AffineTransform t = gc.getDefaultTransform();
+        double sx = t.getScaleX();
+        double sy = t.getScaleY();
+        return (int) Math.max(sx, sy);
     }
 
     @Override
@@ -155,27 +117,27 @@ public class Java8Support implements JavaSupportImpl {
 
     @Override
     public AquaMultiResolutionImage createMultiResolutionImage(BufferedImage im) {
-        return new Aqua8MultiResolutionImage(im);
+        return new Aqua8JBMultiResolutionImage(im);
     }
 
     @Override
     public AquaMultiResolutionImage createMultiResolutionImage(BufferedImage im1, BufferedImage im2) {
-        return new Aqua8MultiResolutionImage2(im1, im2);
+        return new Aqua8JBMultiResolutionImage2(im1, im2);
     }
 
     @Override
     public Image applyFilter(Image image, ImageFilter filter) {
-        return Aqua8MultiResolutionImage.apply(image, filter);
+        return Aqua8JBMultiResolutionImage.apply(image, filter);
     }
 
     @Override
     public Image applyMapper(Image source, Function<Image, Image> mapper) {
-        return Aqua8MultiResolutionImage.apply(source, mapper);
+        return Aqua8JBMultiResolutionImage.apply(source, mapper);
     }
 
     @Override
     public Image applyMapper(Image source, AquaMultiResolutionImage.Mapper mapper) {
-        return Aqua8MultiResolutionImage.apply(source, mapper);
+        return Aqua8JBMultiResolutionImage.apply(source, mapper);
     }
 
     @Override
@@ -231,6 +193,6 @@ public class Java8Support implements JavaSupportImpl {
 
     @Override
     public AquaPopupFactory createPopupFactory() {
-        return new Aqua8PopupFactory();
+        return new Aqua8JBPopupFactory();
     }
 }

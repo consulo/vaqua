@@ -8,35 +8,33 @@
 
 package org.violetlib.aqua;
 
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.Image;
-import java.awt.Taskbar;
+import org.violetlib.aqua.impl.JavaSupportImpl;
+import relocate.javax.swing.plaf.basic.BasicGraphicsUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.DirectColorModel;
-import java.awt.image.ImageFilter;
-import java.awt.image.WritableRaster;
+import java.awt.image.*;
 import java.util.function.Function;
-
-import javax.swing.JComponent;
-import javax.swing.UIDefaults;
-
-import relocate.javax.swing.plaf.basic.BasicGraphicsUtils;
 
 /**
  * Support for Java 9 and later
  */
 
-public class Java9Support implements JavaSupport.JavaSupportImpl {
+public class Java9Support implements JavaSupportImpl {
     @Override
-    public int getScaleFactor(Graphics g)
-    {
+    public boolean isAvaliable() {
+        try {
+            return Class.forName("java.lang.Module") != null && Class.forName("java.awt.image.MultiResolutionImage") != null;
+        }
+        catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public int getScaleFactor(Graphics g) {
         // This works in Java 9. Before that, it returned 1.
         Graphics2D gg = (Graphics2D) g;
         GraphicsConfiguration gc = gg.getDeviceConfiguration();

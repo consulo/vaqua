@@ -49,6 +49,7 @@
 
 		<module>vaqua</module>
 		<module>vaqua/java8-impl</module>
+		<module>vaqua/java8-jb-impl</module>
 		<module>vaqua/java9-impl</module>
 		<module>vaqua-shade</module>
 

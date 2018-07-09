@@ -8,44 +8,33 @@
 
 package org.violetlib.aqua;
 
+import org.violetlib.aqua.impl.JavaSupportImpl;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageFilter;
+import java.util.ServiceLoader;
 import java.util.function.Function;
-import javax.swing.*;
 
 /**
  * Platform support that varies based on the Java version.
  */
-
 public class JavaSupport {
-
-    public interface JavaSupportImpl {
-        int getScaleFactor(Graphics g);
-        boolean hasOpaqueBeenExplicitlySet(final JComponent c);
-        Image getDockIconImage();
-        void drawString(JComponent c, Graphics2D g, String string, float x, float y);
-        void drawStringUnderlineCharAt(JComponent c, Graphics2D g, String string, int underlinedIndex,
-                                       float x, float y);
-        String getClippedString(JComponent c, FontMetrics fm, String string, int availTextWidth);
-        float getStringWidth(JComponent c, FontMetrics fm, String string);
-        void installAATextInfo(UIDefaults table);
-        AquaMultiResolutionImage createMultiResolutionImage(BufferedImage im);
-        AquaMultiResolutionImage createMultiResolutionImage(BufferedImage im1, BufferedImage im2);
-        Image applyFilter(Image image, ImageFilter filter);
-        Image applyMapper(Image source, Function<Image,Image> mapper);
-        Image applyMapper(Image source, AquaMultiResolutionImage.Mapper mapper);
-        BufferedImage createImage(int width, int height, int[] data);
-        void preload(Image image, int availableInfo);
-        void lockRenderQueue();
-        void unlockRenderQueue();
-        AquaPopupFactory createPopupFactory();
-    }
-
     private final static JavaSupportImpl impl = findImpl();
 
-    public static int getScaleFactor(Graphics g)
-    {
+    private static JavaSupportImpl findImpl() {
+        ServiceLoader<JavaSupportImpl> loader = ServiceLoader.load(JavaSupportImpl.class, JavaSupportImpl.class.getClassLoader());
+        for (JavaSupportImpl javaSupport : loader) {
+            if (javaSupport.isAvaliable()) {
+                return javaSupport;
+            }
+        }
+
+        throw new Error("Unsupported java version: " + System.getProperty("java.version"));
+    }
+
+    public static int getScaleFactor(Graphics g) {
         return impl.getScaleFactor(g);
     }
 
@@ -90,7 +79,7 @@ public class JavaSupport {
         return impl.applyFilter(image, filter);
     }
 
-    public static Image applyMapper(Image source, Function<Image,Image> mapper) {
+    public static Image applyMapper(Image source, Function<Image, Image> mapper) {
         return impl.applyMapper(source, mapper);
     }
 
@@ -120,21 +109,5 @@ public class JavaSupport {
 
     public static AquaPopupFactory createPopupFactory() {
         return impl.createPopupFactory();
-    }
-
-    private static JavaSupportImpl findImpl() {
-        int version = AquaUtils.getJavaVersion();
-        String className;
-        if (version >= 900000) {
-            className = "Java9Support";
-        } else {
-            className = "Java8Support";
-        }
-        try {
-            Class c = Class.forName("org.violetlib.aqua." + className);
-            return (JavaSupportImpl) c.getDeclaredConstructor().newInstance();
-        } catch (Exception ex) {
-            throw new UnsupportedOperationException("Unsupported Java version: " + version, ex);
-        }
     }
 }
