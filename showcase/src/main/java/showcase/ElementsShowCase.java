@@ -24,8 +24,27 @@ public class ElementsShowCase {
         frame.setContentPane(tabbedPane);
 
         tabbedPane.addTab("ComboBoxes", comboBoxes());
+        tabbedPane.addTab("ProgressBars", progressBars());
 
         frame.setVisible(true);
+    }
+
+    private JComponent progressBars() {
+        JPanel panel = new JPanel();
+
+        JProgressBar progressBar = new JProgressBar();
+        progressBar.setForeground(Color.red);
+        progressBar.setValue(50);
+
+        panel.add(progressBar);
+
+        JProgressBar progressBar2 = new JProgressBar();
+        progressBar2.putClientProperty("JProgressBar.style", "circular");
+        progressBar2.setIndeterminate(true);
+        progressBar2.setValue(50);
+
+        panel.add(progressBar2);
+        return panel;
     }
 
     private static JComponent comboBoxes() {
