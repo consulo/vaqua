@@ -8,12 +8,10 @@
 
 package org.violetlib.aqua;
 
-import java.awt.Component;
+import javax.swing.*;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import javax.swing.Popup;
-import javax.swing.PopupFactory;
 
 /**
  * A popup factory for Java 9 and later.
@@ -27,7 +25,8 @@ public class Aqua9PopupFactory extends AquaPopupFactory
 	{
 		try
 		{
-			ourGetPopupMethod = PopupFactory.class.getMethod("getPopup", Component.class, Component.class, int.class, int.class, boolean.class);
+			ourGetPopupMethod = PopupFactory.class.getDeclaredMethod("getPopup", Component.class, Component.class, int.class, int.class, boolean.class);
+			ourGetPopupMethod.setAccessible(true);
 		}
 		catch(NoSuchMethodException e)
 		{
