@@ -5,9 +5,9 @@ import java.awt.*;
 
 public class UnifiedToolBar {
     private ToolBarButton fileButton
-            = new ToolBarButton("File", UIManager.getIcon("FileView.fileIcon"));
+            = new ToolBarButton(null, UIManager.getIcon("FileView.fileIcon"));
     private ToolBarButton folderButton
-            = new ToolBarButton("Folder", UIManager.getIcon("FileView.directoryIcon"));
+            = new ToolBarButton(null, UIManager.getIcon("FileView.directoryIcon"));
 
     public static void main(String[] args) throws Exception {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -21,6 +21,9 @@ public class UnifiedToolBar {
         tb.setFloatable(false);
         tb.add(fileButton);
         tb.add(folderButton);
+        JComboBox box = new JComboBox(new String[]{"test1", "test2"});
+        box.putClientProperty("JComboBox.style", "textured");
+        tb.add(box);
 
         JFrame fr = new JFrame("Sample Tool Bar");
         fr.getRootPane().putClientProperty("Aqua.windowStyle", "unifiedToolBar");
