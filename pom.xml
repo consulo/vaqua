@@ -53,6 +53,8 @@
 		<module>vaqua/java9-impl</module>
 		<module>vaqua-shade</module>
 
+		<module>vsheet</module>
+
 		<module>java9-stub</module>
 
 		<module>showcase</module>
