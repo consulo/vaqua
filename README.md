@@ -10,7 +10,7 @@ Author: Alan Snyder (https://github.com/cbfiddle)
 
 ## Support JetBrains JDK 8 (which contains JDK 9 hidpi changes)
 
- * Default hack for transparent title bar **Aqua.windowStyle**=**transparentTitleBar** don't at JetBrains JDK - need use their hack **jetbrains.awt.transparentTitleBarAppearance**=**true**
+ * Default hack for transparent title bar **Aqua.windowStyle**=**transparentTitleBar** don't work at JetBrains JDK - need use their hack **jetbrains.awt.transparentTitleBarAppearance**=**true**
 
 ## List UI support vibrant effects
 
