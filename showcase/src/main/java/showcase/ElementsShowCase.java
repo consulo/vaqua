@@ -25,10 +25,18 @@ public class ElementsShowCase {
 
         tabbedPane.addTab("ComboBoxes", comboBoxes());
         tabbedPane.addTab("ProgressBars", progressBars());
+        tabbedPane.addTab("Labels", labels());
 
         frame.setVisible(true);
     }
 
+    private JPanel labels() {
+        JPanel panel = new JPanel();
+
+        panel.add(new JLabel("test"));
+
+        return panel;
+    }
     private JComponent progressBars() {
         JPanel panel = new JPanel();
 
@@ -47,7 +55,7 @@ public class ElementsShowCase {
         return panel;
     }
 
-    private static JComponent comboBoxes() {
+    private JComponent comboBoxes() {
         JPanel panel = new JPanel(new FlowLayout());
 
         JComboBox c1 = new JComboBox(new String[]{"test1", "test2"});
