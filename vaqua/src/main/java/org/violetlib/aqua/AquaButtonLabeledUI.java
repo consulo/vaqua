@@ -33,15 +33,15 @@
 
 package org.violetlib.aqua;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
+import org.violetlib.jnr.aqua.AquaUIPainter.Size;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.text.View;
-
-import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
-import org.violetlib.jnr.aqua.AquaUIPainter.Size;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * The base class for check box and radio button UIs.
@@ -167,7 +167,7 @@ public abstract class AquaButtonLabeledUI extends AquaButtonUI {
         if (((AbstractButton)c).isBorderPainted() && !isCellEditor) {
             final Border border = c.getBorder();
             if (border instanceof AquaButtonBorder) {
-                ((AquaButtonBorder)border).paintBackground(c, g, viewRect.x, viewRect.y, viewRect.width, viewRect.height);
+                //((AquaButtonBorder)border).paintBackground(c, g, viewRect.x, viewRect.y, viewRect.width, viewRect.height);
             }
         }
 
