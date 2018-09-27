@@ -8,9 +8,15 @@
 
 package org.violetlib.aqua;
 
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.util.function.Function;
+
+import consulo.internal.vaqua.impl.JavaSupport;
 
 /**
  * Abstract base class for multi-resolution images. This class is intended to (eventually) isolate the JDK 1.8/1.9 API

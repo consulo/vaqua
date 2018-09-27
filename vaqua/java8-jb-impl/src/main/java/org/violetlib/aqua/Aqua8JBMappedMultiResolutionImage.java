@@ -42,6 +42,8 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import consulo.internal.vaqua.impl.JavaSupport;
+
 /**
  * This class supports mapping of arbitrary multiresolution images in Java 9. Note that caching is a necessity in the
  * current AWT design. If a new deferred image is returned each time a resolution variant is asked for by the graphics
