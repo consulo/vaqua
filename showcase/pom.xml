@@ -79,13 +79,13 @@
         <dependency>
             <groupId>consulo.internal</groupId>
             <artifactId>jnr</artifactId>
-            <version>6.0-SNAPSHOT</version>
+            <version>7.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>consulo.internal</groupId>
             <artifactId>jnr-java8-impl</artifactId>
-            <version>6.0-SNAPSHOT</version>
+            <version>7.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -97,31 +97,31 @@
         <dependency>
             <groupId>consulo.internal</groupId>
             <artifactId>jnr-java9-impl</artifactId>
-            <version>6.0-SNAPSHOT</version>
+            <version>7.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>consulo.internal</groupId>
             <artifactId>vaqua</artifactId>
-            <version>5.0-SNAPSHOT</version>
+            <version>6.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>consulo.internal</groupId>
             <artifactId>vaqua-java8-impl</artifactId>
-            <version>5.0-SNAPSHOT</version>
+            <version>6.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>consulo.internal</groupId>
             <artifactId>vaqua-java9-impl</artifactId>
-            <version>5.0-SNAPSHOT</version>
+            <version>6.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>consulo.internal</groupId>
             <artifactId>vaqua-java8-jb-impl</artifactId>
-            <version>5.0-SNAPSHOT</version>
+            <version>6.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -130,7 +130,13 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <dependency>
+		<dependency>
+			<groupId>consulo.internal</groupId>
+			<artifactId>vappearances</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
             <groupId>consulo.internal</groupId>
             <artifactId>vsheet</artifactId>
             <version>1.0-SNAPSHOT</version>
