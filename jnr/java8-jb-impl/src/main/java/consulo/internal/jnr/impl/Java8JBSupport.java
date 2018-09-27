@@ -1,6 +1,6 @@
 package consulo.internal.jnr.impl;
 
-import org.violetlib.jnr.impl.JavaSupportImpl;
+import consulo.internal.jnr.aqua.impl.JavaSupportImpl;
 
 import javax.annotation.Nonnull;
 import java.awt.*;

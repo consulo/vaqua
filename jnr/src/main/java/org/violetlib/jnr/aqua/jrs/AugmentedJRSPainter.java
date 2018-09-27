@@ -8,25 +8,18 @@
 
 package org.violetlib.jnr.aqua.jrs;
 
-import javax.annotation.*;
-
 import org.violetlib.jnr.aqua.ComboBoxConfiguration;
 import org.violetlib.jnr.aqua.PopupButtonConfiguration;
 import org.violetlib.jnr.aqua.ScrollBarConfiguration;
 import org.violetlib.jnr.aqua.SliderConfiguration;
 import org.violetlib.jnr.aqua.SplitPaneDividerConfiguration;
 import org.violetlib.jnr.aqua.TableColumnHeaderConfiguration;
-import org.violetlib.jnr.aqua.impl.CircularSliderPainterExtension;
-import org.violetlib.jnr.aqua.impl.ComboBoxButtonCellPainterExtension;
-import org.violetlib.jnr.aqua.impl.LinearSliderPainterExtension;
-import org.violetlib.jnr.aqua.impl.OverlayScrollBarPainterExtension;
-import org.violetlib.jnr.aqua.impl.PopUpArrowPainter;
-import org.violetlib.jnr.aqua.impl.PullDownArrowPainter;
-import org.violetlib.jnr.aqua.impl.TableColumnHeaderCellPainterExtension;
-import org.violetlib.jnr.aqua.impl.ThickSplitPaneDividerPainterExtension;
-import org.violetlib.jnr.aqua.impl.ThinSplitPaneDividerPainterExtension;
+import org.violetlib.jnr.aqua.impl.*;
+import org.violetlib.jnr.impl.JNRPlatformUtils;
 import org.violetlib.jnr.impl.PainterExtension;
 import org.violetlib.jnr.impl.Renderer;
+
+import org.jetbrains.annotations.*;
 
 /**
 	This class augments the JRS native painting code to work around its deficiencies.
@@ -36,15 +29,13 @@ public class AugmentedJRSPainter
 	extends JRSPainter
 {
 	@Override
-	public @Nonnull
-	AugmentedJRSPainter copy()
+	public @NotNull AugmentedJRSPainter copy()
 	{
 		return new AugmentedJRSPainter();
 	}
 
 	@Override
-	public @Nonnull
-	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g)
+	public @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g)
 	{
 		// Do not use the native renderer. Use our simulation instead.
 
@@ -53,14 +44,13 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSplitPaneDividerRenderer(@Nonnull SplitPaneDividerConfiguration g)
+	protected @NotNull Renderer getSplitPaneDividerRenderer(@NotNull SplitPaneDividerConfiguration g)
 	{
 		if (g.getWidget() == DividerWidget.THICK_DIVIDER) {
 			PainterExtension px = new ThickSplitPaneDividerPainterExtension(g);
 			return Renderer.create(px);
 		} else if (g.getWidget() == DividerWidget.THIN_DIVIDER) {
-			PainterExtension px = new ThinSplitPaneDividerPainterExtension(g);
+			PainterExtension px = new ThinSplitPaneDividerPainterExtension(g, appearance);
 			return Renderer.create(px);
 		} else {
 			return super.getSplitPaneDividerRenderer(g);
@@ -68,8 +58,7 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getComboBoxButtonRenderer(@Nonnull ComboBoxConfiguration g)
+	protected @NotNull Renderer getComboBoxButtonRenderer(@NotNull ComboBoxConfiguration g)
 	{
 		ComboBoxWidget bw = g.getWidget();
 		if (bw == ComboBoxWidget.BUTTON_COMBO_BOX_CELL) {
@@ -81,21 +70,20 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	public @Nullable
-	Renderer getPopupArrowRenderer(@Nonnull PopupButtonConfiguration g)
+	public @Nullable Renderer getPopupArrowRenderer(@NotNull PopupButtonConfiguration g)
 	{
 		Renderer r = super.getPopupArrowRenderer(g);
 		if (isArrowNeeded(g)) {
 			if (g.isPopUp()) {
-				return Renderer.create(new PopUpArrowPainter(g));
+				return Renderer.create(new PopUpArrowPainter(g, appearance));
 			} else {
-				return Renderer.create(new PullDownArrowPainter(g));
+				return Renderer.create(new PullDownArrowPainter(g, appearance));
 			}
 		}
 		return r;
 	}
 
-	private boolean isArrowNeeded(@Nonnull PopupButtonConfiguration g)
+	private boolean isArrowNeeded(@NotNull PopupButtonConfiguration g)
 	{
 		PopupButtonWidget w = g.getPopupButtonWidget();
 
@@ -116,44 +104,45 @@ public class AugmentedJRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getScrollBarRenderer(@Nonnull ScrollBarConfiguration g)
+	protected @NotNull Renderer getScrollBarRenderer(@NotNull ScrollBarConfiguration g)
 	{
+		int platformVersion = JNRPlatformUtils.getPlatformVersion();
 		ScrollBarWidget sw = g.getWidget();
 
-		if (sw == ScrollBarWidget.LEGACY) {
+		if (platformVersion < 101400) {
 			return super.getScrollBarRenderer(g);
 		}
 
-		return Renderer.create(new OverlayScrollBarPainterExtension(uiLayout, g));
+		if (sw == ScrollBarWidget.LEGACY) {
+			return Renderer.create(new LegacyScrollBarPainterExtension(uiLayout, g, appearance));
+		} else {
+			return Renderer.create(new OverlayScrollBarPainterExtension(uiLayout, g));
+		}
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSliderRenderer(@Nonnull SliderConfiguration g)
+	protected @NotNull Renderer getSliderRenderer(@NotNull SliderConfiguration g)
 	{
 		Renderer r = super.getSliderRenderer(g);
 		if (g.getWidget() == SliderWidget.SLIDER_CIRCULAR) {
-			Renderer pr = Renderer.create(new CircularSliderPainterExtension(g));
+			Renderer pr = Renderer.create(new CircularSliderPainterExtension(g, appearance));
 			return Renderer.createCompositeRenderer(r, pr);
 		}
 		return r;
 	}
 
 	@Override
-	protected @Nullable
-	Renderer getSliderTickMarkRenderer(@Nonnull SliderConfiguration g)
+	protected @Nullable Renderer getSliderTickMarkRenderer(@NotNull SliderConfiguration g)
 	{
 		if (g.getWidget() != SliderWidget.SLIDER_CIRCULAR && g.hasTickMarks()) {
-			return Renderer.create(new LinearSliderPainterExtension(uiLayout, g));
+			return Renderer.create(new LinearSliderPainterExtension(uiLayout, g, appearance));
 		} else {
 			return null;
 		}
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return "Augmented " + super.toString();
 	}

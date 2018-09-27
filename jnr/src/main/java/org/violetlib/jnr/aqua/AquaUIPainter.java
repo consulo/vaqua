@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Alan Snyder.
+ * Copyright (c) 2015-2018 Alan Snyder.
  * All rights reserved.
  *
  * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
@@ -12,9 +12,10 @@ import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import javax.annotation.*;
-
 import org.violetlib.jnr.Painter;
+import org.violetlib.vappearances.VAppearance;
+
+import org.jetbrains.annotations.*;
 
 /**
 	An interface that supports native rendering for the Aqua look and feel. The goals of this interface are to
@@ -227,15 +228,15 @@ public interface AquaUIPainter
 		BUTTON_RADIO,
 		BUTTON_DISCLOSURE,
 		BUTTON_DISCLOSURE_TRIANGLE,
-		BUTTON_HELP,									// not suitable for a toggle button
+		BUTTON_HELP,				          // not suitable for a toggle button
 		BUTTON_GRADIENT,              // a square button with no border - recommended for icon buttons - push, toggle, or menu
-		BUTTON_RECESSED,              // a recessed scope (toggle) button; fixed height; does not support state INACTIVE or DISABLED; displayed without border when not selected
+		BUTTON_RECESSED,              // a recessed scope (toggle) button; fixed height; displayed without border when not selected
 		BUTTON_INLINE,                // a short, fixed height button with rounded ends, used as a push button or indicator inside lists
 		BUTTON_ROUNDED_RECT,          // fixed height, displays as an rectangle outline with rounded corners and no background, darkens when pressed, in IB
-		BUTTON_TEXTURED,              // fixed height, does not support disabled state, recommended for use in window frame, also called scurve
+		BUTTON_TEXTURED,              // fixed height, recommended for use in window frame, previously called scurve
 		BUTTON_TEXTURED_TOOLBAR,      // introduced in 10.11 for textured buttons on the tool bar (taller)
-		BUTTON_TOOLBAR_ITEM,					// a tool bar item
-		BUTTON_COLOR_WELL,						// a color well
+		BUTTON_TOOLBAR_ITEM,		      // a tool bar item
+		BUTTON_COLOR_WELL,			      // a color well
 
 		// The following styles are no longer recommended
 
@@ -243,9 +244,9 @@ public interface AquaUIPainter
 		BUTTON_BEVEL_ROUND,           	// Bevel button with rounded corners (not recommended in Yosemite)
 		BUTTON_ROUND,                 	// a round white button with a border
 		BUTTON_ROUND_INSET,           	// a round transparent button with an outline, probably obsolete
-		BUTTON_ROUND_TEXTURED,        	// a round white borderless button with a shadow; not the button sometimes called Round Textured in IB, this is round
-		BUTTON_ROUND_TOOLBAR,						// introduced in 10.11 for textured buttons on the toolbar (taller)
-		BUTTON_PUSH_INSET2;							// an obsolete style supported by Core UI
+		BUTTON_ROUND_TEXTURED,        	// a round white borderless button with a shadow
+		BUTTON_ROUND_TOOLBAR,		        // introduced in 10.11 for round textured buttons on the toolbar (taller)
+		BUTTON_PUSH_INSET2;			        // an obsolete style supported by Core UI
 
 		public boolean isTextured()
 		{
@@ -262,24 +263,39 @@ public interface AquaUIPainter
 
 	enum SegmentedButtonWidget
 	{
-		BUTTON_TAB,                     							// the segmented control on a Tab View
-		BUTTON_SEGMENTED,               							// the default button for the content area, known as Rounded (looks the same as Tab)
+		BUTTON_TAB,                     				      // the segmented control on a Tab View
+		BUTTON_SEGMENTED,               				      // the default button for the content area, known as Rounded (looks the same as Tab)
 		BUTTON_SEGMENTED_SEPARATED,               		// separated buttons that look like Rounded buttons
-		BUTTON_SEGMENTED_INSET,         							// also known as Round Rect, a transparent button whose outline has rounded corners
-		BUTTON_SEGMENTED_SMALL_SQUARE,  							// a square button similar to a gradient button
-		BUTTON_SEGMENTED_TEXTURED,      							// also known as Textured Square, for use in window frames
-		BUTTON_SEGMENTED_TEXTURED_TOOLBAR,    				// introduced in 10.11 for textured segmented controls on the tool bar (taller)
-		BUTTON_SEGMENTED_TEXTURED_SEPARATED,					// separated buttons that look like Textured buttons, for use in window frames
+		BUTTON_SEGMENTED_INSET,         				      // also known as Round Rect, a transparent button whose outline has rounded corners
+		BUTTON_SEGMENTED_SMALL_SQUARE,  				      // a square button similar to a gradient button
+		BUTTON_SEGMENTED_TEXTURED,      				      // also known as Textured Rounded, for use in window frames
+		BUTTON_SEGMENTED_TEXTURED_TOOLBAR,    			  // introduced in 10.11 for textured segmented controls on the tool bar (taller)
+		BUTTON_SEGMENTED_TEXTURED_SEPARATED,			    // separated buttons that look like Textured buttons, for use in window frames
 		BUTTON_SEGMENTED_TEXTURED_SEPARATED_TOOLBAR,	// introduced in 10.11 for textured segmented controls on the tool bar (taller)
 
 		// The following styles are obsolete and are replaced by other styles in Yosemite
 
-		BUTTON_SEGMENTED_TOOLBAR,       // also known as Capsule or Textured Rounded
-		BUTTON_SEGMENTED_SCURVE;        // also known as Capsule or Textured Rounded
+		BUTTON_SEGMENTED_TOOLBAR,       // also known as Capsule or Textured Square
+		BUTTON_SEGMENTED_SCURVE;        // also known as Capsule or Textured Square
 
 		public boolean isSeparated()
 		{
-			return this == BUTTON_SEGMENTED_SEPARATED || this == BUTTON_SEGMENTED_TEXTURED_SEPARATED || this == BUTTON_SEGMENTED_TEXTURED_SEPARATED_TOOLBAR;
+			return this == BUTTON_SEGMENTED_SEPARATED
+							 || this == BUTTON_SEGMENTED_TEXTURED_SEPARATED
+							 || this == BUTTON_SEGMENTED_TEXTURED_SEPARATED_TOOLBAR;
+		}
+
+		public boolean isToolbar()
+		{
+			return this == BUTTON_SEGMENTED_TEXTURED_TOOLBAR || this == BUTTON_SEGMENTED_TEXTURED_SEPARATED_TOOLBAR;
+		}
+
+		public boolean isTextured()
+		{
+			return this == BUTTON_SEGMENTED_TEXTURED
+				|| this == BUTTON_SEGMENTED_TEXTURED_TOOLBAR
+				|| this == BUTTON_SEGMENTED_TEXTURED_SEPARATED
+				|| this == BUTTON_SEGMENTED_TEXTURED_SEPARATED_TOOLBAR;
 		}
 	}
 
@@ -408,6 +424,7 @@ public interface AquaUIPainter
 	{
 		SPINNER,
 		BAR,
+		INDETERMINATE_SPINNER,
 		INDETERMINATE_BAR
 	}
 
@@ -499,8 +516,15 @@ public interface AquaUIPainter
 		Create a new instance with the same implementation.
 	*/
 
-	@Nonnull
-	AquaUIPainter copy();
+	@NotNull AquaUIPainter copy();
+
+	/**
+		Configure the system appearance to be used by the painter.
+
+		@param appearance The appearance to use.
+	*/
+
+	void configureAppearance(@NotNull VAppearance appearance);
 
 	/**
 		Configure the generic parameters for the next request.
@@ -518,16 +542,14 @@ public interface AquaUIPainter
 		@throws UnsupportedOperationException if the configuration is not supported.
 	*/
 
-	@Nonnull
-	Painter getPainter(@Nonnull Configuration g)
+	@NotNull Painter getPainter(@NotNull Configuration g)
 		throws UnsupportedOperationException;
 
 	/**
 		Return a provider of layout information.
 	*/
 
-	@Nonnull
-	AquaUILayoutInfo getLayoutInfo();
+	@NotNull AquaUILayoutInfo getLayoutInfo();
 
 	/**
 		Return the visible outline of a widget based on the configured width and height. The returned shape can be used to
@@ -538,8 +560,7 @@ public interface AquaUIPainter
 		@return the outline.
 	*/
 
-	@Nullable
-	Shape getOutline(@Nonnull LayoutConfiguration g);
+	@Nullable Shape getOutline(@NotNull LayoutConfiguration g);
 
 	/**
 		Return the bounds of the editor area of a combo box based on the configured width and height. The bounds of the
@@ -548,8 +569,7 @@ public interface AquaUIPainter
 		@param g This parameter specifies the layout configuration of the combo box.
 	*/
 
-	@Nonnull
-	Rectangle2D getComboBoxEditorBounds(@Nonnull ComboBoxLayoutConfiguration g);
+	@NotNull Rectangle2D getComboBoxEditorBounds(@NotNull ComboBoxLayoutConfiguration g);
 
 	/**
 		Return the bounds of the indicator within the combo box based on the configured width and height.
@@ -557,8 +577,7 @@ public interface AquaUIPainter
 		@param g This parameter specifies the layout configuration of the segmented button.
 	*/
 
-	@Nonnull
-	Rectangle2D getComboBoxIndicatorBounds(@Nonnull ComboBoxLayoutConfiguration g);
+	@NotNull Rectangle2D getComboBoxIndicatorBounds(@NotNull ComboBoxLayoutConfiguration g);
 
 	/**
 		Return the bounds of the content area of a pop up button based on the configured width and height. The bounds of the
@@ -567,8 +586,7 @@ public interface AquaUIPainter
 		@param g This parameter specifies the layout configuration of the pop up button.
 	*/
 
-	@Nonnull
-	Rectangle2D getPopupButtonContentBounds(@Nonnull PopupButtonLayoutConfiguration g);
+	@NotNull Rectangle2D getPopupButtonContentBounds(@NotNull PopupButtonLayoutConfiguration g);
 
 	/**
 		Return the bounds of the thumb area based on the configured width and height.
@@ -578,8 +596,7 @@ public interface AquaUIPainter
 			in the range 0 to 1 (inclusive). Thumb position 0 corresponds to the lowest slider value.
 	*/
 
-	@Nonnull
-	Rectangle2D getSliderThumbBounds(@Nonnull SliderLayoutConfiguration g, double thumbPosition);
+	@NotNull Rectangle2D getSliderThumbBounds(@NotNull SliderLayoutConfiguration g, double thumbPosition);
 
 	/**
 	  Map a mouse coordinate to a slider thumb position. This method relies on the previously configured widget size.
@@ -593,7 +610,7 @@ public interface AquaUIPainter
 				than 1 if the coordinate is outside the slider range in the area corresponding to high values.
 	*/
 
-	double getSliderThumbPosition(@Nonnull SliderLayoutConfiguration g, int x, int y);
+	double getSliderThumbPosition(@NotNull SliderLayoutConfiguration g, int x, int y);
 
 	/**
 		Map a major axis coordinate of a scroll bar to a thumb position along the scroll bar track. This method relies on
@@ -611,7 +628,7 @@ public interface AquaUIPainter
 		The scroll bar track is the portion of the widget that the thumb can occupy.
 	*/
 
-	float getScrollBarThumbPosition(@Nonnull ScrollBarThumbLayoutConfiguration g, boolean useExtent);
+	float getScrollBarThumbPosition(@NotNull ScrollBarThumbLayoutConfiguration g, boolean useExtent);
 
 	/**
 		Determine whether a major axis coordinate of a scroll bar corresponds to the visible thumb. This method relies on
@@ -625,7 +642,7 @@ public interface AquaUIPainter
 		The scroll bar track is the portion of the widget that the thumb can occupy.
 	*/
 
-	int getScrollBarThumbHit(@Nonnull ScrollBarThumbConfiguration g);
+	int getScrollBarThumbHit(@NotNull ScrollBarThumbConfiguration g);
 
 	/**
 		Return the recommended bounds for a label corresponding to a given thumb position. This method relies on the
@@ -638,6 +655,5 @@ public interface AquaUIPainter
 		@return the recommended bounds for the label.
 	*/
 
-	@Nonnull
-	Rectangle2D getSliderLabelBounds(@Nonnull SliderLayoutConfiguration g, double thumbPosition, @Nonnull Dimension size);
+	@NotNull Rectangle2D getSliderLabelBounds(@NotNull SliderLayoutConfiguration g, double thumbPosition, @NotNull Dimension size);
 }

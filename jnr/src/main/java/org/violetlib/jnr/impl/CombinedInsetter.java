@@ -14,7 +14,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.Insets2D;
 import org.violetlib.jnr.Insetter;
@@ -27,20 +27,17 @@ import org.violetlib.jnr.InsetterNotInvertibleException;
 public class CombinedInsetter
 	implements Insetter
 {
-	private final @Nonnull
-	Insetter1 horizontal;
-	private final @Nonnull
-	Insetter1 vertical;
+	private final @NotNull Insetter1 horizontal;
+	private final @NotNull Insetter1 vertical;
 
-	public CombinedInsetter(@Nonnull Insetter1 horizontal, @Nonnull Insetter1 vertical)
+	public CombinedInsetter(@NotNull Insetter1 horizontal, @NotNull Insetter1 vertical)
 	{
 		this.horizontal = horizontal;
 		this.vertical = vertical;
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle2D applyToBounds2D(@Nonnull Rectangle2D bounds)
+	public @NotNull Rectangle2D applyToBounds2D(@NotNull Rectangle2D bounds)
 	{
 		float x = (float) bounds.getX();
 		float y = (float) bounds.getY();
@@ -50,14 +47,12 @@ public class CombinedInsetter
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle2D apply2D(double width, double height)
+	public @NotNull Rectangle2D apply2D(double width, double height)
 	{
 		return apply(0, 0, (float) width, (float) height);
 	}
 
-	protected @Nonnull
-	Rectangle2D apply(float cx, float cy, float cwidth, float cheight)
+	protected @NotNull Rectangle2D apply(float cx, float cy, float cwidth, float cheight)
 	{
 		float x = cx + horizontal.getRegionOrigin(cwidth);
 		float y = cy + vertical.getRegionOrigin(cheight);
@@ -67,21 +62,18 @@ public class CombinedInsetter
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle applyToBounds(@Nonnull Rectangle bounds)
+	public @NotNull Rectangle applyToBounds(@NotNull Rectangle bounds)
 	{
 		return apply(bounds.x, bounds.y, bounds.width, bounds.height);
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle apply(int width, int height)
+	public @NotNull Rectangle apply(int width, int height)
 	{
 		return apply(0, 0, width, height);
 	}
 
-	protected @Nonnull
-	Rectangle apply(int cx, int cy, int cwidth, int cheight)
+	protected @NotNull Rectangle apply(int cx, int cy, int cwidth, int cheight)
 	{
 		double xx = cx + horizontal.getRegionOrigin(cwidth);
 		double ww = horizontal.getRegionSize(cwidth);
@@ -105,8 +97,7 @@ public class CombinedInsetter
 	}
 
 	@Override
-	public @Nonnull
-	Dimension2D expand2D(@Nonnull Dimension2D regionSize)
+	public @NotNull Dimension2D expand2D(@NotNull Dimension2D regionSize)
 	throws InsetterNotInvertibleException
 	{
 		// I guess no one wants floating point dimensions, if they are used mainly for layout.
@@ -116,8 +107,7 @@ public class CombinedInsetter
 	}
 
 	@Override
-	public @Nonnull
-	Dimension expand(@Nonnull Dimension regionSize)
+	public @NotNull Dimension expand(@NotNull Dimension regionSize)
 	throws InsetterNotInvertibleException
 	{
 		int width = (int) Math.ceil(horizontal.getComponentSize(regionSize.width));
@@ -126,8 +116,7 @@ public class CombinedInsetter
 	}
 
 	@Override
-	public @Nullable
-	Insets2D asInsets2D()
+	public @Nullable Insets2D asInsets2D()
 	{
 		float left = horizontal.getFixedInset1();
 		if (left < 0) {
@@ -149,8 +138,7 @@ public class CombinedInsetter
 	}
 
 	@Override
-	public @Nullable
-	Insets asInsets()
+	public @Nullable Insets asInsets()
 	{
 		float left = horizontal.getFixedInset1();
 		if (left < 0) {

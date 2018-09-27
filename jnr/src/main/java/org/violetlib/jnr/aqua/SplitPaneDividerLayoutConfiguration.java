@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.DividerWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
@@ -22,27 +22,23 @@ import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
 public class SplitPaneDividerLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @Nonnull
-	DividerWidget dw;
-	private final @Nonnull
-	Orientation o;
+	private final @NotNull DividerWidget dw;
+	private final @NotNull Orientation o;
 	private final int thickness;
 
-	public SplitPaneDividerLayoutConfiguration(@Nonnull DividerWidget dw, @Nonnull Orientation o, int thickness)
+	public SplitPaneDividerLayoutConfiguration(@NotNull DividerWidget dw, @NotNull Orientation o, int thickness)
 	{
 		this.dw = dw;
 		this.o = o;
 		this.thickness = thickness;
 	}
 
-	public @Nonnull
-	DividerWidget getWidget()
+	public @NotNull DividerWidget getWidget()
 	{
 		return dw;
 	}
 
-	public @Nonnull
-	Orientation getOrientation()
+	public @NotNull Orientation getOrientation()
 	{
 		return o;
 	}
@@ -68,8 +64,7 @@ public class SplitPaneDividerLayoutConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String ts = thickness > 0 ? " " + thickness : "";
 		return dw + " " + o + ts;

@@ -14,19 +14,22 @@ import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.security.PrivilegedAction;
 
-import javax.annotation.*;
-
 import org.violetlib.jnr.aqua.*;
 import org.violetlib.jnr.impl.BasicImageSupport;
 import org.violetlib.jnr.impl.BasicRenderer;
+import org.violetlib.jnr.impl.JNRPlatformUtils;
 import org.violetlib.jnr.impl.RasterDescription;
 import org.violetlib.jnr.impl.Renderer;
 import org.violetlib.jnr.impl.RendererDebugInfo;
 import org.violetlib.jnr.impl.RendererDescription;
+import org.violetlib.jnr.impl.SegmentedRendererDebugInfo;
+import org.violetlib.vappearances.VAppearance;
+
+import org.jetbrains.annotations.*;
 
 /**
 	A painter that renders Aqua widgets by creating and rendering native views. This class supports only the UI for
-	Yosemite (OS X 10.10).
+	Yosemite (OS X 10.10) and later.
 
 	Although using native views should mean that the rendering will be consistent with whatever release of the operating
 	system is being used, there are some platform dependencies in this code (mostly layout related constants) such that
@@ -172,11 +175,9 @@ public class AquaNativePainter
 		});
 	}
 
-	protected static @Nullable
-	TitleBarLayoutInfo titleBarLayoutInfo;
+	protected static @Nullable TitleBarLayoutInfo titleBarLayoutInfo;
 
-	public static @Nonnull
-	TitleBarLayoutInfo getTitleBarLayoutInfo()
+	public static @NotNull TitleBarLayoutInfo getTitleBarLayoutInfo()
 	{
 		if (titleBarLayoutInfo == null) {
 			titleBarLayoutInfo = obtainTitleBarLayoutInfo();
@@ -184,8 +185,7 @@ public class AquaNativePainter
 		return titleBarLayoutInfo;
 	}
 
-	private static final @Nonnull
-	ViewRendererDescriptions rendererDescriptions = new ViewRendererDescriptions();
+	private static final @NotNull ViewRendererDescriptions rendererDescriptions = new ViewRendererDescriptions();
 
 	public AquaNativePainter()
 	{
@@ -193,15 +193,21 @@ public class AquaNativePainter
 	}
 
 	@Override
-	public @Nonnull
-	AquaNativePainter copy()
+	public @NotNull AquaNativePainter copy()
 	{
 		return new AquaNativePainter();
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getButtonRenderer(@Nonnull ButtonConfiguration g)
+	public void configureAppearance(@NotNull VAppearance appearance)
+	{
+		super.configureAppearance(appearance);
+
+		configureNativeAppearance(appearance);
+	}
+
+	@Override
+	protected @NotNull Renderer getButtonRenderer(@NotNull ButtonConfiguration g)
 	{
 		ButtonWidget widget = g.getButtonWidget();
 		State st = g.getState();
@@ -225,6 +231,8 @@ public class AquaNativePainter
 		}
 
 		if (widget == ButtonWidget.BUTTON_RECESSED) {
+			// Avoid painting a background for a button in the OFF state.
+			// Not sure why that would happen, but it does.
 			if (!shouldPaintRecessedBackground(st, bs)) {
 				return NULL_RENDERER;
 			}
@@ -243,8 +251,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getScrollColumnSizerRenderer(@Nonnull ScrollColumnSizerConfiguration g)
+	protected @NotNull Renderer getScrollColumnSizerRenderer(@NotNull ScrollColumnSizerConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getScrollColumnSizerRendererDescription(g);
 
@@ -253,8 +260,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getScrollBarRenderer(@Nonnull ScrollBarConfiguration g)
+	protected @NotNull Renderer getScrollBarRenderer(@NotNull ScrollBarConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getScrollBarRendererDescription(g);
 
@@ -276,8 +282,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getToolBarItemWellRenderer(@Nonnull ToolBarItemWellConfiguration g)
+	protected @NotNull Renderer getToolBarItemWellRenderer(@NotNull ToolBarItemWellConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getToolBarItemWellRendererDescription(g);
 
@@ -287,8 +292,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getGroupBoxRenderer(@Nonnull GroupBoxConfiguration g)
+	protected @NotNull Renderer getGroupBoxRenderer(@NotNull GroupBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getGroupBoxRendererDescription(g);
 
@@ -298,8 +302,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getListBoxRenderer(@Nonnull ListBoxConfiguration g)
+	protected @NotNull Renderer getListBoxRenderer(@NotNull ListBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getListBoxRendererDescription(g);
 
@@ -309,8 +312,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getTextFieldRenderer(@Nonnull TextFieldConfiguration g)
+	protected @NotNull Renderer getTextFieldRenderer(@NotNull TextFieldConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTextFieldRendererDescription(g);
 
@@ -363,8 +365,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getComboBoxButtonRenderer(@Nonnull ComboBoxConfiguration g)
+	protected @NotNull Renderer getComboBoxButtonRenderer(@NotNull ComboBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getComboBoxRendererDescription(g);
 
@@ -378,8 +379,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getPopupButtonRenderer(@Nonnull PopupButtonConfiguration g)
+	protected @NotNull Renderer getPopupButtonRenderer(@NotNull PopupButtonConfiguration g)
 	{
 		// On Yosemite, the square style bombs if the mini size is selected.
 		// This restriction is currently handled in the configuration.
@@ -398,8 +398,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getTitleBarRenderer(@Nonnull TitleBarConfiguration g)
+	protected @NotNull Renderer getTitleBarRenderer(@NotNull TitleBarConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTitleBarRendererDescription(g);
 
@@ -423,12 +422,11 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getIndeterminateProgressIndicatorRenderer(@Nonnull IndeterminateProgressIndicatorConfiguration g)
+	protected @NotNull Renderer getIndeterminateProgressIndicatorRenderer(@NotNull IndeterminateProgressIndicatorConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getIndeterminateProgressIndicatorRendererDescription(g);
 
-		boolean isSpinner = g.getWidget() == ProgressWidget.SPINNER;
+		boolean isSpinner = g.getWidget() == ProgressWidget.INDETERMINATE_SPINNER;
 		Size sz = g.getSize();
 
 		// Small spinners have a fixed size. Large spinners are scaled to fit. Other variants do not work.
@@ -444,10 +442,17 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getProgressIndicatorRenderer(@Nonnull ProgressIndicatorConfiguration g)
+	protected @NotNull Renderer getProgressIndicatorRenderer(@NotNull ProgressIndicatorConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getProgressIndicatorRendererDescription(g);
+
+		boolean isSpinner = g.getWidget() == ProgressWidget.SPINNER;
+		Size sz = g.getSize();
+
+		// Small spinners have a fixed size. Large spinners are scaled to fit. Other variants do not work.
+		if (isSpinner && sz != Size.SMALL) {
+			sz = Size.LARGE;
+		}
 
 		int size = toSize(g.getSize());
 		int state = toActiveState(g.getState());
@@ -457,8 +462,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSliderRenderer(@Nonnull SliderConfiguration g)
+	protected @NotNull Renderer getSliderRenderer(@NotNull SliderConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSliderRendererDescription(g);
 
@@ -487,8 +491,7 @@ public class AquaNativePainter
 		return Renderer.create(r, rd);
 	}
 
-	protected @Nonnull
-	Shape getSliderThumbOutline(@Nonnull Rectangle2D bounds, @Nonnull SliderThumbLayoutConfiguration g)
+	protected @NotNull Shape getSliderThumbOutline(@NotNull Rectangle2D bounds, @NotNull SliderThumbLayoutConfiguration g)
 	{
 		SliderLayoutConfiguration sg = g.getSliderLayoutConfiguration();
 		double thumbPosition = g.getThumbPosition();
@@ -523,15 +526,13 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSliderThumbRenderer(@Nonnull SliderConfiguration g)
+	protected @NotNull Renderer getSliderThumbRenderer(@NotNull SliderConfiguration g)
 	{
 		return NULL_RENDERER;
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSpinnerArrowsRenderer(@Nonnull SpinnerArrowsConfiguration g)
+	protected @NotNull Renderer getSpinnerArrowsRenderer(@NotNull SpinnerArrowsConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSpinnerArrowsRendererDescription(g);
 
@@ -542,8 +543,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSplitPaneDividerRenderer(@Nonnull SplitPaneDividerConfiguration g)
+	protected @NotNull Renderer getSplitPaneDividerRenderer(@NotNull SplitPaneDividerConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSplitPaneDividerRendererDescription(g);
 
@@ -555,8 +555,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getGradientRenderer(@Nonnull GradientConfiguration g)
+	protected @NotNull Renderer getGradientRenderer(@NotNull GradientConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getGradientRendererDescription(g);
 
@@ -575,8 +574,7 @@ public class AquaNativePainter
 	public static final int DEBUG_SEGMENT_RIGHT_INSET = 7;
 
 	@Override
-	protected @Nonnull
-	Renderer getSegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g)
+	protected @NotNull Renderer getSegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSegmentedButtonRendererDescription(g);
 
@@ -586,15 +584,86 @@ public class AquaNativePainter
 		int segmentPosition = toSegmentPosition(g.getPosition());
 		int flags = toSegmentFlags(g);
 
-		BasicRenderer r = (data, rw, rh, w, h) -> nativePaintSegmentedButton(data, rw, rh, w, h, segmentStyle, segmentPosition, size,
-			state, g.isFocused(), flags, null, null);
+		BasicRenderer r = (data, rw, rh, w, h) -> nativePaintSegmentedButton(data, rw, rh, w, h, segmentStyle,
+			segmentPosition, size, state, g.isFocused(), flags, null, null);
 
 		return Renderer.create(r, rd);
 	}
 
+public static final int TEST_SEGMENTED_ONE_SEGMENT = -1;
+public static final int TEST_SEGMENTED_NO_SELECTION = -2;
+
+    /**
+		Render a segmented control for the purpose of debugging its layout.
+		@param g This configuration designates the widget and the size.
+		@param option This parameter determines the number of segments in the control and which segment, if any, is
+			displayed as selected. A value of 0 to 3 displays a segmented control with four segments and the segment with the
+			specified index is selected. A value of {@link #TEST_SEGMENTED_NO_SELECTION} displays a segmented control
+			containing four segments with no segment selected. A value of {@link #TEST_SEGMENTED_ONE_SEGMENT} renders a
+			segmented control containing one segment, not selected.
+		@param scaleFactor The scale factor for the display.
+		@param width The raster width in points.
+		@param height The raster height in points.
+		@param controlWidth The width of the segmented control in points.
+		@param controlHeight The height of the segmented control in points.
+		@return the rendered control display and associated information.
+	*/
+
+	public @Nullable SegmentedRendererDebugInfo
+	getSegmentedRendererDebugInfo(@NotNull SegmentedButtonConfiguration g,
+																int option,
+																int scaleFactor,
+																int width, int height,
+																float controlWidth, float controlHeight, float segmentWidth,
+																boolean isSelectAny)
+	{
+		int size = toSize(g.getSize());
+		int segmentStyle = toSegmentedStyle(g.getWidget());
+
+		int rw = (int) Math.ceil(scaleFactor * width);
+		int rh = (int) Math.ceil(scaleFactor * height);
+		int[] data = new int[rw * rh];
+
+		float[] debugOutput = new float[20];
+		nativeTestSegmentedButton(data, rw, rh, width, height, segmentStyle, option, size, controlWidth, controlHeight,
+			segmentWidth, isSelectAny, debugOutput);
+
+		Rectangle2D controlBounds = null;
+		Rectangle2D[] segmentBounds = null;
+		if (!isZero(debugOutput, 0, 4)) {
+			controlBounds = extractBounds(debugOutput, 0);
+		}
+		int start = 4;
+		if (!isZero(debugOutput, start, 16)) {
+			int count = option == TEST_SEGMENTED_ONE_SEGMENT ? 1 : 4;
+			segmentBounds = new Rectangle2D[count];
+			int offset = start;
+			for (int i = 0; i < count; i++) {
+				segmentBounds[i] = extractBounds(debugOutput, offset);
+				offset += 4;
+			}
+		}
+		Image im = BasicImageSupport.createImage(data, rw, rh);
+		return new SegmentedRendererDebugInfo(im, controlBounds, segmentBounds);
+	}
+
+	private static boolean isZero(@NotNull float[] fs, int start, int count)
+	{
+		for (int i = 0; i < count; i++) {
+			if (fs[start + i] != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static @NotNull Rectangle2D extractBounds(@NotNull float[] fs, int start)
+	{
+		return new Rectangle2D.Float(fs[start], fs[start+1], fs[start+2], fs[start+3]);
+	}
+
 	@Override
-	protected @Nullable
-	RendererDebugInfo getSegmentedButtonRendererDebugInfo(@Nonnull SegmentedButtonConfiguration g,
+	protected @Nullable RendererDebugInfo getSegmentedButtonRendererDebugInfo(@NotNull SegmentedButtonConfiguration g,
 																																						int scaleFactor, int width, int height)
 	{
 		int size = toSize(g.getSize());
@@ -636,12 +705,21 @@ public class AquaNativePainter
 		return new RendererDebugInfo(im, frame, info);
 	}
 
+	public @Nullable float[] getSegmentedButtonLayoutParameters(@NotNull SegmentedButtonLayoutConfiguration g)
+	{
+		int size = toSize(g.getSize());
+		int segmentStyle = toSegmentedStyle(g.getWidget());
+		float[] debugOutput = new float[8];
+		int result = nativeDetermineSegmentedButtonLayoutParameters(segmentStyle, size, debugOutput);
+		return result == 0 ? debugOutput : null;
+	}
+
 	public static final int SEGMENT_POSITION_FIRST = 0;
 	public static final int SEGMENT_POSITION_MIDDLE = 1;
 	public static final int SEGMENT_POSITION_LAST = 2;
 	public static final int SEGMENT_POSITION_ONLY = 3;
 
-	private int toSegmentPosition(@Nonnull Position segmentPosition)
+	private int toSegmentPosition(@NotNull Position segmentPosition)
 	{
 		switch (segmentPosition) {
 			case FIRST:
@@ -662,7 +740,7 @@ public class AquaNativePainter
 	public static final int SEGMENT_FLAG_DRAW_LEADING_SEPARATOR = 8;
 	public static final int SEGMENT_FLAG_DRAW_TRAILING_SEPARATOR = 16;
 
-	private int toSegmentFlags(@Nonnull SegmentedButtonConfiguration g)
+	private int toSegmentFlags(@NotNull SegmentedButtonConfiguration g)
 	{
 		int flags = 0;
 
@@ -685,8 +763,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	public @Nonnull
-	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g)
+	public @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTableColumnHeaderRendererDescription(g);
 
@@ -701,7 +778,7 @@ public class AquaNativePainter
 		return Renderer.create(r, rd);
 	}
 
-	protected int toSize(@Nonnull Size sz)
+	protected int toSize(@NotNull Size sz)
 	{
 		switch (sz)
 		{
@@ -721,7 +798,7 @@ public class AquaNativePainter
 		Map the specified state to the integer encoding used by native code. All states are supported.
 	*/
 
-	protected int toState(@Nonnull State st)
+	protected int toState(@NotNull State st)
 	{
 		switch (st)
 		{
@@ -748,7 +825,7 @@ public class AquaNativePainter
 		supported.
 	*/
 
-	protected int toActiveState(@Nonnull State st)
+	protected int toActiveState(@NotNull State st)
 	{
 		switch (st)
 		{
@@ -762,7 +839,7 @@ public class AquaNativePainter
 		return ActiveState;
 	}
 
-	protected int toDirection(@Nonnull ColumnSortArrowDirection d)
+	protected int toDirection(@NotNull ColumnSortArrowDirection d)
 	{
 		switch (d)
 		{
@@ -777,7 +854,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toDirection(@Nonnull Direction d)
+	protected int toDirection(@NotNull Direction d)
 	{
 		switch (d)
 		{
@@ -796,7 +873,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toOrientation(@Nonnull Orientation o)
+	protected int toOrientation(@NotNull Orientation o)
 	{
 		switch (o)
 		{
@@ -808,13 +885,13 @@ public class AquaNativePainter
 		throw new UnsupportedOperationException();
 	}
 
-	public int getSideInset(@Nonnull SegmentedButtonWidget bw)
+	public int getSideInset(@NotNull SegmentedButtonWidget bw)
 	{
 		int style = toSegmentedStyle(bw);
 		return getSideInsetFromSegmentStyle(style);
 	}
 
-	public int getDividerWidth(@Nonnull SegmentedButtonWidget bw)
+	public int getDividerWidth(@NotNull SegmentedButtonWidget bw)
 	{
 		int style = toSegmentedStyle(bw);
 		return getDividerWidthFromSegmentStyle(style);
@@ -843,7 +920,7 @@ public class AquaNativePainter
 		return 1;
 	}
 
-	protected int toSegmentedStyle(@Nonnull SegmentedButtonWidget bw)
+	protected int toSegmentedStyle(@NotNull SegmentedButtonWidget bw)
 	{
 		switch (bw) {
 			case BUTTON_TAB:
@@ -872,7 +949,7 @@ public class AquaNativePainter
 	}
 
 	// Note: This is an internal hack; NSComboBox does not use bezel style.
-	protected int toBezelStyle(@Nonnull ComboBoxWidget w)
+	protected int toBezelStyle(@NotNull ComboBoxWidget w)
 	{
 		switch (w) {
 			case BUTTON_COMBO_BOX:
@@ -887,7 +964,7 @@ public class AquaNativePainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected int toBezelStyle(@Nonnull PopupButtonWidget bw)
+	protected int toBezelStyle(@NotNull PopupButtonWidget bw)
 	{
 		switch (bw) {
 			case BUTTON_POP_DOWN:
@@ -929,8 +1006,10 @@ public class AquaNativePainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected int toBezelStyle(@Nonnull ButtonWidget bw)
+	protected int toBezelStyle(@NotNull ButtonWidget bw)
 	{
+		int platformVersion = JNRPlatformUtils.getPlatformVersion();
+
 		switch (bw) {
 			case BUTTON_PUSH:
 				return NSRoundedBezelStyle;
@@ -963,12 +1042,12 @@ public class AquaNativePainter
 			case BUTTON_ROUND:
 				return NSCircularBezelStyle;
 			case BUTTON_ROUND_TOOLBAR:
-				return NSCircularBezelStyle_Toolbar;
+				return platformVersion >= 101100 ? NSCircularBezelStyle_Toolbar : NSCircularBezelStyle;
 		}
 		throw new UnsupportedOperationException();
 	}
 
-	protected int toButtonType(@Nonnull ButtonWidget bw)
+	protected int toButtonType(@NotNull ButtonWidget bw)
 	{
 		switch (bw) {
 			case BUTTON_CHECK_BOX:
@@ -986,7 +1065,7 @@ public class AquaNativePainter
 		return NSMomentaryLightButton;
 	}
 
-	protected int toButtonValue(@Nonnull ButtonState bs)
+	protected int toButtonValue(@NotNull ButtonState bs)
 	{
 		switch (bs)
 		{
@@ -999,7 +1078,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toUILayoutDirection(@Nonnull UILayoutDirection d)
+	protected int toUILayoutDirection(@NotNull UILayoutDirection d)
 	{
 		switch (d)
 		{
@@ -1012,7 +1091,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toSliderType(@Nonnull SliderWidget w)
+	protected int toSliderType(@NotNull SliderWidget w)
 	{
 		switch (w)
 		{
@@ -1031,7 +1110,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toTickMarkPosition(@Nonnull TickMarkPosition p)
+	protected int toTickMarkPosition(@NotNull TickMarkPosition p)
 	{
 		switch (p)
 		{
@@ -1048,7 +1127,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toDividerType(@Nonnull DividerWidget w)
+	protected int toDividerType(@NotNull DividerWidget w)
 	{
 		switch (w)
 		{
@@ -1063,7 +1142,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected int toComboBoxType(@Nonnull ComboBoxWidget bw)
+	protected int toComboBoxType(@NotNull ComboBoxWidget bw)
 	{
 		switch (bw)
 		{
@@ -1075,7 +1154,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected static int toWindowType(@Nonnull TitleBarWidget bw)
+	protected static int toWindowType(@NotNull TitleBarWidget bw)
 	{
 		switch (bw)
 		{
@@ -1088,7 +1167,7 @@ public class AquaNativePainter
 		}
 	}
 
-	protected static int toScrollBarType(@Nonnull ScrollBarWidget bw)
+	protected static int toScrollBarType(@NotNull ScrollBarWidget bw)
 	{
 		switch (bw)
 		{
@@ -1103,8 +1182,7 @@ public class AquaNativePainter
 		}
 	}
 
-	private static @Nonnull
-	TitleBarLayoutInfo obtainTitleBarLayoutInfo()
+	private static @NotNull TitleBarLayoutInfo obtainTitleBarLayoutInfo()
 	{
 		// Not sure how useful this is, but we can get button locations from native code.
 
@@ -1113,8 +1191,7 @@ public class AquaNativePainter
 		return new TitleBarLayoutInfo(documentButtonBounds, utilityButtonBounds);
 	}
 
-	private static @Nonnull
-	Rectangle[] obtainTitleBarButtonLayoutInfo(@Nonnull TitleBarWidget bw)
+	private static @NotNull Rectangle[] obtainTitleBarButtonLayoutInfo(@NotNull TitleBarWidget bw)
 	{
 		int windowType = toWindowType(bw);
 		int[] data = nativeGetTitleBarButtonLayoutInfo(windowType);
@@ -1139,8 +1216,7 @@ public class AquaNativePainter
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return "NSView";
 	}
@@ -1166,8 +1242,20 @@ public class AquaNativePainter
 	private static native int[] nativeGetTitleBarButtonLayoutInfo(int windowType);
 	private static native void nativeGetSliderThumbBounds(float[] a, float w, float h, int sliderType, int size, double value, int numberOfTickMarks, int position);
 
-	// The following methods represent a failed experiment. Although I am not sure why, asking a view for its size
-	// does not always provide the information needed here.
+	public static native boolean isLayerPaintingEnabled();
+	public static native void setLayerPaintingEnabled(boolean b);
+
+	private static native void nativeTestSegmentedButton(int[] data, int rw, int rh, float w, float h,
+																											 int segmentType, int option, int size,
+																											 float cw, float ch, float segmentWidth,
+																											 boolean isSelectAny,
+																											 float[] debugOutput);
+
+	private static native int nativeDetermineSegmentedButtonLayoutParameters(int segmentStyle, int size, float[] data);
+  public static native int nativeDetermineSegmentedButtonRenderingVersion();
+
+	// The following methods represent a failed experiment. Although I am not sure why, asking a view for its size does
+	// not always provide the information needed here.
 
 	private static native int nativeDetermineButtonFixedHeight(int buttonType, int bezelStyle, int size);
 	private static native int nativeDetermineButtonFixedWidth(int buttonType, int bezelStyle, int size);

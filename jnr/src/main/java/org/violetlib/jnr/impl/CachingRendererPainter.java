@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.awt.Image;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 /**
 	A painter that uses a renderer and caches the rendered image. The cache key is created by a subclass method.
@@ -47,14 +47,13 @@ public abstract class CachingRendererPainter
 		@param height The height of the rendering, in device independent pixels.
 	*/
 
-	protected CachingRendererPainter(@Nonnull Renderer r, float width, float height)
+	protected CachingRendererPainter(@NotNull Renderer r, float width, float height)
 	{
 		super(r, width, height);
 	}
 
 	@Override
-	protected @Nullable
-	Image getImage(int scaleFactor, int width, int height)
+	protected @Nullable Image getImage(int scaleFactor, int width, int height)
 	{
 		ImageCache.PixelsKey key = createKey(scaleFactor, width, height);
 
@@ -74,6 +73,5 @@ public abstract class CachingRendererPainter
 		}
 	}
 
-	protected abstract @Nullable
-	ImageCache.PixelsKey createKey(int scaleFactor, int rasterWidth, int rasterHeight);
+	protected abstract @Nullable ImageCache.PixelsKey createKey(int scaleFactor, int rasterWidth, int rasterHeight);
 }

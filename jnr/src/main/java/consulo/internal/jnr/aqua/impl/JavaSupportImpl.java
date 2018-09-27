@@ -1,10 +1,8 @@
-package org.violetlib.jnr.impl;
-
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
+package consulo.internal.jnr.aqua.impl;
 
 import javax.annotation.Nonnull;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public interface JavaSupportImpl
 {

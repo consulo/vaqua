@@ -8,6 +8,8 @@
 
 package org.violetlib.jnr.impl;
 
+import consulo.internal.jnr.aqua.impl.JavaSupportImpl;
+
 import javax.annotation.Nonnull;
 import java.awt.*;
 import java.awt.image.BufferedImage;

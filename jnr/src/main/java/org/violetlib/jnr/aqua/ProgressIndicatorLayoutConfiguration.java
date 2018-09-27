@@ -10,11 +10,11 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
+import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
 import org.violetlib.jnr.aqua.AquaUIPainter.ProgressWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
-import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
 
 /**
 	A layout configuration for a progress indicator.
@@ -23,44 +23,41 @@ import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
 public class ProgressIndicatorLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @Nonnull
-	ProgressWidget pw;
-	private final @Nonnull
-	Size size;
-	private final @Nonnull
-	Orientation o;
+	private final @NotNull ProgressWidget pw;
+	private final @NotNull Size size;
+	private final @NotNull Orientation o;
 
-	public ProgressIndicatorLayoutConfiguration(@Nonnull ProgressWidget pw,
-																							@Nonnull Size size,
-																							@Nonnull Orientation o)
+	public ProgressIndicatorLayoutConfiguration(@NotNull ProgressWidget pw,
+																							@NotNull Size size,
+																							@NotNull Orientation o)
 	{
 		// progress bars have only one size
-		this.size = pw == ProgressWidget.SPINNER ? size : Size.REGULAR;
+		// spinners can be regular or small
+		this.size = pw == ProgressWidget.SPINNER || pw == ProgressWidget.INDETERMINATE_SPINNER
+									? size == Size.MINI ? Size.SMALL : size
+									: Size.REGULAR;
 		this.o = o;
 		this.pw = pw;
 	}
 
-	protected ProgressIndicatorLayoutConfiguration(@Nonnull ProgressIndicatorLayoutConfiguration g)
+	protected ProgressIndicatorLayoutConfiguration(@NotNull ProgressIndicatorLayoutConfiguration g)
 	{
 		this.size = g.getSize();
 		this.o = g.getOrientation();
 		this.pw = g.getWidget();
 	}
 
-	public @Nonnull
-	ProgressWidget getWidget()
+	public @NotNull ProgressWidget getWidget()
 	{
 		return pw;
 	}
 
-	public @Nonnull
-	Size getSize()
+	public @NotNull Size getSize()
 	{
 		return size;
 	}
 
-	public @Nonnull
-	Orientation getOrientation()
+	public @NotNull Orientation getOrientation()
 	{
 		return o;
 	}
@@ -81,8 +78,7 @@ public class ProgressIndicatorLayoutConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return pw + " " + size + " " + o;
 	}

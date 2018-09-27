@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.SegmentedButtonWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -49,16 +49,12 @@ public class SegmentedButtonConfiguration
 	extends SegmentedButtonLayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	State state;
+	private final @NotNull State state;
 	private final boolean isSelected;
 	private final boolean isFocused;
-	private final @Nonnull
-	Direction d;	// the direction that the "top" of the button faces
-	private final @Nonnull
-	DividerState leftDividerState;
-	private final @Nonnull
-	DividerState rightDividerState;
+	private final @NotNull Direction d;	// the direction that the "top" of the button faces
+	private final @NotNull DividerState leftDividerState;
+	private final @NotNull DividerState rightDividerState;
 
 	/**
 		The display configuration of a divider between two segments in a segmented control.
@@ -71,15 +67,15 @@ public class SegmentedButtonConfiguration
 		SELECTED
 	}
 
-	public SegmentedButtonConfiguration(@Nonnull SegmentedButtonWidget bw,
-																			@Nonnull Size size,
-																			@Nonnull State state,
+	public SegmentedButtonConfiguration(@NotNull SegmentedButtonWidget bw,
+																			@NotNull Size size,
+																			@NotNull State state,
 																			boolean isSelected,
 																			boolean isFocused,
-																			@Nonnull Direction d,
-																			@Nonnull Position position,
-																			@Nonnull DividerState leftDividerState,
-																			@Nonnull DividerState rightDividerState)
+																			@NotNull Direction d,
+																			@NotNull Position position,
+																			@NotNull DividerState leftDividerState,
+																			@NotNull DividerState rightDividerState)
 	{
 		super(bw, size, position);
 
@@ -91,26 +87,24 @@ public class SegmentedButtonConfiguration
 		this.rightDividerState = rightDividerState;
 	}
 
-	public SegmentedButtonConfiguration(@Nonnull SegmentedButtonLayoutConfiguration g,
-																			@Nonnull State state,
+	public SegmentedButtonConfiguration(@NotNull SegmentedButtonLayoutConfiguration g,
+																			@NotNull State state,
 																			boolean isSelected,
 																			boolean isFocused,
-																			@Nonnull Direction d,
-																			@Nonnull DividerState leftDividerState,
-																			@Nonnull DividerState rightDividerState)
+																			@NotNull Direction d,
+																			@NotNull DividerState leftDividerState,
+																			@NotNull DividerState rightDividerState)
 	{
 		this(g.getWidget(), g.getSize(), state, isSelected, isFocused, d, g.getPosition(), leftDividerState, rightDividerState);
 	}
 
-	public @Nonnull
-	SegmentedButtonConfiguration withWidget(@Nonnull SegmentedButtonWidget widget)
+	public @NotNull SegmentedButtonConfiguration withWidget(@NotNull SegmentedButtonWidget widget)
 	{
 		return new SegmentedButtonConfiguration(widget,
 			getSize(), state, isSelected, isFocused, d, getPosition(), leftDividerState, rightDividerState);
 	}
 
-	public @Nonnull
-	State getState()
+	public @NotNull State getState()
 	{
 		return state;
 	}
@@ -125,20 +119,17 @@ public class SegmentedButtonConfiguration
 		return isFocused;
 	}
 
-	public @Nonnull
-	Direction getDirection()
+	public @NotNull Direction getDirection()
 	{
 		return d;
 	}
 
-	public @Nonnull
-	DividerState getLeftDividerState()
+	public @NotNull DividerState getLeftDividerState()
 	{
 		return leftDividerState;
 	}
 
-	public @Nonnull
-	DividerState getRightDividerState()
+	public @NotNull DividerState getRightDividerState()
 	{
 		return rightDividerState;
 	}
@@ -165,8 +156,7 @@ public class SegmentedButtonConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String fs = isFocused ? " focused" : "";
 		String ss = isSelected ? "S" : "-";

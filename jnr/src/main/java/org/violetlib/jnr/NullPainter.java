@@ -10,7 +10,10 @@ package org.violetlib.jnr;
 
 import java.awt.Graphics;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
+
+import org.violetlib.jnr.ConfiguredPainter;
+import org.violetlib.jnr.LayoutInfo;
 
 /**
 	A painter that does nothing.
@@ -19,8 +22,7 @@ import javax.annotation.*;
 public class NullPainter
 	implements ConfiguredPainter
 {
-	private final @Nullable
-	LayoutInfo layoutInfo;
+	private final @Nullable LayoutInfo layoutInfo;
 
 	public NullPainter(@Nullable LayoutInfo layoutInfo)
 	{
@@ -40,7 +42,7 @@ public class NullPainter
 	}
 
 	@Override
-	public void paint(@Nonnull Graphics g, float x, float y)
+	public void paint(@NotNull Graphics g, float x, float y)
 	{
 	}
 }

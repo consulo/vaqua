@@ -10,7 +10,7 @@ package org.violetlib.jnr;
 
 import java.awt.Graphics;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 /**
 	A painter renders a fixed size rendering at a client specified origin.
@@ -26,5 +26,5 @@ public interface Painter
 		@param y The Y coordinate of the origin of the rendering.
 	*/
 
-	void paint(@Nonnull Graphics g, float x, float y);
+	void paint(@NotNull Graphics g, float x, float y);
 }

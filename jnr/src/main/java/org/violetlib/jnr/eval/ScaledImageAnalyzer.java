@@ -11,7 +11,7 @@ package org.violetlib.jnr.eval;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 /**
 	Analyze an image that may be scaled for HiDPI. Return attributes measured in layout points.
@@ -22,12 +22,10 @@ import javax.annotation.Nonnull;
 public class ScaledImageAnalyzer
 {
 	private final float scale;
-	private final @Nonnull
-	ImageAnalyzer analyzer;
-	private final @Nonnull
-	Rectangle effectiveBounds;
+	private final @NotNull ImageAnalyzer analyzer;
+	private final @NotNull Rectangle effectiveBounds;
 
-	public ScaledImageAnalyzer(int scale, @Nonnull BufferedImage b)
+	public ScaledImageAnalyzer(int scale, @NotNull BufferedImage b)
 	{
 		this.scale = scale;
 		this.analyzer = new ImageAnalyzer(b);

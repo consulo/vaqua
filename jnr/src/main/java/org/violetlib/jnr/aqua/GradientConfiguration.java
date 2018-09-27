@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.GradientWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
@@ -23,25 +23,21 @@ public class GradientConfiguration
 	extends GradientLayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	GradientWidget gw;
-	private final @Nonnull
-	State state;
+	private final @NotNull GradientWidget gw;
+	private final @NotNull State state;
 
-	public GradientConfiguration(@Nonnull GradientWidget gw, @Nonnull State state)
+	public GradientConfiguration(@NotNull GradientWidget gw, @NotNull State state)
 	{
 		this.gw = gw;
 		this.state = state;
 	}
 
-	public @Nonnull
-	GradientWidget getWidget()
+	public @NotNull GradientWidget getWidget()
 	{
 		return gw;
 	}
 
-	public @Nonnull
-	State getState()
+	public @NotNull State getState()
 	{
 		return state;
 	}
@@ -62,8 +58,7 @@ public class GradientConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return gw + " " + state;
 	}

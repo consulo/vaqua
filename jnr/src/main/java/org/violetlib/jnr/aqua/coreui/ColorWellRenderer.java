@@ -13,7 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.color.ColorSpace;
 import java.awt.image.ColorModel;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.ButtonConfiguration;
 import org.violetlib.jnr.impl.BasicRenderer;
@@ -28,19 +28,17 @@ import org.violetlib.jnr.impl.ReusableCompositor;
 public class ColorWellRenderer
 	extends Renderer
 {
-	private final @Nonnull
-	ButtonConfiguration bg;
-	private final @Nonnull
-	Renderer basic;
+	private final @NotNull ButtonConfiguration bg;
+	private final @NotNull Renderer basic;
 
-	public ColorWellRenderer(@Nonnull ButtonConfiguration bg, @Nonnull Renderer basic)
+	public ColorWellRenderer(@NotNull ButtonConfiguration bg, @NotNull Renderer basic)
 	{
 		this.bg = bg;
 		this.basic = basic;
 	}
 
 	@Override
-	public void composeTo(@Nonnull ReusableCompositor compositor)
+	public void composeTo(@NotNull ReusableCompositor compositor)
 	{
 		int rw = compositor.getRasterWidth();
 		int rh = compositor.getRasterHeight();
@@ -97,7 +95,7 @@ public class ColorWellRenderer
 		}
 
 		@Override
-		public void paint(@Nonnull Graphics2D g, float width, float height)
+		public void paint(@NotNull Graphics2D g, float width, float height)
 		{
 			int w = (int) width;
 			int h = (int) height;
@@ -109,7 +107,7 @@ public class ColorWellRenderer
 		}
 
 		@Override
-		public void render(@Nonnull int[] data, int rw, int rh, float w, float h)
+		public void render(@NotNull int[] data, int rw, int rh, float w, float h)
 		{
 			drawRect(data, rw, rh, outer, 0, 0, rw, rh);
 			drawRect(data, rw, rh, inner, 5 * scaleFactor, 5 * scaleFactor, rw - 10 * scaleFactor, rh - 10 * scaleFactor);

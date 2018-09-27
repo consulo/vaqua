@@ -18,6 +18,8 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
+import org.jetbrains.annotations.*;
+
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
 import org.violetlib.jnr.aqua.AquaUIPainter.TitleBarButtonWidget;
@@ -27,8 +29,6 @@ import org.violetlib.jnr.aqua.TitleBarConfiguration.ResizeAction;
 import org.violetlib.jnr.impl.PainterExtension;
 
 import static org.violetlib.jnr.aqua.TitleBarConfiguration.ResizeAction.*;
-
-import javax.annotation.Nonnull;
 
 /**
 	Simulates some features of the Yosemite title bar not supported by the native renderer.
@@ -47,26 +47,21 @@ public class TitleBarPainterExtension
 		If the title bar is inactive, it paints the buttons as inactive except in the pressed state.
 	*/
 
-	protected final @Nonnull
-	TitleBarConfiguration tg;
-	protected final @Nonnull
-	TitleBarLayoutInfo layoutInfo;
+	protected final @NotNull TitleBarConfiguration tg;
+	protected final @NotNull TitleBarLayoutInfo layoutInfo;
 
-	protected final @Nonnull
-	Color RED_COLOR = new Color(255, 96, 88);
-	protected final @Nonnull
-	Color YELLOW_COLOR = new Color(255, 189, 46);
-	protected final @Nonnull
-	Color GREEN_COLOR = new Color(40, 201, 64);
+	protected final @NotNull Color RED_COLOR = new Color(255, 96, 88);
+	protected final @NotNull Color YELLOW_COLOR = new Color(255, 189, 46);
+	protected final @NotNull Color GREEN_COLOR = new Color(40, 201, 64);
 
-	public TitleBarPainterExtension(@Nonnull TitleBarLayoutInfo layoutInfo, @Nonnull TitleBarConfiguration tg)
+	public TitleBarPainterExtension(@NotNull TitleBarLayoutInfo layoutInfo, @NotNull TitleBarConfiguration tg)
 	{
 		this.tg = tg;
 		this.layoutInfo = layoutInfo;
 	}
 
 	@Override
-	public void paint(@Nonnull Graphics2D g, float width, float height)
+	public void paint(@NotNull Graphics2D g, float width, float height)
 	{
 		Rectangle2D bounds = new Rectangle2D.Float(0, 0, width, height);
 		paintIfNeeded(bounds, g, tg.getCloseButtonState(), AquaUIPainter.TitleBarButtonWidget.CLOSE_BOX);
@@ -74,10 +69,10 @@ public class TitleBarPainterExtension
 		paintIfNeeded(bounds, g, tg.getResizeButtonState(), AquaUIPainter.TitleBarButtonWidget.RESIZE_BOX);
 	}
 
-	protected void paintIfNeeded(@Nonnull Rectangle2D bounds,
-															 @Nonnull Graphics2D g,
-															 @Nonnull State state,
-															 @Nonnull TitleBarButtonWidget bw)
+	protected void paintIfNeeded(@NotNull Rectangle2D bounds,
+															 @NotNull Graphics2D g,
+															 @NotNull State state,
+															 @NotNull TitleBarButtonWidget bw)
 	{
 		// Background painting is needed if the title bar is inactive and the button state is not inactive or pressed. Icon
 		// painting is needed if the button state is rollover, or the button state is pressed and the button is the resize

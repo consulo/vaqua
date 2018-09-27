@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.awt.geom.Rectangle2D;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 /**
 	Instances of this class provide information about individual native renderers.
@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 
 	When a widget is rendered, it is rendered into a region defined by the desired layout. This region is defined by the
 	UI, so it should be the same for every implementation of the renderer. Native renderers render into a raster buffer.
-	The relationship between the raster buffer and the target region may be different for different renderers. This
-	class captures the data that expresses that relationship.
+	The relationship between the raster buffer and the target region may be different for different renderers. This class
+	captures the data that expresses that relationship.
 
 	A native renderer may require a raster buffer to have a specific size or a size that is larger than the target region.
 	There are several possible reasons for these requirements. Some native renderers use only a portion of the provided
@@ -52,8 +52,7 @@ public interface RendererDescription
 			and the translation needed to align the rendering properly with the specified target region.
 	*/
 
-	@Nonnull
-	RasterDescription getRasterBounds(@Nonnull Rectangle2D target, int scaleFactor);
+	@NotNull RasterDescription getRasterBounds(@NotNull Rectangle2D target, int scaleFactor);
 
 	/**
 		Indicate whether the renderer has no offset or raster size adjustment.

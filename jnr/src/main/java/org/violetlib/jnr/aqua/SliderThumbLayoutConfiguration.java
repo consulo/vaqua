@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.impl.JNRUtils;
 
@@ -23,15 +23,14 @@ public class SliderThumbLayoutConfiguration
 {
 	private final double thumbPosition;
 
-	public SliderThumbLayoutConfiguration(@Nonnull SliderLayoutConfiguration g, double thumbPosition)
+	public SliderThumbLayoutConfiguration(@NotNull SliderLayoutConfiguration g, double thumbPosition)
 	{
 		super(g);
 
 		this.thumbPosition = thumbPosition;
 	}
 
-	public @Nonnull
-	SliderLayoutConfiguration getSliderLayoutConfiguration()
+	public @NotNull SliderLayoutConfiguration getSliderLayoutConfiguration()
 	{
 		return this;
 	}
@@ -58,8 +57,7 @@ public class SliderThumbLayoutConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return super.toString() + " " + JNRUtils.format2(thumbPosition);
 	}

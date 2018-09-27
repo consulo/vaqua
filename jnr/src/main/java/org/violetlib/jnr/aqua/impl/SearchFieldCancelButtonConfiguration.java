@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua.impl;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.Configuration;
 import org.violetlib.jnr.aqua.LayoutConfiguration;
@@ -24,16 +24,14 @@ public class SearchFieldCancelButtonConfiguration
 	extends LayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	TextFieldConfiguration g;
+	private final @NotNull TextFieldConfiguration g;
 
-	public SearchFieldCancelButtonConfiguration(@Nonnull TextFieldConfiguration g)
+	public SearchFieldCancelButtonConfiguration(@NotNull TextFieldConfiguration g)
 	{
 		this.g = g;
 	}
 
-	public @Nonnull
-	TextFieldConfiguration getTextFieldConfiguration()
+	public @NotNull TextFieldConfiguration getTextFieldConfiguration()
 	{
 		return g;
 	}

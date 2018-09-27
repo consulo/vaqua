@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -23,14 +23,11 @@ import org.violetlib.jnr.aqua.AquaUIPainter.UILayoutDirection;
 public class PopupButtonLayoutConfiguration
 	extends AbstractComboBoxLayoutConfiguration
 {
-	private final @Nonnull
-	PopupButtonWidget bw;
-	private final @Nonnull
-	Size size;
-	private final @Nonnull
-	UILayoutDirection ld;
+	private final @NotNull PopupButtonWidget bw;
+	private final @NotNull Size size;
+	private final @NotNull UILayoutDirection ld;
 
-	public PopupButtonLayoutConfiguration(@Nonnull PopupButtonWidget bw, @Nonnull Size size, @Nonnull UILayoutDirection ld)
+	public PopupButtonLayoutConfiguration(@NotNull PopupButtonWidget bw, @NotNull Size size, @NotNull UILayoutDirection ld)
 	{
 		// Most popup styles do not work in a mini size, most likely because Core UI does not support mini arrows.
 		// Some styles have a fixed height and thus do not support small, either.
@@ -56,20 +53,17 @@ public class PopupButtonLayoutConfiguration
 		this.ld = ld;
 	}
 
-	public @Nonnull
-	PopupButtonWidget getPopupButtonWidget()
+	public @NotNull PopupButtonWidget getPopupButtonWidget()
 	{
 		return bw;
 	}
 
-	public @Nonnull
-	Size getSize()
+	public @NotNull Size getSize()
 	{
 		return size;
 	}
 
-	public @Nonnull
-	UILayoutDirection getLayoutDirection()
+	public @NotNull UILayoutDirection getLayoutDirection()
 	{
 		return ld;
 	}
@@ -129,14 +123,13 @@ public class PopupButtonLayoutConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String lds = ld == UILayoutDirection.RIGHT_TO_LEFT ? " RTL" : "";
 		return bw + " " + size + lds;
 	}
 
-	public static boolean supportsMini(@Nonnull PopupButtonWidget w)
+	public static boolean supportsMini(@NotNull PopupButtonWidget w)
 	{
 		switch (w)
 		{
@@ -154,7 +147,7 @@ public class PopupButtonLayoutConfiguration
 		}
 	}
 
-	public static boolean supportsSmall(@Nonnull PopupButtonWidget w)
+	public static boolean supportsSmall(@NotNull PopupButtonWidget w)
 	{
 		switch (w)
 		{

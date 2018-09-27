@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Alan Snyder.
+ * Copyright (c) 2015-2018 Alan Snyder.
  * All rights reserved.
  *
  * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.util.Arrays;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 /**
 	A compositor that renders into an INT_ARGB_PRE raster from various sources. Multiple renderings can be composed into
@@ -40,12 +40,10 @@ public class ReusableCompositor
 {
 	// TBD: would it be faster to turn everything into an Image and use graphics operations?
 
-	private @Nullable
-	int[] data;	// the actual raster buffer, reallocated as needed to contain at least the required number of pixels.
+	private @Nullable int[] data;	// the actual raster buffer, reallocated as needed to contain at least the required number of pixels.
 		// May be null if the raster has zero size.
 
-	private @Nullable
-	BufferedImage b;	// an image using the raster buffer, created on demand and released when the raster buffer is replaced.
+	private @Nullable BufferedImage b;	// an image using the raster buffer, created on demand and released when the raster buffer is replaced.
 		// May be null if the raster has zero size.
 
 	private boolean isConfigured;	// true if the raster dimensions have been changed but the raster has not been updated
@@ -68,7 +66,12 @@ public class ReusableCompositor
 			@param compositor The compositor.
 		*/
 
-		void composeTo(@Nonnull ReusableCompositor compositor);
+		void composeTo(@NotNull ReusableCompositor compositor);
+	}
+
+	public interface PixelOperator
+	{
+		int combine(int destintationPixel, int sourcePixel);
 	}
 
 	/**
@@ -80,11 +83,32 @@ public class ReusableCompositor
 	}
 
 	/**
+		Create a reusable compositor using the specified buffer.
+	*/
+
+	public ReusableCompositor(@NotNull int[] data, int rw, int rh, int scaleFactor)
+	{
+		if (rw < 0 || rh < 0) {
+			throw new IllegalArgumentException("Invalid negative raster width and/or height");
+		}
+
+		if (scaleFactor < 1 || scaleFactor > 8) {
+			throw new IllegalArgumentException("Invalid or unsupported scale factor");
+		}
+
+		this.data = data;
+		this.rasterWidth = rw;
+		this.rasterHeight = rh;
+		this.scaleFactor = scaleFactor;
+		this.isConfigured = true;
+		this.isEmpty = true;
+	}
+
+	/**
 		Return the INT_ARGB_PRE color model.
 	*/
 
-	public static @Nonnull
-	ColorModel getColorModel()
+	public static @NotNull ColorModel getColorModel()
 	{
 		return BasicImageSupport.getColorModel();
 	}
@@ -132,6 +156,29 @@ public class ReusableCompositor
 	public float getHeight()
 	{
 		return ((float) rasterHeight) / scaleFactor;
+	}
+
+
+	/**
+		Create a compositor that is configured to the same raster size and scale factor as this one.
+	*/
+
+	public @NotNull ReusableCompositor createSimilar()
+	{
+		ReusableCompositor c = new ReusableCompositor();
+		c.reset(rasterWidth, rasterHeight, scaleFactor);
+		return c;
+	}
+
+	/**
+		Create a compositor containing a horizontally flipped copy of this one.
+	*/
+
+	public @NotNull ReusableCompositor createHorizontallyFlippedCopy()
+	{
+		ReusableCompositor output = createSimilar();
+		output.copyHorizontallyFlippedFrom(this);
+		return output;
 	}
 
 	/**
@@ -189,7 +236,7 @@ public class ReusableCompositor
 		@param scaleFactor The scale factor that relates raster pixels to device independent pixels.
 	*/
 
-	public void render(@Nonnull BasicRenderer r, int rasterWidth, int rasterHeight, int scaleFactor)
+	public void render(@NotNull BasicRenderer r, int rasterWidth, int rasterHeight, int scaleFactor)
 	{
 		reset(rasterWidth, rasterHeight, scaleFactor);
 		ensureConfigured();
@@ -209,7 +256,7 @@ public class ReusableCompositor
 			that supports the {@link PixelSource} interface.
 	*/
 
-	public void compose(@Nonnull Object o)
+	public void compose(@NotNull Object o)
 	{
 		if (o instanceof BasicRenderer) {
 			BasicRenderer br = (BasicRenderer) o;
@@ -234,7 +281,7 @@ public class ReusableCompositor
 		@param r The renderer that provides the pixels.
 	*/
 
-	public void composeRenderer(@Nonnull BasicRenderer r)
+	public void composeRenderer(@NotNull BasicRenderer r)
 	{
 		ensureConfigured();
 		if (data != null) {
@@ -259,7 +306,7 @@ public class ReusableCompositor
 		@param dh The height of the raster region.
 	*/
 
-	public void composeRenderer(@Nonnull BasicRenderer r, int dx, int dy, int dw, int dh)
+	public void composeRenderer(@NotNull BasicRenderer r, int dx, int dy, int dw, int dh)
 	{
 		if (dw > 0 && dh > 0) {
 			ReusableCompositor temp = new ReusableCompositor();
@@ -278,13 +325,45 @@ public class ReusableCompositor
 		@param dh The height of the raster region.
 	*/
 
-	public void composePainter(@Nonnull PainterExtension px, int dx, int dy, int dw, int dh)
+	public void composePainter(@NotNull PainterExtension px, int dx, int dy, int dw, int dh)
 	{
 		if (dw > 0 && dh > 0) {
 			ReusableCompositor temp = new ReusableCompositor();
 			temp.reset(dw, dh, scaleFactor);
 			temp.composePainter(px, 0, 0);
 			composeFrom(temp, dx, dy, dw, dh);
+		}
+	}
+
+	/**
+		Copy pixels from a compositor, flipping horizontally.
+
+		@param source The compositor that is the source of the pixels.
+	*/
+
+	private void copyHorizontallyFlippedFrom(@NotNull ReusableCompositor source)
+	{
+		ensureConfigured();
+
+		if (data != null) {
+			int[] sourceData = source.data;
+			if (sourceData != null) {
+				isEmpty = true;
+				if (!source.isEmpty) {
+					int sourceSpan = source.getRasterWidth();
+					for (int row = 0; row < rasterHeight; row++) {
+						for (int col = 0; col < rasterWidth; col++) {
+							int sourceCol = rasterWidth - col - 1;
+							int pixel = sourceData[row * sourceSpan + sourceCol];
+							int alpha = (pixel >> 24) & 0xFF;
+							if (alpha != 0) {
+								isEmpty = false;
+								data[row * rasterWidth + col] = pixel;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -298,7 +377,7 @@ public class ReusableCompositor
 		@param dh The height of the raster region.
 	*/
 
-	public void composeFrom(@Nonnull ReusableCompositor source, int dx, int dy, int dw, int dh)
+	public void composeFrom(@NotNull ReusableCompositor source, int dx, int dy, int dw, int dh)
 	{
 		ensureConfigured();
 
@@ -317,7 +396,7 @@ public class ReusableCompositor
 								int alpha = (pixel >> 24) & 0xFF;
 								if (alpha != 0) {
 									if (alpha != 0xFF) {
-										pixel = combine(data[row * rasterWidth + col], pixel);
+										pixel = JNRUtils.combine(data[row * rasterWidth + col], pixel);
 									}
 									data[row * rasterWidth + col] = pixel;
 								}
@@ -342,7 +421,7 @@ public class ReusableCompositor
 		@param dh The height of the region.
 	*/
 
-	public void composeFrom(@Nonnull ReusableCompositor source, int sx, int sy, int dx, int dy, int dw, int dh)
+	public void composeFrom(@NotNull ReusableCompositor source, int sx, int sy, int dx, int dy, int dw, int dh)
 	{
 		ensureConfigured();
 
@@ -364,7 +443,7 @@ public class ReusableCompositor
 								int alpha = (pixel >> 24) & 0xFF;
 								if (alpha != 0) {
 									if (alpha != 0xFF) {
-										pixel = combine(data[row * rasterWidth + col], pixel);
+										pixel = JNRUtils.combine(data[row * rasterWidth + col], pixel);
 									}
 									data[row * rasterWidth + col] = pixel;
 								}
@@ -380,7 +459,7 @@ public class ReusableCompositor
 		Render a painter extension into the raster, composing with existing contents.
 	*/
 
-	public void composePainter(@Nonnull PainterExtension px, float x, float y)
+	public void composePainter(@NotNull PainterExtension px, float x, float y)
 	{
 		BufferedImage im = getImage();	// this method configures the raster buffer and the buffered image
 
@@ -400,7 +479,7 @@ public class ReusableCompositor
 		A very special case. Allows direct manipulation of the pixels, not just composing.
 	*/
 
-	public void renderFrom(@Nonnull BasicRenderer r)
+	public void renderFrom(@NotNull BasicRenderer r)
 	{
 		ensureConfigured();
 
@@ -409,6 +488,60 @@ public class ReusableCompositor
 			float w = ((float) rasterWidth) / scaleFactor;
 			float h = ((float) rasterHeight) / scaleFactor;
 			r.render(data, rasterWidth, rasterHeight, w, h);
+		}
+	}
+
+	/**
+		Blend pixels from a source compostior into the raster.
+
+		@param source The compositor that is the source of the pixels.
+		@param op The blending operator.
+	*/
+
+	public void blendFrom(@NotNull ReusableCompositor source, @NotNull PixelOperator op)
+	{
+		blendFrom(source, op, 0, 0, rasterWidth, rasterHeight);
+	}
+
+	/**
+		Blend pixels from a source compositor into a region of the raster.
+
+		@param source The compositor that is the source of the pixels.
+		@param op The blending operator.
+		@param dx The X origin of the raster region.
+		@param dy The Y origin of the raster region.
+		@param dw The width of the raster region.
+		@param dh The height of the raster region.
+	*/
+
+	public void blendFrom(@NotNull ReusableCompositor source, @NotNull PixelOperator op, int dx, int dy, int dw, int dh)
+	{
+		ensureConfigured();
+
+		if (data != null) {
+			int[] sourceData = source.data;
+			if (sourceData != null) {
+				int sourceSpan = source.getRasterWidth();
+				for (int rowOffset = 0; rowOffset < dh; rowOffset++) {
+					int row = dy + rowOffset;
+					if (row >= 0 && row < rasterHeight) {
+						for (int colOffset = 0; colOffset < dw; colOffset++) {
+							int col = dx + colOffset;
+							if (col >= 0 && col < rasterWidth) {
+								int destinationIndex = row * rasterWidth + col;
+								int sourcePixel = sourceData[rowOffset * sourceSpan + colOffset];
+								int destinationPixel = data[destinationIndex];
+								int pixel = op.combine(destinationPixel, sourcePixel);
+								int alpha = (pixel >> 24) & 0xFF;
+								if (alpha != 0) {
+									data[destinationIndex] = pixel;
+									isEmpty = false;
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -444,8 +577,7 @@ public class ReusableCompositor
 		@return the image, or null if the raster has zero size.
 	*/
 
-	public @Nullable
-	BufferedImage getImage()
+	public @Nullable BufferedImage getImage()
 	{
 		ensureConfigured();
 
@@ -461,42 +593,12 @@ public class ReusableCompositor
 		@param g The graphics context.
 	*/
 
-	public void paint(@Nonnull Graphics2D g)
+	public void paint(@NotNull Graphics2D g)
 	{
 		BufferedImage im = getImage();
 
 		if (im != null) {
 			g.drawImage(im, null, null);
 		}
-	}
-
-	public static void compose(int[] data, int rw, int rh, int x, int y, int pixel)
-	{
-		int alpha = (pixel >> 24) & 0xFF;
-		if (alpha != 0 && x >= 0 && x < rw && y >= 0 && y < rh) {
-			int index = y * rw + x;
-			int oldPixel = data[index];
-			int newPixel = alpha != 0xFF ? combine(oldPixel, pixel) : pixel;
-			data[index] = newPixel;
-		}
-	}
-
-	private static int combine(int oldPixel, int newPixel)
-	{
-		int oldAlpha = (oldPixel >> 24) & 0xFF;
-		int oldRed = (oldPixel >> 16) & 0xFF;
-		int oldGreen = (oldPixel >> 8) & 0xFF;
-		int oldBlue = (oldPixel >> 0) & 0xFF;
-		int newAlpha = (newPixel >> 24) & 0xFF;
-		int newRed = (newPixel >> 16) & 0xFF;
-		int newGreen = (newPixel >> 8) & 0xFF;
-		int newBlue = (newPixel >> 0) & 0xFF;
-		int f = 255 - newAlpha;
-		int red = (newRed + ((oldRed * f) >> 8)) & 0xFF;
-		int green = (newGreen + ((oldGreen * f) >> 8)) & 0xFF;
-		int blue = (newBlue + ((oldBlue * f) >> 8)) & 0xFF;
-		int alpha =  ((255 * newAlpha + oldAlpha * f) / 255) & 0xFF;
-		int result = (alpha << 24) + (red << 16) + (green << 8) + blue;
-		return result;
 	}
 }

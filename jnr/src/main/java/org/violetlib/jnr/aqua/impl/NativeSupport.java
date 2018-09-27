@@ -16,7 +16,7 @@ import java.io.OutputStream;
 import java.security.AccessControlException;
 import java.util.StringTokenizer;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 /**
 	Provides the native library used by the Aqua Native Painter.
@@ -86,7 +86,7 @@ public class NativeSupport
 		}
 	}
 
-	public static void log(@Nonnull String msg)
+	public static void log(@NotNull String msg)
 	{
 		System.err.println(msg);
 
@@ -96,15 +96,14 @@ public class NativeSupport
 		}
 	}
 
-	private static void reportNativeLibraryError(@Nonnull String msg)
+	private static void reportNativeLibraryError(@NotNull String msg)
 	{
 		String p = System.mapLibraryName(libraryName);
 		String s = "NativeSupport: Unable to load library " + p + ": " + msg;
 		System.err.println(s);
 	}
 
-	private static @Nullable
-	String findNativeLibrary(@Nonnull Class<?> root, @Nonnull String name)
+	private static @Nullable String findNativeLibrary(@NotNull Class<?> root, @NotNull String name)
 		throws IllegalArgumentException
 	{
 		File lf = findNativeLibraryOnPath(name);
@@ -154,8 +153,7 @@ public class NativeSupport
 		}
 	}
 
-	private static @Nullable
-	File findNativeLibraryOnPath(@Nonnull String name)
+	private static @Nullable File findNativeLibraryOnPath(@NotNull String name)
 		throws IllegalArgumentException
 	{
 		if (name.isEmpty()) {
@@ -185,7 +183,7 @@ public class NativeSupport
 		return null;
 	}
 
-	private static void internalInitializeFile(@Nonnull InputStream sin, @Nonnull OutputStream sout)
+	private static void internalInitializeFile(@NotNull InputStream sin, @NotNull OutputStream sout)
 		throws IOException
 	{
 		byte[] buf = new byte[1024];
@@ -213,8 +211,7 @@ public class NativeSupport
 		return 0;
 	}
 
-	public static native @Nullable
-	String getJavaRuntimeSupportVersion();
+	public static native @Nullable String getJavaRuntimeSupportVersion();
 
-	public static native void syslog(@Nonnull String msg);
+	public static native void syslog(@NotNull String msg);
 }

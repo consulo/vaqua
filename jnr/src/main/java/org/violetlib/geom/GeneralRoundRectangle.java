@@ -13,7 +13,7 @@ package org.violetlib.geom;
 import java.awt.Shape;
 import java.awt.geom.*;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 /**
  * A generalized rounded rectangle where each corner has its own arc width and arc height.
@@ -133,8 +133,7 @@ public class GeneralRoundRectangle extends RectangularShape implements Expandabl
     }
 
     @Override
-    public @Nonnull
-	Shape createExpandedShape(float offset)
+    public @NotNull Shape createExpandedShape(float offset)
     {
         return new GeneralRoundRectangle(x - offset, y - offset, width + 2 * offset, height + 2 * offset,
 					tlaw > 0 ? tlaw + offset : 0,
@@ -149,8 +148,7 @@ public class GeneralRoundRectangle extends RectangularShape implements Expandabl
     }
 
     @Override
-    public @Nonnull
-	Shape createTranslatedShape(double x, double y)
+    public @NotNull Shape createTranslatedShape(double x, double y)
     {
         return new GeneralRoundRectangle(x + this.x, y + this.y, width, height,
 					tlaw, tlah, traw, trah, braw, brah, blaw, blah);

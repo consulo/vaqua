@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.TextFieldWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -25,15 +25,14 @@ public class TextFieldConfiguration
 	extends TextFieldLayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	State state;
+	private final @NotNull State state;
 	private final boolean isFocused;
 
-	public TextFieldConfiguration(@Nonnull TextFieldWidget tw,
-																@Nonnull Size sz,
-																@Nonnull State state,
+	public TextFieldConfiguration(@NotNull TextFieldWidget tw,
+																@NotNull Size sz,
+																@NotNull State state,
 																boolean isFocused,
-																@Nonnull UILayoutDirection ld)
+																@NotNull UILayoutDirection ld)
 	{
 		super(tw, sz, ld);
 
@@ -41,8 +40,7 @@ public class TextFieldConfiguration
 		this.isFocused = isFocused;
 	}
 
-	public @Nonnull
-	State getState()
+	public @NotNull State getState()
 	{
 		return state;
 	}
@@ -69,8 +67,7 @@ public class TextFieldConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String fs = isFocused ? " focused" : "";
 		return super.toString() + " " + state + fs;

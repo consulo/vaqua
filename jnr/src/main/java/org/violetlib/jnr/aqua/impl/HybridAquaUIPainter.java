@@ -12,11 +12,12 @@ import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.Painter;
 import org.violetlib.jnr.aqua.*;
 import org.violetlib.jnr.impl.JNRPlatformUtils;
+import org.violetlib.vappearances.VAppearance;
 
 /**
 	A hybrid painter that uses the best available implementation for each given configuration.
@@ -25,20 +26,17 @@ import org.violetlib.jnr.impl.JNRPlatformUtils;
 public class HybridAquaUIPainter
 	implements AquaUIPainter
 {
-	protected final @Nonnull
-	AquaUIPainter viewPainter;
-	protected final @Nonnull
-	AquaUIPainter coreUIPainter;
-	protected final @Nullable
-	AquaUIPainter jrsPainter;
+	protected final @NotNull AquaUIPainter viewPainter;
+	protected final @NotNull AquaUIPainter coreUIPainter;
+	protected final @Nullable AquaUIPainter jrsPainter;
 
-	private final @Nonnull
-	AquaUILayoutInfo layout;
+	private final @NotNull AquaUILayoutInfo layout;
 	private int w;
 	private int h;
+	private @Nullable VAppearance appearance;
 
-	public HybridAquaUIPainter(@Nonnull AquaUIPainter viewPainter,
-														 @Nonnull AquaUIPainter coreUIPainter,
+	public HybridAquaUIPainter(@NotNull AquaUIPainter viewPainter,
+														 @NotNull AquaUIPainter coreUIPainter,
 														 @Nullable AquaUIPainter jrsPainter)
 	{
 		this.viewPainter = viewPainter;
@@ -49,10 +47,15 @@ public class HybridAquaUIPainter
 	}
 
 	@Override
-	public @Nonnull
-	HybridAquaUIPainter copy()
+	public @NotNull HybridAquaUIPainter copy()
 	{
 		return new HybridAquaUIPainter(viewPainter, coreUIPainter, jrsPainter);
+	}
+
+	@Override
+	public void configureAppearance(@NotNull VAppearance appearance)
+	{
+		this.appearance = appearance;
 	}
 
 	@Override
@@ -63,17 +66,18 @@ public class HybridAquaUIPainter
 	}
 
 	@Override
-	public @Nonnull
-	Painter getPainter(@Nonnull Configuration g)
+	public @NotNull Painter getPainter(@NotNull Configuration g)
 		throws UnsupportedOperationException
 	{
 		AquaUIPainter p = select(g);
+		if (appearance != null) {
+			p.configureAppearance(appearance);
+		}
 		p.configure(w, h);
 		return p.getPainter(g);
 	}
 
-	protected @Nonnull
-	AquaUIPainter select(@Nonnull Configuration g)
+	protected @NotNull AquaUIPainter select(@NotNull Configuration g)
 	{
 		// Prefer the JSR painter if defined because it is faster, except where it is not accurate.
 		// Otherwise the core UI painter except where it falls down and the view painter is better.
@@ -127,9 +131,7 @@ public class HybridAquaUIPainter
 			}
 		} else if (g instanceof ProgressIndicatorConfiguration) {
 			ProgressIndicatorConfiguration bg = (ProgressIndicatorConfiguration) g;
-			if (bg.getWidget() == ProgressWidget.BAR && bg.getOrientation() == Orientation.HORIZONTAL) {
-				return coreUIPainter;
-			}
+			return coreUIPainter;
 		} else if (g instanceof IndeterminateProgressIndicatorConfiguration) {
 			IndeterminateProgressIndicatorConfiguration bg = (IndeterminateProgressIndicatorConfiguration) g;
 			return coreUIPainter;
@@ -150,90 +152,90 @@ public class HybridAquaUIPainter
 			return coreUIPainter;
 		}
 
+		// The JRS painter does not support the dark appearance.
+		// TBD: check to see if the dark appearance is being used, if possible
+
+		int platformVersion = JNRPlatformUtils.getPlatformVersion();
+		if (platformVersion >= 101400) {
+			return coreUIPainter;
+		}
+
 		return jrsPainter != null ? jrsPainter : coreUIPainter;
 	}
 
 	@Override
-	public @Nonnull
-	AquaUILayoutInfo getLayoutInfo()
+	public @NotNull AquaUILayoutInfo getLayoutInfo()
 	{
 		return layout;
 	}
 
 	@Override
-	public @Nullable
-	Shape getOutline(@Nonnull LayoutConfiguration g)
+	public @Nullable Shape getOutline(@NotNull LayoutConfiguration g)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getOutline(g);
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle2D getComboBoxEditorBounds(@Nonnull ComboBoxLayoutConfiguration g)
+	public @NotNull Rectangle2D getComboBoxEditorBounds(@NotNull ComboBoxLayoutConfiguration g)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getComboBoxEditorBounds(g);
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle2D getComboBoxIndicatorBounds(@Nonnull ComboBoxLayoutConfiguration g)
+	public @NotNull Rectangle2D getComboBoxIndicatorBounds(@NotNull ComboBoxLayoutConfiguration g)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getComboBoxIndicatorBounds(g);
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle2D getPopupButtonContentBounds(@Nonnull PopupButtonLayoutConfiguration g)
+	public @NotNull Rectangle2D getPopupButtonContentBounds(@NotNull PopupButtonLayoutConfiguration g)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getPopupButtonContentBounds(g);
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle2D getSliderThumbBounds(@Nonnull SliderLayoutConfiguration g, double thumbPosition)
+	public @NotNull Rectangle2D getSliderThumbBounds(@NotNull SliderLayoutConfiguration g, double thumbPosition)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getSliderThumbBounds(g, thumbPosition);
 	}
 
 	@Override
-	public double getSliderThumbPosition(@Nonnull SliderLayoutConfiguration g, int x, int y)
+	public double getSliderThumbPosition(@NotNull SliderLayoutConfiguration g, int x, int y)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getSliderThumbPosition(g, x, y);
 	}
 
 	@Override
-	public float getScrollBarThumbPosition(@Nonnull ScrollBarThumbLayoutConfiguration g, boolean useExtent)
+	public float getScrollBarThumbPosition(@NotNull ScrollBarThumbLayoutConfiguration g, boolean useExtent)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getScrollBarThumbPosition(g, useExtent);
 	}
 
 	@Override
-	public int getScrollBarThumbHit(@Nonnull ScrollBarThumbConfiguration g)
+	public int getScrollBarThumbHit(@NotNull ScrollBarThumbConfiguration g)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getScrollBarThumbHit(g);
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle2D getSliderLabelBounds(@Nonnull SliderLayoutConfiguration g,
+	public @NotNull Rectangle2D getSliderLabelBounds(@NotNull SliderLayoutConfiguration g,
 																									 double thumbPosition,
-																									 @Nonnull Dimension size)
+																									 @NotNull Dimension size)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getSliderLabelBounds(g, thumbPosition, size);
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String s = "Hybrid " + viewPainter + "+" + coreUIPainter;
 		if (jrsPainter != null) {

@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
 
@@ -22,18 +22,16 @@ public class ScrollColumnSizerConfiguration
 	extends ScrollColumnSizerLayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	State state;
+	private final @NotNull State state;
 	private final boolean isFocused;
 
-	public ScrollColumnSizerConfiguration(@Nonnull State state, boolean isFocused)
+	public ScrollColumnSizerConfiguration(@NotNull State state, boolean isFocused)
 	{
 		this.state = state;
 		this.isFocused = isFocused;
 	}
 
-	public @Nonnull
-	State getState()
+	public @NotNull State getState()
 	{
 		return state;
 	}
@@ -59,8 +57,7 @@ public class ScrollColumnSizerConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String fs = isFocused ? " focused" : "";
 		return super.toString() + " " + state + fs;

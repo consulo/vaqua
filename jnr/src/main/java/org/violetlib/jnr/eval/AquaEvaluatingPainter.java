@@ -11,7 +11,7 @@ package org.violetlib.jnr.eval;
 import java.awt.Rectangle;
 import java.awt.Shape;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.NullPainter;
@@ -30,15 +30,13 @@ public abstract class AquaEvaluatingPainter
 	implements AquaUIPainter
 {
 	@Override
-	public @Nonnull
-	Shape getOutline(@Nonnull LayoutConfiguration g)
+	public @NotNull Shape getOutline(@NotNull LayoutConfiguration g)
 	{
 		return new Rectangle(0, 0, 0, 0);
 	}
 
 	@Override
-	public @Nonnull
-	Painter getPainter(@Nonnull Configuration g)
+	public @NotNull Painter getPainter(@NotNull Configuration g)
 		throws UnsupportedOperationException
 	{
 		LayoutInfo layoutInfo = uiLayout.getLayoutInfo((LayoutConfiguration) g);
@@ -46,5 +44,5 @@ public abstract class AquaEvaluatingPainter
 		return new NullPainter(layoutInfo);
 	}
 
-	protected abstract void evaluate(@Nonnull Configuration g, @Nonnull LayoutInfo layoutInfo);
+	protected abstract void evaluate(@NotNull Configuration g, @NotNull LayoutInfo layoutInfo);
 }

@@ -11,7 +11,7 @@ package org.violetlib.geom;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 /**
 	An expandable outline in the form of an ellipse.
@@ -42,8 +42,7 @@ public final class ExpandableEllipseOutline
 	}
 
 	@Override
-	public @Nonnull
-	Shape getShape(float offset)
+	public @NotNull Shape getShape(float offset)
 	{
 		double nx = x - offset;
 		double ny = y - offset;

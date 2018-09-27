@@ -16,13 +16,20 @@ import java.awt.geom.RoundRectangle2D;
 
 import org.violetlib.geom.GeneralRoundRectangle;
 import org.violetlib.jnr.Insetter;
+import org.violetlib.jnr.aqua.AquaUIPainter.ButtonWidget;
+import org.violetlib.jnr.aqua.AquaUIPainter.ComboBoxWidget;
+import org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget;
+import org.violetlib.jnr.aqua.AquaUIPainter.Position;
+import org.violetlib.jnr.aqua.AquaUIPainter.SegmentedButtonWidget;
+import org.violetlib.jnr.aqua.AquaUIPainter.Size;
+import org.violetlib.jnr.aqua.AquaUIPainter.SliderWidget;
+import org.violetlib.jnr.aqua.AquaUIPainter.TextFieldWidget;
 import org.violetlib.jnr.aqua.*;
-import org.violetlib.jnr.aqua.AquaUIPainter.*;
 
-import static org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget.*;
+import org.jetbrains.annotations.*;
+
 import static org.violetlib.jnr.aqua.AquaUIPainter.ButtonWidget.*;
-
-import javax.annotation.*;
+import static org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget.*;
 
 /**
 	Provides outlines for widgets that can be used to draw focus rings. This version for OS 10.10 (Yosemite).
@@ -31,16 +38,15 @@ import javax.annotation.*;
 public class YosemiteOutliner
 	extends UIOutliner
 {
-	protected final @Nonnull
-	YosemiteLayoutInfo uiLayout;
+	protected final @NotNull YosemiteLayoutInfo uiLayout;
 
-	public YosemiteOutliner(@Nonnull YosemiteLayoutInfo uiLayout)
+	public YosemiteOutliner(@NotNull YosemiteLayoutInfo uiLayout)
 	{
 		this.uiLayout = uiLayout;
 	}
 
 	@Override
-	protected Shape getSliderThumbOutline(@Nonnull Rectangle2D bounds, @Nonnull SliderThumbLayoutConfiguration g)
+	protected Shape getSliderThumbOutline(@NotNull Rectangle2D bounds, @NotNull SliderThumbLayoutConfiguration g)
 	{
 		Insetter insets = uiLayout.getSliderThumbInsets(g, g.getThumbPosition());
 		Rectangle2D tb = insets.applyToBounds2D(bounds);
@@ -62,8 +68,7 @@ public class YosemiteOutliner
 	}
 
 	@Override
-	protected @Nullable
-	Shape getButtonOutline(@Nonnull Rectangle2D bounds, @Nonnull ButtonLayoutConfiguration g)
+	protected @Nullable Shape getButtonOutline(@NotNull Rectangle2D bounds, @NotNull ButtonLayoutConfiguration g)
 	{
 		ButtonWidget bw = g.getButtonWidget();
 		Size sz = g.getSize();
@@ -112,11 +117,10 @@ public class YosemiteOutliner
 			return bounds;
 		}
 
-		// A toolbar item is not strictly rectangular
-		// TBD
-
 		if (bw == BUTTON_TOOLBAR_ITEM) {
-			return bounds;
+			double corner = 7;
+			return new GeneralRoundRectangle(x, y, width, height,
+				corner, corner, corner, corner, 0, 0, 0, 0);
 		}
 
 		// all others are rounded rectangles
@@ -126,7 +130,7 @@ public class YosemiteOutliner
 		if (bw == BUTTON_PUSH) {
 			corner = 6;
 			x += size2D(sz, 0.5f, 0.5f, 0.5f);
-			y += size2D(sz, 0.5f, 1, 0.5f);
+			y += size2D(sz, 0.5f, 0.5f, 0.5f);
 			height += size2D(sz, -2, -2, -2);
 			width += size2D(sz, -1, -1, -1);
 		} else if (bw == BUTTON_BEVEL_ROUND) {
@@ -142,8 +146,8 @@ public class YosemiteOutliner
 			width += size2D(sz, -2, -2, -1);
 			height += size2D(sz, -2, -2, -2);
 		} else if (bw == BUTTON_INLINE) {
-			height -= 0.5;
-			corner = 14;
+			height -= 1;
+			corner = 16;
 		} else if (bw == BUTTON_RECESSED) {
 			corner = 6;
 		} else if (bw == BUTTON_TEXTURED || bw == BUTTON_TEXTURED_TOOLBAR) {
@@ -165,8 +169,7 @@ public class YosemiteOutliner
 	}
 
 	@Override
-	protected @Nullable
-	Shape getSegmentedButtonOutline(@Nonnull Rectangle2D bounds, @Nonnull SegmentedButtonLayoutConfiguration g)
+	protected @Nullable Shape getSegmentedButtonOutline(@NotNull Rectangle2D bounds, @NotNull SegmentedButtonLayoutConfiguration g)
 	{
 		SegmentedButtonWidget bw = g.getWidget();
 		Size sz = g.getSize();
@@ -179,17 +182,18 @@ public class YosemiteOutliner
 
 		boolean isLeft = pos == Position.FIRST;
 
-		// Cannot use rounded corners for left/right positions until we have support for half-rounded rectangle shapes.
-		// Could do the only position as rounded rectangles.
+		double corner = 8;
 
 		switch (bw)
 		{
 			case BUTTON_TAB:
 			case BUTTON_SEGMENTED:
 			case BUTTON_SEGMENTED_SEPARATED:
+				corner = 6;
+
 				x += size2D(sz, isLeft ? 0.5f : 0, 0, 0);
-				y += size2D(sz, 0.5f, 1, 1);
-				height += size2D(sz, -2, -3, -2);
+				y += size2D(sz, 0.5f, 0.5f, 0.5f);
+				height += size2D(sz, -2, -2, -2);
 				width += size2D(sz, -0.5f, 0, 0);
 
 				if (sz == Size.SMALL || sz == Size.MINI) {
@@ -205,27 +209,55 @@ public class YosemiteOutliner
 				}
 
 				break;
+
 			case BUTTON_SEGMENTED_INSET:
 				break;
+
 			case BUTTON_SEGMENTED_SCURVE:
 			case BUTTON_SEGMENTED_TEXTURED:
-			case BUTTON_SEGMENTED_TEXTURED_TOOLBAR:
 			case BUTTON_SEGMENTED_TOOLBAR:
-			case BUTTON_SEGMENTED_TEXTURED_SEPARATED:
-			case BUTTON_SEGMENTED_TEXTURED_SEPARATED_TOOLBAR:
 				width += size2D(sz, 0, 0, 0);
 				height += size2D(sz, -1, -1, -1);
 				break;
-			case BUTTON_SEGMENTED_SMALL_SQUARE:
+
+			case BUTTON_SEGMENTED_TEXTURED_TOOLBAR:
+				width += size2D(sz, 0, 0, 0);
+				height += size2D(sz, -1, -2, -1);
 				break;
+
+			case BUTTON_SEGMENTED_TEXTURED_SEPARATED:
+			case BUTTON_SEGMENTED_TEXTURED_SEPARATED_TOOLBAR:
+				if (pos == Position.ONLY || pos == Position.FIRST) {
+					width -= 0.5;
+				}
+				if (pos == Position.MIDDLE) {
+					x -= 0.5;
+				}
+				height -= size2D(sz, 1, 0.5f, 1);
+				break;
+
+			case BUTTON_SEGMENTED_SMALL_SQUARE:
+				corner = 0;
+				break;
+		}
+
+		if (pos == Position.ONLY || bw.isSeparated()) {
+			return new RoundRectangle2D.Double(x, y, width, height, corner, corner);
+		}
+
+		if (pos == Position.FIRST) {
+			return new GeneralRoundRectangle(x, y, width, height, corner, corner, 0, 0, 0, 0, corner, corner);
+		}
+
+		if (pos == Position.LAST) {
+			return new GeneralRoundRectangle(x, y, width, height, 0, 0, corner, corner, corner, corner, 0, 0);
 		}
 
 		return new Rectangle2D.Double(x, y, width, height);
 	}
 
 	@Override
-	protected @Nullable
-	Shape getComboBoxOutline(@Nonnull Rectangle2D bounds, @Nonnull ComboBoxLayoutConfiguration g)
+	protected @Nullable Shape getComboBoxOutline(@NotNull Rectangle2D bounds, @NotNull ComboBoxLayoutConfiguration g)
 	{
 		double x = bounds.getX();
 		double y = bounds.getY();
@@ -259,8 +291,7 @@ public class YosemiteOutliner
 	}
 
 	@Override
-	protected @Nullable
-	Shape getPopUpButtonOutline(@Nonnull Rectangle2D bounds, @Nonnull PopupButtonLayoutConfiguration g)
+	protected @Nullable Shape getPopUpButtonOutline(@NotNull Rectangle2D bounds, @NotNull PopupButtonLayoutConfiguration g)
 	{
 		// On Yosemite, the square style bombs if the mini size is selected.
 		// See rendering code, which must be consistent.
@@ -334,29 +365,25 @@ public class YosemiteOutliner
 	}
 
 	@Override
-	protected @Nullable
-	Shape getToolBarItemWellOutline(@Nonnull Rectangle2D bounds, @Nonnull ToolBarItemWellLayoutConfiguration g)
+	protected @Nullable Shape getToolBarItemWellOutline(@NotNull Rectangle2D bounds, @NotNull ToolBarItemWellLayoutConfiguration g)
 	{
 		return null;
 	}
 
 	@Override
-	protected @Nullable
-	Shape getTitleBarOutline(@Nonnull Rectangle2D bounds, @Nonnull TitleBarLayoutConfiguration g)
+	protected @Nullable Shape getTitleBarOutline(@NotNull Rectangle2D bounds, @NotNull TitleBarLayoutConfiguration g)
 	{
 		return null;
 	}
 
 	@Override
-	protected @Nullable
-	Shape getSliderOutline(@Nonnull Rectangle2D bounds, @Nonnull SliderLayoutConfiguration g)
+	protected @Nullable Shape getSliderOutline(@NotNull Rectangle2D bounds, @NotNull SliderLayoutConfiguration g)
 	{
 		return null;
 	}
 
 	@Override
-	protected @Nullable
-	Shape getSpinnerArrowsOutline(@Nonnull Rectangle2D bounds, @Nonnull SpinnerArrowsLayoutConfiguration g)
+	protected @Nullable Shape getSpinnerArrowsOutline(@NotNull Rectangle2D bounds, @NotNull SpinnerArrowsLayoutConfiguration g)
 	{
 		Size sz = g.getSize();
 		double x = bounds.getX() + size2D(sz, 1, 1, 1);
@@ -368,29 +395,25 @@ public class YosemiteOutliner
 	}
 
 	@Override
-	protected @Nullable
-	Shape getSplitPaneDividerOutline(@Nonnull Rectangle2D bounds, @Nonnull SplitPaneDividerLayoutConfiguration g)
+	protected @Nullable Shape getSplitPaneDividerOutline(@NotNull Rectangle2D bounds, @NotNull SplitPaneDividerLayoutConfiguration g)
 	{
 		return null;
 	}
 
 	@Override
-	protected @Nullable
-	Shape getGroupBoxOutline(@Nonnull Rectangle2D bounds, @Nonnull GroupBoxLayoutConfiguration g)
+	protected @Nullable Shape getGroupBoxOutline(@NotNull Rectangle2D bounds, @NotNull GroupBoxLayoutConfiguration g)
 	{
 		return null;
 	}
 
 	@Override
-	protected @Nullable
-	Shape getListBoxOutline(@Nonnull Rectangle2D bounds, @Nonnull ListBoxLayoutConfiguration g)
+	protected @Nullable Shape getListBoxOutline(@NotNull Rectangle2D bounds, @NotNull ListBoxLayoutConfiguration g)
 	{
 		return null;
 	}
 
 	@Override
-	protected @Nullable
-	Shape getTextFieldOutline(@Nonnull Rectangle2D bounds, @Nonnull TextFieldLayoutConfiguration g)
+	protected @Nullable Shape getTextFieldOutline(@NotNull Rectangle2D bounds, @NotNull TextFieldLayoutConfiguration g)
 	{
 		double x = bounds.getX();
 		double y = bounds.getY();
@@ -419,29 +442,25 @@ public class YosemiteOutliner
 	}
 
 	@Override
-	protected @Nullable
-	Shape getScrollBarOutline(@Nonnull Rectangle2D bounds, @Nonnull ScrollBarLayoutConfiguration g)
+	protected @Nullable Shape getScrollBarOutline(@NotNull Rectangle2D bounds, @NotNull ScrollBarLayoutConfiguration g)
 	{
 		return null;
 	}
 
 	@Override
-	protected @Nullable
-	Shape getScrollColumnSizerOutline(@Nonnull Rectangle2D bounds, @Nonnull ScrollColumnSizerLayoutConfiguration g)
+	protected @Nullable Shape getScrollColumnSizerOutline(@NotNull Rectangle2D bounds, @NotNull ScrollColumnSizerLayoutConfiguration g)
 	{
 		return null;
 	}
 
 	@Override
-	protected @Nullable
-	Shape getProgressIndicatorOutline(@Nonnull Rectangle2D bounds, @Nonnull ProgressIndicatorLayoutConfiguration g)
+	protected @Nullable Shape getProgressIndicatorOutline(@NotNull Rectangle2D bounds, @NotNull ProgressIndicatorLayoutConfiguration g)
 	{
 		return null;
 	}
 
 	@Override
-	protected @Nullable
-	Shape getTableColumnHeaderOutline(@Nonnull Rectangle2D bounds, @Nonnull TableColumnHeaderLayoutConfiguration g)
+	protected @Nullable Shape getTableColumnHeaderOutline(@NotNull Rectangle2D bounds, @NotNull TableColumnHeaderLayoutConfiguration g)
 	{
 		return null;
 	}

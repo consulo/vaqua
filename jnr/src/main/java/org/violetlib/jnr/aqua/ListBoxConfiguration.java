@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
 
@@ -22,20 +22,18 @@ public class ListBoxConfiguration
 	extends ListBoxLayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	State state;
+	private final @NotNull State state;
 	private final boolean isFocused;
 	private final boolean isFrameOnly;
 
-	public ListBoxConfiguration(@Nonnull State state, boolean isFocused, boolean isFrameOnly)
+	public ListBoxConfiguration(@NotNull State state, boolean isFocused, boolean isFrameOnly)
 	{
 		this.state = state;
 		this.isFocused = isFocused;
 		this.isFrameOnly = isFrameOnly;
 	}
 
-	public @Nonnull
-	State getState()
+	public @NotNull State getState()
 	{
 		return state;
 	}
@@ -66,8 +64,7 @@ public class ListBoxConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String fs = isFocused ? " focused" : "";
 		String frs = isFrameOnly ? " frame only" : "";

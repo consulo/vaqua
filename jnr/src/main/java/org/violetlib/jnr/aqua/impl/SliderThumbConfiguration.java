@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua.impl;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.Configuration;
 import org.violetlib.jnr.aqua.LayoutConfiguration;
@@ -24,16 +24,14 @@ public class SliderThumbConfiguration
 	extends LayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	SliderConfiguration g;
+	private final @NotNull SliderConfiguration g;
 
-	public SliderThumbConfiguration(@Nonnull SliderConfiguration g)
+	public SliderThumbConfiguration(@NotNull SliderConfiguration g)
 	{
 		this.g = g;
 	}
 
-	public @Nonnull
-	SliderConfiguration getSliderConfiguration()
+	public @NotNull SliderConfiguration getSliderConfiguration()
 	{
 		return g;
 	}

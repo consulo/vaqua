@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Alan Snyder.
+ * Copyright (c) 2015-2018 Alan Snyder.
  * All rights reserved.
  *
  * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
@@ -10,10 +10,10 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
-
-import org.violetlib.jnr.aqua.AquaUIPainter.TitleBarWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
+import org.violetlib.jnr.aqua.AquaUIPainter.TitleBarWidget;
+
+import org.jetbrains.annotations.*;
 
 /**
 	A configuration for a title bar.
@@ -23,35 +23,30 @@ public class TitleBarConfiguration
 	extends TitleBarLayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	State titleBarState;
-	private final @Nonnull
-	State closeButtonState;
-	private final @Nonnull
-	State minimizeButtonState;
-	private final @Nonnull
-	State resizeButtonState;
-	private final @Nonnull
-	ResizeAction resizeAction;
+	private final @NotNull State titleBarState;
+	private final @NotNull State closeButtonState;
+	private final @NotNull State minimizeButtonState;
+	private final @NotNull State resizeButtonState;
+	private final @NotNull ResizeAction resizeAction;
 	private final boolean isDirty;
 
 	/**
-	 * The possible actions corresponding to the resize button on a title bar.
-	 */
+		The possible actions corresponding to the resize button on a title bar.
+	*/
 	public enum ResizeAction
 	{
 		FULL_SCREEN_ENTER,
 		FULL_SCREEN_EXIT,
-		ZOOM_ENTER,				// Obsolete in Yosemite
-		ZOOM_EXIT					// Obsolete in Yosemite
+		ZOOM_ENTER,
+		ZOOM_EXIT
 	}
 
-	public TitleBarConfiguration(@Nonnull TitleBarWidget tw,
-															 @Nonnull State titleBarState,
-															 @Nonnull State closeButtonState,
-															 @Nonnull State minimizeButtonState,
-															 @Nonnull State resizeButtonState,
-															 @Nonnull ResizeAction resizeAction,
+	public TitleBarConfiguration(@NotNull TitleBarWidget tw,
+															 @NotNull State titleBarState,
+															 @NotNull State closeButtonState,
+															 @NotNull State minimizeButtonState,
+															 @NotNull State resizeButtonState,
+															 @NotNull ResizeAction resizeAction,
 															 boolean isDirty)
 	{
 		super(tw);
@@ -86,32 +81,27 @@ public class TitleBarConfiguration
 		this.isDirty = isDirty;
 	}
 
-	public @Nonnull
-	State getTitleBarState()
+	public @NotNull State getTitleBarState()
 	{
 		return titleBarState;
 	}
 
-	public @Nonnull
-	State getCloseButtonState()
+	public @NotNull State getCloseButtonState()
 	{
 		return closeButtonState;
 	}
 
-	public @Nonnull
-	State getMinimizeButtonState()
+	public @NotNull State getMinimizeButtonState()
 	{
 		return minimizeButtonState;
 	}
 
-	public @Nonnull
-	State getResizeButtonState()
+	public @NotNull State getResizeButtonState()
 	{
 		return resizeButtonState;
 	}
 
-	public @Nonnull
-	ResizeAction getResizeAction()
+	public @NotNull ResizeAction getResizeAction()
 	{
 		return resizeAction;
 	}
@@ -129,11 +119,11 @@ public class TitleBarConfiguration
 		if (!super.equals(o)) return false;
 		TitleBarConfiguration that = (TitleBarConfiguration) o;
 		return titleBarState == that.titleBarState
-			&& closeButtonState == that.closeButtonState
-			&& minimizeButtonState == that.minimizeButtonState
-			&& resizeButtonState == that.resizeButtonState
-			&& resizeAction == that.resizeAction
-			&& isDirty == that.isDirty;
+						 && closeButtonState == that.closeButtonState
+						 && minimizeButtonState == that.minimizeButtonState
+						 && resizeButtonState == that.resizeButtonState
+						 && resizeAction == that.resizeAction
+						 && isDirty == that.isDirty;
 	}
 
 	@Override
@@ -143,11 +133,10 @@ public class TitleBarConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String ds = isDirty ? " dirty" : "";
 		return super.toString() + " " + titleBarState + ds + " close:" + closeButtonState + " minimize:" + minimizeButtonState
-			+ " resize:" + resizeButtonState + " " + resizeAction;
+						 + " resize:" + resizeButtonState + " " + resizeAction;
 	}
 }

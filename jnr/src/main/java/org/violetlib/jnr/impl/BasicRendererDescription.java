@@ -11,7 +11,7 @@ package org.violetlib.jnr.impl;
 import java.awt.geom.Rectangle2D;
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 /**
 	A renderer description based on fixed offsets and raster size adjustments.
@@ -87,8 +87,7 @@ public final class BasicRendererDescription
 	}
 
 	@Override
-	public @Nonnull
-	RasterDescription getRasterBounds(@Nonnull Rectangle2D target, int scaleFactor)
+	public @NotNull RasterDescription getRasterBounds(@NotNull Rectangle2D target, int scaleFactor)
 	{
 		float x = round(target.getX() + xOffset, scaleFactor);
 		float y = round(target.getY() + yOffset, scaleFactor);
@@ -104,8 +103,7 @@ public final class BasicRendererDescription
 		return ((float) scaledRounded) / scaleFactor;
 	}
 
-	public @Nonnull
-	BasicRendererDescription withAdjustments(float x, float y, float w, float h)
+	public @NotNull BasicRendererDescription withAdjustments(float x, float y, float w, float h)
 	{
 		return new BasicRendererDescription(xOffset+x, yOffset+y, widthAdjustment+w, heightAdjustment+h);
 	}

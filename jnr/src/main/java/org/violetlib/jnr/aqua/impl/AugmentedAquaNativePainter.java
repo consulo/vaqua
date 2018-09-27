@@ -8,8 +8,6 @@
 
 package org.violetlib.jnr.aqua.impl;
 
-import javax.annotation.*;
-
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.aqua.ScrollBarConfiguration;
 import org.violetlib.jnr.aqua.TableColumnHeaderConfiguration;
@@ -17,6 +15,8 @@ import org.violetlib.jnr.aqua.TextFieldConfiguration;
 import org.violetlib.jnr.aqua.TitleBarConfiguration;
 import org.violetlib.jnr.impl.PainterExtension;
 import org.violetlib.jnr.impl.Renderer;
+
+import org.jetbrains.annotations.*;
 
 /**
 	This class augments the native painting code with painting to work around deficiencies in the native painting code.
@@ -26,15 +26,13 @@ public class AugmentedAquaNativePainter
 	extends AquaNativePainter
 {
 	@Override
-	public @Nonnull
-	AugmentedAquaNativePainter copy()
+	public @NotNull AugmentedAquaNativePainter copy()
 	{
 		return new AugmentedAquaNativePainter();
 	}
 
 	@Override
-	public @Nonnull
-	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g)
+	public @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g)
 	{
 		// Do not use the native renderer. Use our simulation instead.
 
@@ -43,8 +41,7 @@ public class AugmentedAquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getTitleBarRenderer(@Nonnull TitleBarConfiguration g)
+	protected @NotNull Renderer getTitleBarRenderer(@NotNull TitleBarConfiguration g)
 	{
 		Renderer r = super.getTitleBarRenderer(g);
 		PainterExtension px = getTitleBarButtonPainter(g);
@@ -55,15 +52,13 @@ public class AugmentedAquaNativePainter
 		return Renderer.createCompositeRenderer(r, pr);
 	}
 
-	protected @Nullable
-	PainterExtension getTitleBarButtonPainter(@Nonnull TitleBarConfiguration g)
+	protected @Nullable PainterExtension getTitleBarButtonPainter(@NotNull TitleBarConfiguration g)
 	{
 		return new TitleBarPainterExtension(getTitleBarLayoutInfo(), g);
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getScrollBarRenderer(@Nonnull ScrollBarConfiguration g)
+	protected @NotNull Renderer getScrollBarRenderer(@NotNull ScrollBarConfiguration g)
 	{
 		ScrollBarWidget sw = g.getWidget();
 
@@ -76,15 +71,14 @@ public class AugmentedAquaNativePainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getTextFieldRenderer(@Nonnull TextFieldConfiguration g)
+	protected @NotNull Renderer getTextFieldRenderer(@NotNull TextFieldConfiguration g)
 	{
 		Renderer r = super.getTextFieldRenderer(g);
 		TextFieldWidget w = g.getWidget();
 		if (w.hasMenu()) {
 			Insetter insets = uiLayout.getSearchButtonPaintingInsets(g);
 			if (insets != null) {
-				PainterExtension px = new SearchFieldMenuIconPainter(g, insets);
+				PainterExtension px = new SearchFieldMenuIconPainter(g, insets, appearance);
 				Renderer pr = Renderer.create(px);
 				return Renderer.createCompositeRenderer(r, pr);
 			}
@@ -93,8 +87,7 @@ public class AugmentedAquaNativePainter
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return "Augmented " + super.toString();
 	}

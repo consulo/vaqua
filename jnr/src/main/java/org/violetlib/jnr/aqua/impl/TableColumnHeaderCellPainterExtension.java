@@ -15,7 +15,7 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.TableColumnHeaderConfiguration;
@@ -35,19 +35,17 @@ public class TableColumnHeaderCellPainterExtension
 
 	// Java expects a divider to be painted along the right edge.
 
-	protected final @Nonnull
-	TableColumnHeaderConfiguration tg;
+	protected final @NotNull TableColumnHeaderConfiguration tg;
 
-	protected @Nonnull
-	Color COLOR = new Color(60, 60, 60, 34);	// works with standard tables and Finder tables
+	protected @NotNull Color COLOR = new Color(60, 60, 60, 34);	// works with standard tables and Finder tables
 
-	public TableColumnHeaderCellPainterExtension(@Nonnull TableColumnHeaderConfiguration g)
+	public TableColumnHeaderCellPainterExtension(@NotNull TableColumnHeaderConfiguration g)
 	{
 		this.tg = g;
 	}
 
 	@Override
-	public void paint(@Nonnull Graphics2D g, float width, float height)
+	public void paint(@NotNull Graphics2D g, float width, float height)
 	{
 		if (width == 0 || height == 0) {
 			return;

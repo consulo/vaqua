@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.awt.Graphics2D;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 /**
 	A painter extension is a way of extending the behavior of a native painter using AWT graphics.
@@ -26,5 +26,5 @@ public interface PainterExtension
 		@param height The height of the region to draw into, in graphics coordinates (device independent).
 	*/
 
-	void paint(@Nonnull Graphics2D g, float width, float height);
+	void paint(@NotNull Graphics2D g, float width, float height);
 }

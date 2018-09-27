@@ -10,8 +10,6 @@ package org.violetlib.jnr.aqua.jrs;
 
 import java.awt.geom.Rectangle2D;
 
-import javax.annotation.*;
-
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.Painter;
@@ -28,6 +26,9 @@ import org.violetlib.jnr.impl.ReusableCompositor;
 import org.violetlib.jnr.impl.jrs.JRSUIConstants;
 import org.violetlib.jnr.impl.jrs.JRSUIControl;
 import org.violetlib.jnr.impl.jrs.JRSUIState;
+import org.violetlib.vappearances.VAppearance;
+
+import org.jetbrains.annotations.*;
 
 /**
 	A painter that renders Aqua widgets using the native rendering used by the Aqua look and feel, by way of the JDK
@@ -39,8 +40,7 @@ public class JRSPainter
 {
 	protected final JRSRendererMaker maker;
 
-	private static final @Nonnull
-	JRSRendererDescriptions rendererDescriptions = new JRSRendererDescriptions();
+	private static final @NotNull JRSRendererDescriptions rendererDescriptions = new JRSRendererDescriptions();
 
 	public JRSPainter()
 		throws UnsupportedOperationException
@@ -58,16 +58,15 @@ public class JRSPainter
 	}
 
 	@Override
-	public @Nonnull
-	JRSPainter copy()
+	public @NotNull JRSPainter copy()
 	{
 		return new JRSPainter();
 	}
 
 	@Override
-	protected @Nonnull
-	Painter getPainter(@Nonnull Configuration g,
-																				@Nonnull Renderer r,
+	protected @NotNull Painter getPainter(@NotNull Configuration g,
+																				@NotNull VAppearance appearance,
+																				@NotNull Renderer r,
 																				float width,
 																				float height)
 	{
@@ -77,15 +76,15 @@ public class JRSPainter
 			if (!jr.isAnimating()) {
 				JRSUIState state = jr.getControlState();
 				if (state != null) {
-					return new JRSRenderedPainter(state, r, width, height);
+					return new JRSRenderedPainter(state, appearance, r, width, height);
 				}
 			}
 		}
 
-		return super.getPainter(g, r, width, height);
+		return super.getPainter(g, appearance, r, width, height);
 	}
 
-	protected void configureSize(@Nonnull Size sz)
+	protected void configureSize(@NotNull Size sz)
 	{
 		switch (sz) {
 			case REGULAR:
@@ -105,7 +104,7 @@ public class JRSPainter
 		}
 	}
 
-	protected void configureState(@Nonnull State st)
+	protected void configureState(@NotNull State st)
 	{
 		switch (st) {
 			case ACTIVE:
@@ -132,12 +131,12 @@ public class JRSPainter
 		}
 	}
 
-	protected void configureLayoutDirection(@Nonnull UILayoutDirection ld)
+	protected void configureLayoutDirection(@NotNull UILayoutDirection ld)
 	{
 		// Not supported
 	}
 
-	protected void configureOrientation(@Nonnull Orientation o)
+	protected void configureOrientation(@NotNull Orientation o)
 	{
 		switch (o) {
 			case HORIZONTAL:
@@ -151,7 +150,7 @@ public class JRSPainter
 		}
 	}
 
-	protected void configureDirection(@Nonnull Direction d)
+	protected void configureDirection(@NotNull Direction d)
 	{
 		switch (d) {
 			case NONE:
@@ -175,8 +174,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getButtonRenderer(@Nonnull ButtonConfiguration g)
+	protected @NotNull Renderer getButtonRenderer(@NotNull ButtonConfiguration g)
 	{
 		ButtonWidget bw = toCanonicalButtonStyle(g.getButtonWidget());
 
@@ -225,16 +223,20 @@ public class JRSPainter
 				break;
 			case BUTTON_RECESSED:
 
+				// CoreUI may paint a background when there should be no background.
+				// On 10.10, it incorrectly paints a background when the button is disabled.
+				// On 10.10 and 10.13, it incorrectly paints a background when the button state is OFF.
+
 				if (!shouldPaintRecessedBackground(st, bs)) {
 					return NULL_RENDERER;
 				}
 
 				hasRolloverEffect = true;
 
-				if (st == State.ACTIVE_DEFAULT || st == State.INACTIVE || st == State.DISABLED || st == State.DISABLED_INACTIVE) {
-					// these states render incorrectly on Yosemite
-					st = State.ACTIVE;
-				}
+				// CoreUI incorrectly paints a different background when the button is inactive.
+
+				st = adjustRecessedState(st);
+
 				maker.set(JRSUIConstants.Widget.BUTTON_PUSH_SCOPE);
 				break;
 			case BUTTON_INLINE:
@@ -278,17 +280,8 @@ public class JRSPainter
 			bs = ButtonState.STATELESS;
 		}
 
-		// Textured buttons paint the same background when disabled as they would when enabled
-		if (bw == ButtonWidget.BUTTON_TEXTURED || bw == ButtonWidget.BUTTON_TEXTURED_TOOLBAR) {
-			if (st == State.DISABLED) {
-				st = State.ACTIVE;
-			} else if (st == State.DISABLED_INACTIVE) {
-				st = State.INACTIVE;
-			}
-		}
-
-		// Push buttons and rounded bevel buttons display the same when inactive as they would when active
-		if (bs == ButtonState.STATELESS || bw == ButtonWidget.BUTTON_BEVEL_ROUND) {
+		// Stateless buttons other than textured buttons display the same when inactive as they would when active
+		if (bs == ButtonState.STATELESS && !bw.isTextured()) {
 			if (st == State.INACTIVE) {
 				st = State.ACTIVE;
 			} else if (st == State.DISABLED_INACTIVE) {
@@ -356,8 +349,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g)
+	protected @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTableColumnHeaderRendererDescription(g);
 
@@ -385,8 +377,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getScrollColumnSizerRenderer(@Nonnull ScrollColumnSizerConfiguration g)
+	protected @NotNull Renderer getScrollColumnSizerRenderer(@NotNull ScrollColumnSizerConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getScrollColumnSizerRendererDescription(g);
 
@@ -399,8 +390,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getScrollBarRenderer(@Nonnull ScrollBarConfiguration g)
+	protected @NotNull Renderer getScrollBarRenderer(@NotNull ScrollBarConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getScrollBarRendererDescription(g);
 		RendererDescription trd = rendererDescriptions.getScrollBarThumbRendererDescription(g);
@@ -453,8 +443,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getToolBarItemWellRenderer(@Nonnull ToolBarItemWellConfiguration g)
+	protected @NotNull Renderer getToolBarItemWellRenderer(@NotNull ToolBarItemWellConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getToolBarItemWellRendererDescription(g);
 
@@ -466,8 +455,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getGroupBoxRenderer(@Nonnull GroupBoxConfiguration g)
+	protected @NotNull Renderer getGroupBoxRenderer(@NotNull GroupBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getGroupBoxRendererDescription(g);
 
@@ -479,8 +467,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getListBoxRenderer(@Nonnull ListBoxConfiguration g)
+	protected @NotNull Renderer getListBoxRenderer(@NotNull ListBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getListBoxRendererDescription(g);
 
@@ -492,8 +479,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getTextFieldRenderer(@Nonnull TextFieldConfiguration g)
+	protected @NotNull Renderer getTextFieldRenderer(@NotNull TextFieldConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTextFieldRendererDescription(g);
 
@@ -515,8 +501,7 @@ public class JRSPainter
 		}
 	}
 
-	private @Nullable
-	JRSUIConstants.Widget getWidget(@Nonnull TextFieldWidget tw)
+	private @Nullable JRSUIConstants.Widget getWidget(@NotNull TextFieldWidget tw)
 	{
 		switch (tw) {
 			case TEXT_FIELD_ROUND:
@@ -532,14 +517,11 @@ public class JRSPainter
 	private class SearchFieldRenderer
 		extends Renderer
 	{
-		private final @Nonnull
-		TextFieldConfiguration g;
-		private final @Nullable
-		Insetter searchButtonInsets;
-		private final @Nullable
-		Insetter cancelButtonInsets;
+		private final @NotNull TextFieldConfiguration g;
+		private final @Nullable Insetter searchButtonInsets;
+		private final @Nullable Insetter cancelButtonInsets;
 
-		public SearchFieldRenderer(@Nonnull TextFieldConfiguration g,
+		public SearchFieldRenderer(@NotNull TextFieldConfiguration g,
 															 @Nullable Insetter searchButtonInsets,
 															 @Nullable Insetter cancelButtonInsets)
 		{
@@ -549,7 +531,7 @@ public class JRSPainter
 		}
 
 		@Override
-		public void composeTo(@Nonnull ReusableCompositor compositor)
+		public void composeTo(@NotNull ReusableCompositor compositor)
 		{
 			float w = compositor.getWidth();
 			float h = compositor.getHeight();
@@ -580,8 +562,7 @@ public class JRSPainter
 
 	// This method is public to support evaluation
 	@Override
-	public @Nonnull
-	Renderer getSearchFieldFindButtonRenderer(@Nonnull TextFieldConfiguration g)
+	public @NotNull Renderer getSearchFieldFindButtonRenderer(@NotNull TextFieldConfiguration g)
 	{
 		TextFieldWidget widget = g.getWidget();
 		boolean hasMenu = widget.hasMenu();
@@ -597,16 +578,14 @@ public class JRSPainter
 		return Renderer.create(r, rd);
 	}
 
-	protected @Nonnull
-	RendererDescription getSearchFieldFindButtonRendererDescription(@Nonnull TextFieldConfiguration g)
+	protected @NotNull RendererDescription getSearchFieldFindButtonRendererDescription(@NotNull TextFieldConfiguration g)
 	{
 		return getSearchButtonRendererDescription(g);
 	}
 
 	// This method is public to support evaluation
 	@Override
-	public @Nonnull
-	Renderer getSearchFieldCancelButtonRenderer(@Nonnull TextFieldConfiguration g)
+	public @NotNull Renderer getSearchFieldCancelButtonRenderer(@NotNull TextFieldConfiguration g)
 	{
 		maker.reset();
 		maker.set(JRSUIConstants.Widget.BUTTON_SEARCH_FIELD_CANCEL);
@@ -617,15 +596,13 @@ public class JRSPainter
 		return Renderer.create(r, rd);
 	}
 
-	protected @Nonnull
-	RendererDescription getSearchFieldCancelButtonRendererDescription(@Nonnull TextFieldConfiguration g)
+	protected @NotNull RendererDescription getSearchFieldCancelButtonRendererDescription(@NotNull TextFieldConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getComboBoxButtonRenderer(@Nonnull ComboBoxConfiguration g)
+	protected @NotNull Renderer getComboBoxButtonRenderer(@NotNull ComboBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getComboBoxRendererDescription(g);
 
@@ -665,8 +642,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g)
+	protected @NotNull Renderer getSegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSegmentedButtonRendererDescription(g);
 		Position pos = g.getPosition();
@@ -742,8 +718,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getPopupButtonRenderer(@Nonnull PopupButtonConfiguration g)
+	protected @NotNull Renderer getPopupButtonRenderer(@NotNull PopupButtonConfiguration g)
 	{
 		Renderer basicRenderer = getBasicPopupButtonRenderer(g);
 		Renderer arrowsRenderer = getPopupArrowRenderer(g);
@@ -751,8 +726,7 @@ public class JRSPainter
 		return new PopupRenderer(g, basicRenderer, arrowsRenderer, arrowsInsetter);
 	}
 
-	protected @Nullable
-	Renderer getBasicPopupButtonRenderer(@Nonnull PopupButtonConfiguration g)
+	protected @Nullable Renderer getBasicPopupButtonRenderer(@NotNull PopupButtonConfiguration g)
 	{
 		if (g.isCell()) {
 			return null;
@@ -842,8 +816,7 @@ public class JRSPainter
 		Return the renderer used to draw the arrows of pop up button.
 	*/
 
-	public @Nullable
-	Renderer getPopupArrowRenderer(@Nonnull PopupButtonConfiguration g)
+	public @Nullable Renderer getPopupArrowRenderer(@NotNull PopupButtonConfiguration g)
 	{
 		PopupButtonWidget w = g.getPopupButtonWidget();
 		State state = g.getState();
@@ -894,8 +867,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getTitleBarRenderer(@Nonnull TitleBarConfiguration g)
+	protected @NotNull Renderer getTitleBarRenderer(@NotNull TitleBarConfiguration g)
 	{
 		// Used for internal frames
 
@@ -910,8 +882,8 @@ public class JRSPainter
 	protected class TitleBarRenderer
 		extends TitleBarRendererBase
 	{
-		public TitleBarRenderer(@Nonnull TitleBarConfiguration g,
-														@Nonnull RendererDescription rd,
+		public TitleBarRenderer(@NotNull TitleBarConfiguration g,
+														@NotNull RendererDescription rd,
 														@Nullable Insetter closeButtonInsets,
 														@Nullable Insetter minimizeButtonInsets,
 														@Nullable Insetter resizeButtonInsets)
@@ -919,8 +891,7 @@ public class JRSPainter
 			super(g, rd, closeButtonInsets, minimizeButtonInsets, resizeButtonInsets);
 		}
 
-		protected @Nonnull
-		BasicRenderer getBasicTitleBarRenderer(float w, float h)
+		protected @NotNull BasicRenderer getBasicTitleBarRenderer(float w, float h)
 		{
 			LayoutInfo layoutInfo = uiLayout.getLayoutInfo(g);
 			float titleBarHeight = layoutInfo.getFixedVisualHeight();
@@ -936,16 +907,14 @@ public class JRSPainter
 			return maker.getRenderer();
 		}
 
-		protected @Nonnull
-		Renderer getButtonRenderer(@Nonnull TitleBarButtonWidget bw)
+		protected @NotNull Renderer getButtonRenderer(@NotNull TitleBarButtonWidget bw)
 		{
 			return getTitleBarButtonRenderer(g, bw);
 		}
 	}
 
 	// public to support evaluation
-	public @Nonnull
-	Renderer getTitleBarButtonRenderer(@Nonnull TitleBarConfiguration g, @Nonnull TitleBarButtonWidget bw)
+	public @NotNull Renderer getTitleBarButtonRenderer(@NotNull TitleBarConfiguration g, @NotNull TitleBarButtonWidget bw)
 	{
 		JRSUIConstants.Widget widget;
 		State st;
@@ -983,8 +952,7 @@ public class JRSPainter
 		return Renderer.create(r, rd);
 	}
 
-	protected @Nonnull
-	JRSUIConstants.WindowType toWindowType(@Nonnull TitleBarConfiguration g)
+	protected @NotNull JRSUIConstants.WindowType toWindowType(@NotNull TitleBarConfiguration g)
 	{
 		switch(g.getWidget())
 		{
@@ -997,8 +965,7 @@ public class JRSPainter
 		}
 	}
 
-	protected @Nonnull
-	Renderer getIndeterminateProgressIndicatorRenderer(@Nonnull IndeterminateProgressIndicatorConfiguration g)
+	protected @NotNull Renderer getIndeterminateProgressIndicatorRenderer(@NotNull IndeterminateProgressIndicatorConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getIndeterminateProgressIndicatorRendererDescription(g);
 
@@ -1008,7 +975,7 @@ public class JRSPainter
 
 		switch (g.getWidget())
 		{
-			case SPINNER:
+			case INDETERMINATE_SPINNER:
 				// Small spinners have a fixed size. Large spinners are scaled to fit. Other variants do not work.
 				maker.set(JRSUIConstants.Widget.PROGRESS_SPINNER);
 				if (sz != Size.SMALL) {
@@ -1032,9 +999,12 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getProgressIndicatorRenderer(@Nonnull ProgressIndicatorConfiguration g)
+	protected @NotNull Renderer getProgressIndicatorRenderer(@NotNull ProgressIndicatorConfiguration g)
 	{
+		if (g.getWidget() == ProgressWidget.SPINNER) {
+			throw new UnsupportedOperationException();
+		}
+
 		RendererDescription rd = rendererDescriptions.getProgressIndicatorRendererDescription(g);
 
 		JRSUIConstants.Orientation orientation = g.getOrientation() == Orientation.VERTICAL ? JRSUIConstants.Orientation.VERTICAL : JRSUIConstants.Orientation.HORIZONTAL;
@@ -1049,8 +1019,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSliderRenderer(@Nonnull SliderConfiguration g)
+	protected @NotNull Renderer getSliderRenderer(@NotNull SliderConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSliderRendererDescription(g);
 
@@ -1080,18 +1049,16 @@ public class JRSPainter
 		Renderer thumbRenderer = getSliderThumbRenderer(g);
 		Insetter trackInsets = uiLayout.getSliderTrackPaintingInsets(g);
 		Insetter thumbInsets = uiLayout.getSliderThumbPaintingInsets(g, g.getValue());
-
-		return new LinearSliderRenderer(g, trackRenderer, trackInsets, tickMarkRenderer, thumbRenderer, thumbInsets);
+		boolean isThumbTranslucent = appearance != null && appearance.isDark();
+		return new LinearSliderRenderer(g, trackRenderer, trackInsets, tickMarkRenderer, thumbRenderer, thumbInsets, isThumbTranslucent);
 	}
 
-	protected @Nullable
-	Renderer getSliderTickMarkRenderer(@Nonnull SliderConfiguration g)
+	protected @Nullable Renderer getSliderTickMarkRenderer(@NotNull SliderConfiguration g)
 	{
 		return null;
 	}
 
-	protected @Nonnull
-	Renderer getSliderTrackRenderer(@Nonnull SliderConfiguration g)
+	protected @NotNull Renderer getSliderTrackRenderer(@NotNull SliderConfiguration g)
 	{
 		SliderWidget sw = g.getWidget();
 		if (sw == SliderWidget.SLIDER_CIRCULAR) {
@@ -1132,8 +1099,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSliderThumbRenderer(@Nonnull SliderConfiguration g)
+	protected @NotNull Renderer getSliderThumbRenderer(@NotNull SliderConfiguration g)
 	{
 		SliderWidget sw = g.getWidget();
 		if (sw == SliderWidget.SLIDER_CIRCULAR) {
@@ -1158,8 +1124,7 @@ public class JRSPainter
 		return Renderer.create(r, rd);
 	}
 
-	protected @Nonnull
-	JRSUIConstants.Direction toDirection(@Nonnull TickMarkPosition p)
+	protected @NotNull JRSUIConstants.Direction toDirection(@NotNull TickMarkPosition p)
 	{
 		switch (p)
 		{
@@ -1176,8 +1141,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSpinnerArrowsRenderer(@Nonnull SpinnerArrowsConfiguration g)
+	protected @NotNull Renderer getSpinnerArrowsRenderer(@NotNull SpinnerArrowsConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSpinnerArrowsRendererDescription(g);
 
@@ -1195,8 +1159,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getSplitPaneDividerRenderer(@Nonnull SplitPaneDividerConfiguration g)
+	protected @NotNull Renderer getSplitPaneDividerRenderer(@NotNull SplitPaneDividerConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSplitPaneDividerRendererDescription(g);
 
@@ -1224,8 +1187,7 @@ public class JRSPainter
 	}
 
 	@Override
-	protected @Nonnull
-	Renderer getGradientRenderer(@Nonnull GradientConfiguration g)
+	protected @NotNull Renderer getGradientRenderer(@NotNull GradientConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getGradientRendererDescription(g);
 
@@ -1266,8 +1228,7 @@ public class JRSPainter
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return "JRS";
 	}

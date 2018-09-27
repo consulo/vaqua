@@ -17,7 +17,7 @@ import java.awt.image.DirectColorModel;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 /**
 	Basic support for creating images from INT_ARGB_PRE raster data.
@@ -25,23 +25,19 @@ import javax.annotation.Nonnull;
 
 public class BasicImageSupport
 {
-	private static final @Nonnull
-	ColorModel colorModel = createColorModel();
+	private static final @NotNull ColorModel colorModel = createColorModel();
 
-	public static @Nonnull
-	ColorModel getColorModel()
+	public static @NotNull ColorModel getColorModel()
 	{
 		return colorModel;
 	}
 
-	public static @Nonnull
-	BufferedImage createImage(@Nonnull int[] buffer, int w, int h)
+	public static @NotNull BufferedImage createImage(@NotNull int[] buffer, int w, int h)
 	{
 		return createImage(buffer, w, h, w);
 	}
 
-	public static @Nonnull
-	BufferedImage createImage(@Nonnull int[] buffer, int w, int h, int scan)
+	public static @NotNull BufferedImage createImage(@NotNull int[] buffer, int w, int h, int scan)
 	{
 		return createBufferedImage(colorModel, buffer, w, h, scan);
 	}
@@ -50,8 +46,7 @@ public class BasicImageSupport
 		Create a color model for INT_ARGB_PRE.
 	*/
 
-	private static @Nonnull
-	ColorModel createColorModel()
+	private static @NotNull ColorModel createColorModel()
 	{
 		return new DirectColorModel(
 			ColorSpace.getInstance(ColorSpace.CS_sRGB),
@@ -59,8 +54,7 @@ public class BasicImageSupport
 		);
 	}
 
-	private static @Nonnull
-	BufferedImage createBufferedImage(@Nonnull ColorModel cm, @Nonnull int[] buffer, int w, int h, int scan)
+	private static @NotNull BufferedImage createBufferedImage(@NotNull ColorModel cm, @NotNull int[] buffer, int w, int h, int scan)
 	{
 		DataBuffer db = new DataBufferInt(buffer, buffer.length);
 		int[] bandMasks = new int[4];

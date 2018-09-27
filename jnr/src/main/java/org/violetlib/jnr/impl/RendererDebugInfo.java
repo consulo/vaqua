@@ -11,7 +11,7 @@ package org.violetlib.jnr.impl;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 /**
 	Information for debugging a renderer.
@@ -19,14 +19,11 @@ import javax.annotation.*;
 
 public class RendererDebugInfo
 {
-	protected final @Nullable
-	Image fullImage;
-	protected final @Nullable
-	Rectangle2D imageBounds;
-	protected final @Nonnull
-	String info;
+	protected final @Nullable Image fullImage;
+	protected final @Nullable Rectangle2D imageBounds;
+	protected final @NotNull String info;
 
-	public RendererDebugInfo(@Nullable Image fullImage, @Nullable Rectangle2D imageBounds, @Nonnull String info)
+	public RendererDebugInfo(@Nullable Image fullImage, @Nullable Rectangle2D imageBounds, @NotNull String info)
 	{
 		this.fullImage = fullImage;
 		this.imageBounds = imageBounds;
@@ -38,8 +35,7 @@ public class RendererDebugInfo
 		@return the image, or null if none.
 	*/
 
-	public @Nullable
-	Image getFullImage()
+	public @Nullable Image getFullImage()
 	{
 		return fullImage;
 	}
@@ -49,8 +45,7 @@ public class RendererDebugInfo
 		@return the bounds, or null if none.
 	*/
 
-	public @Nullable
-	Rectangle2D getImageBounds()
+	public @Nullable Rectangle2D getImageBounds()
 	{
 		return imageBounds;
 	}
@@ -59,8 +54,7 @@ public class RendererDebugInfo
 		Return debugging information for display.
 	*/
 
-	public @Nonnull
-	String getDebugInfo()
+	public @NotNull String getDebugInfo()
 	{
 		return info;
 	}

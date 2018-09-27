@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.TextFieldWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -23,14 +23,11 @@ import org.violetlib.jnr.aqua.AquaUIPainter.UILayoutDirection;
 public class TextFieldLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @Nonnull
-	TextFieldWidget tw;
-	private final @Nonnull
-	Size size;
-	private final @Nonnull
-	UILayoutDirection ld;
+	private final @NotNull TextFieldWidget tw;
+	private final @NotNull Size size;
+	private final @NotNull UILayoutDirection ld;
 
-	public TextFieldLayoutConfiguration(@Nonnull TextFieldWidget tw, @Nonnull Size size, @Nonnull UILayoutDirection ld)
+	public TextFieldLayoutConfiguration(@NotNull TextFieldWidget tw, @NotNull Size size, @NotNull UILayoutDirection ld)
 	{
 		// Layout direction affects search fields, in particular, the locations of the search and cancel icons
 
@@ -39,20 +36,17 @@ public class TextFieldLayoutConfiguration
 		this.ld = ld;
 	}
 
-	public @Nonnull
-	TextFieldWidget getWidget()
+	public @NotNull TextFieldWidget getWidget()
 	{
 		return tw;
 	}
 
-	public @Nonnull
-	Size getSize()
+	public @NotNull Size getSize()
 	{
 		return size;
 	}
 
-	public @Nonnull
-	UILayoutDirection getLayoutDirection()
+	public @NotNull UILayoutDirection getLayoutDirection()
 	{
 		return ld;
 	}
@@ -83,8 +77,7 @@ public class TextFieldLayoutConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String lds = ld == UILayoutDirection.RIGHT_TO_LEFT ? " RTL" : "";
 		return tw + " " + size + lds;

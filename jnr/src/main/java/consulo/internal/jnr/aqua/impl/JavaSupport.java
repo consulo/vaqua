@@ -6,14 +6,12 @@
  * accompanying license terms.
  */
 
-package org.violetlib.jnr.impl;
-
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.util.ServiceLoader;
+package consulo.internal.jnr.aqua.impl;
 
 import javax.annotation.Nonnull;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ServiceLoader;
 
 /**
  * Platform support that varies based on the Java version.

@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.aqua;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 /**
 	A layout configuration for a group box.
@@ -18,8 +18,7 @@ public class GroupBoxLayoutConfiguration
 	extends LayoutConfiguration
 {
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return "Group Box";
 	}

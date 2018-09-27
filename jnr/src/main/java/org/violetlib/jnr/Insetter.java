@@ -14,7 +14,7 @@ import java.awt.Rectangle;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 /**
 	An insetter defines the relationship between the bounds of a component and the bounds of a region of the component.
@@ -57,8 +57,7 @@ public interface Insetter
 		@return the bounds that result from applying the insets to the specified bounds.
 	*/
 
-	@Nonnull
-	Rectangle2D applyToBounds2D(@Nonnull Rectangle2D bounds);
+	@NotNull Rectangle2D applyToBounds2D(@NotNull Rectangle2D bounds);
 
 	/**
 		Map from (outer) component bounds to (inner) region bounds by subtracting the insets from the component bounds.
@@ -70,8 +69,7 @@ public interface Insetter
 			negative width or height.
 	*/
 
-	@Nonnull
-	Rectangle applyToBounds(@Nonnull Rectangle bounds);
+	@NotNull Rectangle applyToBounds(@NotNull Rectangle bounds);
 
 	/**
 		Map from (outer) component bounds to (inner) region bounds by subtracting the insets from the component bounds.
@@ -83,8 +81,7 @@ public interface Insetter
 		@return the bounds that result from applying the insets to the specified bounds.
 	*/
 
-	@Nonnull
-	Rectangle2D apply2D(double width, double height);
+	@NotNull Rectangle2D apply2D(double width, double height);
 
 	/**
 		Map from (outer) component bounds to (inner) region bounds by subtracting the insets from the component bounds.
@@ -98,8 +95,7 @@ public interface Insetter
 			insets implied by this insetter, unless applying the insets would result in a negative width or height.
 	*/
 
-	@Nonnull
-	Rectangle apply(int width, int height);
+	@NotNull Rectangle apply(int width, int height);
 
 	/**
 		Indicate whether this insetter is invertible. An invertible insetter can map a region size to the component size.
@@ -118,8 +114,7 @@ public interface Insetter
 		@throws InsetterNotInvertibleException if this insetter is not invertible.
 	*/
 
-	@Nonnull
-	Dimension2D expand2D(@Nonnull Dimension2D regionSize)
+	@NotNull Dimension2D expand2D(@NotNull Dimension2D regionSize)
 		throws InsetterNotInvertibleException;
 
 	/**
@@ -133,8 +128,7 @@ public interface Insetter
 		@throws InsetterNotInvertibleException if this insetter is not invertible.
 	*/
 
-	@Nonnull
-	Dimension expand(@Nonnull Dimension regionSize)
+	@NotNull Dimension expand(@NotNull Dimension regionSize)
 		throws InsetterNotInvertibleException;
 
 	/**
@@ -143,8 +137,7 @@ public interface Insetter
 		@return the fixed inset values, or null if the inset values are not fixed.
 	*/
 
-	@Nullable
-	Insets2D asInsets2D();
+	@Nullable Insets2D asInsets2D();
 
 	/**
 		Return the insets as AWT insets. Only insets with fixed values can be represented as AWT insets. If the inset values
@@ -153,6 +146,5 @@ public interface Insetter
 		@return the insets as AWT insets, or null if the inset values are not fixed.
 	*/
 
-	@Nullable
-	Insets asInsets();
+	@Nullable Insets asInsets();
 }

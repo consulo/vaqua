@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
 import org.violetlib.jnr.aqua.AquaUIPainter.ScrollBarKnobWidget;
@@ -27,10 +27,8 @@ public class ScrollBarConfiguration
 	extends ScrollBarLayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	ScrollBarKnobWidget kw;
-	private final @Nonnull
-	State state;
+	private final @NotNull ScrollBarKnobWidget kw;
+	private final @NotNull State state;
 	private final float thumbPosition;
 	private final float thumbExtent;
 	private final boolean noTrack;
@@ -49,11 +47,11 @@ public class ScrollBarConfiguration
 		@param noTrack If true, the track is not painted. This option is not applicable to overlay scroll bars.
 	*/
 
-	public ScrollBarConfiguration(@Nonnull ScrollBarWidget bw,
-																@Nonnull ScrollBarKnobWidget kw,
-																@Nonnull Size sz,
-																@Nonnull State state,
-																@Nonnull Orientation o,
+	public ScrollBarConfiguration(@NotNull ScrollBarWidget bw,
+																@NotNull ScrollBarKnobWidget kw,
+																@NotNull Size sz,
+																@NotNull State state,
+																@NotNull Orientation o,
 																float thumbPosition,
 																float thumbExtent,
 																boolean noTrack)
@@ -67,20 +65,18 @@ public class ScrollBarConfiguration
 		this.noTrack = noTrack;
 	}
 
-	public ScrollBarConfiguration(@Nonnull ScrollBarConfiguration g)
+	public ScrollBarConfiguration(@NotNull ScrollBarConfiguration g)
 	{
 		this(g.getWidget(), g.getKnobWidget(), g.getSize(), g.getState(), g.getOrientation(), g.getThumbPosition(),
 			g.getThumbExtent(), g.isTrackSuppressed());
 	}
 
-	public @Nonnull
-	ScrollBarKnobWidget getKnobWidget()
+	public @NotNull ScrollBarKnobWidget getKnobWidget()
 	{
 		return kw;
 	}
 
-	public @Nonnull
-	State getState()
+	public @NotNull State getState()
 	{
 		return state;
 	}
@@ -118,8 +114,7 @@ public class ScrollBarConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return super.toString() + " " + kw + " " + state
 			+ " " + JNRUtils.format2(thumbPosition) + " " + JNRUtils.format2(thumbExtent)

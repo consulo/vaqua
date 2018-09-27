@@ -13,24 +13,24 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
+import org.jetbrains.annotations.*;
+
 import org.violetlib.geom.LinearBounds;
+import org.violetlib.jnr.Insetter;
+import org.violetlib.jnr.LayoutInfo;
+import org.violetlib.jnr.aqua.*;
+import org.violetlib.jnr.impl.BasicLayoutInfo;
 import org.violetlib.jnr.impl.CenteredInsetter1;
 import org.violetlib.jnr.impl.CombinedInsetter;
 import org.violetlib.jnr.impl.DynamicInsetter1;
 import org.violetlib.jnr.impl.FixedInsetter1;
 import org.violetlib.jnr.impl.FloatingInsetter1;
-import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.impl.Insetter1;
-import org.violetlib.jnr.LayoutInfo;
-import org.violetlib.jnr.aqua.*;
-import org.violetlib.jnr.impl.BasicLayoutInfo;
 import org.violetlib.jnr.impl.Insetters;
 import org.violetlib.jnr.impl.JNRUtils;
 
 import static org.violetlib.jnr.aqua.AquaUIPainter.*;
 import static org.violetlib.jnr.impl.JNRUtils.*;
-
-import javax.annotation.*;
 
 /**
 	Layout information for OS 10.10 widgets.
@@ -40,8 +40,7 @@ public class YosemiteLayoutInfo
 	extends AquaUILayoutInfo
 {
 	@Override
-	protected @Nonnull
-	LayoutInfo getButtonLayoutInfo(@Nonnull ButtonLayoutConfiguration g)
+	protected @NotNull LayoutInfo getButtonLayoutInfo(@NotNull ButtonLayoutConfiguration g)
 	{
 		ButtonWidget bw = g.getButtonWidget();
 
@@ -113,8 +112,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nullable
-	Insetter getButtonLabelInsets(@Nonnull ButtonLayoutConfiguration g)
+	public @Nullable Insetter getButtonLabelInsets(@NotNull ButtonLayoutConfiguration g)
 	{
 		ButtonWidget bw = g.getButtonWidget();
 
@@ -222,8 +220,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getSegmentedButtonLayoutInfo(@Nonnull SegmentedButtonLayoutConfiguration g)
+	protected @NotNull LayoutInfo getSegmentedButtonLayoutInfo(@NotNull SegmentedButtonLayoutConfiguration g)
 	{
 		SegmentedButtonWidget bw = g.getWidget();
 		Size sz = g.getSize();
@@ -254,8 +251,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getSegmentedButtonLabelInsets(@Nonnull SegmentedButtonLayoutConfiguration g)
+	public @NotNull Insetter getSegmentedButtonLabelInsets(@NotNull SegmentedButtonLayoutConfiguration g)
 	{
 		SegmentedButtonWidget bw = g.getWidget();
 		Position pos = g.getPosition();
@@ -312,8 +308,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getComboBoxLayoutInfo(@Nonnull ComboBoxLayoutConfiguration g)
+	protected @NotNull LayoutInfo getComboBoxLayoutInfo(@NotNull ComboBoxLayoutConfiguration g)
 	{
 		ComboBoxWidget bw = g.getWidget();
 		Size sz = g.getSize();
@@ -334,8 +329,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getComboBoxIndicatorInsets(@Nonnull ComboBoxLayoutConfiguration g)
+	public @NotNull Insetter getComboBoxIndicatorInsets(@NotNull ComboBoxLayoutConfiguration g)
 	{
 		int indicatorWidth;
 
@@ -361,8 +355,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getComboBoxEditorInsets(@Nonnull ComboBoxLayoutConfiguration g)
+	public @NotNull Insetter getComboBoxEditorInsets(@NotNull ComboBoxLayoutConfiguration g)
 	{
 		ComboBoxWidget bw = g.getWidget();
 		Size sz = g.getSize();
@@ -398,8 +391,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getPopUpButtonLayoutInfo(@Nonnull PopupButtonLayoutConfiguration g)
+	protected @NotNull LayoutInfo getPopUpButtonLayoutInfo(@NotNull PopupButtonLayoutConfiguration g)
 	{
 		// On Yosemite and El Capitan, the square style bombs if the mini size is selected.
 		// See rendering code, which must be consistent.
@@ -460,8 +452,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getPopUpArrowInsets(@Nonnull PopupButtonConfiguration g)
+	public @NotNull Insetter getPopUpArrowInsets(@NotNull PopupButtonConfiguration g)
 	{
 		// used when using Core UI to paint the arrows
 		// only regular and small sizes are used
@@ -503,8 +494,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getPopupButtonContentInsets(@Nonnull PopupButtonLayoutConfiguration g)
+	public @NotNull Insetter getPopupButtonContentInsets(@NotNull PopupButtonLayoutConfiguration g)
 	{
 		// On Yosemite, the square style bombs if the mini size is selected.
 		// See rendering code, which must be consistent.
@@ -600,15 +590,13 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getToolBarItemWellLayoutInfo(@Nonnull ToolBarItemWellLayoutConfiguration g)
+	protected @NotNull LayoutInfo getToolBarItemWellLayoutInfo(@NotNull ToolBarItemWellLayoutConfiguration g)
 	{
 		return BasicLayoutInfo.getInstance();	// TBD
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getTitleBarLayoutInfo(@Nonnull TitleBarLayoutConfiguration g)
+	protected @NotNull LayoutInfo getTitleBarLayoutInfo(@NotNull TitleBarLayoutConfiguration g)
 	{
 		switch (g.getWidget())
 		{
@@ -622,44 +610,39 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getTitleBarButtonInsets(@Nonnull TitleBarLayoutConfiguration g,
-																										@Nonnull TitleBarButtonWidget bw)
+	public @NotNull Insetter getTitleBarButtonInsets(@NotNull TitleBarLayoutConfiguration g,
+																										@NotNull TitleBarButtonWidget bw)
 	{
 		TitleBarLayoutInfo layoutInfo = AquaNativePainter.getTitleBarLayoutInfo();
 		return layoutInfo.getButtonInsets(g, bw);
 	}
 
 	@Override
-	public @Nonnull
-	Shape getTitleBarButtonShape(@Nonnull Rectangle2D bounds,
-																							 @Nonnull TitleBarLayoutConfiguration g,
-																							 @Nonnull TitleBarButtonWidget bw)
+	public @NotNull Shape getTitleBarButtonShape(@NotNull Rectangle2D bounds,
+																							 @NotNull TitleBarLayoutConfiguration g,
+																							 @NotNull TitleBarButtonWidget bw)
 	{
 		TitleBarLayoutInfo layoutInfo = AquaNativePainter.getTitleBarLayoutInfo();
 		return layoutInfo.getButtonShape(bounds, g, bw);
 	}
 
 	@Override
-	public @Nullable
-	Insetter getTitleBarLabelInsets(@Nonnull TitleBarLayoutConfiguration g)
+	public @Nullable Insetter getTitleBarLabelInsets(@NotNull TitleBarLayoutConfiguration g)
 	{
 		TitleBarLayoutInfo layoutInfo = AquaNativePainter.getTitleBarLayoutInfo();
 		return layoutInfo.getLabelInsets(g);
 	}
 
 	@Override
-	public @Nullable
-	TitleBarButtonWidget identifyTitleBarButton(@Nonnull Rectangle2D bounds,
-																															 @Nonnull TitleBarLayoutConfiguration g, int x, int y)
+	public @Nullable TitleBarButtonWidget identifyTitleBarButton(@NotNull Rectangle2D bounds,
+																															 @NotNull TitleBarLayoutConfiguration g, int x, int y)
 	{
 		TitleBarLayoutInfo layoutInfo = AquaNativePainter.getTitleBarLayoutInfo();
 		return layoutInfo.identifyButton(bounds, g, x, y);
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getSliderLayoutInfo(@Nonnull SliderLayoutConfiguration g)
+	protected @NotNull LayoutInfo getSliderLayoutInfo(@NotNull SliderLayoutConfiguration g)
 	{
 		// Mini sliders are not supported (must be consistent with rendering code)
 		final Size sz = g.getSize() == Size.MINI ? Size.SMALL : g.getSize();
@@ -688,9 +671,8 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle2D getSliderThumbBounds(@Nonnull Rectangle2D bounds,
-																									 @Nonnull SliderLayoutConfiguration g,
+	public @NotNull Rectangle2D getSliderThumbBounds(@NotNull Rectangle2D bounds,
+																									 @NotNull SliderLayoutConfiguration g,
 																									 double thumbPosition)
 	{
 		if (true) {
@@ -746,8 +728,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getSliderTrackPaintingInsets(@Nonnull SliderLayoutConfiguration g)
+	public @NotNull Insetter getSliderTrackPaintingInsets(@NotNull SliderLayoutConfiguration g)
 	{
 		float trackWidth = 3;
 
@@ -771,7 +752,7 @@ public class YosemiteLayoutInfo
 		return new CombinedInsetter(horizontal, vertical);
 	}
 
-	protected float getTrackOffset(@Nonnull SliderLayoutConfiguration g)
+	protected float getTrackOffset(@NotNull SliderLayoutConfiguration g)
 	{
 		if (g.hasTickMarks()) {
 			TickMarkPosition position = g.getTickMarkPosition();
@@ -791,21 +772,18 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getSliderThumbInsets(@Nonnull SliderLayoutConfiguration g, double thumbPosition)
+	public @NotNull Insetter getSliderThumbInsets(@NotNull SliderLayoutConfiguration g, double thumbPosition)
 	{
 		return getSliderThumbInsets(g, thumbPosition, false);
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getSliderThumbPaintingInsets(@Nonnull SliderLayoutConfiguration g, double thumbPosition)
+	public @NotNull Insetter getSliderThumbPaintingInsets(@NotNull SliderLayoutConfiguration g, double thumbPosition)
 	{
 		return getSliderThumbInsets(g, thumbPosition, true);
 	}
 
-	protected @Nonnull
-	Insetter getSliderThumbInsets(@Nonnull SliderLayoutConfiguration g,
+	protected @NotNull Insetter getSliderThumbInsets(@NotNull SliderLayoutConfiguration g,
 																									 double thumbPosition,
 																									 boolean isForPainting)
 	{
@@ -855,7 +833,7 @@ public class YosemiteLayoutInfo
 		Determine a position adjustment along the minor axis for painting linear slider tick marks.
 	*/
 
-	protected float getPointerOffset(@Nonnull SliderLayoutConfiguration g)
+	protected float getPointerOffset(@NotNull SliderLayoutConfiguration g)
 	{
 		// TBD: there is some kind of round off that I am not capturing systematically
 
@@ -886,8 +864,7 @@ public class YosemiteLayoutInfo
 
 	// supports evaluation
 	@Override
-	public @Nonnull
-	LayoutInfo getSliderThumbLayoutInfo(@Nonnull SliderLayoutConfiguration g)
+	public @NotNull LayoutInfo getSliderThumbLayoutInfo(@NotNull SliderLayoutConfiguration g)
 	{
 		return getSliderThumbLayoutInfo(g, true);
 	}
@@ -899,8 +876,7 @@ public class YosemiteLayoutInfo
 		@return the layout information.
 	*/
 
-	protected @Nonnull
-	LayoutInfo getSliderThumbLayoutInfo(@Nonnull SliderLayoutConfiguration g, boolean isForPainting)
+	protected @NotNull LayoutInfo getSliderThumbLayoutInfo(@NotNull SliderLayoutConfiguration g, boolean isForPainting)
 		{
 			SliderWidget sw = g.getWidget();
 			if (sw == SliderWidget.SLIDER_CIRCULAR) {
@@ -929,11 +905,10 @@ public class YosemiteLayoutInfo
 		}
 
 	@Override
-	public @Nonnull
-	Rectangle2D getSliderLabelBounds(@Nonnull Rectangle2D bounds,
-																									 @Nonnull SliderLayoutConfiguration g,
+	public @NotNull Rectangle2D getSliderLabelBounds(@NotNull Rectangle2D bounds,
+																									 @NotNull SliderLayoutConfiguration g,
 																									 double thumbPosition,
-																									 @Nonnull Dimension size)
+																									 @NotNull Dimension size)
 	{
 		SliderWidget sw = g.getWidget();
 		Size sz = g.getSize();
@@ -993,8 +968,8 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public double getSliderThumbCenter(@Nonnull Rectangle2D bounds,
-																		 @Nonnull SliderLayoutConfiguration g,
+	public double getSliderThumbCenter(@NotNull Rectangle2D bounds,
+																		 @NotNull SliderLayoutConfiguration g,
 																		 double thumbPosition)
 	{
 		SliderWidget sw = g.getWidget();
@@ -1032,7 +1007,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public double getSliderThumbPosition(@Nonnull Rectangle2D bounds, @Nonnull SliderLayoutConfiguration g, int x, int y)
+	public double getSliderThumbPosition(@NotNull Rectangle2D bounds, @NotNull SliderLayoutConfiguration g, int x, int y)
 	{
 		SliderWidget sw = g.getWidget();
 		Size sz = g.getSize();
@@ -1119,7 +1094,7 @@ public class YosemiteLayoutInfo
 		}
 	}
 
-	protected double getSliderExtension(@Nonnull Size sz)
+	protected double getSliderExtension(@NotNull Size sz)
 	{
 		switch (sz)
 		{
@@ -1133,8 +1108,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getSpinnerArrowsLayoutInfo(@Nonnull SpinnerArrowsLayoutConfiguration g)
+	protected @NotNull LayoutInfo getSpinnerArrowsLayoutInfo(@NotNull SpinnerArrowsLayoutConfiguration g)
 	{
 		Size sz = g.getSize();
 		int width = size(sz, 13, 11, 9);
@@ -1143,8 +1117,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getSplitPaneDividerLayoutInfo(@Nonnull SplitPaneDividerLayoutConfiguration g)
+	protected @NotNull LayoutInfo getSplitPaneDividerLayoutInfo(@NotNull SplitPaneDividerLayoutConfiguration g)
 	{
 		// Automatic layout calculation does not work well for these
 		Orientation o = g.getOrientation();
@@ -1170,22 +1143,19 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getGroupBoxLayoutInfo(@Nonnull GroupBoxLayoutConfiguration g)
+	protected @NotNull LayoutInfo getGroupBoxLayoutInfo(@NotNull GroupBoxLayoutConfiguration g)
 	{
 		return BasicLayoutInfo.getInstance();
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getListBoxLayoutInfo(@Nonnull ListBoxLayoutConfiguration g)
+	protected @NotNull LayoutInfo getListBoxLayoutInfo(@NotNull ListBoxLayoutConfiguration g)
 	{
 		return BasicLayoutInfo.getInstance();
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getTextFieldLayoutInfo(@Nonnull TextFieldLayoutConfiguration g)
+	protected @NotNull LayoutInfo getTextFieldLayoutInfo(@NotNull TextFieldLayoutConfiguration g)
 	{
 		AquaUIPainter.TextFieldWidget w = g.getWidget();
 		if (w.isRound() || w.isSearch()) {
@@ -1201,8 +1171,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getTextFieldTextInsets(@Nonnull TextFieldLayoutConfiguration g)
+	public @NotNull Insetter getTextFieldTextInsets(@NotNull TextFieldLayoutConfiguration g)
 	{
 		TextFieldWidget tw = g.getWidget();
 		Size sz = g.getSize();
@@ -1274,8 +1243,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nullable
-	Insetter getSearchButtonInsets(@Nonnull TextFieldLayoutConfiguration g)
+	public @Nullable Insetter getSearchButtonInsets(@NotNull TextFieldLayoutConfiguration g)
 	{
 		float d = 0;
 		float h;
@@ -1294,8 +1262,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nullable
-	Insetter getSearchButtonPaintingInsets(@Nonnull TextFieldLayoutConfiguration g)
+	public @Nullable Insetter getSearchButtonPaintingInsets(@NotNull TextFieldLayoutConfiguration g)
 	{
 		Size sz = g.getSize();
 
@@ -1320,8 +1287,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nullable
-	LayoutInfo getSearchButtonLayoutInfo(@Nonnull TextFieldLayoutConfiguration g)
+	public @Nullable LayoutInfo getSearchButtonLayoutInfo(@NotNull TextFieldLayoutConfiguration g)
 	{
 		TextFieldWidget w = g.getWidget();
 
@@ -1339,8 +1305,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nullable
-	Insetter getCancelButtonInsets(@Nonnull TextFieldLayoutConfiguration g)
+	public @Nullable Insetter getCancelButtonInsets(@NotNull TextFieldLayoutConfiguration g)
 	{
 		TextFieldWidget w = g.getWidget();
 		if (w.hasCancel()) {
@@ -1353,8 +1318,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nullable
-	Insetter getCancelButtonPaintingInsets(@Nonnull TextFieldLayoutConfiguration g)
+	public @Nullable Insetter getCancelButtonPaintingInsets(@NotNull TextFieldLayoutConfiguration g)
 	{
 		Size sz = g.getSize();
 
@@ -1379,8 +1343,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nullable
-	LayoutInfo getCancelButtonLayoutInfo(@Nonnull TextFieldLayoutConfiguration g)
+	public @Nullable LayoutInfo getCancelButtonLayoutInfo(@NotNull TextFieldLayoutConfiguration g)
 	{
 		TextFieldWidget w = g.getWidget();
 		if (w.hasCancel()) {
@@ -1392,8 +1355,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getScrollBarLayoutInfo(@Nonnull ScrollBarLayoutConfiguration g)
+	protected @NotNull LayoutInfo getScrollBarLayoutInfo(@NotNull ScrollBarLayoutConfiguration g)
 	{
 		ScrollBarWidget bw = g.getWidget();
 		Size sz = g.getSize();
@@ -1449,8 +1411,8 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public float getScrollBarThumbPosition(@Nonnull Rectangle2D bounds,
-																				 @Nonnull ScrollBarThumbLayoutConfiguration g,
+	public float getScrollBarThumbPosition(@NotNull Rectangle2D bounds,
+																				 @NotNull ScrollBarThumbLayoutConfiguration g,
 																				 boolean useExtent)
 	{
 		double e = getScrollTrackEndInset(g);
@@ -1472,8 +1434,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Rectangle2D getScrollBarThumbBounds(@Nonnull Rectangle2D bounds, @Nonnull ScrollBarConfiguration g)
+	public @NotNull Rectangle2D getScrollBarThumbBounds(@NotNull Rectangle2D bounds, @NotNull ScrollBarConfiguration g)
 	{
 		LinearBounds tb = getThumbBounds(bounds, g);
 
@@ -1484,8 +1445,7 @@ public class YosemiteLayoutInfo
 		}
 	}
 
-	protected @Nonnull
-	LinearBounds getThumbBounds(@Nonnull Rectangle2D bounds, @Nonnull ScrollBarConfiguration g)
+	protected @NotNull LinearBounds getThumbBounds(@NotNull Rectangle2D bounds, @NotNull ScrollBarConfiguration g)
 	{
 		double e = getScrollTrackEndInset(g);
 		int minimumThumbLength = getMinimumThumbLength(g);
@@ -1499,7 +1459,7 @@ public class YosemiteLayoutInfo
 		return new LinearBounds(thumbOrigin, actualExtent);
 	}
 
-	protected double getVisualThumbExtent(@Nonnull Rectangle2D bounds, @Nonnull ScrollBarThumbLayoutConfiguration g)
+	protected double getVisualThumbExtent(@NotNull Rectangle2D bounds, @NotNull ScrollBarThumbLayoutConfiguration g)
 	{
 		double e = getScrollTrackEndInset(g);
 		boolean isVertical = g.getOrientation() == Orientation.VERTICAL;
@@ -1508,7 +1468,7 @@ public class YosemiteLayoutInfo
 		return Math.max(minimumThumbLength, g.getThumbExtent() * trackLength);
 	}
 
-	protected int getMinimumThumbLength(@Nonnull ScrollBarLayoutConfiguration g)
+	protected int getMinimumThumbLength(@NotNull ScrollBarLayoutConfiguration g)
 	{
 		switch (g.getSize()) {
 			case SMALL:
@@ -1519,7 +1479,7 @@ public class YosemiteLayoutInfo
 		}
 	}
 
-	protected double getScrollTrackEndInset(@Nonnull ScrollBarLayoutConfiguration g)
+	protected double getScrollTrackEndInset(@NotNull ScrollBarLayoutConfiguration g)
 	{
 		switch (g.getWidget()) {
 			case LEGACY:
@@ -1530,7 +1490,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public int getScrollBarThumbHit(@Nonnull Rectangle2D bounds, @Nonnull ScrollBarThumbConfiguration g)
+	public int getScrollBarThumbHit(@NotNull Rectangle2D bounds, @NotNull ScrollBarThumbConfiguration g)
 	{
 		int c = g.getValue();
 
@@ -1556,15 +1516,13 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getScrollColumnSizerLayoutInfo(@Nonnull ScrollColumnSizerLayoutConfiguration g)
+	protected @NotNull LayoutInfo getScrollColumnSizerLayoutInfo(@NotNull ScrollColumnSizerLayoutConfiguration g)
 	{
 		return BasicLayoutInfo.getInstance();	// obsolete
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getProgressIndicatorLayoutInfo(@Nonnull ProgressIndicatorLayoutConfiguration g)
+	protected @NotNull LayoutInfo getProgressIndicatorLayoutInfo(@NotNull ProgressIndicatorLayoutConfiguration g)
 	{
 		ProgressWidget pw = g.getWidget();
 		Orientation o = g.getOrientation();
@@ -1576,7 +1534,7 @@ public class YosemiteLayoutInfo
 			} else {
 				return BasicLayoutInfo.createFixedWidth(6);
 			}
-		} else if (pw == ProgressWidget.SPINNER){
+		} else if (pw == ProgressWidget.SPINNER || pw == ProgressWidget.INDETERMINATE_SPINNER) {
 			int d = size(sz, 32, 16, 12);
 			return BasicLayoutInfo.createFixed(d, d);
 		} else {
@@ -1585,8 +1543,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	protected @Nonnull
-	LayoutInfo getTableColumnHeaderLayoutInfo(@Nonnull TableColumnHeaderLayoutConfiguration g)
+	protected @NotNull LayoutInfo getTableColumnHeaderLayoutInfo(@NotNull TableColumnHeaderLayoutConfiguration g)
 	{
 		// Our painter extension supports arbitrary heights. Therefore we specify a minimum height here.
 		// The native painters would want a fixed height of 15.
@@ -1595,8 +1552,7 @@ public class YosemiteLayoutInfo
 		return BasicLayoutInfo.createMinimum(minWidth, 15);
 	}
 
-	public @Nullable
-	Insetter getTableColumnHeaderSortArrowInsets(@Nonnull TableColumnHeaderLayoutConfiguration g)
+	public @Nullable Insetter getTableColumnHeaderSortArrowInsets(@NotNull TableColumnHeaderLayoutConfiguration g)
 	{
 		int width = getTableHeaderSortIndicatorWidth(g);
 		int top = 1;
@@ -1606,8 +1562,7 @@ public class YosemiteLayoutInfo
 	}
 
 	@Override
-	public @Nonnull
-	Insetter getTableColumnHeaderLabelInsets(@Nonnull TableColumnHeaderLayoutConfiguration g)
+	public @NotNull Insetter getTableColumnHeaderLabelInsets(@NotNull TableColumnHeaderLayoutConfiguration g)
 	{
 		int arrowSide = 7 + getTableHeaderSortIndicatorWidth(g);
 		int top = 1;
@@ -1616,7 +1571,7 @@ public class YosemiteLayoutInfo
 			: Insetters.createFixed(top, arrowSide, top, side);
 	}
 
-	protected int getTableHeaderSortIndicatorWidth(@Nonnull TableColumnHeaderLayoutConfiguration g)
+	protected int getTableHeaderSortIndicatorWidth(@NotNull TableColumnHeaderLayoutConfiguration g)
 	{
 		return g.isSortable() ? 11 : 0;
 	}

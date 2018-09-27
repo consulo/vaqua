@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Alan Snyder.
+ * Copyright (c) 2015-2018 Alan Snyder.
  * All rights reserved.
  *
  * You may not use, copy or modify this file, except in compliance with the license agreement. For details see
@@ -8,9 +8,9 @@
 
 package org.violetlib.jnr.impl;
 
-import java.util.Arrays;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
+import java.util.Arrays;
 
 /**
 	A renderer that vertically flips the effect of a base raster. Not thread safe.
@@ -19,8 +19,7 @@ import javax.annotation.Nonnull;
 public class FlipVerticalRenderer
 	implements BasicRenderer
 {
-	private final @Nonnull
-	BasicRenderer r;
+	private final @NotNull BasicRenderer r;
 
 	private static int[] temp;
 
@@ -31,13 +30,13 @@ public class FlipVerticalRenderer
 		@param r The renderer to invoke.
 	*/
 
-	public FlipVerticalRenderer(@Nonnull BasicRenderer r)
+	public FlipVerticalRenderer(@NotNull BasicRenderer r)
 	{
 		this.r = r;
 	}
 
 	@Override
-	public void render(@Nonnull int[] data, int rw, int rh, float w, float h)
+	public void render(@NotNull int[] data, int rw, int rh, float w, float h)
 	{
 		int requiredSize = rw * rh;
 		if (requiredSize > 0) {
@@ -56,9 +55,6 @@ public class FlipVerticalRenderer
 							int pixel = temp[rowOffset*rw+colOffset];
 							int alpha = (pixel >> 24) & 0xFF;
 							if (alpha != 0) {
-								if (alpha != 0xFF) {
-									pixel = combine(data[row * rw + col], pixel);
-								}
 								data[row * rw + col] = pixel;
 							}
 						}
@@ -66,24 +62,5 @@ public class FlipVerticalRenderer
 				}
 			}
 		}
-	}
-
-	private static int combine(int oldPixel, int newPixel)
-	{
-		int oldAlpha = (oldPixel >> 24) & 0xFF;
-		int oldRed = (oldPixel >> 16) & 0xFF;
-		int oldGreen = (oldPixel >> 8) & 0xFF;
-		int oldBlue = (oldPixel >> 0) & 0xFF;
-		int newAlpha = (newPixel >> 24) & 0xFF;
-		int newRed = (newPixel >> 16) & 0xFF;
-		int newGreen = (newPixel >> 8) & 0xFF;
-		int newBlue = (newPixel >> 0) & 0xFF;
-		int f = 255 - newAlpha;
-		int red = (newRed + ((oldRed * f) >> 8)) & 0xFF;
-		int green = (newGreen + ((oldGreen * f) >> 8)) & 0xFF;
-		int blue = (newBlue + ((oldBlue * f) >> 8)) & 0xFF;
-		int alpha =  ((255 * newAlpha + oldAlpha * f) / 255) & 0xFF;
-		int result = (alpha << 24) + (red << 16) + (green << 8) + blue;
-		return result;
 	}
 }

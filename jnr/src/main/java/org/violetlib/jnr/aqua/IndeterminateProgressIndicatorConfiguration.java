@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
 import org.violetlib.jnr.aqua.AquaUIPainter.ProgressWidget;
@@ -25,14 +25,13 @@ public class IndeterminateProgressIndicatorConfiguration
 	extends ProgressIndicatorLayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	State state;
+	private final @NotNull State state;
 	private final int animationFrame;
 
-	public IndeterminateProgressIndicatorConfiguration(@Nonnull ProgressWidget pw,
-																										 @Nonnull Size sz,
-																										 @Nonnull State state,
-																										 @Nonnull Orientation o,
+	public IndeterminateProgressIndicatorConfiguration(@NotNull ProgressWidget pw,
+																										 @NotNull Size sz,
+																										 @NotNull State state,
+																										 @NotNull Orientation o,
 																										 int animationFrame)
 	{
 		super(pw, sz, o);
@@ -41,8 +40,7 @@ public class IndeterminateProgressIndicatorConfiguration
 		this.animationFrame = animationFrame;
 	}
 
-	public @Nonnull
-	State getState()
+	public @NotNull State getState()
 	{
 		return state;
 	}
@@ -69,8 +67,7 @@ public class IndeterminateProgressIndicatorConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String fs = animationFrame > 0 ? " " + animationFrame : "";
 		return super.toString() + " " + state + fs;

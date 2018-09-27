@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.SegmentedButtonWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -23,36 +23,30 @@ import org.violetlib.jnr.aqua.AquaUIPainter.Position;
 public class SegmentedButtonLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @Nonnull
-	SegmentedButtonWidget bw;
-	private final @Nonnull
-	Size size;
-	private final @Nonnull
-	Position position;
+	private final @NotNull SegmentedButtonWidget bw;
+	private final @NotNull Size size;
+	private final @NotNull Position position;
 
-	public SegmentedButtonLayoutConfiguration(@Nonnull SegmentedButtonWidget bw,
-																						@Nonnull Size size,
-																						@Nonnull Position position)
+	public SegmentedButtonLayoutConfiguration(@NotNull SegmentedButtonWidget bw,
+																						@NotNull Size size,
+																						@NotNull Position position)
 	{
 		this.bw = bw;
 		this.size = size;
 		this.position = position;
 	}
 
-	public @Nonnull
-	SegmentedButtonWidget getWidget()
+	public @NotNull SegmentedButtonWidget getWidget()
 	{
 		return bw;
 	}
 
-	public @Nonnull
-	Size getSize()
+	public @NotNull Size getSize()
 	{
 		return size;
 	}
 
-	public @Nonnull
-	Position getPosition()
+	public @NotNull Position getPosition()
 	{
 		return position;
 	}
@@ -73,8 +67,7 @@ public class SegmentedButtonLayoutConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return bw + " " + size + " " + position;
 	}

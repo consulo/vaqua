@@ -13,7 +13,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.ComboBoxConfiguration;
@@ -26,19 +26,17 @@ import org.violetlib.jnr.impl.PainterExtension;
 public class ComboBoxButtonCellPainterExtension
 	implements PainterExtension
 {
-	protected final @Nonnull
-	ComboBoxConfiguration gg;
+	protected final @NotNull ComboBoxConfiguration gg;
 
-	protected @Nonnull
-	Color COLOR = new Color(7, 7, 7, 150);
+	protected @NotNull Color COLOR = new Color(7, 7, 7, 150);
 
-	public ComboBoxButtonCellPainterExtension(@Nonnull ComboBoxConfiguration g)
+	public ComboBoxButtonCellPainterExtension(@NotNull ComboBoxConfiguration g)
 	{
 		this.gg = g;
 	}
 
 	@Override
-	public void paint(@Nonnull Graphics2D g, float width, float height)
+	public void paint(@NotNull Graphics2D g, float width, float height)
 	{
 		AquaUIPainter.Size sz = gg.getSize();
 		double h = sz == AquaUIPainter.Size.REGULAR ? 4 : 4;

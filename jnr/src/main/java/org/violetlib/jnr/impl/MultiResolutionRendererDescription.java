@@ -11,7 +11,7 @@ package org.violetlib.jnr.impl;
 import java.awt.geom.Rectangle2D;
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 /**
 
@@ -20,12 +20,10 @@ import javax.annotation.*;
 public final class MultiResolutionRendererDescription
 	implements RendererDescription
 {
-	private final @Nonnull
-	RendererDescription rd1;
-	private final @Nonnull
-	RendererDescription rd2;
+	private final @NotNull RendererDescription rd1;
+	private final @NotNull RendererDescription rd2;
 
-	public MultiResolutionRendererDescription(@Nonnull RendererDescription rd1, @Nonnull RendererDescription rd2)
+	public MultiResolutionRendererDescription(@NotNull RendererDescription rd1, @NotNull RendererDescription rd2)
 	{
 		this.rd1 = rd1;
 		this.rd2 = rd2;
@@ -37,21 +35,18 @@ public final class MultiResolutionRendererDescription
 		return rd1.isTrivial() && rd2.isTrivial();
 	}
 
-	public @Nonnull
-	RendererDescription getDescription1()
+	public @NotNull RendererDescription getDescription1()
 	{
 		return rd1;
 	}
 
-	public @Nonnull
-	RendererDescription getDescription2()
+	public @NotNull RendererDescription getDescription2()
 	{
 		return rd2;
 	}
 
 	@Override
-	public @Nonnull
-	RasterDescription getRasterBounds(@Nonnull Rectangle2D target, int scaleFactor)
+	public @NotNull RasterDescription getRasterBounds(@NotNull Rectangle2D target, int scaleFactor)
 	{
 		return scaleFactor == 1 ? rd1.getRasterBounds(target, scaleFactor) : rd2.getRasterBounds(target, scaleFactor);
 	}

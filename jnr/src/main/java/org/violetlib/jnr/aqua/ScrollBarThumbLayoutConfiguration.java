@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 /**
 	A layout configuration for a scroll bar thumb.
@@ -22,7 +22,7 @@ public class ScrollBarThumbLayoutConfiguration
 	private final int value;
 	private final float thumbExtent;
 
-	public ScrollBarThumbLayoutConfiguration(@Nonnull ScrollBarConfiguration g, int value)
+	public ScrollBarThumbLayoutConfiguration(@NotNull ScrollBarConfiguration g, int value)
 	{
 		super(g);
 
@@ -30,9 +30,9 @@ public class ScrollBarThumbLayoutConfiguration
 		this.thumbExtent = g.getThumbExtent();
 	}
 
-	public ScrollBarThumbLayoutConfiguration(@Nonnull AquaUIPainter.ScrollBarWidget bw,
-																					 @Nonnull AquaUIPainter.Size size,
-																					 @Nonnull AquaUIPainter.Orientation o,
+	public ScrollBarThumbLayoutConfiguration(@NotNull AquaUIPainter.ScrollBarWidget bw,
+																					 @NotNull AquaUIPainter.Size size,
+																					 @NotNull AquaUIPainter.Orientation o,
 																					 float thumbExtent,
 																					 int value)
 	{
@@ -69,8 +69,7 @@ public class ScrollBarThumbLayoutConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		return super.toString() + " " + value;
 	}

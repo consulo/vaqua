@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua.jrs;
 
 import java.lang.reflect.Method;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.impl.jrs.JRSUIConstants;
 import org.violetlib.jnr.impl.jrs.JRSUIControl;
@@ -25,12 +25,9 @@ import org.violetlib.jnr.impl.BasicRenderer;
 
 public class JRSRendererMaker
 {
-	protected @Nullable
-	JRSUIConstants.Widget currentWidget;
-	protected @Nullable
-	JRSUIControl control;
-	protected @Nullable
-	JRSUIState state;
+	protected @Nullable JRSUIConstants.Widget currentWidget;
+	protected @Nullable JRSUIControl control;
+	protected @Nullable JRSUIState state;
 
 	private static final Method stateSetMethod = getStateSetMethod();
 
@@ -57,7 +54,7 @@ public class JRSRendererMaker
 		}
 	}
 
-	protected void setProperty(@Nonnull Object p)
+	protected void setProperty(@NotNull Object p)
 	{
 		if (false) {  // debug
 			System.err.println("  Setting property: " + p);
@@ -71,122 +68,122 @@ public class JRSRendererMaker
 		}
 	}
 
-	public void set(@Nonnull JRSUIConstants.Size p)
+	public void set(@NotNull JRSUIConstants.Size p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.State p)
+	public void set(@NotNull JRSUIConstants.State p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.Direction p)
+	public void set(@NotNull JRSUIConstants.Direction p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.Orientation p)
+	public void set(@NotNull JRSUIConstants.Orientation p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.AlignmentVertical p)
+	public void set(@NotNull JRSUIConstants.AlignmentVertical p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.AlignmentHorizontal p)
+	public void set(@NotNull JRSUIConstants.AlignmentHorizontal p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.SegmentPosition p)
+	public void set(@NotNull JRSUIConstants.SegmentPosition p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.ScrollBarPart p)
+	public void set(@NotNull JRSUIConstants.ScrollBarPart p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.Variant p)
+	public void set(@NotNull JRSUIConstants.Variant p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.WindowType p)
+	public void set(@NotNull JRSUIConstants.WindowType p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.Focused p)
+	public void set(@NotNull JRSUIConstants.Focused p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.IndicatorOnly p)
+	public void set(@NotNull JRSUIConstants.IndicatorOnly p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.NoIndicator p)
+	public void set(@NotNull JRSUIConstants.NoIndicator p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.ArrowsOnly p)
+	public void set(@NotNull JRSUIConstants.ArrowsOnly p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.FrameOnly p)
+	public void set(@NotNull JRSUIConstants.FrameOnly p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.SegmentTrailingSeparator p)
+	public void set(@NotNull JRSUIConstants.SegmentTrailingSeparator p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.SegmentLeadingSeparator p)
+	public void set(@NotNull JRSUIConstants.SegmentLeadingSeparator p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.NothingToScroll p)
+	public void set(@NotNull JRSUIConstants.NothingToScroll p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.WindowTitleBarSeparator p)
+	public void set(@NotNull JRSUIConstants.WindowTitleBarSeparator p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.WindowClipCorners p)
+	public void set(@NotNull JRSUIConstants.WindowClipCorners p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.ShowArrows p)
+	public void set(@NotNull JRSUIConstants.ShowArrows p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.BooleanValue p)
+	public void set(@NotNull JRSUIConstants.BooleanValue p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.Animating p)
+	public void set(@NotNull JRSUIConstants.Animating p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.Widget p)
+	public void set(@NotNull JRSUIConstants.Widget p)
 	{
 		if (p == currentWidget) {
 			return;
@@ -235,12 +232,12 @@ public class JRSRendererMaker
 		control = new JRSUIControl(false);
 	}
 
-	public void set(@Nonnull JRSUIConstants.Hit p)
+	public void set(@NotNull JRSUIConstants.Hit p)
 	{
 		setProperty(p);
 	}
 
-	public void set(@Nonnull JRSUIConstants.ScrollBarHit p)
+	public void set(@NotNull JRSUIConstants.ScrollBarHit p)
 	{
 		setProperty(p);
 	}
@@ -285,8 +282,7 @@ public class JRSRendererMaker
 		}
 	}
 
-	public @Nonnull
-	BasicRenderer getRenderer()
+	public @NotNull BasicRenderer getRenderer()
 	{
 		if (state != null) {
 			assert control != null;

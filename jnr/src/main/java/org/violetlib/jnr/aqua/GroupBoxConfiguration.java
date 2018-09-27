@@ -10,7 +10,7 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
 
@@ -22,18 +22,16 @@ public class GroupBoxConfiguration
 	extends GroupBoxLayoutConfiguration
 	implements Configuration
 {
-	private final @Nonnull
-	State state;
+	private final @NotNull State state;
 	private final boolean isFrameOnly;
 
-	public GroupBoxConfiguration(@Nonnull State state, boolean isFrameOnly)
+	public GroupBoxConfiguration(@NotNull State state, boolean isFrameOnly)
 	{
 		this.state = state;
 		this.isFrameOnly = isFrameOnly;
 	}
 
-	public @Nonnull
-	State getState()
+	public @NotNull State getState()
 	{
 		return state;
 	}
@@ -59,8 +57,7 @@ public class GroupBoxConfiguration
 	}
 
 	@Override
-	public @Nonnull
-	String toString()
+	public @NotNull String toString()
 	{
 		String frs = isFrameOnly ? " frame only" : "";
 		return super.toString() + frs + " " + state;

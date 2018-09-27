@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.impl;
 
-import javax.annotation.*;
+import org.jetbrains.annotations.*;
 
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.LayoutInfo;
@@ -30,8 +30,7 @@ public class Insetters
 		@throws IllegalArgumentException if any parameter is negative.
 	*/
 
-	public static @Nonnull
-	Insetter createFixed(float top, float left, float bottom, float right)
+	public static @NotNull Insetter createFixed(float top, float left, float bottom, float right)
 	{
 		return new CombinedInsetter(new FixedInsetter1(left, right), new FixedInsetter1(top, bottom));
 	}
@@ -47,8 +46,7 @@ public class Insetters
 		@throws IllegalArgumentException if any parameter is negative.
 	*/
 
-	public static @Nonnull
-	Insetter createFixed(float top, float left, float bottom, float right, @Nullable LayoutInfo layoutInfo)
+	public static @NotNull Insetter createFixed(float top, float left, float bottom, float right, @Nullable LayoutInfo layoutInfo)
 	{
 		Insetter1 horizontal = null;
 		Insetter1 vertical = null;
@@ -86,8 +84,7 @@ public class Insetters
 		@throws IllegalArgumentException if any parameter is negative.
 	*/
 
-	public static @Nonnull
-	Insetter createLeftAligned(float regionWidth, float left, float top, float bottom)
+	public static @NotNull Insetter createLeftAligned(float regionWidth, float left, float top, float bottom)
 	{
 		return new CombinedInsetter(FloatingInsetter1.createLeftTopAligned(regionWidth, left), new FixedInsetter1(top, bottom));
 	}
@@ -103,8 +100,7 @@ public class Insetters
 		@throws IllegalArgumentException if any parameter is negative.
 	*/
 
-	public static @Nonnull
-	Insetter createRightAligned(float regionWidth, float right, float top, float bottom)
+	public static @NotNull Insetter createRightAligned(float regionWidth, float right, float top, float bottom)
 	{
 		return new CombinedInsetter(FloatingInsetter1.createRightBottomAligned(regionWidth, right), new FixedInsetter1(top, bottom));
 	}
@@ -120,8 +116,7 @@ public class Insetters
 		@throws IllegalArgumentException if any parameter is negative.
 	*/
 
-	public static @Nonnull
-	Insetter createTopAligned(float regionHeight, float top, float left, float right)
+	public static @NotNull Insetter createTopAligned(float regionHeight, float top, float left, float right)
 	{
 		return new CombinedInsetter(new FixedInsetter1(left, right), FloatingInsetter1.createLeftTopAligned(regionHeight, top));
 	}
@@ -137,8 +132,7 @@ public class Insetters
 		@throws IllegalArgumentException if any parameter is negative.
 	*/
 
-	public static @Nonnull
-	Insetter createBottomAligned(float regionHeight, float bottom, float left, float right)
+	public static @NotNull Insetter createBottomAligned(float regionHeight, float bottom, float left, float right)
 	{
 		return new CombinedInsetter(new FixedInsetter1(left, right), FloatingInsetter1.createRightBottomAligned(regionHeight, bottom));
 	}
