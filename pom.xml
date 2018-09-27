@@ -47,6 +47,8 @@
 		<module>jnr/java9-impl</module>
 		<module>jnr-shade</module>
 
+		<module>vappearances</module>
+
 		<module>vaqua</module>
 		<module>vaqua/java8-impl</module>
 		<module>vaqua/java8-jb-impl</module>
