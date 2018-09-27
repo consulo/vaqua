@@ -29,6 +29,7 @@ public class SidePanelListBox {
         JRootPane rootPane = fr.getRootPane();
         rootPane.putClientProperty("Aqua.windowTopMargin", 0);
         rootPane.putClientProperty("Aqua.windowStyle", "transparentTitleBar");
+        rootPane.putClientProperty("jetbrains.awt.transparentTitleBarAppearance", true); // jetbrains hack
 
         JList jlist = new JList(new DefaultListModel());
         jlist.addListSelectionListener(new ListSelectionListener() {

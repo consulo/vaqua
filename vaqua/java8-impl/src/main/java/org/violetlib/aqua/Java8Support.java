@@ -196,13 +196,13 @@ public class Java8Support implements JavaSupportImpl
 	@Override
 	public AquaMultiResolutionImage createMultiResolutionImage(BufferedImage im)
 	{
-		return new Aqua8MultiResolutionImage(im);
+		return Aqua8MultiResolutionImage.create(im);
 	}
 
 	@Override
 	public AquaMultiResolutionImage createMultiResolutionImage(BufferedImage im1, BufferedImage im2)
 	{
-		return new Aqua8MultiResolutionImage2(im1, im2);
+		return Aqua8MultiResolutionImage2.create(im1, im2);
 	}
 
 	@Override

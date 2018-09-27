@@ -15,9 +15,15 @@ public class Java8JBSupport implements JavaSupportImpl {
     @Override
     public boolean isAvaliable() {
         try {
-            return Class.forName("java.lang.Module") == null && Class.forName("java.awt.image.MultiResolutionImage") != null;
+            Class.forName("java.lang.Module");
+            return false;
+        } catch (ClassNotFoundException ignored) {
         }
-        catch (ClassNotFoundException e) {
+
+        try {
+            Class.forName("java.awt.image.MultiResolutionImage");
+            return true;
+        } catch (ClassNotFoundException e) {
             return false;
         }
     }
@@ -35,6 +41,6 @@ public class Java8JBSupport implements JavaSupportImpl {
 
     @Override
     public Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im) {
-        return new JNR8JBMultiResolutionImage(baseImageWidth, baseImageHeight, im);
+        return JNR8JBMultiResolutionImage.create(baseImageWidth, baseImageHeight, im);
     }
 }

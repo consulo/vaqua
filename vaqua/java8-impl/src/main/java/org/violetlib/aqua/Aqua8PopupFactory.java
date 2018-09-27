@@ -8,9 +8,9 @@
 
 package org.violetlib.aqua;
 
+import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.Method;
-import javax.swing.*;
 
 /**
  * A Java 8 specific popup factory.

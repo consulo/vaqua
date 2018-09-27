@@ -23,9 +23,9 @@ public class Java8Support implements JavaSupportImpl {
     @Override
     public boolean isAvaliable() {
         try {
-            return Class.forName("sun.awt.image.MultiResolutionImage") != null;
-        }
-        catch (ClassNotFoundException e) {
+            Class.forName("sun.awt.image.MultiResolutionImage");
+            return true;
+        } catch (ClassNotFoundException e) {
             return false;
         }
     }
@@ -44,8 +44,7 @@ public class Java8Support implements JavaSupportImpl {
             Graphics2D gg = (Graphics2D) g;
             GraphicsConfiguration gc = gg.getDeviceConfiguration();
             scaleFactor = getScaleFactor(gc);
-        }
-        else {
+        } else {
             scaleFactor = 1;
         }
 
@@ -67,8 +66,7 @@ public class Java8Support implements JavaSupportImpl {
                 field.setAccessible(true);
                 scale = field.get(device);
             }
-        }
-        catch (Exception ignore) {
+        } catch (Exception ignore) {
         }
 
         if (scale instanceof Integer) {
@@ -80,6 +78,6 @@ public class Java8Support implements JavaSupportImpl {
 
     @Override
     public Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im) {
-        return new JNR8MultiResolutionImage(baseImageWidth, baseImageHeight, im);
+        return JNR8MultiResolutionImage.create(baseImageWidth, baseImageHeight, im);
     }
 }

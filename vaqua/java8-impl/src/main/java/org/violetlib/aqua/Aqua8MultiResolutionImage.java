@@ -8,8 +8,13 @@
 
 package org.violetlib.aqua;
 
-import java.awt.*;
-import java.awt.image.*;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -23,11 +28,19 @@ import sun.awt.image.MultiResolutionImage;
  * A multi-resolution image with a single representation. This class is designed for Java 8.
  */
 public class Aqua8MultiResolutionImage extends AquaMultiResolutionImage implements MultiResolutionImage {
-    public Aqua8MultiResolutionImage(BufferedImage im) {
+    public static AquaMultiResolutionImage create(BufferedImage image) {
+        return new Aqua8MultiResolutionImage(image);
+    }
+
+    public static Aqua8MultiResolutionImage create(int width, int height, BufferedImage im) {
+        return new Aqua8MultiResolutionImage(width, height, im);
+    }
+
+    private Aqua8MultiResolutionImage(BufferedImage im) {
         super(im);
     }
 
-    public Aqua8MultiResolutionImage(int width, int height, BufferedImage im) {
+    private Aqua8MultiResolutionImage(int width, int height, BufferedImage im) {
         super(im, width, height);
     }
 
@@ -58,7 +71,7 @@ public class Aqua8MultiResolutionImage extends AquaMultiResolutionImage implemen
      */
     public static Image apply(Image image, ImageFilter filter) {
         if (image instanceof MultiResolutionImage) {
-            Function<Image,Image> f = (rv -> createFilteredImage(rv, filter));
+            Function<Image, Image> f = (rv -> createFilteredImage(rv, filter));
             return apply(image, f);
         }
 
@@ -74,7 +87,7 @@ public class Aqua8MultiResolutionImage extends AquaMultiResolutionImage implemen
     // throws an exception.
 
     private static Image waitForImage(Image image) {
-        final boolean[] mutex = new boolean[] { false };
+        final boolean[] mutex = new boolean[]{false};
         ImageObserver observer = (Image img, int infoflags, int x, int y, int width, int height) -> {
             if ((width != -1 && height != -1 && (infoflags & ImageObserver.ALLBITS) != 0) || (infoflags & ImageObserver.ABORT) != 0) {
                 synchronized (mutex) {
@@ -101,7 +114,7 @@ public class Aqua8MultiResolutionImage extends AquaMultiResolutionImage implemen
     /**
      * Create an image by applying a generic mapper. Supports multi-resolution images.
      */
-    public static Image apply(Image source, Function<Image,Image> mapper) {
+    public static Image apply(Image source, Function<Image, Image> mapper) {
         if (source instanceof MultiResolutionCachedImage) {
             MultiResolutionCachedImage s = (MultiResolutionCachedImage) source;
             return s.map(mapper::apply);

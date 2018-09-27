@@ -22,7 +22,9 @@ public class Java9Support implements JavaSupportImpl {
     @Override
     public boolean isAvaliable() {
         try {
-            return Class.forName("java.lang.Module") != null && Class.forName("java.awt.image.MultiResolutionImage") != null;
+            Class.forName("java.lang.Module");
+            Class.forName("java.awt.image.MultiResolutionImage");
+            return true;
         }
         catch (ClassNotFoundException e) {
             return false;
@@ -42,6 +44,6 @@ public class Java9Support implements JavaSupportImpl {
 
     @Override
     public Image createMultiResolutionImage(int baseImageWidth, int baseImageHeight, @Nonnull BufferedImage im) {
-        return new JNR9MultiResolutionImage(baseImageWidth, baseImageHeight, im);
+        return JNR9MultiResolutionImage.create(baseImageWidth, baseImageHeight, im);
     }
 }
