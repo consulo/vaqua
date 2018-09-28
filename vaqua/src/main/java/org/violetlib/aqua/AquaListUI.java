@@ -33,22 +33,22 @@
 
 package org.violetlib.aqua;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.violetlib.jnr.aqua.AquaUIPainter;
+
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicListUI;
 import javax.swing.text.JTextComponent;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.violetlib.jnr.aqua.AquaUIPainter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * A Mac L&F implementation of JList
@@ -299,7 +299,11 @@ public class AquaListUI extends BasicListUI implements AquaComponentUI {
     @Override
     public void paint(Graphics g, JComponent c) {
         if (appearanceContext != null) {
-            paintStripes(g, c);
+			if (c.isOpaque() || AquaVibrantSupport.isVibrant(c)) {
+				AquaUtils.fillRect(g, c, AquaUtils.ERASE_IF_TEXTURED | AquaUtils.ERASE_IF_VIBRANT);
+			}
+
+			paintStripes(g, c);
             super.paint(g, c);
         }
     }
