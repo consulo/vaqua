@@ -1,4 +1,4 @@
-# VAqua & JNR & VAppearances library
+# VAqua & JNR & VAppearances libraries [![Build Status](https://travis-ci.org/consulo/vaqua.svg?branch=master)](https://travis-ci.org/consulo/vaqua)
 
 
 Source from https://violetlib.org/vaqua/overview.html
