@@ -60,6 +60,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>consulo.internal</groupId>
+			<artifactId>jsr305</artifactId>
+			<version>3.0.3</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>consulo.internal</groupId>
 			<artifactId>jnr</artifactId>
 			<version>${project.version}</version>
 			<scope>provided</scope>
