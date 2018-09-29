@@ -35,6 +35,8 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.MenuDragMouseEvent;
@@ -43,8 +45,7 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicMenuUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 public class AquaMenuUI extends BasicMenuUI implements AquaComponentUI {
 
@@ -52,7 +53,8 @@ public class AquaMenuUI extends BasicMenuUI implements AquaComponentUI {
         return new AquaMenuUI();
     }
 
-    protected @NotNull BasicContextualColors colors;
+    protected @Nonnull
+	BasicContextualColors colors;
     protected @Nullable AppearanceContext appearanceContext;
 
     public AquaMenuUI() {
@@ -87,12 +89,12 @@ public class AquaMenuUI extends BasicMenuUI implements AquaComponentUI {
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 

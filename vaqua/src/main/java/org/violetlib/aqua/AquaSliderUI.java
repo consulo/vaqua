@@ -37,6 +37,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.Dictionary;
 import java.util.Enumeration;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -44,8 +46,7 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicSliderUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.geom.ExpandableOutline;
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.Painter;
@@ -68,7 +69,8 @@ public class AquaSliderUI extends BasicSliderUI
 
     private final AquaUIPainter painter = AquaPainting.create();
 
-    protected @NotNull BasicContextualColors colors;
+    protected @Nonnull
+	BasicContextualColors colors;
     protected @Nullable AppearanceContext appearanceContext;
 
     protected Size sizeVariant = Size.REGULAR;
@@ -131,16 +133,16 @@ public class AquaSliderUI extends BasicSliderUI
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance, (JSlider)c);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         // colors are not active state sensitive
     }
 
-    protected void configureAppearanceContext(@Nullable AquaAppearance appearance, @NotNull JSlider s) {
+    protected void configureAppearanceContext(@Nullable AquaAppearance appearance, @Nonnull JSlider s) {
         if (appearance == null) {
             appearance = AppearanceManager.ensureAppearance(s);
         }

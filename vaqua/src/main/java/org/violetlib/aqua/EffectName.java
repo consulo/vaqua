@@ -8,31 +8,39 @@
 
 package org.violetlib.aqua;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
 
  */
 
 public class EffectName {
-    private final @NotNull String name;
+    private final @Nonnull
+	String name;
 
-    public static final @NotNull EffectName EFFECT_NONE = new EffectName("none");
-    public static final @NotNull EffectName EFFECT_PRESSED = new EffectName("pressed");
-    public static final @NotNull EffectName EFFECT_DEEP_PRESSED = new EffectName("deepPressed");
-    public static final @NotNull EffectName EFFECT_DISABLED = new EffectName("disabled");
-    public static final @NotNull EffectName EFFECT_ROLLOVER = new EffectName("rollover");
+    public static final @Nonnull
+	EffectName EFFECT_NONE = new EffectName("none");
+    public static final @Nonnull
+	EffectName EFFECT_PRESSED = new EffectName("pressed");
+    public static final @Nonnull
+	EffectName EFFECT_DEEP_PRESSED = new EffectName("deepPressed");
+    public static final @Nonnull
+	EffectName EFFECT_DISABLED = new EffectName("disabled");
+    public static final @Nonnull
+	EffectName EFFECT_ROLLOVER = new EffectName("rollover");
 
-    private EffectName(@NotNull String name) {
+    private EffectName(@Nonnull String name) {
         this.name = name;
     }
 
-    public @NotNull String getName() {
+    public @Nonnull
+	String getName() {
         return name;
     }
 
     @Override
-    public @NotNull String toString() {
+    public @Nonnull
+	String toString() {
         return name;
     }
 }

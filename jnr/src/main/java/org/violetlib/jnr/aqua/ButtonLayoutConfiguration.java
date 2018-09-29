@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.ButtonWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -23,28 +24,34 @@ import org.violetlib.jnr.aqua.AquaUIPainter.UILayoutDirection;
 public class ButtonLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @NotNull ButtonWidget bw;
-	private final @NotNull Size size;
-	private final @NotNull UILayoutDirection ld;
+	private final @Nonnull
+	ButtonWidget bw;
+	private final @Nonnull
+	Size size;
+	private final @Nonnull
+	UILayoutDirection ld;
 
-	public ButtonLayoutConfiguration(@NotNull ButtonWidget bw, @NotNull Size size, @NotNull UILayoutDirection ld)
+	public ButtonLayoutConfiguration(@Nonnull ButtonWidget bw, @Nonnull Size size, @Nonnull UILayoutDirection ld)
 	{
 		this.bw = bw;
 		this.size = size;
 		this.ld = ld;
 	}
 
-	public @NotNull ButtonWidget getButtonWidget()
+	public @Nonnull
+	ButtonWidget getButtonWidget()
 	{
 		return bw;
 	}
 
-	public @NotNull Size getSize()
+	public @Nonnull
+	Size getSize()
 	{
 		return size;
 	}
 
-	public @NotNull UILayoutDirection getLayoutDirection()
+	public @Nonnull
+	UILayoutDirection getLayoutDirection()
 	{
 		return ld;
 	}
@@ -70,7 +77,8 @@ public class ButtonLayoutConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String lds = ld == UILayoutDirection.RIGHT_TO_LEFT ? " RTL" : "";
 		return bw + " " + size + lds;

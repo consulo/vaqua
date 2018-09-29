@@ -11,13 +11,14 @@ package org.violetlib.jnr.aqua.impl;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.SliderConfiguration;
 import org.violetlib.jnr.impl.JNRUtils;
 import org.violetlib.jnr.impl.PainterExtension;
 import org.violetlib.vappearances.VAppearance;
-
-import org.jetbrains.annotations.*;
 
 /**
 	Simulates the rendering of circular sliders (dials).
@@ -26,14 +27,19 @@ import org.jetbrains.annotations.*;
 public class CircularSliderPainterExtension
 	implements PainterExtension
 {
-	protected final @NotNull SliderConfiguration sg;
-	protected final @NotNull Color tickColor;
-	protected final @Nullable VAppearance appearance;
+	protected final @Nonnull
+	SliderConfiguration sg;
+	protected final @Nonnull
+	Color tickColor;
+	protected final @Nullable
+	VAppearance appearance;
 
-	protected final @NotNull Color LIGHT_TICK_COLOR = new Color(10, 10, 10, 110);
-	protected final @NotNull Color DARK_TICK_COLOR = new Color(255, 255, 255, 64);
+	protected final @Nonnull
+	Color LIGHT_TICK_COLOR = new Color(10, 10, 10, 110);
+	protected final @Nonnull
+	Color DARK_TICK_COLOR = new Color(255, 255, 255, 64);
 
-	public CircularSliderPainterExtension(@NotNull SliderConfiguration g, @Nullable VAppearance appearance)
+	public CircularSliderPainterExtension(@Nonnull SliderConfiguration g, @Nullable VAppearance appearance)
 	{
 		this.sg = g;
 		this.appearance = appearance;
@@ -41,7 +47,7 @@ public class CircularSliderPainterExtension
 	}
 
 	@Override
-	public void paint(@NotNull Graphics2D g, float width, float height)
+	public void paint(@Nonnull Graphics2D g, float width, float height)
 	{
 		AquaUIPainter.SliderWidget sw = sg.getWidget();
 
@@ -53,7 +59,7 @@ public class CircularSliderPainterExtension
 		}
 	}
 
-	protected void paintCircularTickMarks(@NotNull Graphics2D g, float width, float height)
+	protected void paintCircularTickMarks(@Nonnull Graphics2D g, float width, float height)
 	{
 		double x = width / 2.0;
 		double y = height / 2.0;
@@ -67,7 +73,7 @@ public class CircularSliderPainterExtension
 		p.paint(g);
 	}
 
-	protected void paintCircularIndicator(@NotNull Graphics2D g, float width, float height)
+	protected void paintCircularIndicator(@Nonnull Graphics2D g, float width, float height)
 	{
 		double x = width / 2.0;
 		double y = height / 2.0;

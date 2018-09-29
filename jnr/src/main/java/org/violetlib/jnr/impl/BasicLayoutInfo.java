@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.LayoutInfo;
 
@@ -24,13 +24,15 @@ public class BasicLayoutInfo
 	private final float minimumWidth;
 	private final float minimumHeight;
 
-	private static final @NotNull LayoutInfo EMPTY = new BasicLayoutInfo(0, 0, 0, 0);
+	private static final @Nonnull
+	LayoutInfo EMPTY = new BasicLayoutInfo(0, 0, 0, 0);
 
 	/**
 		Return a layout info with no fixed or minimum dimensions.
 	*/
 
-	public static @NotNull LayoutInfo getInstance()
+	public static @Nonnull
+	LayoutInfo getInstance()
 	{
 		return EMPTY;
 	}
@@ -43,7 +45,8 @@ public class BasicLayoutInfo
 		@throws IllegalArgumentException if the specified width is negative.
 	*/
 
-	public static @NotNull LayoutInfo createFixedWidth(float fixedWidth)
+	public static @Nonnull
+	LayoutInfo createFixedWidth(float fixedWidth)
 	{
 		return new BasicLayoutInfo(fixedWidth, 0, 0, 0);
 	}
@@ -56,7 +59,8 @@ public class BasicLayoutInfo
 		@throws IllegalArgumentException if the specified height is negative.
 	*/
 
-	public static @NotNull LayoutInfo createFixedHeight(float fixedHeight)
+	public static @Nonnull
+	LayoutInfo createFixedHeight(float fixedHeight)
 	{
 		return new BasicLayoutInfo(0, fixedHeight, 0, 0);
 	}
@@ -70,7 +74,8 @@ public class BasicLayoutInfo
 		@throws IllegalArgumentException if the specified width or height is negative.
 	*/
 
-	public static @NotNull LayoutInfo createFixed(float fixedWidth, float fixedHeight)
+	public static @Nonnull
+	LayoutInfo createFixed(float fixedWidth, float fixedHeight)
 	{
 		return new BasicLayoutInfo(fixedWidth, fixedHeight, 0, 0);
 	}
@@ -83,7 +88,8 @@ public class BasicLayoutInfo
 		@throws IllegalArgumentException if the specified width is negative.
 	*/
 
-	public static @NotNull LayoutInfo createMinimumWidth(float minWidth)
+	public static @Nonnull
+	LayoutInfo createMinimumWidth(float minWidth)
 	{
 		return new BasicLayoutInfo(0, 0, minWidth, 0);
 	}
@@ -96,7 +102,8 @@ public class BasicLayoutInfo
 		@throws IllegalArgumentException if the specified height is negative.
 	*/
 
-	public static @NotNull LayoutInfo createMinimumHeight(float minHeight)
+	public static @Nonnull
+	LayoutInfo createMinimumHeight(float minHeight)
 	{
 		return new BasicLayoutInfo(0, 0, 0, minHeight);
 	}
@@ -110,7 +117,8 @@ public class BasicLayoutInfo
 		@throws IllegalArgumentException if the specified width or height is negative.
 	*/
 
-	public static @NotNull LayoutInfo createMinimum(float minWidth, float minHeight)
+	public static @Nonnull
+	LayoutInfo createMinimum(float minWidth, float minHeight)
 	{
 		return new BasicLayoutInfo(0, 0, minWidth, minHeight);
 	}
@@ -128,7 +136,8 @@ public class BasicLayoutInfo
 		@throws IllegalArgumentException if the specified width or height is negative.
 	*/
 
-	public static @NotNull LayoutInfo create(boolean isWidthFixed, float width, boolean isHeightFixed, float height)
+	public static @Nonnull
+	LayoutInfo create(boolean isWidthFixed, float width, boolean isHeightFixed, float height)
 	{
 		float fixedWidth = isWidthFixed ? width : 0;
 		float fixedHeight = isHeightFixed ? height : 0;

@@ -35,11 +35,12 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.plaf.UIResource;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.jnr.Painter;
 
@@ -71,7 +72,8 @@ public class AquaIcon {
      * @param i The icon (may be null).
      * @return the corresponding image, or null if not possible.
      */
-    public static @Nullable Image getImageForIcon(@Nullable Icon i) {
+    public static @Nullable
+	Image getImageForIcon(@Nullable Icon i) {
         if (i == null) {
             return null;
         }
@@ -95,7 +97,8 @@ public class AquaIcon {
         return image;
     }
 
-    public static @NotNull Icon createPressedDarkIcon(@NotNull Icon ic) {
+    public static @Nonnull
+	Icon createPressedDarkIcon(@Nonnull Icon ic) {
         Image im = getImageForIcon(ic);
         if (im != null) {
             Image pressedImage = AquaImageFactory.getProcessedImage(im, AquaImageFactory.DARKEN_FOR_PRESSED);
@@ -105,7 +108,8 @@ public class AquaIcon {
         }
     }
 
-    public static @NotNull Icon createDisabledLightIcon(@NotNull Icon ic) {
+    public static @Nonnull
+	Icon createDisabledLightIcon(@Nonnull Icon ic) {
         Image im = getImageForIcon(ic);
         if (im != null) {
             Image disabledImage = AquaImageFactory.getProcessedImage(im, AquaImageFactory.LIGHTEN_FOR_DISABLED);

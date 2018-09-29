@@ -60,8 +60,8 @@ import javax.swing.text.FieldView;
 import javax.swing.text.JTextComponent;
 import javax.swing.text.View;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.Insets2D;
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.LayoutInfo;
@@ -84,7 +84,8 @@ public class AquaTextFieldUI extends BasicTextFieldUI implements FocusRingOutlin
     protected JTextComponent editor;
     protected View topView;
     boolean oldDragState = false;
-    protected @NotNull BasicContextualColors colors;
+    protected @Nonnull
+	BasicContextualColors colors;
     protected @Nullable AppearanceContext appearanceContext;
 
     public AquaTextFieldUI() {
@@ -195,12 +196,12 @@ public class AquaTextFieldUI extends BasicTextFieldUI implements FocusRingOutlin
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 
@@ -469,7 +470,7 @@ public class AquaTextFieldUI extends BasicTextFieldUI implements FocusRingOutlin
         return editor.getBackground();
     }
 
-    protected void paintBackgroundSafely(@NotNull Graphics g, @Nullable Color background) {
+    protected void paintBackgroundSafely(@Nonnull Graphics g, @Nullable Color background) {
         int width = editor.getWidth();
         int height = editor.getHeight();
 

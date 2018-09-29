@@ -8,8 +8,8 @@
 
 package org.violetlib.vappearances;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -54,9 +54,10 @@ public class VAppearances
     public static class AppearanceChangeEvent
       extends ChangeEvent
     {
-        private final @NotNull VAppearance appearance;
+        private final @Nonnull
+		VAppearance appearance;
 
-        public AppearanceChangeEvent(@NotNull VAppearance appearance)
+        public AppearanceChangeEvent(@Nonnull VAppearance appearance)
         {
             super(VAppearances.class);
 
@@ -67,19 +68,22 @@ public class VAppearances
           Return the appearance whose definition may have changed.
         */
 
-        public @NotNull VAppearance getAppearance()
+        public @Nonnull
+		VAppearance getAppearance()
         {
             return appearance;
         }
     }
 
-    private static final @NotNull Map<String,VAppearance> appearancesByName = new HashMap<>();
+    private static final @Nonnull
+	Map<String,VAppearance> appearancesByName = new HashMap<>();
 
-    private static final @NotNull Set<ChangeListener> changeListeners = new HashSet<>();
+    private static final @Nonnull
+	Set<ChangeListener> changeListeners = new HashSet<>();
 
     private interface AppearanceChangedListener
     {
-        void appearanceChanged(@NotNull String data);
+        void appearanceChanged(@Nonnull String data);
     }
 
     private VAppearances()
@@ -93,13 +97,17 @@ public class VAppearances
 	*/
 
     /** The name of the light Aqua appearance */
-    public final static @NotNull String aquaAppearance = "NSAppearanceNameAqua";
+    public final static @Nonnull
+	String aquaAppearance = "NSAppearanceNameAqua";
     /** The name of the dark Aqua appearance */
-    public final static @NotNull String darkAquaAppearance = "NSAppearanceNameDarkAqua";
+    public final static @Nonnull
+	String darkAquaAppearance = "NSAppearanceNameDarkAqua";
     /** The name of the vibrant light appearance */
-    public final static @NotNull String vibrantLightAppearance = "NSAppearanceNameVibrantLight";
+    public final static @Nonnull
+	String vibrantLightAppearance = "NSAppearanceNameVibrantLight";
     /** The name of the vibrant dark appearance */
-    public final static @NotNull String vibrantDarkAppearance = "NSAppearanceNameVibrantDark";
+    public final static @Nonnull
+	String vibrantDarkAppearance = "NSAppearanceNameVibrantDark";
 
     // The following names appear to be unused:
     // public final static @NotNull String highContrastAquaAppearance = "NSAppearanceNameAccessibilityHighContrastAqua";
@@ -120,7 +128,8 @@ public class VAppearances
       @throws IOException if the appearance is not defined or not available, or if the data could not be obtained.
     */
 
-    public static @NotNull VAppearance getAppearance(@NotNull String appearanceName)
+    public static @Nonnull
+	VAppearance getAppearance(@Nonnull String appearanceName)
       throws IOException
     {
         synchronized (VAppearanceImpl.class) {
@@ -158,7 +167,8 @@ public class VAppearances
      * @throws IOException if the appearance is not defined or not available, or if the data could not be obtained.
     */
 
-    public static @NotNull VAppearance getApplicationEffectiveAppearance()
+    public static @Nonnull
+	VAppearance getApplicationEffectiveAppearance()
       throws IOException
     {
         String name;
@@ -180,12 +190,12 @@ public class VAppearances
     }
 
     // Upcall from native code with (possibly) new data for an appearance
-    private static void appearanceChanged(@NotNull String data)
+    private static void appearanceChanged(@Nonnull String data)
     {
         SwingUtilities.invokeLater(() -> installAppearance(data));
     }
 
-    private static void installAppearance(@NotNull String data)
+    private static void installAppearance(@Nonnull String data)
     {
         VAppearance a = VAppearanceImpl.parse(data);
         if (a != null) {
@@ -202,7 +212,7 @@ public class VAppearances
         }
     }
 
-    private static void installAppearance(@NotNull VAppearance a, @NotNull String source)
+    private static void installAppearance(@Nonnull VAppearance a, @Nonnull String source)
     {
         String name = a.getName();
 
@@ -229,7 +239,7 @@ public class VAppearances
         }
     }
 
-    private static void invokeListeners(@NotNull List<ChangeListener> listeners, @NotNull VAppearance appearance)
+    private static void invokeListeners(@Nonnull List<ChangeListener> listeners, @Nonnull VAppearance appearance)
     {
         ChangeEvent event = new AppearanceChangeEvent(appearance);
         for (ChangeListener listener : listeners) {
@@ -245,7 +255,7 @@ public class VAppearances
       * @param listener The listener to be registered.
     */
 
-    public static synchronized void addChangeListener(@NotNull ChangeListener listener)
+    public static synchronized void addChangeListener(@Nonnull ChangeListener listener)
     {
         changeListeners.add(listener);
     }
@@ -255,12 +265,13 @@ public class VAppearances
       * @param listener The listener to be unregistered.
     */
 
-    public static synchronized void removeChangeListener(@NotNull ChangeListener listener)
+    public static synchronized void removeChangeListener(@Nonnull ChangeListener listener)
     {
         changeListeners.remove(listener);
     }
 
-    private static native @Nullable String getSystemColorsData(@NotNull String appearanceName);
+    private static native @Nullable
+	String getSystemColorsData(@Nonnull String appearanceName);
 
     private static native void registerChangeListener(@Nullable AppearanceChangedListener listener);
 

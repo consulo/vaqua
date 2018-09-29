@@ -12,10 +12,11 @@ import java.awt.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 import javax.swing.plaf.ColorUIResource;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.vappearances.VAppearance;
 
 import static org.violetlib.aqua.OSXSystemProperties.OSVersion;
@@ -25,18 +26,25 @@ import static org.violetlib.aqua.OSXSystemProperties.OSVersion;
  */
 
 public class AquaAppearance implements VAppearance {
-    private final @NotNull VAppearance appearance;
-    private final @NotNull Map<String,Color> colors;
+    private final @Nonnull
+	VAppearance appearance;
+    private final @Nonnull
+	Map<String,Color> colors;
 
-    private static final @NotNull Colors defaultColors = createDefaultColors();
-    private static final @NotNull Colors lightColors = createLightColors();
-    private static final @NotNull Colors darkColors = createDarkColors();
-    private static final @NotNull Colors highContrastLightColors = createHighContrastLightColors();
-    private static final @NotNull Colors highContrastDarkColors = createHighContrastDarkColors();
+    private static final @Nonnull
+	Colors defaultColors = createDefaultColors();
+    private static final @Nonnull
+	Colors lightColors = createLightColors();
+    private static final @Nonnull
+	Colors darkColors = createDarkColors();
+    private static final @Nonnull
+	Colors highContrastLightColors = createHighContrastLightColors();
+    private static final @Nonnull
+	Colors highContrastDarkColors = createHighContrastDarkColors();
 
     private static final int NO_INACTIVE = 1 << 0;   // colors do not change when inactive
 
-    public AquaAppearance(@NotNull VAppearance appearance) {
+    public AquaAppearance(@Nonnull VAppearance appearance) {
         this.appearance = appearance;
 
         Colors colors = new Colors();
@@ -59,7 +67,8 @@ public class AquaAppearance implements VAppearance {
     }
 
     @Override
-    public @NotNull String getName() {
+    public @Nonnull
+	String getName() {
         return appearance.getName();
     }
 
@@ -74,7 +83,8 @@ public class AquaAppearance implements VAppearance {
     }
 
     @Override
-    public @NotNull Map<String,Color> getColors() {
+    public @Nonnull
+	Map<String,Color> getColors() {
         return appearance.getColors();
     }
 
@@ -84,7 +94,7 @@ public class AquaAppearance implements VAppearance {
      * @return the color, as a ColorUIResource, or null if the color name not defined in this appearance.
      */
 
-    public @Nullable Color getColor(@NotNull String colorName) {
+    public @Nullable Color getColor(@Nonnull String colorName) {
         Color color = colors.get(colorName);
         if (AquaColors.isDebugging()) {
             System.err.println("  Color " + colorName + ": " + AquaColors.toString(color));
@@ -101,7 +111,8 @@ public class AquaAppearance implements VAppearance {
      * defined for the specified effect, or null if the color name is note defined in this appearance.
      */
 
-    public @Nullable Color getColorForEffect(@NotNull String colorName, @NotNull EffectName effectName) {
+    public @Nullable
+	Color getColorForEffect(@Nonnull String colorName, @Nonnull EffectName effectName) {
         if (effectName == EffectName.EFFECT_NONE) {
             return colors.get(colorName);
         }
@@ -120,7 +131,7 @@ public class AquaAppearance implements VAppearance {
      * defined for the specified effect, or null if the color name is note defined in this appearance.
      */
 
-    public @Nullable Color getColorForOptionalEffect(@NotNull String colorName, @NotNull EffectName effectName) {
+    public @Nullable Color getColorForOptionalEffect(@Nonnull String colorName, @Nonnull EffectName effectName) {
         if (effectName == EffectName.EFFECT_NONE) {
             return colors.get(colorName);
         }
@@ -130,11 +141,12 @@ public class AquaAppearance implements VAppearance {
         return c != null ? c : colors.get(colorName);
     }
 
-    public boolean isBasedOn(@NotNull VAppearance va) {
+    public boolean isBasedOn(@Nonnull VAppearance va) {
         return va == appearance;
     }
 
-    private static @NotNull Colors createDefaultColors() {
+    private static @Nonnull
+	Colors createDefaultColors() {
         Colors colors = new Colors();
         colors.add("clear", 0, 0);
 
@@ -228,7 +240,8 @@ public class AquaAppearance implements VAppearance {
         return colors;
     }
 
-    private static @NotNull Colors createLightColors() {
+    private static @Nonnull
+	Colors createLightColors() {
         Colors colors = new Colors();
         colors.add("texturedWindowBackground", 212);
         colors.add("texturedWindowBackground_disabled", 246);
@@ -435,7 +448,8 @@ public class AquaAppearance implements VAppearance {
         return colors;
     }
 
-    private static @NotNull Colors createHighContrastLightColors() {
+    private static @Nonnull
+	Colors createHighContrastLightColors() {
         Colors colors = new Colors();
 
         if (OSVersion < 1014) {
@@ -482,7 +496,7 @@ public class AquaAppearance implements VAppearance {
 
     // Fixups are alterations that depend on existing definitions being present.
 
-    private static void installFixups(@NotNull Colors colors, @NotNull VAppearance appearance) {
+    private static void installFixups(@Nonnull Colors colors, @Nonnull VAppearance appearance) {
 
         if (OSVersion < 1014) {
             // Some appearance based colors prior to 10.14 are not represented as system colors.
@@ -510,7 +524,8 @@ public class AquaAppearance implements VAppearance {
         }
     }
 
-    private static @NotNull Colors createDarkColors() {
+    private static @Nonnull
+	Colors createDarkColors() {
 
         // colors related to the unified title and toolbar window style (dark mode)
 
@@ -706,7 +721,8 @@ public class AquaAppearance implements VAppearance {
         return colors;
     }
 
-    private static @NotNull Colors createHighContrastDarkColors() {
+    private static @Nonnull
+	Colors createHighContrastDarkColors() {
         Colors colors = new Colors();
 
         colors.add("windowBackground", 50);
@@ -738,18 +754,21 @@ public class AquaAppearance implements VAppearance {
     }
 
     private static class Colors {
-        private final @NotNull Map<String,Color> colors = new HashMap<>();
-        private final @NotNull Map<String,String> synonyms = new HashMap<>();
+        private final @Nonnull
+		Map<String,Color> colors = new HashMap<>();
+        private final @Nonnull
+		Map<String,String> synonyms = new HashMap<>();
 
         /**
          * This method is for final consumption only.
          */
-        public @NotNull Map<String,Color> getColors() {
+        public @Nonnull
+		Map<String,Color> getColors() {
             applySynonyms(synonyms);
             return Collections.unmodifiableMap(colors);
         }
 
-        private void applySynonyms(@NotNull Map<String,String> synonyms) {
+        private void applySynonyms(@Nonnull Map<String,String> synonyms) {
             // The goal is to support (short) chains of synonyms without risk of infinite loop
 
             Map<String,Color> results = new HashMap<>();
@@ -770,7 +789,7 @@ public class AquaAppearance implements VAppearance {
             }
         }
 
-        private @Nullable Color getIndirect(@NotNull String name, int limit) {
+        private @Nullable Color getIndirect(@Nonnull String name, int limit) {
             if (limit < 0) {
                 return null;
             }
@@ -782,7 +801,8 @@ public class AquaAppearance implements VAppearance {
             return colors.get(name);
         }
 
-        private @NotNull String getIndirectPath(@NotNull String name, int limit) {
+        private @Nonnull
+		String getIndirectPath(@Nonnull String name, int limit) {
             if (limit < 0) {
                 return "...";
             }
@@ -793,11 +813,12 @@ public class AquaAppearance implements VAppearance {
             return name;
         }
 
-        public @Nullable Color get(@NotNull String name) {
+        public @Nullable
+		Color get(@Nonnull String name) {
             return colors.get(name);
         }
 
-        private void internalAdd(@NotNull String name, @NotNull Color color) {
+        private void internalAdd(@Nonnull String name, @Nonnull Color color) {
             synonyms.remove(name);
             if (!(color instanceof ColorUIResource)) {
                 color = new ColorUIResource(color);
@@ -805,75 +826,75 @@ public class AquaAppearance implements VAppearance {
             colors.put(name, color);
         }
 
-        public void add(@NotNull String name, int color) {
+        public void add(@Nonnull String name, int color) {
             Color c = new ColorUIResource(color, color, color);
             internalAdd(name, c);
         }
 
-        public void add(@NotNull String name, int red, int green, int blue) {
+        public void add(@Nonnull String name, int red, int green, int blue) {
             Color c = new ColorUIResource(red, green, blue);
             internalAdd(name, c);
         }
 
-        public void add(@NotNull String name, int red, int green, int blue, int alpha) {
+        public void add(@Nonnull String name, int red, int green, int blue, int alpha) {
             Color c = new ColorUIResource(new Color(red, green, blue, alpha));
             internalAdd(name, c);
         }
 
-        public void add(@NotNull String name, int intensity, int alpha) {
+        public void add(@Nonnull String name, int intensity, int alpha) {
             Color c = new ColorUIResource(new Color(intensity, intensity, intensity, alpha));
             internalAdd(name, c);
         }
 
-        public void addColorGradient(@NotNull String name, int start, int finish, int alpha) {
+        public void addColorGradient(@Nonnull String name, int start, int finish, int alpha) {
             Color startColor = new Color(start, start, start, alpha);
             Color finishColor = new Color(finish, finish, finish, alpha);
             Color gradientColor = new AquaColors.GradientColor(startColor, finishColor);
             internalAdd(name, gradientColor);
         }
 
-        public void addMagicColorGradient(@NotNull String name, int start, int finish, int alpha) {
+        public void addMagicColorGradient(@Nonnull String name, int start, int finish, int alpha) {
             Color startColor = new Color(start, start, start, alpha);
             Color finishColor = new Color(finish, finish, finish, alpha);
             Color gradientColor = new AquaColors.GradientColor(startColor, finishColor, true);
             internalAdd(name, gradientColor);
         }
 
-        public void addAlphaGradient(@NotNull String name, int intensity, int startAlpha, int finishAlpha) {
+        public void addAlphaGradient(@Nonnull String name, int intensity, int startAlpha, int finishAlpha) {
             Color startColor = new Color(intensity, intensity, intensity, startAlpha);
             Color finishColor = new Color(intensity, intensity, intensity, finishAlpha);
             Color gradientColor = new AquaColors.GradientColor(startColor, finishColor);
             internalAdd(name, gradientColor);
         }
 
-        public void addMagicAlphaGradient(@NotNull String name, int intensity, int startAlpha, int finishAlpha) {
+        public void addMagicAlphaGradient(@Nonnull String name, int intensity, int startAlpha, int finishAlpha) {
             Color startColor = new Color(intensity, intensity, intensity, startAlpha);
             Color finishColor = new Color(intensity, intensity, intensity, finishAlpha);
             Color gradientColor = new AquaColors.GradientColor(startColor, finishColor, true);
             internalAdd(name, gradientColor);
         }
 
-        public void add(@NotNull String name, @NotNull Color color) {
+        public void add(@Nonnull String name, @Nonnull Color color) {
             internalAdd(name, color);
         }
 
-        public void addAll(@NotNull Map<String,Color> cs) {
+        public void addAll(@Nonnull Map<String,Color> cs) {
             for (String name : cs.keySet()) {
                 Color c = cs.get(name);
                 internalAdd(name, c);
             }
         }
 
-        private void internalAdd(@NotNull String name, @NotNull String synonym) {
+        private void internalAdd(@Nonnull String name, @Nonnull String synonym) {
             colors.remove(name);
             synonyms.put(name, synonym);
         }
 
-        public void add(@NotNull String name, @NotNull String synonym) {
+        public void add(@Nonnull String name, @Nonnull String synonym) {
             internalAdd(name, synonym);
         }
 
-        public void addAll(@NotNull String root, @NotNull String synonymRoot) {
+        public void addAll(@Nonnull String root, @Nonnull String synonymRoot) {
             add(root, synonymRoot);
             for (String suffix : AquaColors.getAllColorSuffixes()) {
                 addDerived(root, synonymRoot, suffix);
@@ -886,12 +907,12 @@ public class AquaAppearance implements VAppearance {
             }
         }
 
-        private void addDerived(@NotNull String root, @NotNull String synonymRoot, @NotNull String suffix)
+        private void addDerived(@Nonnull String root, @Nonnull String synonymRoot, @Nonnull String suffix)
         {
             add(root + suffix, synonymRoot + suffix);
         }
 
-        public void addAll(@NotNull String root, @NotNull String synonymRoot, int option) {
+        public void addAll(@Nonnull String root, @Nonnull String synonymRoot, int option) {
             add(root, synonymRoot);
             for (String suffix : AquaColors.getAllColorSuffixes()) {
                 addDerived(root, synonymRoot, suffix, option);
@@ -904,7 +925,7 @@ public class AquaAppearance implements VAppearance {
             }
         }
 
-        private void addDerived(@NotNull String root, @NotNull String synonymRoot, @NotNull String suffix, int option)
+        private void addDerived(@Nonnull String root, @Nonnull String synonymRoot, @Nonnull String suffix, int option)
         {
             if ((option & NO_INACTIVE) != 0) {
                 // define inactive variants in terms of the non-inactive variant
@@ -918,7 +939,7 @@ public class AquaAppearance implements VAppearance {
             add(root + suffix, synonymRoot + suffix);
         }
 
-        public void defineNoInactive(@NotNull String root)
+        public void defineNoInactive(@Nonnull String root)
         {
            // define inactive variants in terms of the non-inactive variant
            for (String suffix : AquaColors.getAllColorSuffixes()) {
@@ -937,11 +958,11 @@ public class AquaAppearance implements VAppearance {
             }
         }
 
-        public void remove(@NotNull String name) {
+        public void remove(@Nonnull String name) {
             colors.remove(name);
         }
 
-        public void add(@NotNull Colors cs) {
+        public void add(@Nonnull Colors cs) {
             Map<String,Color> colorsToAdd = cs.colors;
             for (String name : colorsToAdd.keySet()) {
                 Color c = colorsToAdd.get(name);
@@ -956,7 +977,8 @@ public class AquaAppearance implements VAppearance {
     }
 
     @Override
-    public @NotNull String toString() {
+    public @Nonnull
+	String toString() {
         return super.toString() + "[" + appearance.getName() + "]";
     }
 }

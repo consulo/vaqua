@@ -15,10 +15,11 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.aqua.*;
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 
@@ -68,15 +69,16 @@ public class OSXFile {
 
     private static class RecyclableFileIcon extends RecyclableSingleton<ImageIconUIResource> {
 
-        private final @NotNull File file;
+        private final @Nonnull
+		File file;
         private final boolean shouldConvertToTemplate;
 
-        public RecyclableFileIcon(@NotNull File file, boolean shouldConvertToTemplate) {
+        public RecyclableFileIcon(@Nonnull File file, boolean shouldConvertToTemplate) {
              this.file = file;
              this.shouldConvertToTemplate = shouldConvertToTemplate;
          }
 
-        public RecyclableFileIcon(@NotNull String path, boolean shouldConvertToTemplate) {
+        public RecyclableFileIcon(@Nonnull String path, boolean shouldConvertToTemplate) {
             this.file = new File(path);
             this.shouldConvertToTemplate = shouldConvertToTemplate;
         }
@@ -100,13 +102,14 @@ public class OSXFile {
 
     private static class RecyclableSidebarIcon extends RecyclableSingleton<ImageIcon> {
 
-        private final @NotNull File file;
+        private final @Nonnull
+		File file;
 
-        public RecyclableSidebarIcon(@NotNull File file) {
+        public RecyclableSidebarIcon(@Nonnull File file) {
             this.file = file;
         }
 
-        public RecyclableSidebarIcon(@NotNull String path) {
+        public RecyclableSidebarIcon(@Nonnull String path) {
             this.file = new File(path);
         }
 
@@ -116,16 +119,16 @@ public class OSXFile {
         }
     }
 
-    private static RecyclableFileIcon createIcon(@NotNull String name) {
+    private static RecyclableFileIcon createIcon(@Nonnull String name) {
         return createIcon(name, false);
     }
 
-    private static RecyclableFileIcon createIcon(@NotNull String name, boolean convertToTemplate) {
+    private static RecyclableFileIcon createIcon(@Nonnull String name, boolean convertToTemplate) {
         String prefix = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/";
         return new RecyclableFileIcon(prefix + name + ".icns", convertToTemplate);
     }
 
-    private static RecyclableSidebarIcon createSidebarIcon(@NotNull String name) {
+    private static RecyclableSidebarIcon createSidebarIcon(@Nonnull String name) {
         String prefix = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Sidebar";
         RecyclableSidebarIcon icon = new RecyclableSidebarIcon(prefix + name + ".icns");
         return icon;
@@ -192,7 +195,8 @@ public class OSXFile {
      *
      * @param f The file which we must ensure contains an absolute path.
      */
-    public static @NotNull File getAbsoluteFile(@NotNull File f) {
+    public static @Nonnull
+	File getAbsoluteFile(@Nonnull File f) {
         if (!f.isAbsolute()) {
             f = new File(AquaUtils.getProperty("user.home") + File.separatorChar + f.getPath());
 
@@ -238,7 +242,7 @@ public class OSXFile {
     /**
      * Returns the file type: 0=file, 1=directory, 2=alias, -1=unknown.
      */
-    public static int getFileType(@NotNull File f) {
+    public static int getFileType(@Nonnull File f) {
         if (isNativeCodeAvailable()) {
             int flags = nativeGetBasicItemInfoFlags(f.getAbsolutePath());
 
@@ -272,7 +276,8 @@ public class OSXFile {
     /**
      * Resolve a path that may be absolute, relative, or start with ~user.
      */
-    public static @NotNull File resolvePath(@NotNull String path, @Nullable File currentDirectory) {
+    public static @Nonnull
+	File resolvePath(@Nonnull String path, @Nullable File currentDirectory) {
         if (path.startsWith("/")) {
             return new File(path);
         }
@@ -302,7 +307,7 @@ public class OSXFile {
      * Resolve a file by converting all valid aliases in the path.
      */
 
-    public static @Nullable File resolve(@NotNull File f) {
+    public static @Nullable File resolve(@Nonnull File f) {
         return resolveAlias(f, true);
     }
 
@@ -313,7 +318,7 @@ public class OSXFile {
      * @param noUI Set this to true, if the alias should be resolved without user interaction.
      * @return Returns the resolved File object.
      */
-    public static @Nullable File resolveAlias(@NotNull File f, boolean noUI) {
+    public static @Nullable File resolveAlias(@Nonnull File f, boolean noUI) {
         if (isNativeCodeAvailable()) {
 
             String path = nativeResolveAlias(f.getAbsolutePath(), noUI);
@@ -398,7 +403,8 @@ public class OSXFile {
      * Services icon for the file wil be returned. Note that obtaining a Quick Look preview image can take a long time.
      * @throws UnsupportedOperationException if an image cannot be obtained.
      */
-    public static @NotNull Image getIconImage(@Nullable File file, int size, boolean useQuickLook) throws UnsupportedOperationException {
+    public static @Nonnull
+	Image getIconImage(@Nullable File file, int size, boolean useQuickLook) throws UnsupportedOperationException {
         if (isNativeCodeAvailable() && file != null) {
             FileIconCreator c = new FileIconCreator(file, size, useQuickLook, true);
             return c.getImage();
@@ -414,7 +420,8 @@ public class OSXFile {
      * @param size The desired image size.
      * @throws UnsupportedOperationException if an image cannot be obtained.
      */
-    public static @NotNull Image getThumbnailImage(@Nullable File file, int size) throws UnsupportedOperationException {
+    public static @Nonnull
+	Image getThumbnailImage(@Nullable File file, int size) throws UnsupportedOperationException {
         if (isNativeCodeAvailable() && file != null) {
             FileIconCreator c = new FileIconCreator(file, size, true, false);
             return c.getImage();
@@ -434,14 +441,15 @@ public class OSXFile {
         private final boolean useIconMode;
         private Image result;
 
-        public FileIconCreator(@NotNull File file, int size, boolean useQuickLook, boolean useIconMode) {
+        public FileIconCreator(@Nonnull File file, int size, boolean useQuickLook, boolean useIconMode) {
             this.file = file;
             this.size = size;
             this.useQuickLook = useQuickLook;
             this.useIconMode = useIconMode;
         }
 
-        public @NotNull Image getImage() {
+        public @Nonnull
+		Image getImage() {
             if (result == null) {
                 String path = file.getAbsolutePath();
                 int[][] buffers = new int[2][];
@@ -488,7 +496,7 @@ public class OSXFile {
         }
     }
 
-    public static boolean isInvisible(@NotNull File file) {
+    public static boolean isInvisible(@Nonnull File file) {
         if (isNativeCodeAvailable()) {
             int flags = nativeGetBasicItemInfoFlags(file.getAbsolutePath());
             return (flags & kLSItemInfoIsInvisible) != 0;
@@ -554,7 +562,7 @@ public class OSXFile {
 
     private static String[] nonTraversableDirectories = { ".Spotlight-V100", ".DocumentRevisions", ".Trashes" };
 
-    private static boolean basicIsTraversable(@NotNull File f) {
+    private static boolean basicIsTraversable(@Nonnull File f) {
         String name = f.getName();
 
         if (f.isDirectory()) {
@@ -573,7 +581,7 @@ public class OSXFile {
         return false;
     }
 
-    public static boolean isSavedSearch(@NotNull File f) {
+    public static boolean isSavedSearch(@Nonnull File f) {
         return f.getName().endsWith(".savedSearch");
     }
 
@@ -680,7 +688,8 @@ public class OSXFile {
     /**
      * Returns the localized display name of the specified file.
      */
-    public static @NotNull String getDisplayName(@NotNull File f) {
+    public static @Nonnull
+	String getDisplayName(@Nonnull File f) {
         if (isNativeCodeAvailable()) {
             String name = nativeGetDisplayName(f.getAbsolutePath());
             if (name != null) {
@@ -693,7 +702,7 @@ public class OSXFile {
     /**
      * Return the time of last use of a file, as recorded by Launch Services. Called the "Date Last Opened" by Finder.
      */
-    public static @Nullable Date getLastUsedDate(@NotNull File f) {
+    public static @Nullable Date getLastUsedDate(@Nonnull File f) {
         if (isNativeCodeAvailable()) {
             long t = nativeGetLastUsedDate(f.getAbsolutePath());
             return t > 0 ? new Date(t) : null;
@@ -708,7 +717,7 @@ public class OSXFile {
      * @param savedSearchFile The .savedSearch file that defines the query.
      * @return an array containing the files that satisfy the query or null if the query could not be performed.
      */
-    public static @Nullable File[] executedSavedSearch(@NotNull File savedSearchFile) {
+    public static @Nullable File[] executedSavedSearch(@Nonnull File savedSearchFile) {
         String savedSearchPath = savedSearchFile.getAbsolutePath();
         String[] paths = nativeExecuteSavedSearch(savedSearchPath);
         if (paths != null) {
@@ -728,16 +737,18 @@ public class OSXFile {
      */
 
     public static class SystemItemInfo {
-        private final @NotNull String name;
-        private final @NotNull String path;
+        private final @Nonnull
+		String name;
+        private final @Nonnull
+		String path;
         private final int sequenceNumber;
         private final boolean isVisible;
         private int id; // volume ID for sidebar volumes
         private final @Nullable Icon icon;
         private final boolean isComputer;
 
-        public SystemItemInfo(@NotNull String name,
-                              @NotNull String path,
+        public SystemItemInfo(@Nonnull String name,
+                              @Nonnull String path,
                               int sequenceNumber,
                               boolean isVisible,
                               int id,
@@ -761,7 +772,8 @@ public class OSXFile {
             this.icon = icon;
         }
 
-        private static @NotNull String determineName(@NotNull String name, boolean isComputer) {
+        private static @Nonnull
+		String determineName(@Nonnull String name, boolean isComputer) {
             if (isComputer) {
                 String computerName = getComputerName();
                 if (computerName != null) {
@@ -771,11 +783,13 @@ public class OSXFile {
             return name;
         }
 
-        public @NotNull String getName() {
+        public @Nonnull
+		String getName() {
             return name;
         }
 
-        public @NotNull String getPath() {
+        public @Nonnull
+		String getPath() {
             return path;
         }
 
@@ -821,7 +835,8 @@ public class OSXFile {
             lastResults = new ArrayList<>();
         }
 
-        public @NotNull List<SystemItemInfo> getResults() {
+        public @Nonnull
+		List<SystemItemInfo> getResults() {
             int imageSize = 18;
             Object[] data = nativeGetSidebarFiles(which, 18, lastSeed);
             if (data == null) {
@@ -875,11 +890,12 @@ public class OSXFile {
      * @param which This parameter selects favorites or volumes.
      * @return the requested list.
      */
-    public static @NotNull List<SystemItemInfo> getSidebarFiles(int which) {
+    public static @Nonnull
+	List<SystemItemInfo> getSidebarFiles(int which) {
         return sharedFileLists[which].getResults();
     }
 
-    public static @Nullable String exec(@NotNull String[] cmd, Charset cs) {
+    public static @Nullable String exec(@Nonnull String[] cmd, Charset cs) {
         try {
             Process p = Runtime.getRuntime().exec(cmd);
             InputStream stdout = p.getInputStream();
@@ -913,7 +929,7 @@ public class OSXFile {
             return result;
         }
 
-        private synchronized void setContents(@NotNull String s) {
+        private synchronized void setContents(@Nonnull String s) {
             result = s;
             notifyAll();
         }
@@ -977,6 +993,6 @@ public class OSXFile {
      * @param h The height of the image.
      * @return true if successful, false otherwise.
      */
-    private static native boolean nativeRenderFileImage(@NotNull String path, boolean isQuickLook,
-                                                        boolean useIconMode, int[][] buffers, int w, int h);
+    private static native boolean nativeRenderFileImage(@Nonnull String path, boolean isQuickLook,
+														boolean useIconMode, int[][] buffers, int w, int h);
 }

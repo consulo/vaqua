@@ -8,7 +8,8 @@
 
 package org.violetlib.jnr.aqua;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
 import org.violetlib.jnr.aqua.AquaUIPainter.UILayoutDirection;
 
@@ -19,9 +20,11 @@ import org.violetlib.jnr.aqua.AquaUIPainter.UILayoutDirection;
 public abstract class AbstractComboBoxLayoutConfiguration
 	extends LayoutConfiguration
 {
-	public abstract @NotNull Size getSize();
+	public abstract @Nonnull
+	Size getSize();
 
-	public abstract @NotNull UILayoutDirection getLayoutDirection();
+	public abstract @Nonnull
+	UILayoutDirection getLayoutDirection();
 
 	public abstract boolean isCell();
 

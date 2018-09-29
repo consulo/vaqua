@@ -9,8 +9,8 @@
 package org.violetlib.jnr.impl;
 
 import consulo.internal.jnr.aqua.impl.JavaSupport;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.Painter;
 
 import java.awt.*;
@@ -24,7 +24,8 @@ import java.awt.image.BufferedImage;
 public abstract class RendererPainter
 	implements Painter
 {
-	protected final @NotNull Renderer r;
+	protected final @Nonnull
+	Renderer r;
 	protected final float width;
 	protected final float height;
 
@@ -36,7 +37,7 @@ public abstract class RendererPainter
 		@param height The height of the rendering, in device independent pixels.
 	*/
 
-	public RendererPainter(@NotNull Renderer r, float width, float height)
+	public RendererPainter(@Nonnull Renderer r, float width, float height)
 	{
 		this.r = r;
 		this.width = width;
@@ -44,7 +45,7 @@ public abstract class RendererPainter
 	}
 
 	@Override
-	public void paint(@NotNull Graphics gg, float x, float y)
+	public void paint(@Nonnull Graphics gg, float x, float y)
 	{
 		int scaleFactor = JavaSupport.getScaleFactor(gg);
 		int w = (int) Math.ceil(width);

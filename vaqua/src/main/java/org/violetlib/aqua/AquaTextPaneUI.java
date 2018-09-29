@@ -34,14 +34,15 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTextPaneUI;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 //[3663467] moved it to sublcass from BasicEditorPaneUI to BasicTextPaneUI. (vm)
@@ -53,7 +54,8 @@ public class AquaTextPaneUI extends BasicTextPaneUI implements FocusRingOutlineP
     private JTextComponent editor;
     private AquaFocusHandler handler;
     private boolean oldDragState = false;
-    protected @NotNull BasicContextualColors colors;
+    protected @Nonnull
+	BasicContextualColors colors;
     protected @Nullable AppearanceContext appearanceContext;
 
     public AquaTextPaneUI() {
@@ -126,12 +128,12 @@ public class AquaTextPaneUI extends BasicTextPaneUI implements FocusRingOutlineP
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 

@@ -10,7 +10,7 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * A contextual color is a source of colors based on context.
@@ -22,7 +22,8 @@ public interface ContextualColor {
      * Return the name of this contextual color (for debugging).
      */
 
-    @NotNull String getColorName();
+    @Nonnull
+	String getColorName();
 
     /**
      * Return the color to use in a specified context.
@@ -31,5 +32,6 @@ public interface ContextualColor {
      * @throws UnsupportedOperationException if no color is defined.
      */
 
-    @NotNull Color get(@NotNull AppearanceContext context);
+    @Nonnull
+	Color get(@Nonnull AppearanceContext context);
 }

@@ -17,10 +17,10 @@ import java.awt.image.ImageFilter;
 import java.util.ServiceLoader;
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import javax.swing.UIDefaults;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.AquaMultiResolutionImage;
 import org.violetlib.aqua.AquaPopupFactory;
 
@@ -139,8 +139,8 @@ public class JavaSupport
 		return impl.createPopupFactory();
 	}
 
-	@NotNull
-	public static Image getResolutionVariant(@NotNull Image source, double width, double height)
+	@Nonnull
+	public static Image getResolutionVariant(@Nonnull Image source, double width, double height)
 	{
 		return impl.getResolutionVariant(source, width, height);
 	}

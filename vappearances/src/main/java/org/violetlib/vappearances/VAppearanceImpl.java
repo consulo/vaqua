@@ -14,21 +14,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
   This object represents a snapshot of the attributes of a system appearance.
 */
 
 /* package private */ class VAppearanceImpl implements VAppearance {
-    private final @NotNull String name;
+    private final @Nonnull
+	String name;
     private final boolean isDark;
     private final boolean isHighContrast;
-    private final @NotNull String data;
-    private final @NotNull Map<String,Color> colors;
-    private @Nullable VAppearance replacement;
+    private final @Nonnull
+	String data;
+    private final @Nonnull
+	Map<String,Color> colors;
+    private @Nullable
+	VAppearance replacement;
 
-    public static @Nullable VAppearance parse(@NotNull String data)
+    public static @Nullable
+	VAppearance parse(@Nonnull String data)
     {
         // The first line is the appearance name, with an optional HighContrast indicator
         int pos = data.indexOf('\n');
@@ -61,7 +67,8 @@ import org.jetbrains.annotations.*;
         return null;
     }
 
-    private static @NotNull Map<String,Color> parseData(@NotNull String data)
+    private static @Nonnull
+	Map<String,Color> parseData(@Nonnull String data)
     {
         Map<String,Color> colors = new HashMap<>();
         StringTokenizer st = new StringTokenizer(data, "\n");
@@ -80,7 +87,8 @@ import org.jetbrains.annotations.*;
         return colors;
     }
 
-    private static @Nullable Color parseColor(@NotNull String s)
+    private static @Nullable
+	Color parseColor(@Nonnull String s)
     {
         StringTokenizer st = new StringTokenizer(s, " ");
         Float red = parseParameter(st);
@@ -94,7 +102,8 @@ import org.jetbrains.annotations.*;
         }
     }
 
-    private static @Nullable Float parseParameter(@NotNull StringTokenizer st)
+    private static @Nullable
+	Float parseParameter(@Nonnull StringTokenizer st)
     {
         if (st.hasMoreTokens()) {
             String s = st.nextToken();
@@ -112,11 +121,11 @@ import org.jetbrains.annotations.*;
         return null;
     }
 
-    private VAppearanceImpl(@NotNull String name,
+    private VAppearanceImpl(@Nonnull String name,
                             boolean isDark,
                             boolean isHighContrast,
-                            @NotNull String data,
-                            @NotNull Map<String,Color> colors)
+                            @Nonnull String data,
+                            @Nonnull Map<String,Color> colors)
     {
         this.name = name;
         this.isDark = isDark;
@@ -130,13 +139,15 @@ import org.jetbrains.annotations.*;
         return replacement == null;
     }
 
-    public synchronized @Nullable VAppearance getReplacement()
+    public synchronized @Nullable
+	VAppearance getReplacement()
     {
         return replacement;
     }
 
     @Override
-    public @NotNull String getName()
+    public @Nonnull
+	String getName()
     {
         return name;
     }
@@ -151,18 +162,20 @@ import org.jetbrains.annotations.*;
         return isHighContrast;
     }
 
-    /* package private */ @NotNull String getData()
+    /* package private */ @Nonnull
+	String getData()
     {
         return data;
     }
 
     @Override
-    public @NotNull Map<String,Color> getColors()
+    public @Nonnull
+	Map<String,Color> getColors()
     {
         return colors;
     }
 
-    /* package private */ synchronized void setReplacement(@NotNull VAppearance replacement)
+    /* package private */ synchronized void setReplacement(@Nonnull VAppearance replacement)
     {
         this.replacement = replacement;
     }

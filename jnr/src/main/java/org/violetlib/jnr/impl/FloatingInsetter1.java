@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.InsetterNotInvertibleException;
 
@@ -20,7 +20,8 @@ public class FloatingInsetter1
 	implements Insetter1
 {
 	private final float regionSize;
-	private final @NotNull Alignment alignment;
+	private final @Nonnull
+	Alignment alignment;
 	private final float d1;
 	private final float d2;
 
@@ -38,7 +39,8 @@ public class FloatingInsetter1
 		@throws IllegalArgumentException if {@code regionSize} or {@code d1} is negative.
 	*/
 
-	public static @NotNull FloatingInsetter1 createLeftTopAligned(float regionSize, float d1)
+	public static @Nonnull
+	FloatingInsetter1 createLeftTopAligned(float regionSize, float d1)
 	{
 		if (regionSize < 0) {
 			throw new IllegalArgumentException("Invalid negative region size");
@@ -59,7 +61,8 @@ public class FloatingInsetter1
 		@throws IllegalArgumentException if {@code regionSize} or {@code d2} is negative.
 	*/
 
-	public static @NotNull FloatingInsetter1 createRightBottomAligned(float regionSize, float d2)
+	public static @Nonnull
+	FloatingInsetter1 createRightBottomAligned(float regionSize, float d2)
 	{
 		if (regionSize < 0) {
 			throw new IllegalArgumentException("Invalid negative region size");
@@ -81,7 +84,8 @@ public class FloatingInsetter1
 		@throws IllegalArgumentException if {@code regionSize}, {@code d1}, or {@code d2} is negative.
 	*/
 
-	public static @NotNull FloatingInsetter1 createCentered(float regionSize, float d1, float d2)
+	public static @Nonnull
+	FloatingInsetter1 createCentered(float regionSize, float d1, float d2)
 	{
 		if (regionSize < 0) {
 			throw new IllegalArgumentException("Invalid negative region size");
@@ -93,7 +97,7 @@ public class FloatingInsetter1
 		return new FloatingInsetter1(regionSize, Alignment.CENTER, d1, d2);
 	}
 
-	private FloatingInsetter1(float regionSize, @NotNull Alignment alignment, float d1, float d2)
+	private FloatingInsetter1(float regionSize, @Nonnull Alignment alignment, float d1, float d2)
 	{
 		this.regionSize = regionSize;
 		this.alignment = alignment;

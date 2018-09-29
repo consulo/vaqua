@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.awt.Color;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A basic renderer that paints a color using an alpha mask defined by a basic renderer.
@@ -24,7 +24,7 @@ public class PaintUsingMaskRenderer
 	private final int bluePaint;
 	private final int alphaPaint;
 
-	public PaintUsingMaskRenderer(@NotNull BasicRenderer r, @NotNull Color c)
+	public PaintUsingMaskRenderer(@Nonnull BasicRenderer r, @Nonnull Color c)
 	{
 		super(r);
 

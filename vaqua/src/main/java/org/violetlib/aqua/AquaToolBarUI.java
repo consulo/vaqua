@@ -38,6 +38,8 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
@@ -46,8 +48,7 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicToolBarUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.ButtonLayoutConfiguration;
 import org.violetlib.jnr.aqua.LayoutConfiguration;
@@ -58,14 +59,15 @@ public class AquaToolBarUI extends BasicToolBarUI implements SwingConstants, Aqu
         return new AquaToolBarUI();
     }
 
-    public static Border getToolBarBorder(@NotNull JToolBar tb) {
+    public static Border getToolBarBorder(@Nonnull JToolBar tb) {
         AquaToolBarUI ui = AquaUtils.getUI(tb, AquaToolBarUI.class);
         return ui != null ? ui.createBorder() : null;
     }
 
     private LayoutManager originalLayoutManager;
 
-    protected @NotNull BasicContextualColors colors;
+    protected @Nonnull
+	BasicContextualColors colors;
     protected @Nullable AppearanceContext appearanceContext;
 
     protected boolean isRendering;
@@ -99,7 +101,8 @@ public class AquaToolBarUI extends BasicToolBarUI implements SwingConstants, Aqu
         }
     }
 
-    protected @NotNull Border createBorder() {
+    protected @Nonnull
+	Border createBorder() {
         return new ToolBarBorder();
     }
 
@@ -125,12 +128,12 @@ public class AquaToolBarUI extends BasicToolBarUI implements SwingConstants, Aqu
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 
@@ -256,7 +259,7 @@ public class AquaToolBarUI extends BasicToolBarUI implements SwingConstants, Aqu
      * Determine if the toolbar or toolbar panel contains a tall format button. A tall format button is a toggle button
      * that uses the toolbar item button style. A tall format button should have no space below it in the toolbar.
      */
-    public static boolean isTallFormatToolBar(@NotNull JComponent tb) {
+    public static boolean isTallFormatToolBar(@Nonnull JComponent tb) {
         int count = tb.getComponentCount();
         for (int i = 0; i < count; i++) {
             Component c = tb.getComponent(i);

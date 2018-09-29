@@ -9,11 +9,12 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
 /**
  * The UI for a combo box popup menu. It installs the intended menu border. Needed because a JPopupMenu uninstalls and
@@ -25,7 +26,8 @@ public class AquaComboBoxPopupMenuUI extends AquaPopupMenuUI {
         return new AquaComboBoxPopupMenuUI();
     }
 
-    protected @Nullable ContainerContextualColors colorsForList;
+    protected @Nullable
+	ContainerContextualColors colorsForList;
 
     @Override
     public void installUI(JComponent c) {
@@ -48,7 +50,7 @@ public class AquaComboBoxPopupMenuUI extends AquaPopupMenuUI {
         return super.getContextualMenuStyle(c);
     }
 
-    public void configure(@NotNull JList list) {
+    public void configure(@Nonnull JList list) {
         if (colorsForList == null) {
             colorsForList = new DelegatedContainerContextualColors(colors);
         }

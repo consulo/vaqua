@@ -12,7 +12,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 	A generic renderer. This class supports native renderers as well as renderers implemented using Java graphics.
@@ -31,7 +32,8 @@ public abstract class Renderer
 		@return the renderer.
 	*/
 
-	public static @NotNull Renderer create(@NotNull BasicRenderer r, @Nullable RendererDescription rd)
+	public static @Nonnull
+	Renderer create(@Nonnull BasicRenderer r, @Nullable RendererDescription rd)
 	{
 		if (rd == null) {
 			rd = TrivialRendererDescription.getInstance();
@@ -46,7 +48,8 @@ public abstract class Renderer
 		@return the renderer.
 	*/
 
-	public static @NotNull Renderer create(@NotNull PainterExtension px)
+	public static @Nonnull
+	Renderer create(@Nonnull PainterExtension px)
 	{
 		return new PainterExtensionRenderer(px);
 	}
@@ -57,7 +60,8 @@ public abstract class Renderer
 		@return the composite renderer.
 	*/
 
-	public static @NotNull Renderer createCompositeRenderer(@Nullable Renderer... rs)
+	public static @Nonnull
+	Renderer createCompositeRenderer(@Nullable Renderer... rs)
 	{
 		if (rs == null || rs.length == 0) {
 			return NULL_RENDERER;
@@ -85,7 +89,8 @@ public abstract class Renderer
 		@param brs The basic renderers to be composed.
 	*/
 
-	public static @NotNull BasicRenderer createCompositeBasicRenderer(@Nullable BasicRenderer... brs)
+	public static @Nonnull
+	BasicRenderer createCompositeBasicRenderer(@Nullable BasicRenderer... brs)
 	{
 		if (brs == null || brs.length == 0) {
 			return NULL_BASIC_RENDERER;
@@ -120,17 +125,20 @@ public abstract class Renderer
 		@return the renderer.
 	*/
 
-	public static @NotNull Renderer createOffsetRenderer(@NotNull Renderer source, float x, float y, float w, float h)
+	public static @Nonnull
+	Renderer createOffsetRenderer(@Nonnull Renderer source, float x, float y, float w, float h)
 	{
 		return new OffsetRendererX(source, x, y, w, h);
 	}
 
-	public static @NotNull Renderer createOffsetRenderer(@NotNull Renderer source, double x, double y, double w, double h)
+	public static @Nonnull
+	Renderer createOffsetRenderer(@Nonnull Renderer source, double x, double y, double w, double h)
 	{
 		return new OffsetRendererX(source, (float) x, (float) y, (float) w, (float) h);
 	}
 
-	public static @NotNull Renderer createOffsetRenderer(@NotNull Renderer source, @NotNull Rectangle2D bounds)
+	public static @Nonnull
+	Renderer createOffsetRenderer(@Nonnull Renderer source, @Nonnull Rectangle2D bounds)
 	{
 		return new OffsetRendererX(source, (float) bounds.getX(), (float) bounds.getY(), (float) bounds.getWidth(), (float) bounds.getHeight());
 	}
@@ -146,17 +154,20 @@ public abstract class Renderer
 		@return the renderer.
 	*/
 
-	public static @NotNull Renderer createRasterOffsetRenderer(@NotNull Renderer source, int x, int y, int w, int h)
+	public static @Nonnull
+	Renderer createRasterOffsetRenderer(@Nonnull Renderer source, int x, int y, int w, int h)
 	{
 		return new OffsetRasterRendererX(source, x, y, w, h);
 	}
 
-	public @Nullable BasicRenderer getBasicRenderer()
+	public @Nullable
+	BasicRenderer getBasicRenderer()
 	{
 		return null;
 	}
 
-	public @Nullable RendererDescription getRendererDescription()
+	public @Nullable
+	RendererDescription getRendererDescription()
 	{
 		return null;
 	}
@@ -165,17 +176,19 @@ public abstract class Renderer
 class BasicRendererRenderer
 	extends Renderer
 {
-	private final @NotNull BasicRenderer r;
-	private final @NotNull RendererDescription rd;
+	private final @Nonnull
+	BasicRenderer r;
+	private final @Nonnull
+	RendererDescription rd;
 
-	public BasicRendererRenderer(@NotNull BasicRenderer r, @NotNull RendererDescription rd)
+	public BasicRendererRenderer(@Nonnull BasicRenderer r, @Nonnull RendererDescription rd)
 	{
 		this.r = r;
 		this.rd = rd;
 	}
 
 	@Override
-	public void composeTo(@NotNull ReusableCompositor compositor)
+	public void composeTo(@Nonnull ReusableCompositor compositor)
 	{
 		if (rd.isTrivial()) {
 			compositor.composeRenderer(r);
@@ -196,12 +209,14 @@ class BasicRendererRenderer
 		}
 	}
 
-	public @NotNull BasicRenderer getBasicRenderer()
+	public @Nonnull
+	BasicRenderer getBasicRenderer()
 	{
 		return r;
 	}
 
-	public @NotNull RendererDescription getRendererDescription()
+	public @Nonnull
+	RendererDescription getRendererDescription()
 	{
 		return rd;
 	}
@@ -210,20 +225,22 @@ class BasicRendererRenderer
 class PainterExtensionRenderer
 	extends Renderer
 {
-	private final @NotNull PainterExtension px;
+	private final @Nonnull
+	PainterExtension px;
 
-	public PainterExtensionRenderer(@NotNull PainterExtension px)
+	public PainterExtensionRenderer(@Nonnull PainterExtension px)
 	{
 		this.px = px;
 	}
 
-	@NotNull PainterExtension getPainterExtension()
+	@Nonnull
+	PainterExtension getPainterExtension()
 	{
 		return px;
 	}
 
 	@Override
-	public void composeTo(@NotNull ReusableCompositor compositor)
+	public void composeTo(@Nonnull ReusableCompositor compositor)
 	{
 		compositor.composePainter(px, 0, 0);
 	}
@@ -232,15 +249,16 @@ class PainterExtensionRenderer
 class CompositeRenderer
 	extends Renderer
 {
-	private final @NotNull List<Renderer> renderers;
+	private final @Nonnull
+	List<Renderer> renderers;
 
-	public CompositeRenderer(@NotNull List<Renderer> renderers)
+	public CompositeRenderer(@Nonnull List<Renderer> renderers)
 	{
 		this.renderers = renderers;
 	}
 
 	@Override
-	public void composeTo(@NotNull ReusableCompositor compositor)
+	public void composeTo(@Nonnull ReusableCompositor compositor)
 	{
 		for (Renderer r : renderers) {
 			r.composeTo(compositor);
@@ -251,15 +269,16 @@ class CompositeRenderer
 class CompositeBasicRenderer
 	implements BasicRenderer
 {
-	private final @NotNull List<BasicRenderer> renderers;
+	private final @Nonnull
+	List<BasicRenderer> renderers;
 
-	public CompositeBasicRenderer(@NotNull List<BasicRenderer> renderers)
+	public CompositeBasicRenderer(@Nonnull List<BasicRenderer> renderers)
 	{
 		this.renderers = renderers;
 	}
 
 	@Override
-	public void render(@NotNull int[] data, int rw, int rh, float w, float h)
+	public void render(@Nonnull int[] data, int rw, int rh, float w, float h)
 	{
 		int scaleFactor = (int) Math.ceil(rw / w);
 		ReusableCompositor compositor = new ReusableCompositor(data, rw, rh, scaleFactor);
@@ -273,7 +292,7 @@ class NullRenderer
 	extends Renderer
 {
 	@Override
-	public void composeTo(@NotNull ReusableCompositor compositor)
+	public void composeTo(@Nonnull ReusableCompositor compositor)
 	{
 	}
 }
@@ -282,7 +301,7 @@ class NullBasicRenderer
 	implements BasicRenderer
 {
 	@Override
-	public void render(@NotNull int[] data, int rw, int rh, float w, float h)
+	public void render(@Nonnull int[] data, int rw, int rh, float w, float h)
 	{
 	}
 }
@@ -290,13 +309,14 @@ class NullBasicRenderer
 class OffsetRendererX
 	extends Renderer
 {
-	private final @NotNull Renderer source;
+	private final @Nonnull
+	Renderer source;
 	private final float x;
 	private final float y;
 	private final float w;
 	private final float h;
 
-	public OffsetRendererX(@NotNull Renderer source, float x, float y, float w, float h)
+	public OffsetRendererX(@Nonnull Renderer source, float x, float y, float w, float h)
 	{
 		this.source = source;
 		this.x = x;
@@ -306,7 +326,7 @@ class OffsetRendererX
 	}
 
 	@Override
-	public void composeTo(@NotNull ReusableCompositor compositor)
+	public void composeTo(@Nonnull ReusableCompositor compositor)
 	{
 		if (source instanceof BasicRendererRenderer) {
 			BasicRendererRenderer brr = (BasicRendererRenderer) source;
@@ -345,13 +365,14 @@ class OffsetRendererX
 class OffsetRasterRendererX
 	extends Renderer
 {
-	private final @NotNull Renderer source;
+	private final @Nonnull
+	Renderer source;
 	private final int x;
 	private final int y;
 	private final int w;
 	private final int h;
 
-	public OffsetRasterRendererX(@NotNull Renderer source, int x, int y, int w, int h)
+	public OffsetRasterRendererX(@Nonnull Renderer source, int x, int y, int w, int h)
 	{
 		this.source = source;
 		this.x = x;
@@ -361,7 +382,7 @@ class OffsetRasterRendererX
 	}
 
 	@Override
-	public void composeTo(@NotNull ReusableCompositor compositor)
+	public void composeTo(@Nonnull ReusableCompositor compositor)
 	{
 		if (source instanceof BasicRendererRenderer) {
 			BasicRendererRenderer brr = (BasicRendererRenderer) source;

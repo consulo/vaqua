@@ -9,12 +9,13 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.plaf.UIResource;
 import javax.swing.table.JTableHeader;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * Fills out the table header when a legacy vertical scroll bar is used.
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class AquaTableScrollPaneCorner extends JComponent implements UIResource {
 
     @Override
-    protected void paintComponent(@NotNull Graphics g) {
+    protected void paintComponent(@Nonnull Graphics g) {
         int width = getWidth();
         int height = getHeight();
 

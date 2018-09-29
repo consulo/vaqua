@@ -10,7 +10,7 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
 
@@ -18,22 +18,28 @@ import org.jetbrains.annotations.NotNull;
 
 public class StripedContainerContextualColors implements ContainerContextualColors {
 
-    protected @NotNull ContextualColor containerBackground;
-    protected @NotNull ContextualColor evenRowBackground;
-    protected @NotNull ContextualColor oddRowBackground;
-    protected @NotNull ContextualColor grid;
+    protected @Nonnull
+	ContextualColor containerBackground;
+    protected @Nonnull
+	ContextualColor evenRowBackground;
+    protected @Nonnull
+	ContextualColor oddRowBackground;
+    protected @Nonnull
+	ContextualColor grid;
     protected boolean isRowSelected;
-    protected @NotNull ContextualColor background;
-    protected @NotNull ContextualColor foreground;
+    protected @Nonnull
+	ContextualColor background;
+    protected @Nonnull
+	ContextualColor foreground;
 
     /**
      * Create colors for a striped container.
      */
-    public StripedContainerContextualColors(@NotNull ContextualColor containerBackground,
-                                            @NotNull ContextualColor evenRowBackground,
-                                            @NotNull ContextualColor oddRowBackground,
-                                            @NotNull ContextualColor foreground,
-                                            @NotNull ContextualColor grid) {
+    public StripedContainerContextualColors(@Nonnull ContextualColor containerBackground,
+                                            @Nonnull ContextualColor evenRowBackground,
+                                            @Nonnull ContextualColor oddRowBackground,
+                                            @Nonnull ContextualColor foreground,
+                                            @Nonnull ContextualColor grid) {
         this.containerBackground = containerBackground;
         this.evenRowBackground = evenRowBackground;
         this.oddRowBackground = oddRowBackground;
@@ -62,18 +68,21 @@ public class StripedContainerContextualColors implements ContainerContextualColo
     }
 
     @Override
-    public @NotNull Color getBackground(@NotNull AppearanceContext context) {
+    public @Nonnull
+	Color getBackground(@Nonnull AppearanceContext context) {
         context = context.withSelected(isRowSelected || context.isSelected());
         return background.get(context);
     }
 
     @Override
-    public @NotNull Color getForeground(@NotNull AppearanceContext context) {
+    public @Nonnull
+	Color getForeground(@Nonnull AppearanceContext context) {
         context = context.withSelected(isRowSelected || context.isSelected());
         return foreground.get(context);
     }
 
-    public @NotNull Color getGrid(@NotNull AppearanceContext context) {
+    public @Nonnull
+	Color getGrid(@Nonnull AppearanceContext context) {
         context = context.withSelected(isRowSelected || context.isSelected());
         return grid.get(context);
     }

@@ -14,13 +14,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.function.Consumer;
 import javax.accessibility.AccessibleContext;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.FileChooserUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import static org.violetlib.aqua.AquaUtils.execute;
 
@@ -292,7 +292,7 @@ public class AquaSheetSupport {
     /**
      * Determine whether a component is being displayed in a sheet.
      */
-    public static boolean isSheet(@NotNull JComponent c) {
+    public static boolean isSheet(@Nonnull JComponent c) {
         JRootPane rp = c.getRootPane();
         if (rp != null) {
             Object style = rp.getClientProperty(AquaVibrantSupport.BACKGROUND_STYLE_KEY);
@@ -345,20 +345,23 @@ public class AquaSheetSupport {
      * A sheet closer performs the necessary operations when a sheet is dismissed.
      */
     private static class SheetCloser extends WindowAdapter implements HierarchyListener {
-        private final @NotNull Window w;
-        private final @Nullable Runnable closeHandler;
+        private final @Nonnull
+		Window w;
+        private final @Nullable
+		Runnable closeHandler;
         private final @Nullable Object oldBackgroundStyle;
         private final @Nullable String windowStyle;
         private final int oldTop;
-        private final @NotNull Dimension originalSize;
+        private final @Nonnull
+		Dimension originalSize;
         private boolean hasClosed = false;
 
-        public SheetCloser(@NotNull Window w,
+        public SheetCloser(@Nonnull Window w,
                            @Nullable Runnable closeHandler,
                            @Nullable Object oldBackgroundStyle,
                            @Nullable String windowStyle,
                            int oldTop,
-                           @NotNull Dimension originalSize) {
+                           @Nonnull Dimension originalSize) {
             this.w = w;
             this.closeHandler = closeHandler;
             this.oldBackgroundStyle = oldBackgroundStyle;

@@ -13,7 +13,8 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.SplitPaneDividerConfiguration;
@@ -27,26 +28,29 @@ import org.violetlib.vappearances.VAppearance;
 public class ThinSplitPaneDividerPainterExtension
 	implements PainterExtension
 {
-	protected final @NotNull SplitPaneDividerConfiguration dg;
-	protected final @NotNull Color dividerColor;
+	protected final @Nonnull
+	SplitPaneDividerConfiguration dg;
+	protected final @Nonnull
+	Color dividerColor;
 
 	protected static final Color COLOR = new Color(128, 128, 128, 80);
 
-	public ThinSplitPaneDividerPainterExtension(@NotNull SplitPaneDividerConfiguration g,
+	public ThinSplitPaneDividerPainterExtension(@Nonnull SplitPaneDividerConfiguration g,
 																							@Nullable VAppearance appearance)
 	{
 		this.dg = g;
 		this.dividerColor = determineDividerColor(g, appearance);
 	}
 
-	private @NotNull Color determineDividerColor(@NotNull SplitPaneDividerConfiguration g,
-																							 @Nullable VAppearance appearance)
+	private @Nonnull
+	Color determineDividerColor(@Nonnull SplitPaneDividerConfiguration g,
+								@Nullable VAppearance appearance)
 	{
 		return appearance != null ? appearance.getColors().get("separator") : COLOR;
 	}
 
 	@Override
-	public void paint(@NotNull Graphics2D g, float width, float height)
+	public void paint(@Nonnull Graphics2D g, float width, float height)
 	{
 		float d = 1;
 		Shape s;

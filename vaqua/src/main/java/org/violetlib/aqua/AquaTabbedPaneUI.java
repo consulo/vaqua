@@ -52,6 +52,7 @@ import java.awt.geom.AffineTransform;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -62,8 +63,7 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.text.View;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.Painter;
@@ -116,8 +116,10 @@ public class AquaTabbedPaneUI extends AquaTabbedPaneCopyFromBasicUI
     protected boolean isLeftToRight;
     protected boolean isDark;
 
-    protected @NotNull BasicContextualColors colors;
-    protected @Nullable AppearanceContext appearanceContext;
+    protected @Nonnull
+	BasicContextualColors colors;
+    protected @Nullable
+	AppearanceContext appearanceContext;
 
     public AquaTabbedPaneUI() {
         colors = AquaColors.TAB_COLORS;
@@ -195,16 +197,16 @@ public class AquaTabbedPaneUI extends AquaTabbedPaneCopyFromBasicUI
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance, (JTabbedPane)c);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null, (JTabbedPane)c);
     }
 
-    protected void configureAppearanceContext(@Nullable AquaAppearance appearance, @NotNull JTabbedPane s) {
+    protected void configureAppearanceContext(@Nullable AquaAppearance appearance, @Nonnull JTabbedPane s) {
         if (appearance == null) {
             appearance = AppearanceManager.ensureAppearance(s);
         }
@@ -520,8 +522,8 @@ public class AquaTabbedPaneUI extends AquaTabbedPaneCopyFromBasicUI
         }
     }
 
-    protected void paintTabBackground(@NotNull Graphics g,
-                                      @NotNull Rectangle tabRect,
+    protected void paintTabBackground(@Nonnull Graphics g,
+                                      @Nonnull Rectangle tabRect,
                                       boolean isSelected,
                                       boolean isLeftToRight,
                                       int nonRectIndex) {
@@ -579,7 +581,7 @@ public class AquaTabbedPaneUI extends AquaTabbedPaneCopyFromBasicUI
                 isFocused, Direction.UP, segmentPosition, leftState, rightState);
     }
 
-    protected void paintContents(@NotNull Graphics g,
+    protected void paintContents(@Nonnull Graphics g,
                                  int tabPlacement,
                                  int tabIndex,
                                  Rectangle tabRect,
@@ -629,7 +631,7 @@ public class AquaTabbedPaneUI extends AquaTabbedPaneCopyFromBasicUI
         g.setClip(temp);
     }
 
-    protected void paintTitle(@NotNull Graphics2D g2d,
+    protected void paintTitle(@Nonnull Graphics2D g2d,
                               Font font,
                               FontMetrics metrics,
                               Rectangle textRect,

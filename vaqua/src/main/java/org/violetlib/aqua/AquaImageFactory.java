@@ -49,14 +49,14 @@ import java.net.URL;
 import java.security.PrivilegedAction;
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.GrayFilter;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.IconUIResource;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.aqua.fc.OSXFile;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -83,17 +83,19 @@ public class AquaImageFactory {
 
     static class AquaImageCache extends ProcessedImageCache {
         @Override
-        protected boolean determineTemplateImage(@NotNull Image source) {
+        protected boolean determineTemplateImage(@Nonnull Image source) {
             return AquaImageFactory.determineTemplateImageStatus(source);
         }
 
         @Override
-        protected @NotNull Image createImageFromTemplate(@NotNull Image source, @NotNull Color color) {
+        protected @Nonnull
+		Image createImageFromTemplate(@Nonnull Image source, @Nonnull Color color) {
             return AquaImageFactory.createImageFromTemplate(source, color);
         }
 
         @Override
-        protected @NotNull Image createProcessedImage(@NotNull Image source, @NotNull Object operator) {
+        protected @Nonnull
+		Image createProcessedImage(@Nonnull Image source, @Nonnull Object operator) {
             return AquaImageFactory.createProcessedImage(source, operator);
         }
     }
@@ -193,7 +195,8 @@ public class AquaImageFactory {
         return u != null ? Toolkit.getDefaultToolkit().createImage(u) : null;
     }
 
-    public static @Nullable Image getImage(@Nullable File file, int size) {
+    public static @Nullable
+	Image getImage(@Nullable File file, int size) {
         if (file != null) {
             ImageFileIconCreator r = new ImageFileIconCreator(file, size, size);
             return r.getImage();
@@ -313,7 +316,8 @@ public class AquaImageFactory {
     protected static final NamedImageSingleton eastArrow = new NamedImageSingleton("NSMenuSubmenu");
     protected static final IconUIResourceSingleton eastArrowIcon = new IconUIResourceSingleton(eastArrow);
 
-    public static @Nullable Image getArrowImageForDirection(int direction) {
+    public static @Nullable
+	Image getArrowImageForDirection(int direction) {
         switch(direction) {
             case SwingConstants.NORTH: return northArrow.get();
             case SwingConstants.SOUTH: return southArrow.get();
@@ -379,7 +383,8 @@ public class AquaImageFactory {
         return new ImageIcon(getProcessedImage(getNSIcon("NSMenuMixedState"), LIGHTEN_25));
     }
 
-    private static @Nullable Image getNSImage(@NotNull String imageName, int width, int height) {
+    private static @Nullable
+	Image getNSImage(@Nonnull String imageName, int width, int height) {
         return getNativeImage(imageName, width, height);
     }
 
@@ -536,7 +541,8 @@ public class AquaImageFactory {
     /**
      * Obtain a native image with a specified logical size.
      */
-    private static native @Nullable Image getNativeImage(String name, int width, int height);
+    private static native @Nullable
+	Image getNativeImage(String name, int width, int height);
 
     /**
      * Render an image file.
@@ -549,7 +555,8 @@ public class AquaImageFactory {
      */
     private static native boolean nativeRenderImageFile(String path, int[][] buffers, int w, int h);
 
-    public static @NotNull Object getLightenOperator(int percent) {
+    public static @Nonnull
+	Object getLightenOperator(int percent) {
         return new LightenOperator(percent);
     }
 
@@ -574,7 +581,8 @@ public class AquaImageFactory {
         }
     }
 
-    private static @NotNull Image createProcessedImage(@NotNull Image source, @NotNull Object operator) {
+    private static @Nonnull
+	Image createProcessedImage(@Nonnull Image source, @Nonnull Object operator) {
         if (operator == DARKEN_FOR_SELECTION) {
             return applyFilter(source, new GenerateSelectedDarkFilter());
         }
@@ -682,7 +690,7 @@ public class AquaImageFactory {
         return imageCache.isTemplateImage(image);
     }
 
-    private static boolean determineTemplateImageStatus(@NotNull Image image) {
+    private static boolean determineTemplateImageStatus(@Nonnull Image image) {
         // Run the template filter in a special way that allows us to observe its behavior.
         TemplateFilter filter = new TemplateFilter(Color.BLACK, true);
         // The following is to force a lazy mapped image to run the filter
@@ -697,7 +705,8 @@ public class AquaImageFactory {
         return filter.isTemplate();
     }
 
-    public static @NotNull Image generateTemplateImage(@NotNull Image image) {
+    public static @Nonnull
+	Image generateTemplateImage(@Nonnull Image image) {
         return applyFilter(image, new GenerateTemplateFilter());
     }
 
@@ -707,7 +716,8 @@ public class AquaImageFactory {
      * @param operator The operation to be performed on the image.
      * @return the processed version of {@code image}.
      */
-    public static @NotNull Image getProcessedImage(@NotNull Image image, @NotNull Object operator) {
+    public static @Nonnull
+	Image getProcessedImage(@Nonnull Image image, @Nonnull Object operator) {
         return imageCache.getProcessedImage(image, operator);
     }
 
@@ -717,7 +727,8 @@ public class AquaImageFactory {
      * @param operator The operation to be performed on the icon image, or null to return the actual icon image.
      * @return the processed version of {@code icon}, or null if the icon is not valid.
      */
-    public static @Nullable Image getProcessedImage(@NotNull Icon icon, @Nullable Object operator) {
+    public static @Nullable
+	Image getProcessedImage(@Nonnull Icon icon, @Nullable Object operator) {
         return imageCache.getProcessedImage(icon, operator);
     }
 
@@ -819,7 +830,8 @@ public class AquaImageFactory {
         }
     }
 
-    private static @NotNull Image waitForImage(@NotNull Image image) {
+    private static @Nonnull
+	Image waitForImage(@Nonnull Image image) {
         boolean[] mutex = new boolean[] { false };
         ImageObserver observer = (Image img, int infoflags, int x, int y, int width, int height) -> {
             if ((width != -1 && height != -1 && (infoflags & ImageObserver.ALLBITS) != 0) || (infoflags & ImageObserver.ABORT) != 0) {

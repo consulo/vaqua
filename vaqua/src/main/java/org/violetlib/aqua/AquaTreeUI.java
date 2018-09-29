@@ -40,6 +40,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Enumeration;
 import java.util.TooManyListenersException;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputAdapter;
@@ -52,8 +54,7 @@ import javax.swing.tree.AbstractLayoutCache;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.aqua.*;
 import org.violetlib.jnr.aqua.AquaUIPainter.ButtonState;
@@ -129,8 +130,10 @@ public class AquaTreeUI extends BasicTreeUI implements SelectionRepaintable, Aqu
 
     private static DropTargetListener defaultDropTargetListener = null;
 
-    protected @NotNull ContainerContextualColors colors;
-    protected @Nullable AppearanceContext appearanceContext;
+    protected @Nonnull
+	ContainerContextualColors colors;
+    protected @Nullable
+	AppearanceContext appearanceContext;
 
     public AquaTreeUI() {
         this.colors = AquaColors.CONTAINER_COLORS;
@@ -179,12 +182,12 @@ public class AquaTreeUI extends BasicTreeUI implements SelectionRepaintable, Aqu
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 
@@ -201,7 +204,8 @@ public class AquaTreeUI extends BasicTreeUI implements SelectionRepaintable, Aqu
         repaintScrollPane();
     }
 
-    protected @NotNull ContainerContextualColors determineColors() {
+    protected @Nonnull
+	ContainerContextualColors determineColors() {
         if (isSideBar) {
             return AquaColors.SIDEBAR_CONTAINER_COLORS;
         }
@@ -271,7 +275,8 @@ public class AquaTreeUI extends BasicTreeUI implements SelectionRepaintable, Aqu
         }
     }
 
-    protected @NotNull JComponent getComponentForVisualEffectView()
+    protected @Nonnull
+	JComponent getComponentForVisualEffectView()
     {
         Container parent = tree.getParent();
         if (parent instanceof JViewport) {
@@ -649,7 +654,7 @@ public class AquaTreeUI extends BasicTreeUI implements SelectionRepaintable, Aqu
     }
 
     @Override
-    public void paint(@NotNull Graphics g, @NotNull JComponent c) {
+    public void paint(@Nonnull Graphics g, @Nonnull JComponent c) {
 
         if (treeState == null || appearanceContext == null) {
             return;
@@ -683,7 +688,7 @@ public class AquaTreeUI extends BasicTreeUI implements SelectionRepaintable, Aqu
         }
     }
 
-    protected void paintBackground(@NotNull Graphics g, @Nullable Color background) {
+    protected void paintBackground(@Nonnull Graphics g, @Nullable Color background) {
         if (tree.isOpaque()) {
             int width = tree.getWidth();
             int height = tree.getHeight();
@@ -759,7 +764,8 @@ public class AquaTreeUI extends BasicTreeUI implements SelectionRepaintable, Aqu
         colors.configureForContainer();
     }
 
-    protected @Nullable Color getSpecialBackgroundForRow(int row) {
+    protected @Nullable
+	Color getSpecialBackgroundForRow(int row) {
 
         AppearanceContext ac = appearanceContext;
 
@@ -1124,7 +1130,8 @@ public class AquaTreeUI extends BasicTreeUI implements SelectionRepaintable, Aqu
         icon.paintIcon(c, g, x, y);
     }
 
-    protected @NotNull Color getIconColor() {
+    protected @Nonnull
+	Color getIconColor() {
         return AquaColors.getSystemColor(tree, "expandControl");
     }
 

@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
 import org.violetlib.jnr.aqua.AquaUIPainter.ProgressWidget;
@@ -27,16 +28,18 @@ public class ProgressIndicatorConfiguration
 	extends ProgressIndicatorLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State state;
+	private final @Nonnull
+	State state;
 	private final double value;
-	private final @NotNull UILayoutDirection ld;
+	private final @Nonnull
+	UILayoutDirection ld;
 
-	public ProgressIndicatorConfiguration(@NotNull ProgressWidget pw,
-																				@NotNull Size sz,
-																				@NotNull State state,
-																				@NotNull Orientation o,
+	public ProgressIndicatorConfiguration(@Nonnull ProgressWidget pw,
+																				@Nonnull Size sz,
+																				@Nonnull State state,
+																				@Nonnull Orientation o,
 																				double value,
-																				@NotNull UILayoutDirection ld)
+																				@Nonnull UILayoutDirection ld)
 	{
 		super(pw, sz, o);
 
@@ -45,10 +48,10 @@ public class ProgressIndicatorConfiguration
 		this.ld = ld;
 	}
 
-	public ProgressIndicatorConfiguration(@NotNull ProgressIndicatorLayoutConfiguration g,
-																				@NotNull State state,
+	public ProgressIndicatorConfiguration(@Nonnull ProgressIndicatorLayoutConfiguration g,
+																				@Nonnull State state,
 																				double value,
-																				@NotNull UILayoutDirection ld)
+																				@Nonnull UILayoutDirection ld)
 	{
 		super(g);
 
@@ -57,7 +60,8 @@ public class ProgressIndicatorConfiguration
 		this.ld = ld;
 	}
 
-	public @NotNull State getState()
+	public @Nonnull
+	State getState()
 	{
 		return state;
 	}
@@ -67,7 +71,8 @@ public class ProgressIndicatorConfiguration
 		return value;
 	}
 
-	public @NotNull UILayoutDirection getLayoutDirection()
+	public @Nonnull
+	UILayoutDirection getLayoutDirection()
 	{
 		return ld;
 	}
@@ -94,7 +99,8 @@ public class ProgressIndicatorConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String lds = ld == UILayoutDirection.RIGHT_TO_LEFT ? " RTL" : "";
 		return super.toString() + " " + state + " " + JNRUtils.format2(value) + lds;

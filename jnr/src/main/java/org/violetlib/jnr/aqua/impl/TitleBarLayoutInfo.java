@@ -13,8 +13,6 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
-
 import org.violetlib.jnr.impl.CombinedInsetter;
 import org.violetlib.jnr.impl.FloatingInsetter1;
 import org.violetlib.jnr.Insetter;
@@ -24,6 +22,9 @@ import org.violetlib.jnr.impl.Insetters;
 
 import static org.violetlib.jnr.aqua.AquaUIPainter.*;
 import static org.violetlib.jnr.aqua.AquaUIPainter.TitleBarButtonWidget.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 	Layout information for a title bar.
@@ -37,24 +38,27 @@ public class TitleBarLayoutInfo
 	private static final int DOCUMENT_DIAMETER = 12;
 	private static final int UTILITY_DIAMETER = 11;
 
-	private final @NotNull WindowInfo[] windowInfo;
+	private final @Nonnull
+	WindowInfo[] windowInfo;
 
-	public TitleBarLayoutInfo(@NotNull Rectangle[] documentButtonBounds, @NotNull Rectangle[] utilityButtonBounds)
+	public TitleBarLayoutInfo(@Nonnull Rectangle[] documentButtonBounds, @Nonnull Rectangle[] utilityButtonBounds)
 	{
 		windowInfo = new WindowInfo[2];
 		windowInfo[0] = new WindowInfo(DOCUMENT_HEIGHT, documentButtonBounds, DOCUMENT_DIAMETER);
 		windowInfo[1] = new WindowInfo(UTILITY_HEIGHT, utilityButtonBounds, UTILITY_DIAMETER);
 	}
 
-	public @NotNull Insetter getButtonInsets(@NotNull TitleBarLayoutConfiguration g, @NotNull TitleBarButtonWidget bw)
+	public @Nonnull
+	Insetter getButtonInsets(@Nonnull TitleBarLayoutConfiguration g, @Nonnull TitleBarButtonWidget bw)
 	{
 		ButtonInfo buttonInfo = getButtonInfo(g.getWidget(), bw);
 		return buttonInfo.insets;
 	}
 
-	public @NotNull Shape getButtonShape(@NotNull Rectangle2D bounds,
-																			 @NotNull TitleBarLayoutConfiguration g,
-																			 @NotNull TitleBarButtonWidget bw)
+	public @Nonnull
+	Shape getButtonShape(@Nonnull Rectangle2D bounds,
+						 @Nonnull TitleBarLayoutConfiguration g,
+						 @Nonnull TitleBarButtonWidget bw)
 	{
 		/*
 			Because the title bar buttons are aligned top left, the title bar width and height do not affect the locations of
@@ -65,14 +69,16 @@ public class TitleBarLayoutInfo
 		return buttonInfo.shape;
 	}
 
-	public @NotNull Insetter getLabelInsets(@NotNull TitleBarLayoutConfiguration g)
+	public @Nonnull
+	Insetter getLabelInsets(@Nonnull TitleBarLayoutConfiguration g)
 	{
 		WindowInfo w = getWindowInfo(g.getWidget());
 		return w.labelInsets;
 	}
 
-	public @Nullable TitleBarButtonWidget identifyButton(@NotNull Rectangle2D bounds,
-																											 @NotNull TitleBarLayoutConfiguration g, int x, int y)
+	public @Nullable
+	TitleBarButtonWidget identifyButton(@Nonnull Rectangle2D bounds,
+										@Nonnull TitleBarLayoutConfiguration g, int x, int y)
 	{
 		WindowInfo w = getWindowInfo(g.getWidget());
 		for (int i = 0; i < w.buttonInfo.length; i++) {
@@ -85,20 +91,22 @@ public class TitleBarLayoutInfo
 		return null;
 	}
 
-	protected @NotNull WindowInfo getWindowInfo(@NotNull TitleBarWidget w)
+	protected @Nonnull
+	WindowInfo getWindowInfo(@Nonnull TitleBarWidget w)
 	{
 		int index = toWindowTypeIndex(w);
 		return windowInfo[index];
 	}
 
-	protected @NotNull ButtonInfo getButtonInfo(@NotNull TitleBarWidget w, @NotNull TitleBarButtonWidget bw)
+	protected @Nonnull
+	ButtonInfo getButtonInfo(@Nonnull TitleBarWidget w, @Nonnull TitleBarButtonWidget bw)
 	{
 		WindowInfo windowInfo = getWindowInfo(w);
 		int index = toButtonIndex(bw);
 		return windowInfo.buttonInfo[index];
 	}
 
-	public static int toWindowTypeIndex(@NotNull TitleBarWidget w)
+	public static int toWindowTypeIndex(@Nonnull TitleBarWidget w)
 	{
 		switch (w) {
 			case DOCUMENT_WINDOW:
@@ -110,7 +118,7 @@ public class TitleBarLayoutInfo
 		}
 	}
 
-	public static int toButtonIndex(@NotNull TitleBarButtonWidget bw)
+	public static int toButtonIndex(@Nonnull TitleBarButtonWidget bw)
 	{
 		switch (bw) {
 			case CLOSE_BOX:
@@ -124,7 +132,8 @@ public class TitleBarLayoutInfo
 		}
 	}
 
-	public static @NotNull TitleBarButtonWidget fromButtonIndex(int index)
+	public static @Nonnull
+	TitleBarButtonWidget fromButtonIndex(int index)
 	{
 		switch (index) {
 			case 0:
@@ -142,10 +151,12 @@ public class TitleBarLayoutInfo
 	{
 		final float height;
 		final float buttonAreaWidth;
-		final @NotNull ButtonInfo[] buttonInfo;
-		final @NotNull Insetter labelInsets;
+		final @Nonnull
+		ButtonInfo[] buttonInfo;
+		final @Nonnull
+		Insetter labelInsets;
 
-		public WindowInfo(float height, @NotNull Rectangle[] buttonBounds, float buttonDiameter)
+		public WindowInfo(float height, @Nonnull Rectangle[] buttonBounds, float buttonDiameter)
 		{
 			int buttonCount = buttonBounds.length;
 			Rectangle lastBounds = buttonBounds[buttonCount-1];
@@ -162,11 +173,14 @@ public class TitleBarLayoutInfo
 
 	private static class ButtonInfo
 	{
-		final @NotNull Rectangle bounds;
-		final @NotNull Shape shape;
-		final @NotNull Insetter insets;
+		final @Nonnull
+		Rectangle bounds;
+		final @Nonnull
+		Shape shape;
+		final @Nonnull
+		Insetter insets;
 
-		public ButtonInfo(@NotNull Rectangle bounds, float diameter)
+		public ButtonInfo(@Nonnull Rectangle bounds, float diameter)
 		{
 			this.bounds = bounds;
 			this.shape = createButtonShape(bounds, diameter);
@@ -176,7 +190,8 @@ public class TitleBarLayoutInfo
 		}
 	}
 
-	private static @NotNull Shape createButtonShape(@NotNull Rectangle bounds, float diameter)
+	private static @Nonnull
+	Shape createButtonShape(@Nonnull Rectangle bounds, float diameter)
 	{
 		float radius = diameter / 2;
 		float x = (float) (bounds.x + bounds.width / 2.0 - radius);

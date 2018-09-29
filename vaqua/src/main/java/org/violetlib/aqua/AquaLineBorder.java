@@ -34,10 +34,11 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.border.Border;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
  * The class renders a line border using an appearance based color.
@@ -48,7 +49,7 @@ public class AquaLineBorder implements Border {
 
     private final String colorName;
 
-    public AquaLineBorder(@NotNull String colorName) {
+    public AquaLineBorder(@Nonnull String colorName) {
         this.colorName = colorName;
     }
 
@@ -66,13 +67,14 @@ public class AquaLineBorder implements Border {
         g.fillRect(x + width - 1, y+1, 1, height-2);
     }
 
-    protected @Nullable Color getColor(@NotNull Component c) {
+    protected @Nullable Color getColor(@Nonnull Component c) {
         AquaAppearance appearance = AppearanceManager.getAppearance(c);
         return appearance.getColor(colorName);
     }
 
     @Override
-    public @NotNull Insets getBorderInsets(Component c) {
+    public @Nonnull
+	Insets getBorderInsets(Component c) {
         return borderInsets;
     }
 

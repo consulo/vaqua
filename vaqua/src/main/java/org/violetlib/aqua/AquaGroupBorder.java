@@ -34,9 +34,10 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.border.Border;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.AquaUtils.RecyclableSingletonFromDefaultConstructor;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.Configuration;
@@ -61,10 +62,12 @@ public class AquaGroupBorder extends AquaBorder {
         return titlelessGroupBorder.get();
     }
 
-    protected final @NotNull Insets boxInsets;
-    protected final @NotNull Insets borderInsets;
+    protected final @Nonnull
+	Insets boxInsets;
+    protected final @Nonnull
+	Insets borderInsets;
 
-    public AquaGroupBorder(@NotNull Insets boxInsets, @NotNull Insets borderInsets) {
+    public AquaGroupBorder(@Nonnull Insets boxInsets, @Nonnull Insets borderInsets) {
         this.boxInsets = boxInsets;
         this.borderInsets = new Insets(boxInsets.top + borderInsets.top,
                 boxInsets.left + borderInsets.left,

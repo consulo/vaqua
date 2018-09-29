@@ -27,7 +27,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.aqua.AquaUILayoutInfo;
@@ -147,7 +147,7 @@ public class AquaTitleBar {
         return result;
     }
 
-    public void paint(@NotNull Graphics g) {
+    public void paint(@Nonnull Graphics g) {
         AquaAppearance appearance = AppearanceManager.ensureAppearance(frame);
         boolean isSelected = AquaFocusHandler.isActive(frame) && (frame.isSelected() || widget == AquaUIPainter.TitleBarWidget.UTILITY_WINDOW);
         EffectName effect = isSelected ? EffectName.EFFECT_NONE : EffectName.EFFECT_DISABLED;
@@ -194,7 +194,7 @@ public class AquaTitleBar {
         return AquaUIPainter.State.ACTIVE;
     }
 
-    protected void paintTitleContents(@NotNull Graphics g, @NotNull Color textColor) {
+    protected void paintTitleContents(@Nonnull Graphics g, @Nonnull Color textColor) {
         TitleBarLayout layout = getTitleBarLayout();
         Rectangle titleBounds = layout.titleBounds;
         if (titleBounds == null) {

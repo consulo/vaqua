@@ -13,10 +13,10 @@ import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
-import javax.swing.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
 
 /**
  * Softly cache processed images and image analysis results to avoid recomputation.
@@ -32,7 +32,8 @@ public abstract class ProcessedImageCache {
      * @param operator The operation to be performed on the icon image, or null to return the actual icon image.
      * @return the processed version of {@code icon}, or null if the icon is not valid.
      */
-    public @Nullable Image getProcessedImage(@NotNull Icon icon, @Nullable Object operator) {
+    public @Nullable
+	Image getProcessedImage(@Nonnull Icon icon, @Nullable Object operator) {
         ImageInfo info = getIconImageInfo(icon);
         return info != null ? info.getProcessedImage(operator) : null;
     }
@@ -43,7 +44,8 @@ public abstract class ProcessedImageCache {
      * @param operator The operation to be performed on the image.
      * @return the processed version of {@code image}.
      */
-    public @NotNull Image getProcessedImage(@NotNull Image image, @NotNull Object operator) {
+    public @Nonnull
+	Image getProcessedImage(@Nonnull Image image, @Nonnull Object operator) {
         ImageInfo info = getImageInfo(image);
         return info.getProcessedImage(operator);
     }
@@ -53,12 +55,13 @@ public abstract class ProcessedImageCache {
      * @param image The image.
      * @return true if and only if the image is a template image.
      */
-    public boolean isTemplateImage(@NotNull Image image) {
+    public boolean isTemplateImage(@Nonnull Image image) {
         ImageInfo info = getImageInfo(image);
         return info.isTemplate;
     }
 
-    private @Nullable ImageInfo getIconImageInfo(@NotNull Icon icon) {
+    private @Nullable
+	ImageInfo getIconImageInfo(@Nonnull Icon icon) {
         ImageInfo info = imageMap.get(icon);
         if (info == null) {
             Image image = AquaIcon.getImageForIcon(icon);
@@ -70,7 +73,8 @@ public abstract class ProcessedImageCache {
         return info;
     }
 
-    private @NotNull ImageInfo getImageInfo(@NotNull Image image) {
+    private @Nonnull
+	ImageInfo getImageInfo(@Nonnull Image image) {
         ImageInfo info = imageMap.get(image);
         if (info == null) {
             boolean isTemplate = determineTemplateImage(image);
@@ -81,16 +85,19 @@ public abstract class ProcessedImageCache {
     }
 
     private class ImageInfo {
-        @NotNull Image source;
+        @Nonnull
+		Image source;
         boolean isTemplate;
-        @Nullable Map<Object,SoftReference<Image>> processedImageMap;
+        @Nullable
+		Map<Object,SoftReference<Image>> processedImageMap;
 
-        private ImageInfo(@NotNull Image source, boolean isTemplate) {
+        private ImageInfo(@Nonnull Image source, boolean isTemplate) {
             this.source = source;
             this.isTemplate = isTemplate;
         }
 
-        public @NotNull Image getProcessedImage(@Nullable Object operator) {
+        public @Nonnull
+		Image getProcessedImage(@Nullable Object operator) {
             if (processedImageMap == null) {
                 processedImageMap = new HashMap<>();
             }
@@ -122,7 +129,9 @@ public abstract class ProcessedImageCache {
         }
     }
 
-    protected abstract boolean determineTemplateImage(@NotNull Image source);
-    protected abstract @NotNull Image createImageFromTemplate(@NotNull Image source, @NotNull Color color);
-    protected abstract @NotNull Image createProcessedImage(@NotNull Image source, @NotNull Object operator);
+    protected abstract boolean determineTemplateImage(@Nonnull Image source);
+    protected abstract @Nonnull
+	Image createImageFromTemplate(@Nonnull Image source, @Nonnull Color color);
+    protected abstract @Nonnull
+	Image createProcessedImage(@Nonnull Image source, @Nonnull Object operator);
 }

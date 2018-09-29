@@ -8,10 +8,10 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageFilter;
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import javax.swing.UIDefaults;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.AquaMultiResolutionImage;
 import org.violetlib.aqua.AquaPopupFactory;
 
@@ -55,6 +55,6 @@ public interface JavaSupportImpl
 
 	AquaPopupFactory createPopupFactory();
 
-	@NotNull
-	Image getResolutionVariant(@NotNull Image source, double width, double height);
+	@Nonnull
+	Image getResolutionVariant(@Nonnull Image source, double width, double height);
 }

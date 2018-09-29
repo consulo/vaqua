@@ -35,10 +35,11 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.AquaUtils.LazyKeyedSingleton;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.AquaUIPainter.DividerWidget;
@@ -189,7 +190,8 @@ public class AquaSplitPaneDivider extends BasicSplitPaneDivider {
 
     // separate static, because the divider needs to be serializable
     // see <rdar://problem/7590946> JSplitPane is not serializable when using Aqua look and feel
-    static @NotNull JButton createButtonForDirection(int direction) {
+    static @Nonnull
+	JButton createButtonForDirection(int direction) {
         Image image = directionArrows.get(direction);
         JButton button = image != null ? new JButton(new ImageIcon(image)) : new JButton();
         button.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));

@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.ComboBoxWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -23,28 +24,34 @@ import org.violetlib.jnr.aqua.AquaUIPainter.UILayoutDirection;
 public class ComboBoxLayoutConfiguration
 	extends AbstractComboBoxLayoutConfiguration
 {
-	private final @NotNull ComboBoxWidget widget;
-	private final @NotNull Size size;
-	private final @NotNull UILayoutDirection ld;
+	private final @Nonnull
+	ComboBoxWidget widget;
+	private final @Nonnull
+	Size size;
+	private final @Nonnull
+	UILayoutDirection ld;
 
-	public ComboBoxLayoutConfiguration(@NotNull ComboBoxWidget widget, @NotNull Size size, @NotNull UILayoutDirection ld)
+	public ComboBoxLayoutConfiguration(@Nonnull ComboBoxWidget widget, @Nonnull Size size, @Nonnull UILayoutDirection ld)
 	{
 		this.widget = widget;
 		this.size = size;
 		this.ld = ld;
 	}
 
-	public @NotNull ComboBoxWidget getWidget()
+	public @Nonnull
+	ComboBoxWidget getWidget()
 	{
 		return widget;
 	}
 
-	public @NotNull Size getSize()
+	public @Nonnull
+	Size getSize()
 	{
 		return size;
 	}
 
-	public @NotNull UILayoutDirection getLayoutDirection()
+	public @Nonnull
+	UILayoutDirection getLayoutDirection()
 	{
 		return ld;
 	}
@@ -76,7 +83,8 @@ public class ComboBoxLayoutConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String lds = ld == UILayoutDirection.RIGHT_TO_LEFT ? " RTL" : "";
 		return widget + " " + size + lds;

@@ -16,6 +16,8 @@ import java.io.Serializable;
 import java.text.CollationKey;
 import java.text.Collator;
 import java.util.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
@@ -23,7 +25,6 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.tree.*;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.AquaUtils;
 
  /**
@@ -885,7 +886,8 @@ public class FileSystemTreeModel implements TreeModel {
             }
         }
 
-        public @NotNull String getUserName() {
+        public @Nonnull
+		String getUserName() {
             if (userName == null) {
                 userName = fileChooser.getName(file);
             }

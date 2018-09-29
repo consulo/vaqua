@@ -40,6 +40,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -52,8 +54,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 /**
@@ -80,9 +81,12 @@ public class AquaTableUI extends BasicTableUI
     protected AquaTablePainter painter;
 
     private boolean isStriped = false;
-    protected @NotNull ContainerContextualColors colors;
-    protected @Nullable AppearanceContext appearanceContext;
-    protected @Nullable Color actualTableBackground;
+    protected @Nonnull
+	ContainerContextualColors colors;
+    protected @Nullable
+	AppearanceContext appearanceContext;
+    protected @Nullable
+	Color actualTableBackground;
 
     public AquaTableUI() {
         propertyChangeListener = new TablePropertyChangeListener();
@@ -272,12 +276,12 @@ public class AquaTableUI extends BasicTableUI
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 
@@ -594,8 +598,8 @@ public class AquaTableUI extends BasicTableUI
             }
         }
 
-        protected void paintEditorCell(@NotNull Graphics g,
-                                       @NotNull Rectangle cellRect,
+        protected void paintEditorCell(@Nonnull Graphics g,
+                                       @Nonnull Rectangle cellRect,
                                        int row,
                                        int column) {
             Component component = table.getEditorComponent();
@@ -603,8 +607,8 @@ public class AquaTableUI extends BasicTableUI
             component.validate();
         }
 
-        protected void paintRenderedCell(@NotNull Graphics g,
-                                         @NotNull Rectangle cellRect,
+        protected void paintRenderedCell(@Nonnull Graphics g,
+                                         @Nonnull Rectangle cellRect,
                                          int row,
                                          int column) {
 

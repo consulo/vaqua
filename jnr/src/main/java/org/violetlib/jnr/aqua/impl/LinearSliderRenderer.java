@@ -10,13 +10,14 @@ package org.violetlib.jnr.aqua.impl;
 
 import java.awt.geom.Rectangle2D;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.aqua.SliderConfiguration;
 import org.violetlib.jnr.impl.JNRUtils;
 import org.violetlib.jnr.impl.Renderer;
 import org.violetlib.jnr.impl.ReusableCompositor;
-
-import org.jetbrains.annotations.*;
 
 /**
 	A renderer for linear sliders using CoreUI based renderers for the track and thumb. It repositions the track and thumb
@@ -26,22 +27,29 @@ import org.jetbrains.annotations.*;
 public class LinearSliderRenderer
 	extends Renderer
 {
-	private static final @NotNull ReusableCompositor.PixelOperator blender = new Blender();
+	private static final @Nonnull
+	ReusableCompositor.PixelOperator blender = new Blender();
 
-	protected final @NotNull SliderConfiguration g;
-	protected final @NotNull Renderer trackRenderer;
-	protected final @NotNull Insetter trackInsets;
-	protected final @Nullable Renderer tickMarkRenderer;
-	protected final @NotNull Renderer thumbRenderer;
-	protected final @NotNull Insetter thumbInsets;
+	protected final @Nonnull
+	SliderConfiguration g;
+	protected final @Nonnull
+	Renderer trackRenderer;
+	protected final @Nonnull
+	Insetter trackInsets;
+	protected final @Nullable
+	Renderer tickMarkRenderer;
+	protected final @Nonnull
+	Renderer thumbRenderer;
+	protected final @Nonnull
+	Insetter thumbInsets;
 	protected final boolean isThumbTranslucent;
 
-	public LinearSliderRenderer(@NotNull SliderConfiguration g,
-															@NotNull Renderer trackRenderer,
-															@NotNull Insetter trackInsets,
+	public LinearSliderRenderer(@Nonnull SliderConfiguration g,
+															@Nonnull Renderer trackRenderer,
+															@Nonnull Insetter trackInsets,
 															@Nullable Renderer tickMarkRenderer,
-															@NotNull Renderer thumbRenderer,
-															@NotNull Insetter thumbInsets,
+															@Nonnull Renderer thumbRenderer,
+															@Nonnull Insetter thumbInsets,
 															boolean isThumbTranslucent)
 	{
 		this.g = g;
@@ -54,7 +62,7 @@ public class LinearSliderRenderer
 	}
 
 	@Override
-	public void composeTo(@NotNull ReusableCompositor compositor)
+	public void composeTo(@Nonnull ReusableCompositor compositor)
 	{
 		float w = compositor.getWidth();
 		float h = compositor.getHeight();

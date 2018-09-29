@@ -9,12 +9,13 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicMenuBarUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 /**
@@ -26,8 +27,10 @@ public class AquaMenuBarUI extends BasicMenuBarUI implements AquaComponentUI {
         return new AquaMenuBarUI();
     }
 
-    protected @NotNull BasicContextualColors colors;
-    protected @Nullable AppearanceContext appearanceContext;
+    protected @Nonnull
+	BasicContextualColors colors;
+    protected @Nullable
+	AppearanceContext appearanceContext;
 
     public AquaMenuBarUI() {
         colors = AquaColors.CONTROL_COLORS;
@@ -51,12 +54,12 @@ public class AquaMenuBarUI extends BasicMenuBarUI implements AquaComponentUI {
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 

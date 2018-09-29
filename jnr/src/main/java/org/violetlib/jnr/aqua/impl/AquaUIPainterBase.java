@@ -28,10 +28,11 @@ import org.violetlib.jnr.impl.RendererDebugInfo;
 import org.violetlib.jnr.impl.RendererDescription;
 import org.violetlib.vappearances.VAppearance;
 
-import org.jetbrains.annotations.*;
-
 import static org.violetlib.jnr.aqua.impl.AquaNativePainter.*;
 import static org.violetlib.jnr.impl.JNRUtils.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 	A common base class for native painters. The assumption of this base class is that most if not all layout related
@@ -50,7 +51,8 @@ public abstract class AquaUIPainterBase
 {
 	public static final Renderer NULL_RENDERER = Renderer.createCompositeRenderer();
 
-	protected final @NotNull RendererDescriptions rendererDescriptions;
+	protected final @Nonnull
+	RendererDescriptions rendererDescriptions;
 
 // The following distinguishable versions of segmented control layout and rendering have been identified.
 // Note that the stock JDK up to Java 11 (and possibly later) is linked against a 10.9 SDK.
@@ -62,7 +64,7 @@ public abstract class AquaUIPainterBase
   public static final int SEGMENTED_10_14_OLD = 4;       // rendering on macOS 10.14 that is similar to 10.11, used when linked against an old SDK
   public static final int SEGMENTED_10_14 = 5;           // rendering on macOS 10.14, when linked against SDK 10.11 or later
 
-	protected AquaUIPainterBase(@NotNull RendererDescriptions rds)
+	protected AquaUIPainterBase(@Nonnull RendererDescriptions rds)
 	{
 		this.rendererDescriptions = rds;
 	}
@@ -97,7 +99,8 @@ public abstract class AquaUIPainterBase
 	}
 
 	@Override
-	public @Nullable Shape getOutline(@NotNull LayoutConfiguration g)
+	public @Nullable
+	Shape getOutline(@Nonnull LayoutConfiguration g)
 		throws UnsupportedOperationException
 	{
 		LayoutInfo layoutInfo = uiLayout.getLayoutInfo(g);
@@ -105,14 +108,16 @@ public abstract class AquaUIPainterBase
 		return getOutline(bounds, g);
 	}
 
-	public @Nullable Shape getOutline(@NotNull Rectangle2D bounds, @NotNull LayoutConfiguration g)
+	public @Nullable
+	Shape getOutline(@Nonnull Rectangle2D bounds, @Nonnull LayoutConfiguration g)
 		throws UnsupportedOperationException
 	{
 		return uiOutliner.getOutline(bounds, g);
 	}
 
 	@Override
-	public @NotNull Painter getPainter(@NotNull Configuration g)
+	public @Nonnull
+	Painter getPainter(@Nonnull Configuration g)
 		throws UnsupportedOperationException
 	{
 		LayoutInfo layoutInfo = uiLayout.getLayoutInfo((LayoutConfiguration) g);
@@ -121,7 +126,8 @@ public abstract class AquaUIPainterBase
 		return customizePainter(p, g, layoutInfo);
 	}
 
-	protected @NotNull Painter customizePainter(@NotNull Painter p, @NotNull Configuration g, @NotNull LayoutInfo layoutInfo)
+	protected @Nonnull
+	Painter customizePainter(@Nonnull Painter p, @Nonnull Configuration g, @Nonnull LayoutInfo layoutInfo)
 	{
 		if (g instanceof SliderConfiguration) {
 			SliderConfiguration sg = (SliderConfiguration) g;
@@ -132,7 +138,8 @@ public abstract class AquaUIPainterBase
 	}
 
 	// public to support evaluation
-	public @NotNull Renderer getRenderer(@NotNull Configuration g)
+	public @Nonnull
+	Renderer getRenderer(@Nonnull Configuration g)
 	{
 		if (g instanceof ButtonConfiguration) {
 			ButtonConfiguration gg = (ButtonConfiguration) g;
@@ -256,7 +263,8 @@ public abstract class AquaUIPainterBase
 		throw new UnsupportedOperationException();	// TBD
 	}
 
-	public @Nullable RendererDebugInfo getRendererDebugInfo(@NotNull Configuration g, int scaleFactor, int width, int height)
+	public @Nullable
+	RendererDebugInfo getRendererDebugInfo(@Nonnull Configuration g, int scaleFactor, int width, int height)
 	{
 		if (g instanceof SegmentedButtonConfiguration) {
 			SegmentedButtonConfiguration gg = (SegmentedButtonConfiguration) g;
@@ -271,7 +279,8 @@ public abstract class AquaUIPainterBase
 		obsolete and are best supported by using a similar style.
 	*/
 
-	protected @NotNull ButtonWidget toCanonicalButtonStyle(ButtonWidget bw)
+	protected @Nonnull
+	ButtonWidget toCanonicalButtonStyle(ButtonWidget bw)
 	{
 //		switch (bw) {
 //			case BUTTON_ROUND_INSET:
@@ -282,17 +291,20 @@ public abstract class AquaUIPainterBase
 		return bw;
 	}
 
-	protected @Nullable Renderer getSearchFieldFindButtonRenderer(@NotNull TextFieldConfiguration g)
+	protected @Nullable
+	Renderer getSearchFieldFindButtonRenderer(@Nonnull TextFieldConfiguration g)
 	{
 		return null;
 	}
 
-	protected @Nullable Renderer getSearchFieldCancelButtonRenderer(@NotNull TextFieldConfiguration g)
+	protected @Nullable
+	Renderer getSearchFieldCancelButtonRenderer(@Nonnull TextFieldConfiguration g)
 	{
 		return null;
 	}
 
-	protected @Nullable RendererDescription getSearchButtonRendererDescription(@NotNull TextFieldLayoutConfiguration g)
+	protected @Nullable
+	RendererDescription getSearchButtonRendererDescription(@Nonnull TextFieldLayoutConfiguration g)
 	{
 		TextFieldWidget w = g.getWidget();
 
@@ -355,9 +367,10 @@ public abstract class AquaUIPainterBase
 		</p>
 	*/
 
-	protected @NotNull Painter getPainter(@Nullable LayoutInfo info,
-																				@NotNull Configuration g,
-																				@NotNull Renderer r)
+	protected @Nonnull
+	Painter getPainter(@Nullable LayoutInfo info,
+					   @Nonnull Configuration g,
+					   @Nonnull Renderer r)
 	{
 		configureLayout(info);
 
@@ -389,54 +402,74 @@ public abstract class AquaUIPainterBase
 		@return the painter.
 	*/
 
-	protected @NotNull Painter getPainter(@NotNull Configuration g,
-																				@NotNull VAppearance appearance,
-																				@NotNull Renderer r,
-																				float width,
-																				float height)
+	protected @Nonnull
+	Painter getPainter(@Nonnull Configuration g,
+					   @Nonnull VAppearance appearance,
+					   @Nonnull Renderer r,
+					   float width,
+					   float height)
 	{
 		return new AquaRenderedPainter(g, appearance, r, width, height);
 	}
 
-	protected abstract @NotNull Renderer getButtonRenderer(@NotNull ButtonConfiguration g);
+	protected abstract @Nonnull
+	Renderer getButtonRenderer(@Nonnull ButtonConfiguration g);
 
-	protected abstract @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g);
+	protected abstract @Nonnull
+	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g);
 
-	protected abstract @NotNull Renderer getScrollColumnSizerRenderer(@NotNull ScrollColumnSizerConfiguration g);
+	protected abstract @Nonnull
+	Renderer getScrollColumnSizerRenderer(@Nonnull ScrollColumnSizerConfiguration g);
 
-	protected abstract @NotNull Renderer getScrollBarRenderer(@NotNull ScrollBarConfiguration g);
+	protected abstract @Nonnull
+	Renderer getScrollBarRenderer(@Nonnull ScrollBarConfiguration g);
 
-	protected abstract @NotNull Renderer getToolBarItemWellRenderer(@NotNull ToolBarItemWellConfiguration g);
+	protected abstract @Nonnull
+	Renderer getToolBarItemWellRenderer(@Nonnull ToolBarItemWellConfiguration g);
 
-	protected abstract @NotNull Renderer getGroupBoxRenderer(@NotNull GroupBoxConfiguration g);
+	protected abstract @Nonnull
+	Renderer getGroupBoxRenderer(@Nonnull GroupBoxConfiguration g);
 
-	protected abstract @NotNull Renderer getListBoxRenderer(@NotNull ListBoxConfiguration g);
+	protected abstract @Nonnull
+	Renderer getListBoxRenderer(@Nonnull ListBoxConfiguration g);
 
-	protected abstract @NotNull Renderer getTextFieldRenderer(@NotNull TextFieldConfiguration g);
+	protected abstract @Nonnull
+	Renderer getTextFieldRenderer(@Nonnull TextFieldConfiguration g);
 
-	protected abstract @NotNull Renderer getComboBoxButtonRenderer(@NotNull ComboBoxConfiguration g);
+	protected abstract @Nonnull
+	Renderer getComboBoxButtonRenderer(@Nonnull ComboBoxConfiguration g);
 
-	protected abstract @NotNull Renderer getSegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g);
+	protected abstract @Nonnull
+	Renderer getSegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g);
 
-	protected abstract @NotNull Renderer getPopupButtonRenderer(@NotNull PopupButtonConfiguration g);
+	protected abstract @Nonnull
+	Renderer getPopupButtonRenderer(@Nonnull PopupButtonConfiguration g);
 
-	protected abstract @NotNull Renderer getTitleBarRenderer(@NotNull TitleBarConfiguration g);
+	protected abstract @Nonnull
+	Renderer getTitleBarRenderer(@Nonnull TitleBarConfiguration g);
 
-	protected abstract @NotNull Renderer getIndeterminateProgressIndicatorRenderer(@NotNull IndeterminateProgressIndicatorConfiguration g);
+	protected abstract @Nonnull
+	Renderer getIndeterminateProgressIndicatorRenderer(@Nonnull IndeterminateProgressIndicatorConfiguration g);
 
-	protected abstract @NotNull Renderer getProgressIndicatorRenderer(@NotNull ProgressIndicatorConfiguration g);
+	protected abstract @Nonnull
+	Renderer getProgressIndicatorRenderer(@Nonnull ProgressIndicatorConfiguration g);
 
-	protected abstract @NotNull Renderer getSliderRenderer(@NotNull SliderConfiguration g);
+	protected abstract @Nonnull
+	Renderer getSliderRenderer(@Nonnull SliderConfiguration g);
 
-	protected abstract @NotNull Renderer getSliderThumbRenderer(@NotNull SliderConfiguration g);
+	protected abstract @Nonnull
+	Renderer getSliderThumbRenderer(@Nonnull SliderConfiguration g);
 
-	protected abstract @NotNull Renderer getSpinnerArrowsRenderer(@NotNull SpinnerArrowsConfiguration g);
+	protected abstract @Nonnull
+	Renderer getSpinnerArrowsRenderer(@Nonnull SpinnerArrowsConfiguration g);
 
-	protected abstract @NotNull Renderer getSplitPaneDividerRenderer(@NotNull SplitPaneDividerConfiguration g);
+	protected abstract @Nonnull
+	Renderer getSplitPaneDividerRenderer(@Nonnull SplitPaneDividerConfiguration g);
 
-	protected abstract @NotNull Renderer getGradientRenderer(@NotNull GradientConfiguration g);
+	protected abstract @Nonnull
+	Renderer getGradientRenderer(@Nonnull GradientConfiguration g);
 
-	protected boolean shouldPaintRecessedBackground(@NotNull State state, @NotNull ButtonState bs)
+	protected boolean shouldPaintRecessedBackground(@Nonnull State state, @Nonnull ButtonState bs)
 	{
 		if (state == State.PRESSED || state == State.ROLLOVER) {
 			return true;
@@ -457,7 +490,8 @@ public abstract class AquaUIPainterBase
 		return state;
 	}
 
-	protected @Nullable RendererDebugInfo getSegmentedButtonRendererDebugInfo(@NotNull SegmentedButtonConfiguration g, int scaleFactor, int width, int height)
+	protected @Nullable
+	RendererDebugInfo getSegmentedButtonRendererDebugInfo(@Nonnull SegmentedButtonConfiguration g, int scaleFactor, int width, int height)
 	{
 		return null;
 	}
@@ -466,7 +500,8 @@ public abstract class AquaUIPainterBase
 		Return the renderer used to draw the arrows of pop up button, if any.
 	*/
 
-	protected @Nullable Renderer getPopupArrowRenderer(@NotNull PopupButtonConfiguration g)
+	protected @Nullable
+	Renderer getPopupArrowRenderer(@Nonnull PopupButtonConfiguration g)
 	{
 		return null;
 	}
@@ -474,20 +509,26 @@ public abstract class AquaUIPainterBase
 	private class SliderPainterImpl
 		implements SliderPainter
 	{
-		private final @NotNull SliderConfiguration sg;
-		private final @Nullable LayoutInfo layoutInfo;
-		private final @NotNull Rectangle2D bounds;
-		private final @NotNull Painter p;
+		private final @Nonnull
+		SliderConfiguration sg;
+		private final @Nullable
+		LayoutInfo layoutInfo;
+		private final @Nonnull
+		Rectangle2D bounds;
+		private final @Nonnull
+		Painter p;
 		private final double thumbPosition;
 
-		private @Nullable Rectangle2D thumbBounds;
-		private @Nullable Shape thumbOutline;
+		private @Nullable
+		Rectangle2D thumbBounds;
+		private @Nullable
+		Shape thumbOutline;
 
-		public SliderPainterImpl(@NotNull SliderConfiguration sg,
+		public SliderPainterImpl(@Nonnull SliderConfiguration sg,
 														 @Nullable LayoutInfo layoutInfo,
-														 @NotNull Rectangle2D bounds,
+														 @Nonnull Rectangle2D bounds,
 														 double thumbPosition,
-														 @NotNull Painter p)
+														 @Nonnull Painter p)
 		{
 			this.sg = sg;
 			this.layoutInfo = layoutInfo;
@@ -497,7 +538,8 @@ public abstract class AquaUIPainterBase
 		}
 
 		@Override
-		public @NotNull Rectangle2D getThumbBounds()
+		public @Nonnull
+		Rectangle2D getThumbBounds()
 		{
 			if (thumbBounds == null) {
 				thumbBounds = uiLayout.getSliderThumbBounds(bounds, sg, thumbPosition);
@@ -507,7 +549,8 @@ public abstract class AquaUIPainterBase
 		}
 
 		@Override
-		public @NotNull Shape getThumbOutline()
+		public @Nonnull
+		Shape getThumbOutline()
 		{
 			if (thumbOutline == null) {
 				SliderThumbLayoutConfiguration tg = new SliderThumbLayoutConfiguration(sg, thumbPosition);
@@ -523,7 +566,8 @@ public abstract class AquaUIPainterBase
 		}
 
 		@Override
-		public @NotNull Rectangle2D getLabelBounds(double value, @NotNull Dimension size)
+		public @Nonnull
+		Rectangle2D getLabelBounds(double value, @Nonnull Dimension size)
 		{
 			return uiLayout.getSliderLabelBounds(bounds, sg, value, size);
 		}
@@ -541,13 +585,13 @@ public abstract class AquaUIPainterBase
 		}
 
 		@Override
-		public void paint(@NotNull Graphics g, float x, float y)
+		public void paint(@Nonnull Graphics g, float x, float y)
 		{
 			p.paint(g, x, y);
 		}
 	}
 
-	protected static void configureNativeAppearance(@NotNull VAppearance appearance)
+	protected static void configureNativeAppearance(@Nonnull VAppearance appearance)
 	{
 		String appearanceName = appearance.getName();
 		int appearanceID;

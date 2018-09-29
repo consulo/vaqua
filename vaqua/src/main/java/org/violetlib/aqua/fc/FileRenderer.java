@@ -15,10 +15,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.plaf.BorderUIResource;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.violetlib.aqua.*;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
@@ -118,7 +117,7 @@ public class FileRenderer extends JLabel implements ListCellRenderer, GenericCel
     public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
     }
 
-    public Component getListCellRendererComponent(@NotNull JList list,
+    public Component getListCellRendererComponent(@Nonnull JList list,
                                                   @Nullable Object value,
                                                   int index,
                                                   boolean isSelected,
@@ -131,18 +130,18 @@ public class FileRenderer extends JLabel implements ListCellRenderer, GenericCel
     }
 
     @Override
-    public Component getCellRendererComponent(@NotNull JComponent container,
-                                              @NotNull AquaAppearance appearance,
-                                              @NotNull ContainerContextualColors colors,
+    public Component getCellRendererComponent(@Nonnull JComponent container,
+                                              @Nonnull AquaAppearance appearance,
+                                              @Nonnull ContainerContextualColors colors,
                                               @Nullable Object value,
                                               boolean isSelected,
                                               boolean cellHasFocus) {
         return getCellRendererComponent(container, appearance, colors, value, isSelected, cellHasFocus, true);
     }
 
-    protected Component getCellRendererComponent(@NotNull JComponent container,
-                                                 @NotNull AquaAppearance appearance,
-                                                 @NotNull ContainerContextualColors colors,
+    protected Component getCellRendererComponent(@Nonnull JComponent container,
+                                                 @Nonnull AquaAppearance appearance,
+                                                 @Nonnull ContainerContextualColors colors,
                                                  @Nullable Object value,
                                                  boolean isSelected,
                                                  boolean cellHasFocus,
@@ -217,21 +216,23 @@ public class FileRenderer extends JLabel implements ListCellRenderer, GenericCel
         return this;
     }
 
-    protected @NotNull AquaUIPainter.State getState(@NotNull JComponent c, boolean isGrayed) {
+    protected @Nonnull
+	AquaUIPainter.State getState(@Nonnull JComponent c, boolean isGrayed) {
         return c.isEnabled() && !isGrayed ?
                 AquaFocusHandler.hasFocus(c) ? AquaUIPainter.State.ACTIVE_DEFAULT : AquaUIPainter.State.ACTIVE
                 : AquaUIPainter.State.DISABLED;
     }
 
     private class ConfigurableMatteBorder extends MatteBorder {
-        private @NotNull Color configuredColor;
+        private @Nonnull
+		Color configuredColor;
 
         public ConfigurableMatteBorder(int top, int left, int bottom, int right) {
             super(top, left, bottom, right, Color.BLACK);
             this.configuredColor = Color.BLACK;
         }
 
-        public void configure(@NotNull Color c) {
+        public void configure(@Nonnull Color c) {
             configuredColor = c;
         }
 

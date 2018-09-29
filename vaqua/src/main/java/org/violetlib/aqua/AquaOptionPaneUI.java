@@ -34,13 +34,13 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicOptionPaneUI;
 import javax.swing.text.Document;
 import javax.swing.text.View;
-
-import org.jetbrains.annotations.NotNull;
 
 public class AquaOptionPaneUI extends BasicOptionPaneUI implements AquaComponentUI {
     private static final int kOKCancelButtonWidth = 79;
@@ -74,11 +74,11 @@ public class AquaOptionPaneUI extends BasicOptionPaneUI implements AquaComponent
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
     }
 
     @Override

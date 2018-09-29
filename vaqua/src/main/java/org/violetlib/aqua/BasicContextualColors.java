@@ -10,7 +10,7 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Identify contextually determined foreground and background colors.
@@ -18,7 +18,9 @@ import org.jetbrains.annotations.NotNull;
 
 public interface BasicContextualColors {
 
-    @NotNull Color getBackground(@NotNull AppearanceContext context);
+    @Nonnull
+	Color getBackground(@Nonnull AppearanceContext context);
 
-    @NotNull Color getForeground(@NotNull AppearanceContext context);
+    @Nonnull
+	Color getForeground(@Nonnull AppearanceContext context);
 }

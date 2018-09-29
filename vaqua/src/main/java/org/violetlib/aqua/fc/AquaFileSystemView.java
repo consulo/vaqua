@@ -12,10 +12,10 @@
 package org.violetlib.aqua.fc;
 
 import java.io.File;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.filechooser.FileView;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * An enhanced FileSystemView, which provides additional information about a file system required for Aqua file
@@ -51,7 +51,8 @@ public abstract class AquaFileSystemView extends DelegatedFileSystemViewBase {
     /**
      * Creates a system specific file view for the specified JFileChooser.
      */
-    public @NotNull FileView createFileView(JFileChooser chooser) {
+    public @Nonnull
+	FileView createFileView(JFileChooser chooser) {
         return new AquaFileView(this);
     }
 
@@ -60,7 +61,8 @@ public abstract class AquaFileSystemView extends DelegatedFileSystemViewBase {
     /**
      * Returns a FileSystemView that can be cast into AquaFileSystemView.
      */
-    public static @NotNull AquaFileSystemView getAquaFileSystemView() {
+    public static @Nonnull
+	AquaFileSystemView getAquaFileSystemView() {
         if (fileSystemView == null) {
             fileSystemView = new OSXFileSystemView();
         }
@@ -74,7 +76,8 @@ public abstract class AquaFileSystemView extends DelegatedFileSystemViewBase {
      * @param isApplicationTraversable True if bundled applications should be traversable.
      * @return true if and only if the file can be visited.
      */
-    public @NotNull Boolean isTraversable(File f, boolean isPackageTraversable, boolean isApplicationTraversable) {
+    public @Nonnull
+	Boolean isTraversable(File f, boolean isPackageTraversable, boolean isApplicationTraversable) {
         return target.isTraversable(f);
     }
 }

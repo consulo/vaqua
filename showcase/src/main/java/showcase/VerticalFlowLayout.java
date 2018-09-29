@@ -15,8 +15,6 @@
  */
 package showcase;
 
-import org.intellij.lang.annotations.MagicConstant;
-
 import java.awt.*;
 import java.io.Serializable;
 
@@ -29,14 +27,12 @@ public class VerticalFlowLayout extends FlowLayout implements Serializable {
     private final int vGap;
     private final int hGap;
 
-    @MagicConstant(intValues = {TOP, MIDDLE, BOTTOM})
-    public @interface VerticalFlowAlignment {}
 
     public VerticalFlowLayout() {
         this(TOP, 5, 5, true, false);
     }
 
-    public VerticalFlowLayout(@VerticalFlowAlignment int alignment) {
+    public VerticalFlowLayout(int alignment) {
         this(alignment, 5, 5, true, false);
     }
 
@@ -44,7 +40,7 @@ public class VerticalFlowLayout extends FlowLayout implements Serializable {
         this(TOP, 5, 5, fillHorizontally, fillVertically);
     }
 
-    public VerticalFlowLayout(@VerticalFlowAlignment int alignment, boolean fillHorizontally, boolean fillVertically) {
+    public VerticalFlowLayout(int alignment, boolean fillHorizontally, boolean fillVertically) {
         this(alignment, 5, 5, fillHorizontally, fillVertically);
     }
 
@@ -52,7 +48,7 @@ public class VerticalFlowLayout extends FlowLayout implements Serializable {
         this(TOP, hGap, vGap, true, false);
     }
 
-    public VerticalFlowLayout(@VerticalFlowAlignment int alignment, int hGap, int vGap, boolean fillHorizontally, boolean fillVertically) {
+    public VerticalFlowLayout(int alignment, int hGap, int vGap, boolean fillHorizontally, boolean fillVertically) {
         setAlignment(alignment);
         this.hGap = hGap;
         this.vGap = vGap;

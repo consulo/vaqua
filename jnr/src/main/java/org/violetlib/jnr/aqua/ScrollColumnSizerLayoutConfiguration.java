@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.aqua;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A layout configuration for a scroll column sizer.
@@ -18,7 +18,8 @@ public class ScrollColumnSizerLayoutConfiguration
 	extends LayoutConfiguration
 {
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return "Scroll Column Sizer";
 	}

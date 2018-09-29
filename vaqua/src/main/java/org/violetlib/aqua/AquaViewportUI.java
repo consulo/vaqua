@@ -9,12 +9,14 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.ViewportUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 /**
@@ -26,9 +28,12 @@ public class AquaViewportUI extends ViewportUI implements AquaComponentUI {
         return new AquaViewportUI();
     }
 
-    protected @Nullable JViewport viewport;
-    protected final @NotNull BasicContextualColors colors;
-    protected @Nullable AppearanceContext appearanceContext;
+    protected @Nullable
+	JViewport viewport;
+    protected final @Nonnull
+	BasicContextualColors colors;
+    protected @Nullable
+	AppearanceContext appearanceContext;
 
     public AquaViewportUI() {
         colors = AquaColors.CONTROL_COLORS;
@@ -52,12 +57,12 @@ public class AquaViewportUI extends ViewportUI implements AquaComponentUI {
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 
@@ -77,7 +82,7 @@ public class AquaViewportUI extends ViewportUI implements AquaComponentUI {
     }
 
     @Override
-    public final void update(@NotNull Graphics g, @NotNull JComponent c) {
+    public final void update(@Nonnull Graphics g, @Nonnull JComponent c) {
 
         AquaAppearance appearance = AppearanceManager.registerCurrentAppearance(c);
 

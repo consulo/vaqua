@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua.impl;
 
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.aqua.PopupButtonConfiguration;
@@ -24,12 +25,16 @@ import org.violetlib.jnr.impl.ReusableCompositor;
 public class PopupRenderer
 	extends Renderer
 {
-	protected final @NotNull PopupButtonConfiguration g;
-	protected final @Nullable Renderer buttonRenderer;
-	protected final @Nullable Renderer arrowsRenderer;
-	protected final @Nullable Insetter arrowsInsets;
+	protected final @Nonnull
+	PopupButtonConfiguration g;
+	protected final @Nullable
+	Renderer buttonRenderer;
+	protected final @Nullable
+	Renderer arrowsRenderer;
+	protected final @Nullable
+	Insetter arrowsInsets;
 
-	public PopupRenderer(@NotNull PopupButtonConfiguration g,
+	public PopupRenderer(@Nonnull PopupButtonConfiguration g,
 											 @Nullable Renderer buttonRenderer,
 											 @Nullable Renderer arrowsRenderer,
 											 @Nullable Insetter arrowsInsets)
@@ -41,7 +46,7 @@ public class PopupRenderer
 	}
 
 	@Override
-	public void composeTo(@NotNull ReusableCompositor compositor)
+	public void composeTo(@Nonnull ReusableCompositor compositor)
 	{
 		float w = compositor.getWidth();
 		float h = compositor.getHeight();

@@ -37,6 +37,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+import javax.annotation.Nonnull;
 import javax.swing.ButtonModel;
 import javax.swing.Icon;
 import javax.swing.JComponent;
@@ -49,8 +50,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.text.View;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.aqua.AquaUtils.RecyclableSingletonFromDefaultConstructor;
 import org.violetlib.jnr.aqua.AquaUIPainter;
@@ -123,7 +123,8 @@ public class AquaMenuSupport {
         return sPainter.get();
     }
 
-    public @NotNull AppearanceContext getAppearanceContext(@NotNull JMenuItem b, @Nullable AquaAppearance appearance) {
+    public @Nonnull
+	AppearanceContext getAppearanceContext(@Nonnull JMenuItem b, @Nullable AquaAppearance appearance) {
         if (appearance == null) {
             appearance = AppearanceManager.ensureAppearance(b);
         }
@@ -135,7 +136,8 @@ public class AquaMenuSupport {
         return new AppearanceContext(appearance, state, isSelected, false);
     }
 
-    protected @NotNull AquaUIPainter.State getState(@NotNull JMenuItem b) {
+    protected @Nonnull
+	AquaUIPainter.State getState(@Nonnull JMenuItem b) {
         Container ancestor = getAncestor(b);
         ButtonModel model = b.getModel();
         boolean isEnabled = model.isEnabled() && (ancestor == null || ancestor.isVisible());
@@ -151,7 +153,7 @@ public class AquaMenuSupport {
         }
     }
 
-    protected @Nullable Container getAncestor(@NotNull JMenuItem b) {
+    protected @Nullable Container getAncestor(@Nonnull JMenuItem b) {
         Container ancestor = b.getParent();
         while (ancestor != null && !(ancestor instanceof JPopupMenu)) ancestor = ancestor.getParent();
         return ancestor;

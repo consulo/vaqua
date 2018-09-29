@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A basic renderer that alters the output of a basic renderer by scaling the alpha channel.
@@ -19,7 +19,7 @@ public class ScaledAlphaRenderer
 {
 	private final float multiplier;
 
-	public ScaledAlphaRenderer(@NotNull BasicRenderer r, float multiplier)
+	public ScaledAlphaRenderer(@Nonnull BasicRenderer r, float multiplier)
 	{
 		super(r);
 

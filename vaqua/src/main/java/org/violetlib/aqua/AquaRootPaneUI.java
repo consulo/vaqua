@@ -37,6 +37,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -46,8 +48,7 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.MenuBarUI;
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import static org.violetlib.aqua.AquaVibrantSupport.NO_VIBRANT_STYLE;
 import static org.violetlib.aqua.AquaVibrantSupport.WINDOW_BACKGROUND_STYLE;
@@ -410,7 +411,8 @@ public class AquaRootPaneUI extends BasicRootPaneUI {
         }
     }
 
-    private @Nullable String getSpecifiedWindowAppearance() {
+    private @Nullable
+	String getSpecifiedWindowAppearance() {
         Object o = rootPane.getClientProperty(AppearanceManager.AQUA_APPEARANCE_NAME_KEY);
         if (o instanceof String) {
             return (String) o;
@@ -423,7 +425,7 @@ public class AquaRootPaneUI extends BasicRootPaneUI {
      * meaning an appearance with a different appearance name.
      * @param appearanceName The new appearance name.
      */
-    public void windowAppearanceChanged(@NotNull String appearanceName) {
+    public void windowAppearanceChanged(@Nonnull String appearanceName) {
         updateAppearances(appearanceName, false);
     }
 
@@ -438,7 +440,7 @@ public class AquaRootPaneUI extends BasicRootPaneUI {
         }
     }
 
-    protected void updateWindowAppearances(@NotNull Window w,
+    protected void updateWindowAppearances(@Nonnull Window w,
                                            @Nullable String appearanceName,
                                            boolean forceInitialization) {
         if (appearanceName == null) {
@@ -475,7 +477,7 @@ public class AquaRootPaneUI extends BasicRootPaneUI {
         }
     }
 
-    protected void setupBackground(@NotNull Window w) {
+    protected void setupBackground(@Nonnull Window w) {
 
         if (OSXSystemProperties.OSVersion >= 1014 && !vibrantStyleIsExplicitlySet) {
             int vibrantStyle = getDefaultWindowVibrantStyle();
@@ -554,7 +556,8 @@ public class AquaRootPaneUI extends BasicRootPaneUI {
         AquaUtils.configurePopup(w, radius);
     }
 
-    protected @Nullable Window getWindow() {
+    protected @Nullable
+	Window getWindow() {
         Container parent = rootPane.getParent();
         return parent instanceof Window ? (Window) parent : null;
     }
@@ -639,7 +642,8 @@ public class AquaRootPaneUI extends BasicRootPaneUI {
         return customStyledWindow;
     }
 
-    public static @Nullable String getWindowStyleKey(@NotNull JRootPane rp) {
+    public static @Nullable
+	String getWindowStyleKey(@Nonnull JRootPane rp) {
         Object o = rp.getClientProperty(AQUA_WINDOW_STYLE_KEY);
         return o instanceof String ? (String) o : null;
     }

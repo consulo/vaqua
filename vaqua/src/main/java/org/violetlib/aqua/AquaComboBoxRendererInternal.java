@@ -36,8 +36,8 @@ package org.violetlib.aqua;
 import javax.swing.*;
 import java.awt.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.PopupButtonLayoutConfiguration;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
 
@@ -159,7 +159,8 @@ public class AquaComboBoxRendererInternal<E> extends JLabel implements ListCellR
         return this;
     }
 
-    public @NotNull Insets getInsets(@Nullable Insets insets) {
+    public @Nonnull
+	Insets getInsets(@Nullable Insets insets) {
         if (insets == null) {
             insets = new Insets(0, 0, 0, 0);
         }

@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.util.Arrays;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A basic renderer that renders into a temporary raster using a specified basic renderer, post processes the pixels,
@@ -20,7 +20,8 @@ import org.jetbrains.annotations.*;
 public abstract class PostProcessedRenderer
 	implements BasicRenderer
 {
-	private final @NotNull BasicRenderer r;
+	private final @Nonnull
+	BasicRenderer r;
 
 	private static int[] temp;
 
@@ -30,13 +31,13 @@ public abstract class PostProcessedRenderer
 		@param r The renderer to invoke.
 	*/
 
-	public PostProcessedRenderer(@NotNull BasicRenderer r)
+	public PostProcessedRenderer(@Nonnull BasicRenderer r)
 	{
 		this.r = r;
 	}
 
 	@Override
-	public void render(@NotNull int[] data, int rw, int rh, float w, float h)
+	public void render(@Nonnull int[] data, int rw, int rh, float w, float h)
 	{
 		int requiredSize = rw * rh;
 		if (requiredSize > 0) {
@@ -58,12 +59,12 @@ public abstract class PostProcessedRenderer
 		@param rh The number of rows in the raster.
 	*/
 
-	protected void process(@NotNull int[] buffer, int rw, int rh)
+	protected void process(@Nonnull int[] buffer, int rw, int rh)
 	{
 		processPixels(buffer, rw, rh);
 	}
 
-	protected void processPixels(@NotNull int[] buffer, int rw, int rh)
+	protected void processPixels(@Nonnull int[] buffer, int rw, int rh)
 	{
 		for (int row = 0; row < rh; row++) {
 			for (int col = 0; col < rw; col++) {
@@ -152,7 +153,7 @@ public abstract class PostProcessedRenderer
 		@param rh The number of rows in the raster.
 	*/
 
-	protected void install(@NotNull int[] buffer, @NotNull int[] output, int rw, int rh)
+	protected void install(@Nonnull int[] buffer, @Nonnull int[] output, int rw, int rh)
 	{
 		int count = rw * rh;
 		System.arraycopy(buffer, 0, output, 0, count);

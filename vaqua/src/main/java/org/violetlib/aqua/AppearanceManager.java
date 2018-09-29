@@ -15,11 +15,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import static org.violetlib.aqua.AquaFocusHandler.FRAME_ACTIVE_PROPERTY;
 
@@ -43,7 +44,8 @@ public class AppearanceManager {
      * @return the current appearance, or a default appearance if no current appearance has been registered.
      */
 
-    public static @NotNull AquaAppearance getCurrentAppearance() {
+    public static @Nonnull
+	AquaAppearance getCurrentAppearance() {
         if (currentAppearance != null) {
             return currentAppearance;
         } else {
@@ -53,7 +55,8 @@ public class AppearanceManager {
 
     private static Set<Class> notifiedClasses = new HashSet<>();
 
-    public static @Nullable AquaAppearance registerCurrentAppearance(@NotNull JComponent c) {
+    public static @Nullable
+	AquaAppearance registerCurrentAppearance(@Nonnull JComponent c) {
         AquaAppearance appearance = getRegisteredAppearance(c);
         if (appearance != null && appearance != currentAppearance) {
             currentAppearance = appearance;
@@ -84,7 +87,7 @@ public class AppearanceManager {
      * @throws IllegalArgumentException if {@code c} does not support {@link AquaComponentUI}.
      */
 
-    public static void installListener(@NotNull JComponent c) {
+    public static void installListener(@Nonnull JComponent c) {
         AquaComponentUI ui = AquaUtils.getUI(c, AquaComponentUI.class);
         if (ui != null) {
             c.addHierarchyListener(hierarchyListener);
@@ -99,12 +102,12 @@ public class AppearanceManager {
      * @param c The component.
      */
 
-    public static void uninstallListener(@NotNull Component c) {
+    public static void uninstallListener(@Nonnull Component c) {
         c.removeHierarchyListener(hierarchyListener);
         c.removePropertyChangeListener(FRAME_ACTIVE_PROPERTY, activeStateListener);
     }
 
-    public static void installAppearance(@NotNull JComponent c, @Nullable AquaAppearance appearance) {
+    public static void installAppearance(@Nonnull JComponent c, @Nullable AquaAppearance appearance) {
         if (appearance != null) {
             AquaAppearance existingAppearance = getRegisteredAppearance(c);
             if (appearance != existingAppearance) {
@@ -119,7 +122,7 @@ public class AppearanceManager {
         }
     }
 
-    public static void uninstallAppearance(@NotNull JComponent c) {
+    public static void uninstallAppearance(@Nonnull JComponent c) {
         try {
             c.putClientProperty(AQUA_APPEARANCE_KEY, null);
         } catch (Throwable th) {
@@ -128,7 +131,7 @@ public class AppearanceManager {
         }
     }
 
-    public static void updateAppearancesInSubtree(@NotNull Component c) {
+    public static void updateAppearancesInSubtree(@Nonnull Component c) {
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             AppearanceManager.ensureAppearance(jc);
@@ -153,7 +156,8 @@ public class AppearanceManager {
      * @return the appearance for the component.
      */
 
-    public static @NotNull AquaAppearance ensureAppearance(@NotNull Component c) {
+    public static @Nonnull
+	AquaAppearance ensureAppearance(@Nonnull Component c) {
 
         // Appearances currently affect only component painting.
         // In the general case, the appearance for a displayable component depends upon its position in the component
@@ -176,7 +180,8 @@ public class AppearanceManager {
         return getInheritedAppearance(c);
     }
 
-    private static @NotNull AquaAppearance getAppearanceForComponent(@NotNull Component c) {
+    private static @Nonnull
+	AquaAppearance getAppearanceForComponent(@Nonnull Component c) {
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             return getAppearanceForJComponent(jc);
@@ -185,7 +190,8 @@ public class AppearanceManager {
         return getInheritedAppearance(c);
     }
 
-    private static @NotNull AquaAppearance getAppearanceForJComponent(@NotNull JComponent jc) {
+    private static @Nonnull
+	AquaAppearance getAppearanceForJComponent(@Nonnull JComponent jc) {
         boolean useVibrant = AquaVibrantSupport.isVibrant(jc) && !(jc instanceof JRootPane);
 
         // If the component specifies an appearance, obey that specification.
@@ -206,8 +212,9 @@ public class AppearanceManager {
         return appearance;
     }
 
-    private static @NotNull AquaAppearance getAppearanceForComponent(@NotNull Component c,
-                                                                     @NotNull AquaAppearance inheritedAppearance) {
+    private static @Nonnull
+	AquaAppearance getAppearanceForComponent(@Nonnull Component c,
+											 @Nonnull AquaAppearance inheritedAppearance) {
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             boolean useVibrant = AquaVibrantSupport.isVibrant(jc) && !(jc instanceof JRootPane);
@@ -227,7 +234,8 @@ public class AppearanceManager {
         return inheritedAppearance;
     }
 
-    private static @NotNull AquaAppearance getInheritedAppearance(@NotNull Component c) {
+    private static @Nonnull
+	AquaAppearance getInheritedAppearance(@Nonnull Component c) {
         Container parent = c.getParent();
         if (parent == null) {
             String name = AquaUtils.nativeGetApplicationAppearanceName();
@@ -239,12 +247,14 @@ public class AppearanceManager {
         return getAppearanceForComponent(parent);
     }
 
-    public static @NotNull AquaAppearance getAppearance(@NotNull Component c) {
+    public static @Nonnull
+	AquaAppearance getAppearance(@Nonnull Component c) {
         AquaAppearance appearance = getRegisteredAppearance(c);
         return appearance != null ? appearance : AquaAppearances.getDefaultAppearance();
     }
 
-    public static @Nullable AquaAppearance getRegisteredAppearance(@NotNull Component c) {
+    public static @Nullable
+	AquaAppearance getRegisteredAppearance(@Nonnull Component c) {
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             Object o = jc.getClientProperty(AQUA_APPEARANCE_KEY);
@@ -255,7 +265,8 @@ public class AppearanceManager {
         return null;
     }
 
-    private static @Nullable String getRegisteredAppearanceName(@NotNull Component c) {
+    private static @Nullable
+	String getRegisteredAppearanceName(@Nonnull Component c) {
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             Object o = jc.getClientProperty(AQUA_APPEARANCE_NAME_KEY);
@@ -266,7 +277,7 @@ public class AppearanceManager {
         return null;
     }
 
-    private static void appearanceHasChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    private static void appearanceHasChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         if (c instanceof JMenuBar) {
             JMenuBar mb = (JMenuBar) c;
             // Special hack because we are required to use the platform AquaMenuBarUI to be able to use the screen menu bar
@@ -306,7 +317,7 @@ public class AppearanceManager {
 
     private static class AppearanceManagerHierarchyListener implements HierarchyListener {
         @Override
-        public void hierarchyChanged(@NotNull HierarchyEvent e) {
+        public void hierarchyChanged(@Nonnull HierarchyEvent e) {
             long flags = e.getChangeFlags();
             if ((flags & (HierarchyEvent.PARENT_CHANGED)) != 0) {
                 Component c = e.getChanged();
@@ -318,7 +329,7 @@ public class AppearanceManager {
         }
     }
 
-    private static void parentChanged(@NotNull JComponent c) {
+    private static void parentChanged(@Nonnull JComponent c) {
         Container parent = c.getParent();
         if (parent == null) {
             // If the component was removed from a hierarchy, remove all appearance information from the component.
@@ -353,7 +364,7 @@ public class AppearanceManager {
         }
     }
 
-    private static @Nullable AquaAppearance getInheritedAppearanceForAttachment(@NotNull JComponent c) {
+    private static @Nullable AquaAppearance getInheritedAppearanceForAttachment(@Nonnull JComponent c) {
         // Look for an appearance assigned to the nearest JComponent ancestor.
         // Skip non-JComponents, such as CellRendererPane.
 
@@ -367,7 +378,7 @@ public class AppearanceManager {
         return null;
     }
 
-    private static void installAppearancesInNewlyAttachedTree(@NotNull Component c) {
+    private static void installAppearancesInNewlyAttachedTree(@Nonnull Component c) {
         // We have just installed an appearance at the root of a newly attached tree.
         // If the tree is part of a complete hierarchy, the install appearances in the child trees.
         // Otherwise, it is probably better to wait.
@@ -386,8 +397,8 @@ public class AppearanceManager {
         }
     }
 
-    private static void installAppearancesInTree(@NotNull Component c,
-                                                 @NotNull AquaAppearance inheritedAppearance) {
+    private static void installAppearancesInTree(@Nonnull Component c,
+                                                 @Nonnull AquaAppearance inheritedAppearance) {
         if (c instanceof Container) {
             Container top = (Container) c;  // must succeed
             AquaAppearance topAppearance = getAppearanceForComponent(c, inheritedAppearance);
@@ -403,7 +414,7 @@ public class AppearanceManager {
          }
     }
 
-    private static void uninstallAppearancesInTree(@NotNull Component c) {
+    private static void uninstallAppearancesInTree(@Nonnull Component c) {
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             uninstallAppearance(jc);
@@ -419,7 +430,8 @@ public class AppearanceManager {
         }
     }
 
-    private static @NotNull AquaAppearance getVariant(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    private static @Nonnull
+	AquaAppearance getVariant(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         boolean useVibrant = AquaVibrantSupport.isVibrant(c) && !(c instanceof JRootPane);
         if (useVibrant) {
             appearance = AquaAppearances.getVibrantAppearance(appearance);

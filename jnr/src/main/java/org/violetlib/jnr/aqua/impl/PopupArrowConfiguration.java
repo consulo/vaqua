@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua.impl;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.Configuration;
 import org.violetlib.jnr.aqua.LayoutConfiguration;
@@ -24,14 +25,16 @@ public class PopupArrowConfiguration
 	extends LayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull PopupButtonConfiguration g;
+	private final @Nonnull
+	PopupButtonConfiguration g;
 
-	public PopupArrowConfiguration(@NotNull PopupButtonConfiguration g)
+	public PopupArrowConfiguration(@Nonnull PopupButtonConfiguration g)
 	{
 		this.g = g;
 	}
 
-	public @NotNull PopupButtonConfiguration getPopupButtonConfiguration()
+	public @Nonnull
+	PopupButtonConfiguration getPopupButtonConfiguration()
 	{
 		return g;
 	}

@@ -35,12 +35,12 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.swing.plaf.basic.BasicComboPopup;
-
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("serial") // Superclass is not serializable across versions
 class AquaComboBoxPopup extends BasicComboPopup implements AquaExtendedPopup, ListDataListener {
@@ -202,7 +202,8 @@ class AquaComboBoxPopup extends BasicComboPopup implements AquaExtendedPopup, Li
         return popupSize;
     }
 
-    protected @NotNull PopupDisplayType computePopupDisplayType() {
+    protected @Nonnull
+	PopupDisplayType computePopupDisplayType() {
         if (comboBox.isEditable()) {
             return comboBox.getItemCount() > comboBox.getMaximumRowCount()
               ? PopupDisplayType.EDITABLE_SCROLL : PopupDisplayType.EDITABLE_NO_SCROLL;
@@ -495,7 +496,7 @@ class AquaComboBoxPopup extends BasicComboPopup implements AquaExtendedPopup, Li
             togglePopup();
         }
 
-        protected boolean shouldFocusEditor(@NotNull Component c) {
+        protected boolean shouldFocusEditor(@Nonnull Component c) {
             if (c instanceof JComponent) {
                 JComponent jc = (JComponent) c;
                 if (!jc.isRequestFocusEnabled()) {

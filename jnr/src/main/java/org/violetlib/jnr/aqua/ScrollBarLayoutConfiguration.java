@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.ScrollBarWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -23,35 +24,41 @@ import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
 public class ScrollBarLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @NotNull ScrollBarWidget bw;
-	private final @NotNull Size size;
-	private final @NotNull Orientation o;
+	private final @Nonnull
+	ScrollBarWidget bw;
+	private final @Nonnull
+	Size size;
+	private final @Nonnull
+	Orientation o;
 
-	public ScrollBarLayoutConfiguration(@NotNull ScrollBarWidget bw, @NotNull Size size, @NotNull Orientation o)
+	public ScrollBarLayoutConfiguration(@Nonnull ScrollBarWidget bw, @Nonnull Size size, @Nonnull Orientation o)
 	{
 		this.bw = bw;
 		this.size = size;
 		this.o = o;
 	}
 
-	protected ScrollBarLayoutConfiguration(@NotNull ScrollBarLayoutConfiguration g)
+	protected ScrollBarLayoutConfiguration(@Nonnull ScrollBarLayoutConfiguration g)
 	{
 		this.bw = g.getWidget();
 		this.size = g.getSize();
 		this.o = g.getOrientation();
 	}
 
-	public @NotNull ScrollBarWidget getWidget()
+	public @Nonnull
+	ScrollBarWidget getWidget()
 	{
 		return bw;
 	}
 
-	public @NotNull Size getSize()
+	public @Nonnull
+	Size getSize()
 	{
 		return size;
 	}
 
-	public @NotNull Orientation getOrientation()
+	public @Nonnull
+	Orientation getOrientation()
 	{
 		return o;
 	}
@@ -72,7 +79,8 @@ public class ScrollBarLayoutConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return bw + " " + size + " " + o;
 	}

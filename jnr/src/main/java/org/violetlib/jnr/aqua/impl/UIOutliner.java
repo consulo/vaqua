@@ -11,7 +11,8 @@ package org.violetlib.jnr.aqua.impl;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.*;
 
@@ -21,7 +22,8 @@ import org.violetlib.jnr.aqua.*;
 
 public abstract class UIOutliner
 {
-	public @Nullable Shape getOutline(@NotNull Rectangle2D bounds, @NotNull LayoutConfiguration g)
+	public @Nullable
+	Shape getOutline(@Nonnull Rectangle2D bounds, @Nonnull LayoutConfiguration g)
 		throws UnsupportedOperationException
 	{
 		if (g instanceof ButtonLayoutConfiguration) {
@@ -112,41 +114,58 @@ public abstract class UIOutliner
 		throw new UnsupportedOperationException();
 	}
 
-	protected abstract @Nullable Shape getSliderThumbOutline(@NotNull Rectangle2D bounds, @NotNull SliderThumbLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getSliderThumbOutline(@Nonnull Rectangle2D bounds, @Nonnull SliderThumbLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getButtonOutline(@NotNull Rectangle2D bounds, @NotNull ButtonLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getButtonOutline(@Nonnull Rectangle2D bounds, @Nonnull ButtonLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getSegmentedButtonOutline(@NotNull Rectangle2D bounds, @NotNull SegmentedButtonLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getSegmentedButtonOutline(@Nonnull Rectangle2D bounds, @Nonnull SegmentedButtonLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getComboBoxOutline(@NotNull Rectangle2D bounds, @NotNull ComboBoxLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getComboBoxOutline(@Nonnull Rectangle2D bounds, @Nonnull ComboBoxLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getPopUpButtonOutline(@NotNull Rectangle2D bounds, @NotNull PopupButtonLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getPopUpButtonOutline(@Nonnull Rectangle2D bounds, @Nonnull PopupButtonLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getToolBarItemWellOutline(@NotNull Rectangle2D bounds, @NotNull ToolBarItemWellLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getToolBarItemWellOutline(@Nonnull Rectangle2D bounds, @Nonnull ToolBarItemWellLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getTitleBarOutline(@NotNull Rectangle2D bounds, @NotNull TitleBarLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getTitleBarOutline(@Nonnull Rectangle2D bounds, @Nonnull TitleBarLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getSliderOutline(@NotNull Rectangle2D bounds, @NotNull SliderLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getSliderOutline(@Nonnull Rectangle2D bounds, @Nonnull SliderLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getSpinnerArrowsOutline(@NotNull Rectangle2D bounds, @NotNull SpinnerArrowsLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getSpinnerArrowsOutline(@Nonnull Rectangle2D bounds, @Nonnull SpinnerArrowsLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getSplitPaneDividerOutline(@NotNull Rectangle2D bounds, @NotNull SplitPaneDividerLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getSplitPaneDividerOutline(@Nonnull Rectangle2D bounds, @Nonnull SplitPaneDividerLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getGroupBoxOutline(@NotNull Rectangle2D bounds, @NotNull GroupBoxLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getGroupBoxOutline(@Nonnull Rectangle2D bounds, @Nonnull GroupBoxLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getListBoxOutline(@NotNull Rectangle2D bounds, @NotNull ListBoxLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getListBoxOutline(@Nonnull Rectangle2D bounds, @Nonnull ListBoxLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getTextFieldOutline(@NotNull Rectangle2D bounds, @NotNull TextFieldLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getTextFieldOutline(@Nonnull Rectangle2D bounds, @Nonnull TextFieldLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getScrollBarOutline(@NotNull Rectangle2D bounds, @NotNull ScrollBarLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getScrollBarOutline(@Nonnull Rectangle2D bounds, @Nonnull ScrollBarLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getScrollColumnSizerOutline(@NotNull Rectangle2D bounds, @NotNull ScrollColumnSizerLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getScrollColumnSizerOutline(@Nonnull Rectangle2D bounds, @Nonnull ScrollColumnSizerLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getProgressIndicatorOutline(@NotNull Rectangle2D bounds, @NotNull ProgressIndicatorLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getProgressIndicatorOutline(@Nonnull Rectangle2D bounds, @Nonnull ProgressIndicatorLayoutConfiguration g);
 
-	protected abstract @Nullable Shape getTableColumnHeaderOutline(@NotNull Rectangle2D bounds, @NotNull TableColumnHeaderLayoutConfiguration g);
+	protected abstract @Nullable
+	Shape getTableColumnHeaderOutline(@Nonnull Rectangle2D bounds, @Nonnull TableColumnHeaderLayoutConfiguration g);
 
-	public static int size(@NotNull AquaUIPainter.Size sz, int regular, int small, int mini)
+	public static int size(@Nonnull AquaUIPainter.Size sz, int regular, int small, int mini)
 	{
 		switch (sz) {
 			case SMALL:
@@ -158,7 +177,7 @@ public abstract class UIOutliner
 		}
 	}
 
-	public static float size2D(@NotNull AquaUIPainter.Size sz, float regular, float small, float mini)
+	public static float size2D(@Nonnull AquaUIPainter.Size sz, float regular, float small, float mini)
 	{
 		switch (sz) {
 			case SMALL:

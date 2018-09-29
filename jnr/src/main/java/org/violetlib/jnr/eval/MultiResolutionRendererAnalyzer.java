@@ -8,7 +8,8 @@
 
 package org.violetlib.jnr.eval;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.impl.BasicRendererDescription;
 import org.violetlib.jnr.impl.MultiResolutionRendererDescription;
@@ -21,31 +22,36 @@ import org.violetlib.jnr.impl.RendererDescription;
 
 public class MultiResolutionRendererAnalyzer
 {
-	private final @Nullable RendererAnalysisResults results1;
-	private final @Nullable RendererAnalysisResults results2;
+	private final @Nullable
+	RendererAnalysisResults results1;
+	private final @Nullable
+	RendererAnalysisResults results2;
 	private float fixedWidth;
 	private float fixedHeight;
-	private @Nullable RendererDescription rd;
+	private @Nullable
+	RendererDescription rd;
 
-	public MultiResolutionRendererAnalyzer(@NotNull Renderer r, boolean forceVertical)
+	public MultiResolutionRendererAnalyzer(@Nonnull Renderer r, boolean forceVertical)
 	{
 		this(r, forceVertical ? BasicRendererAnalyzer.DEFAULT_HEIGHT : BasicRendererAnalyzer.DEFAULT_WIDTH,
 			forceVertical ? BasicRendererAnalyzer.DEFAULT_WIDTH : BasicRendererAnalyzer.DEFAULT_HEIGHT);
 	}
 
-	public MultiResolutionRendererAnalyzer(@NotNull Renderer r, int testWidth, int testHeight)
+	public MultiResolutionRendererAnalyzer(@Nonnull Renderer r, int testWidth, int testHeight)
 	{
 		results1 = new BasicRendererAnalyzer(r, 1, testWidth, testHeight).getResults();
 		results2 = new BasicRendererAnalyzer(r, 2, testWidth, testHeight).getResults();
 		combineResults(results1, results2);
 	}
 
-	public @Nullable RendererAnalysisResults getResults1()
+	public @Nullable
+	RendererAnalysisResults getResults1()
 	{
 		return results1;
 	}
 
-	public @Nullable RendererAnalysisResults getResults2()
+	public @Nullable
+	RendererAnalysisResults getResults2()
 	{
 		return results2;
 	}
@@ -60,7 +66,8 @@ public class MultiResolutionRendererAnalyzer
 		return fixedHeight;
 	}
 
-	public @Nullable RendererDescription getRendererDescription()
+	public @Nullable
+	RendererDescription getRendererDescription()
 	{
 		return rd;
 	}
@@ -91,7 +98,8 @@ public class MultiResolutionRendererAnalyzer
 		}
 	}
 
-	protected @NotNull BasicRendererDescription createRendererDescription(@NotNull RendererAnalysisResults r)
+	protected @Nonnull
+	BasicRendererDescription createRendererDescription(@Nonnull RendererAnalysisResults r)
 	{
 		int wa = (int) Math.ceil(r.getWidthAdjustment());
 		int ha = (int) Math.ceil(r.getHeightAdjustment());

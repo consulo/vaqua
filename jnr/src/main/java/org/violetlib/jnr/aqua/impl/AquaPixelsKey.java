@@ -8,11 +8,12 @@
 
 package org.violetlib.jnr.aqua.impl;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.violetlib.jnr.aqua.Configuration;
 import org.violetlib.jnr.impl.ImageCache;
 import org.violetlib.vappearances.VAppearance;
-
-import org.jetbrains.annotations.*;
 
 /**
 	The key used by the AquaNativePainter to cache images.
@@ -27,10 +28,12 @@ public class AquaPixelsKey
 	private final int scaleFactor;
 	private final int w;
 	private final int h;
-	private final @NotNull Configuration g;
-	private final @NotNull VAppearance appearance;
+	private final @Nonnull
+	Configuration g;
+	private final @Nonnull
+	VAppearance appearance;
 
-	public AquaPixelsKey(int scaleFactor, int w, int h, @NotNull Configuration g, @NotNull VAppearance appearance)
+	public AquaPixelsKey(int scaleFactor, int w, int h, @Nonnull Configuration g, @Nonnull VAppearance appearance)
 	{
 		this.pixelCount = w * h;
 		this.scaleFactor = scaleFactor;

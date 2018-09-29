@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	An interface for a native renderer that renders directly into a raster.
@@ -32,5 +32,5 @@ public interface BasicRenderer
 		@param h The height of the rendered image in device independent pixels (sometimes called points).
 	*/
 
-	void render(@NotNull int[] data, int rw, int rh, float w, float h);
+	void render(@Nonnull int[] data, int rw, int rh, float w, float h);
 }

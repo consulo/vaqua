@@ -8,9 +8,8 @@
 
 package org.violetlib.aqua;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
 
@@ -18,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface AquaComponentUI {
 
-    void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance);
+    void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance);
 
-    void activeStateChanged(@NotNull JComponent c, boolean isActive);
+    void activeStateChanged(@Nonnull JComponent c, boolean isActive);
 }

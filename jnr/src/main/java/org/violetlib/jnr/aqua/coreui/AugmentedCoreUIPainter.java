@@ -34,10 +34,11 @@ import org.violetlib.jnr.impl.PainterExtension;
 import org.violetlib.jnr.impl.Renderer;
 import org.violetlib.jnr.impl.ReusableCompositor;
 
-import org.jetbrains.annotations.*;
-
 import static org.violetlib.jnr.aqua.AquaUIPainter.PopupButtonWidget.*;
 import static org.violetlib.jnr.aqua.AquaUIPainter.SegmentedButtonWidget.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 	This class augments the Core UI native painting code to work around its deficiencies.
@@ -68,13 +69,15 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	public @NotNull AugmentedCoreUIPainter copy()
+	public @Nonnull
+	AugmentedCoreUIPainter copy()
 	{
 		return new AugmentedCoreUIPainter(useJRS);
 	}
 
 	@Override
-	protected @NotNull Renderer getGroupBoxRenderer(@NotNull GroupBoxConfiguration g)
+	protected @Nonnull
+	Renderer getGroupBoxRenderer(@Nonnull GroupBoxConfiguration g)
 	{
 		if (appearance != null && appearance.isDark()) {
 			// workaround for CoreUI painting light mode group box even in dark mode
@@ -91,7 +94,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getButtonRenderer(@NotNull ButtonConfiguration g)
+	protected @Nonnull
+	Renderer getButtonRenderer(@Nonnull ButtonConfiguration g)
 	{
 		Renderer r = super.getButtonRenderer(g);
 		if (g.getButtonWidget() == ButtonWidget.BUTTON_COLOR_WELL) {
@@ -102,7 +106,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getComboBoxButtonRenderer(@NotNull ComboBoxConfiguration g)
+	protected @Nonnull
+	Renderer getComboBoxButtonRenderer(@Nonnull ComboBoxConfiguration g)
 	{
 		Renderer r = super.getComboBoxButtonRenderer(g);
 
@@ -121,7 +126,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	public @Nullable Renderer getBasicPopupButtonRenderer(@NotNull PopupButtonConfiguration g)
+	public @Nullable
+	Renderer getBasicPopupButtonRenderer(@Nonnull PopupButtonConfiguration g)
 	{
 		Renderer r = super.getBasicPopupButtonRenderer(g);
 
@@ -140,7 +146,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g)
+	protected @Nonnull
+	Renderer getSegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g)
 	{
 		Renderer r = super.getSegmentedButtonRenderer(g);
 
@@ -177,7 +184,7 @@ public class AugmentedCoreUIPainter
 		might not. The issue is that the display scale factor is not known at this time.
 	*/
 
-	protected boolean isCustomSegmentedButtonRendererNeeded(@NotNull SegmentedButtonConfiguration g)
+	protected boolean isCustomSegmentedButtonRendererNeeded(@Nonnull SegmentedButtonConfiguration g)
 	{
 		if (g.getPosition() == Position.ONLY) {
 			return false;
@@ -227,8 +234,9 @@ public class AugmentedCoreUIPainter
 		@return a description of the needed adjustments, or null if none.
 	*/
 
-	protected @Nullable SegmentedButtonAdjustment getSegmentedButtonAdjustment(
-		@NotNull SegmentedButtonConfiguration g, int scaleFactor)
+	protected @Nullable
+	SegmentedButtonAdjustment getSegmentedButtonAdjustment(
+			@Nonnull SegmentedButtonConfiguration g, int scaleFactor)
 	{
 		// The CoreUI rendering of segmented button cells assumes a style of use that is different than Java.
 		// Here we identify the actual rendering of dividers and compare with the desired rendering.
@@ -266,8 +274,9 @@ public class AugmentedCoreUIPainter
 			rightDividerActual, rightDividerRequested);
 	}
 
-	private @NotNull SegmentedButtonAdjustment getSegmentedDividerAvailable(
-		@NotNull SegmentedButtonConfiguration g, int scaleFactor)
+	private @Nonnull
+	SegmentedButtonAdjustment getSegmentedDividerAvailable(
+			@Nonnull SegmentedButtonConfiguration g, int scaleFactor)
 	{
 		// Supported only for configurations that might need adjustment, used internally.
 
@@ -312,8 +321,9 @@ public class AugmentedCoreUIPainter
 		return new SegmentedButtonAdjustment(leftDividerActual, 0, rightDividerActual, 0);
 	}
 
-	protected @NotNull Renderer createCustomSegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g,
-																																	@NotNull Renderer r)
+	protected @Nonnull
+	Renderer createCustomSegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g,
+												 @Nonnull Renderer r)
 	{
 		return new MySegmentedButtonRenderer(g, r);
 	}
@@ -321,17 +331,19 @@ public class AugmentedCoreUIPainter
 	protected class MySegmentedButtonRenderer
 		extends Renderer
 	{
-		private final @NotNull SegmentedButtonConfiguration g;
-		private final @NotNull Renderer r;
+		private final @Nonnull
+		SegmentedButtonConfiguration g;
+		private final @Nonnull
+		Renderer r;
 
-		public MySegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g, @NotNull Renderer r)
+		public MySegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g, @Nonnull Renderer r)
 		{
 			this.g = g;
 			this.r = r;
 		}
 
 		@Override
-		public void composeTo(@NotNull ReusableCompositor compositor)
+		public void composeTo(@Nonnull ReusableCompositor compositor)
 		{
 			int scaleFactor = compositor.getScaleFactor();
 			SegmentedButtonAdjustment adjustment = getSegmentedButtonAdjustment(g, scaleFactor);
@@ -423,10 +435,12 @@ public class AugmentedCoreUIPainter
 
 	protected static class SegmentedRendering
 	{
-		public final @NotNull ReusableCompositor rendering;
-		public final @NotNull SegmentedButtonAdjustment dividers;
+		public final @Nonnull
+		ReusableCompositor rendering;
+		public final @Nonnull
+		SegmentedButtonAdjustment dividers;
 
-		public SegmentedRendering(@NotNull ReusableCompositor rendering, @NotNull SegmentedButtonAdjustment dividers)
+		public SegmentedRendering(@Nonnull ReusableCompositor rendering, @Nonnull SegmentedButtonAdjustment dividers)
 		{
 			this.rendering = rendering;
 			this.dividers = dividers;
@@ -438,9 +452,10 @@ public class AugmentedCoreUIPainter
 		Flipping handles the 1x separated case, where the rendering is not symmetric.
 	*/
 
-	protected @NotNull SegmentedRendering createFlippedRendering(@NotNull SegmentedButtonConfiguration sg,
-																															 int height,
-																															 int scaleFactor)
+	protected @Nonnull
+	SegmentedRendering createFlippedRendering(@Nonnull SegmentedButtonConfiguration sg,
+											  int height,
+											  int scaleFactor)
 	{
 		SegmentedButtonConfiguration g = new SegmentedButtonConfiguration(sg.getWidget(),
 			sg.getSize(),
@@ -464,7 +479,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSplitPaneDividerRenderer(@NotNull SplitPaneDividerConfiguration g)
+	protected @Nonnull
+	Renderer getSplitPaneDividerRenderer(@Nonnull SplitPaneDividerConfiguration g)
 	{
 		if (g.getWidget() == DividerWidget.THIN_DIVIDER) {
 			PainterExtension px = new ThinSplitPaneDividerPainterExtension(g, appearance);
@@ -475,7 +491,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	public @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g)
+	public @Nonnull
+	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g)
 	{
 		// Do not use the native renderer. Use our simulation instead.
 
@@ -484,7 +501,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSliderRenderer(@NotNull SliderConfiguration g)
+	protected @Nonnull
+	Renderer getSliderRenderer(@Nonnull SliderConfiguration g)
 	{
 		Renderer r = super.getSliderRenderer(g);
 		if (g.getWidget() == SliderWidget.SLIDER_CIRCULAR) {
@@ -495,7 +513,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @Nullable Renderer getSliderTickMarkRenderer(@NotNull SliderConfiguration g)
+	protected @Nullable
+	Renderer getSliderTickMarkRenderer(@Nonnull SliderConfiguration g)
 	{
 		if (g.getWidget() != SliderWidget.SLIDER_CIRCULAR && g.hasTickMarks()) {
 			return Renderer.create(new LinearSliderPainterExtension(uiLayout, g, appearance));
@@ -505,7 +524,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getScrollBarRenderer(@NotNull ScrollBarConfiguration g)
+	protected @Nonnull
+	Renderer getScrollBarRenderer(@Nonnull ScrollBarConfiguration g)
 	{
 		int platformVersion = JNRPlatformUtils.getPlatformVersion();
 		ScrollBarWidget sw = g.getWidget();
@@ -522,7 +542,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	public @Nullable Renderer getPopupArrowRenderer(@NotNull PopupButtonConfiguration g)
+	public @Nullable
+	Renderer getPopupArrowRenderer(@Nonnull PopupButtonConfiguration g)
 	{
 		Renderer r = super.getPopupArrowRenderer(g);
 		if (isArrowNeeded(g)) {
@@ -535,7 +556,7 @@ public class AugmentedCoreUIPainter
 		return r;
 	}
 
-	private boolean isArrowNeeded(@NotNull PopupButtonConfiguration g)
+	private boolean isArrowNeeded(@Nonnull PopupButtonConfiguration g)
 	{
 		PopupButtonWidget w = g.getPopupButtonWidget();
 		// Correct arrow color for recessed style
@@ -543,7 +564,8 @@ public class AugmentedCoreUIPainter
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return "Augmented " + super.toString();
 	}

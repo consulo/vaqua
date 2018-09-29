@@ -35,14 +35,15 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTextAreaUI;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 public class AquaTextAreaUI extends BasicTextAreaUI implements FocusRingOutlineProvider, AquaComponentUI {
@@ -54,8 +55,10 @@ public class AquaTextAreaUI extends BasicTextAreaUI implements FocusRingOutlineP
     private AquaFocusHandler handler;
     protected PropertyChangeListener propertyChangeListener;
     private boolean oldDragState = false;
-    protected @NotNull BasicContextualColors colors;
-    protected @Nullable AppearanceContext appearanceContext;
+    protected @Nonnull
+	BasicContextualColors colors;
+    protected @Nullable
+	AppearanceContext appearanceContext;
 
     public AquaTextAreaUI() {
         colors = AquaColors.TEXT_COLORS;
@@ -126,12 +129,12 @@ public class AquaTextAreaUI extends BasicTextAreaUI implements FocusRingOutlineP
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 

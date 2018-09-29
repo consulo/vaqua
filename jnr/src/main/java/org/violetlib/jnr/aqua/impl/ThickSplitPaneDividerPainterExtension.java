@@ -14,7 +14,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 import org.violetlib.jnr.aqua.SplitPaneDividerConfiguration;
 import org.violetlib.jnr.impl.PainterExtension;
@@ -26,18 +26,19 @@ import org.violetlib.jnr.impl.PainterExtension;
 public class ThickSplitPaneDividerPainterExtension
 	implements PainterExtension
 {
-	protected final @NotNull SplitPaneDividerConfiguration g;
+	protected final @Nonnull
+	SplitPaneDividerConfiguration g;
 
 	protected Color DIMPLE_COLOR = new Color(30, 30, 30, 40);
 	protected Color DIMPLE_BORDER = new Color(0, 0, 0, 40);
 
-	public ThickSplitPaneDividerPainterExtension(@NotNull SplitPaneDividerConfiguration g)
+	public ThickSplitPaneDividerPainterExtension(@Nonnull SplitPaneDividerConfiguration g)
 	{
 		this.g = g;
 	}
 
 	@Override
-	public void paint(@NotNull Graphics2D g, float width, float height)
+	public void paint(@Nonnull Graphics2D g, float width, float height)
 	{
 		// TBD: shadow
 

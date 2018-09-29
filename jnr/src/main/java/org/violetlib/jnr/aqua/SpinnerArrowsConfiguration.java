@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
@@ -23,12 +24,13 @@ public class SpinnerArrowsConfiguration
 	extends SpinnerArrowsLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State state;
+	private final @Nonnull
+	State state;
 	private final boolean isFocused;
 	private final boolean isPressedTop;
 
-	public SpinnerArrowsConfiguration(@NotNull Size size,
-																		@NotNull State state,
+	public SpinnerArrowsConfiguration(@Nonnull Size size,
+																		@Nonnull State state,
 																		boolean isFocused,
 																		boolean isPressedTop)
 	{
@@ -38,7 +40,8 @@ public class SpinnerArrowsConfiguration
 		this.isPressedTop = isPressedTop;
 	}
 
-	public @NotNull State getState()
+	public @Nonnull
+	State getState()
 	{
 		return state;
 	}
@@ -70,7 +73,8 @@ public class SpinnerArrowsConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String fs = isFocused ? " focused" : "";
 		String ts = state == State.PRESSED ? (isPressedTop ? "-Top" : "-Bottom") : "";

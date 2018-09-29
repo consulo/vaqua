@@ -10,9 +10,10 @@ package org.violetlib.jnr.impl;
 
 import java.text.DecimalFormat;
 
-import org.violetlib.jnr.aqua.AquaUIPainter;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import org.jetbrains.annotations.*;
+import org.violetlib.jnr.aqua.AquaUIPainter;
 
 /**
 	Utilities
@@ -20,13 +21,14 @@ import org.jetbrains.annotations.*;
 
 public class JNRUtils
 {
-	static final @NotNull DecimalFormat df2 = new DecimalFormat("0.00");
+	static final @Nonnull
+	DecimalFormat df2 = new DecimalFormat("0.00");
 
 	static {
 		df2.setDecimalSeparatorAlwaysShown(true);
 	}
 
-	public static int size(@NotNull AquaUIPainter.Size sz, int regular, int small, int mini)
+	public static int size(@Nonnull AquaUIPainter.Size sz, int regular, int small, int mini)
 	{
 		switch (sz) {
 			case SMALL:
@@ -38,7 +40,7 @@ public class JNRUtils
 		}
 	}
 
-	public static float size2D(@NotNull AquaUIPainter.Size sz, float regular, float small, float mini)
+	public static float size2D(@Nonnull AquaUIPainter.Size sz, float regular, float small, float mini)
 	{
 		switch (sz) {
 			case SMALL:
@@ -50,12 +52,14 @@ public class JNRUtils
 		}
 	}
 
-	public static @NotNull String format2(double v)
+	public static @Nonnull
+	String format2(double v)
 	{
 		return df2.format(v);
 	}
 
-	public static @Nullable BasicRendererDescription toBasicRendererDescription(@NotNull RendererDescription rd)
+	public static @Nullable
+	BasicRendererDescription toBasicRendererDescription(@Nonnull RendererDescription rd)
 	{
 		if (rd instanceof BasicRendererDescription) {
 			return (BasicRendererDescription) rd;
@@ -70,7 +74,8 @@ public class JNRUtils
 		@return the basic renderer description corresponding to {@code rd}, or null if not determinable.
 	*/
 
-	public static @Nullable BasicRendererDescription toBasicRendererDescription(@NotNull RendererDescription rd, int scaleFactor)
+	public static @Nullable
+	BasicRendererDescription toBasicRendererDescription(@Nonnull RendererDescription rd, int scaleFactor)
 	{
 		if (rd instanceof BasicRendererDescription) {
 			return (BasicRendererDescription) rd;
@@ -84,8 +89,9 @@ public class JNRUtils
 		return null;
 	}
 
-	public static @NotNull RendererDescription adjustRendererDescription(@NotNull RendererDescription rd,
-																																			 float deltaX, float deltaY, float deltaWA, float deltaHA)
+	public static @Nonnull
+	RendererDescription adjustRendererDescription(@Nonnull RendererDescription rd,
+												  float deltaX, float deltaY, float deltaWA, float deltaHA)
 		throws UnsupportedOperationException
 	{
 		if (deltaX == 0 && deltaY == 0 && deltaWA == 0 && deltaHA == 0) {
@@ -113,8 +119,9 @@ public class JNRUtils
 
 	public static final float NO_CHANGE = -123456;
 
-	public static @NotNull RendererDescription changeRendererDescription(@NotNull RendererDescription rd,
-																																			 float x, float y, float wa, float ha)
+	public static @Nonnull
+	RendererDescription changeRendererDescription(@Nonnull RendererDescription rd,
+												  float x, float y, float wa, float ha)
 		throws UnsupportedOperationException
 	{
 		if (x == NO_CHANGE && y == NO_CHANGE && wa == NO_CHANGE && ha == NO_CHANGE) {
@@ -140,8 +147,9 @@ public class JNRUtils
 		throw new UnsupportedOperationException("Renderer description cannot be changed");
 	}
 
-	private static @NotNull BasicRendererDescription change(@NotNull BasicRendererDescription brd,
-																													float x, float y, float wa, float ha)
+	private static @Nonnull
+	BasicRendererDescription change(@Nonnull BasicRendererDescription brd,
+									float x, float y, float wa, float ha)
 	{
 		float nx = x == NO_CHANGE ? brd.getXOffset() : x;
 		float ny = y == NO_CHANGE ? brd.getYOffset() : y;
@@ -175,7 +183,7 @@ public class JNRUtils
 		return result;
 	}
 
-	public static boolean describeRenderer(@NotNull BasicRenderer r, int w, int h, int scaleFactor)
+	public static boolean describeRenderer(@Nonnull BasicRenderer r, int w, int h, int scaleFactor)
 	{
 		int rw = (int) Math.ceil(scaleFactor * w);
 		int rh = (int) Math.ceil(scaleFactor * h);
@@ -184,7 +192,7 @@ public class JNRUtils
 		return describeRaster(buffer, rw, rh);
 	}
 
-	public static void showRenderer(@NotNull BasicRenderer r, int w, int h, int scaleFactor)
+	public static void showRenderer(@Nonnull BasicRenderer r, int w, int h, int scaleFactor)
 	{
 		int rw = (int) Math.ceil(scaleFactor * w);
 		int rh = (int) Math.ceil(scaleFactor * h);
@@ -201,7 +209,7 @@ public class JNRUtils
 		@return true if the raster is not empty.
 	*/
 
-	public static boolean describeRaster(@NotNull int[] buffer, int rw, int rh)
+	public static boolean describeRaster(@Nonnull int[] buffer, int rw, int rh)
 	{
 		int transparentPixelCount = 0;
 		int opaquePixelCount = 0;
@@ -290,7 +298,7 @@ public class JNRUtils
 		@param rh The number of raster lines.
 	*/
 
-	public static void showRaster(@NotNull int[] buffer, int rw, int rh)
+	public static void showRaster(@Nonnull int[] buffer, int rw, int rh)
 	{
 		for (int row = 0; row < rh; row++) {
 			for (int col = 0; col < rw; col++) {

@@ -46,6 +46,8 @@ import java.awt.geom.AffineTransform;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.JComponent;
 import javax.swing.JProgressBar;
 import javax.swing.LookAndFeel;
@@ -59,8 +61,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.ProgressBarUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.violetlib.aqua.AquaUtilControlSize.Sizeable;
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.aqua.AquaUIPainter;
@@ -89,7 +89,8 @@ public class AquaProgressBarUI
 
     protected JProgressBar progressBar;
     protected Size sizeVariant = Size.REGULAR;
-    protected @NotNull BasicContextualColors colors;
+    protected @Nonnull
+	BasicContextualColors colors;
     protected boolean isCircular;
 
     private Animator animator;
@@ -145,12 +146,12 @@ public class AquaProgressBarUI
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 
@@ -217,7 +218,8 @@ public class AquaProgressBarUI
         progressBar.repaint();
     }
 
-    protected @NotNull AquaUIPainter.State getState() {
+    protected @Nonnull
+	AquaUIPainter.State getState() {
         if (!progressBar.isEnabled()) {
             return State.INACTIVE;
         }
@@ -263,7 +265,8 @@ public class AquaProgressBarUI
         }
     }
 
-    protected @NotNull Configuration getConfiguration() {
+    protected @Nonnull
+	Configuration getConfiguration() {
         State state = getState();
         Orientation orientation = isHorizontal() ? Orientation.HORIZONTAL : Orientation.VERTICAL;
         if (progressBar.isIndeterminate()) {
@@ -285,7 +288,7 @@ public class AquaProgressBarUI
         return Double.isNaN(value) ? 0 : value;
     }
 
-    protected void paintString(@NotNull Graphics2D g, int x, int y, int width, int height) {
+    protected void paintString(@Nonnull Graphics2D g, int x, int y, int width, int height) {
 
         String progressString = progressBar.getString();
         g.setFont(progressBar.getFont());
@@ -316,7 +319,8 @@ public class AquaProgressBarUI
      * progress bar (in both x and y). Override this if you want to right, left, top, or bottom align the progress
      * string or if you need to nudge it around for any reason.
      */
-    protected @NotNull Point getStringPlacement(Graphics g, String progressString, int x, int y, int width, int height) {
+    protected @Nonnull
+	Point getStringPlacement(Graphics g, String progressString, int x, int y, int width, int height) {
         FontMetrics fontSizer = progressBar.getFontMetrics(progressBar.getFont());
         int stringWidth = fontSizer.stringWidth(progressString);
 
@@ -335,7 +339,8 @@ public class AquaProgressBarUI
         return new Point(x + Math.round(width / 2 - stringWidth / 2), y + ((height + fontSizer.getAscent() - fontSizer.getLeading() - fontSizer.getDescent()) / 2) - 1);
     }
 
-    protected @NotNull Dimension getCircularPreferredSize() {
+    protected @Nonnull
+	Dimension getCircularPreferredSize() {
         LayoutConfiguration g = getLayoutConfiguration();
         LayoutInfo layoutInfo = painter.getLayoutInfo().getLayoutInfo(g);
         int width = (int) layoutInfo.getFixedVisualWidth();
@@ -350,7 +355,8 @@ public class AquaProgressBarUI
     }
 
     @Override
-    public @NotNull Dimension getPreferredSize(JComponent c) {
+    public @Nonnull
+	Dimension getPreferredSize(JComponent c) {
         if (isCircular) {
             return getCircularPreferredSize();
         }
@@ -367,7 +373,8 @@ public class AquaProgressBarUI
         return size;
     }
 
-    protected @NotNull Dimension getPreferredHorizontalSize(LayoutInfo layoutInfo, FontMetrics metrics) {
+    protected @Nonnull
+	Dimension getPreferredHorizontalSize(LayoutInfo layoutInfo, FontMetrics metrics) {
         int width = sizeVariant == Size.REGULAR ? 146 : 140;
         int height = sizeVariant == Size.REGULAR ? 20 : 14;
         height = (int) Math.max(height, layoutInfo.getMinimumVisualHeight());
@@ -393,7 +400,8 @@ public class AquaProgressBarUI
         return size;
     }
 
-    protected @NotNull Dimension getPreferredVerticalSize(LayoutInfo layoutInfo, FontMetrics metrics) {
+    protected @Nonnull
+	Dimension getPreferredVerticalSize(LayoutInfo layoutInfo, FontMetrics metrics) {
         int width = sizeVariant == Size.REGULAR ? 20 : 14;
         int height = sizeVariant == Size.REGULAR ? 146 : 140;
         width = (int) Math.max(width, layoutInfo.getMinimumVisualWidth());
@@ -416,7 +424,8 @@ public class AquaProgressBarUI
     }
 
     @Override
-    public @NotNull Dimension getMinimumSize(JComponent c) {
+    public @Nonnull
+	Dimension getMinimumSize(JComponent c) {
         if (isCircular) {
             return getCircularPreferredSize();
         }
@@ -435,7 +444,8 @@ public class AquaProgressBarUI
     }
 
     @Override
-    public @NotNull Dimension getMaximumSize(JComponent c) {
+    public @Nonnull
+	Dimension getMaximumSize(JComponent c) {
         if (isCircular) {
             return getCircularPreferredSize();
         }

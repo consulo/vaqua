@@ -15,6 +15,8 @@ package org.violetlib.aqua.fc;
 
 import java.io.File;
 import java.util.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -23,7 +25,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.AquaUtils;
 import org.violetlib.aqua.fc.OSXFile.SystemItemInfo;
 
@@ -150,7 +151,7 @@ public class SidebarTreeModel extends DefaultTreeModel implements TreeModelListe
         replaceNodes(devicesNode, devices, someNodesUpdatedState[0]);
     }
 
-    private SidebarTreeNode createOrFindDeviceNode(@NotNull SystemItemInfo info, boolean[] updatedState) {
+    private SidebarTreeNode createOrFindDeviceNode(@Nonnull SystemItemInfo info, boolean[] updatedState) {
         File f = new File(info.getPath());
         int count = devicesNode.getChildCount();
         for (int index = 0; index < count; index++) {
@@ -247,7 +248,8 @@ public class SidebarTreeModel extends DefaultTreeModel implements TreeModelListe
         return result;
     }
 
-    private @NotNull SidebarTreeNode createNode(@NotNull SystemItemInfo info) {
+    private @Nonnull
+	SidebarTreeNode createNode(@Nonnull SystemItemInfo info) {
         String path = info.getPath();
         File f = new File(path);
         Icon icon = info.getIcon();
@@ -297,7 +299,7 @@ public class SidebarTreeModel extends DefaultTreeModel implements TreeModelListe
     }
 
     private class SidebarTreeNodeComparator implements Comparator<SidebarTreeNode> {
-        public int compare(@NotNull SidebarTreeNode n1, @NotNull SidebarTreeNode n2) {
+        public int compare(@Nonnull SidebarTreeNode n1, @Nonnull SidebarTreeNode n2) {
             return n1.getSequenceNumber() - n2.getSequenceNumber();
         }
     }

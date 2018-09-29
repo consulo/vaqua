@@ -13,10 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.vappearances.VAppearance;
 import org.violetlib.vappearances.VAppearances;
 
@@ -25,9 +26,12 @@ import org.violetlib.vappearances.VAppearances;
  */
 
 public class AquaAppearances {
-    private static final @NotNull Map<String,AquaAppearance> appearances = new HashMap<>();
-    private static final @NotNull String defaultAppearanceName = "NSAppearanceNameAqua";
-    private static final @NotNull List<ChangeListener> changeListeners = new ArrayList<>();
+    private static final @Nonnull
+	Map<String,AquaAppearance> appearances = new HashMap<>();
+    private static final @Nonnull
+	String defaultAppearanceName = "NSAppearanceNameAqua";
+    private static final @Nonnull
+	List<ChangeListener> changeListeners = new ArrayList<>();
 
     static {
          VAppearances.addChangeListener(AquaAppearances::appearanceChanged);
@@ -39,7 +43,8 @@ public class AquaAppearances {
      * @return the appearance.
      * @throws UnsupportedOperationException if this appearance and the default appearance are not available.
      */
-    public static @NotNull AquaAppearance get(@NotNull String appearanceName) {
+    public static @Nonnull
+	AquaAppearance get(@Nonnull String appearanceName) {
         AquaAppearance appearance = appearances.get(appearanceName);
         if (appearance == null) {
             try {
@@ -60,7 +65,8 @@ public class AquaAppearances {
      * @throws UnsupportedOperationException if the default appearance is not available.
      */
 
-    public static @NotNull AquaAppearance getDefaultAppearance() {
+    public static @Nonnull
+	AquaAppearance getDefaultAppearance() {
         AquaAppearance appearance = appearances.get(defaultAppearanceName);
         if (appearance == null) {
             try {
@@ -82,7 +88,8 @@ public class AquaAppearances {
      * @return the vibrant appearance corresponding to {@code a}.
      */
 
-    public static @NotNull AquaAppearance getVibrantAppearance(@NotNull AquaAppearance a) {
+    public static @Nonnull
+	AquaAppearance getVibrantAppearance(@Nonnull AquaAppearance a) {
         String name = a.getName();
         if (name.contains("Vibrant")) {
             return a;
@@ -98,15 +105,15 @@ public class AquaAppearances {
      * existing system appearance may have changed.
      */
 
-    public static void addChangeListener(@NotNull ChangeListener listener) {
+    public static void addChangeListener(@Nonnull ChangeListener listener) {
         changeListeners.add(listener);
     }
 
-    public static void removeChangeListener(@NotNull ChangeListener listener) {
+    public static void removeChangeListener(@Nonnull ChangeListener listener) {
         changeListeners.remove(listener);
     }
 
-    private static void appearanceChanged(@NotNull ChangeEvent ev) {
+    private static void appearanceChanged(@Nonnull ChangeEvent ev) {
         if (ev instanceof VAppearances.AppearanceChangeEvent) {
             VAppearances.AppearanceChangeEvent ace = (VAppearances.AppearanceChangeEvent) ev;
             VAppearance a = ace.getAppearance();

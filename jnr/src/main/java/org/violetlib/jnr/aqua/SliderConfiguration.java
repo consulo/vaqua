@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
 import org.violetlib.jnr.aqua.AquaUIPainter.SliderWidget;
@@ -26,17 +27,18 @@ public class SliderConfiguration
 	extends SliderLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State state;
+	private final @Nonnull
+	State state;
 	private final boolean isFocused;
 	private final double value;
 
-	public SliderConfiguration(@NotNull SliderWidget sw,
-														 @NotNull Size sz,
-														 @NotNull State state,
+	public SliderConfiguration(@Nonnull SliderWidget sw,
+														 @Nonnull Size sz,
+														 @Nonnull State state,
 														 boolean isFocused,
 														 double value,
 														 int numberOfTickMarks,
-														 @NotNull TickMarkPosition position
+														 @Nonnull TickMarkPosition position
 														 )
 	{
 		super(sw, sz, numberOfTickMarks, position);
@@ -46,7 +48,8 @@ public class SliderConfiguration
 		this.value = value;
 	}
 
-	public @NotNull State getState()
+	public @Nonnull
+	State getState()
 	{
 		return state;
 	}
@@ -78,7 +81,8 @@ public class SliderConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String fs = isFocused ? " focused" : "";
 		return super.toString() + " " + state + fs + " " + JNRUtils.format2(value);

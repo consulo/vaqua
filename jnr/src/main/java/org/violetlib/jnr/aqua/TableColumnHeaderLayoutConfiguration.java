@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.UILayoutDirection;
 
@@ -21,16 +22,18 @@ import org.violetlib.jnr.aqua.AquaUIPainter.UILayoutDirection;
 public class TableColumnHeaderLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @NotNull UILayoutDirection ld;
+	private final @Nonnull
+	UILayoutDirection ld;
 	private final boolean isSortable;
 
-	public TableColumnHeaderLayoutConfiguration(@NotNull UILayoutDirection ld, boolean isSortable)
+	public TableColumnHeaderLayoutConfiguration(@Nonnull UILayoutDirection ld, boolean isSortable)
 	{
 		this.ld = ld;
 		this.isSortable = isSortable;
 	}
 
-	public @NotNull UILayoutDirection getLayoutDirection()
+	public @Nonnull
+	UILayoutDirection getLayoutDirection()
 	{
 		return ld;
 	}
@@ -61,7 +64,8 @@ public class TableColumnHeaderLayoutConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String lds = ld == UILayoutDirection.RIGHT_TO_LEFT ? " RTL" : "";
 		String ss = isSortable ? " - Sortable" : "";

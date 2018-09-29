@@ -8,13 +8,14 @@
 
 package org.violetlib.jnr.aqua.impl;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.violetlib.jnr.aqua.Configuration;
 import org.violetlib.jnr.impl.CachingRendererPainter;
 import org.violetlib.jnr.impl.ImageCache;
 import org.violetlib.jnr.impl.Renderer;
 import org.violetlib.vappearances.VAppearance;
-
-import org.jetbrains.annotations.*;
 
 /**
 	A painter that uses a renderer and caches the rendered image. The cache key is based on the renderer configuration.
@@ -23,8 +24,10 @@ import org.jetbrains.annotations.*;
 public class AquaRenderedPainter
 	extends CachingRendererPainter
 {
-	private final @NotNull Configuration g;
-	private final @NotNull VAppearance appearance;
+	private final @Nonnull
+	Configuration g;
+	private final @Nonnull
+	VAppearance appearance;
 
 	/**
 		Create a widget painter based on a renderer.
@@ -35,9 +38,9 @@ public class AquaRenderedPainter
 		@param height The height of the rendering, in device independent pixels.
 	*/
 
-	public AquaRenderedPainter(@NotNull Configuration g,
-														 @NotNull VAppearance appearance,
-														 @NotNull Renderer r,
+	public AquaRenderedPainter(@Nonnull Configuration g,
+														 @Nonnull VAppearance appearance,
+														 @Nonnull Renderer r,
 														 float width,
 														 float height)
 	{
@@ -48,7 +51,8 @@ public class AquaRenderedPainter
 	}
 
 	@Override
-	protected @Nullable ImageCache.PixelsKey createKey(int scaleFactor, int rasterWidth, int rasterHeight)
+	protected @Nullable
+	ImageCache.PixelsKey createKey(int scaleFactor, int rasterWidth, int rasterHeight)
 	{
 		return new AquaPixelsKey(scaleFactor, rasterWidth, rasterHeight, g, appearance);
 	}

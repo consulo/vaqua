@@ -8,8 +8,6 @@
 
 package org.violetlib.jnr.aqua.impl;
 
-import org.jetbrains.annotations.*;
-
 import org.violetlib.jnr.Insetter;
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.aqua.AquaUIPainter;
@@ -24,6 +22,9 @@ import org.violetlib.jnr.impl.Insetters;
 
 import static org.violetlib.jnr.impl.JNRUtils.*;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
 	Layout information for OS 10.11 widgets.
 */
@@ -32,7 +33,8 @@ public class ElCapitanLayoutInfo
 	extends YosemiteLayoutInfo
 {
 	@Override
-	protected @NotNull LayoutInfo getButtonLayoutInfo(@NotNull ButtonLayoutConfiguration g)
+	protected @Nonnull
+	LayoutInfo getButtonLayoutInfo(@Nonnull ButtonLayoutConfiguration g)
 	{
 		AquaUIPainter.ButtonWidget bw = g.getButtonWidget();
 
@@ -110,7 +112,8 @@ public class ElCapitanLayoutInfo
 	}
 
 	@Override
-	public @Nullable Insetter getButtonLabelInsets(@NotNull ButtonLayoutConfiguration g)
+	public @Nullable
+	Insetter getButtonLabelInsets(@Nonnull ButtonLayoutConfiguration g)
 	{
 		AquaUIPainter.ButtonWidget bw = g.getButtonWidget();
 
@@ -223,7 +226,8 @@ public class ElCapitanLayoutInfo
 	}
 
 	@Override
-	protected @NotNull LayoutInfo getSegmentedButtonLayoutInfo(@NotNull SegmentedButtonLayoutConfiguration g)
+	protected @Nonnull
+	LayoutInfo getSegmentedButtonLayoutInfo(@Nonnull SegmentedButtonLayoutConfiguration g)
 	{
 		AquaUIPainter.SegmentedButtonWidget bw = g.getWidget();
 		AquaUIPainter.Size sz = g.getSize();
@@ -256,7 +260,8 @@ public class ElCapitanLayoutInfo
 	}
 
 	@Override
-	public @NotNull Insetter getSegmentedButtonLabelInsets(@NotNull SegmentedButtonLayoutConfiguration g)
+	public @Nonnull
+	Insetter getSegmentedButtonLabelInsets(@Nonnull SegmentedButtonLayoutConfiguration g)
 	{
 		AquaUIPainter.SegmentedButtonWidget bw = g.getWidget();
 		AquaUIPainter.Position pos = g.getPosition();
@@ -317,7 +322,8 @@ public class ElCapitanLayoutInfo
 	}
 
 	@Override
-	protected @NotNull LayoutInfo getComboBoxLayoutInfo(@NotNull ComboBoxLayoutConfiguration g)
+	protected @Nonnull
+	LayoutInfo getComboBoxLayoutInfo(@Nonnull ComboBoxLayoutConfiguration g)
 	{
 		AquaUIPainter.ComboBoxWidget bw = g.getWidget();
 		AquaUIPainter.Size sz = g.getSize();
@@ -344,7 +350,8 @@ public class ElCapitanLayoutInfo
 	}
 
 	@Override
-	protected @NotNull LayoutInfo getPopUpButtonLayoutInfo(@NotNull PopupButtonLayoutConfiguration g)
+	protected @Nonnull
+	LayoutInfo getPopUpButtonLayoutInfo(@Nonnull PopupButtonLayoutConfiguration g)
 	{
 		// On Yosemite and El Capitan, the square style bombs if the mini size is selected.
 		// See rendering code, which must be consistent.
@@ -414,7 +421,8 @@ public class ElCapitanLayoutInfo
 	}
 
 	@Override
-	protected @NotNull LayoutInfo getTextFieldLayoutInfo(@NotNull TextFieldLayoutConfiguration g)
+	protected @Nonnull
+	LayoutInfo getTextFieldLayoutInfo(@Nonnull TextFieldLayoutConfiguration g)
 	{
 		AquaUIPainter.TextFieldWidget w = g.getWidget();
 		if (w.isRound() || w.isSearch()) {

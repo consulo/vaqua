@@ -10,10 +10,11 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
 import org.violetlib.jnr.aqua.AquaUIPainter.TitleBarWidget;
-
-import org.jetbrains.annotations.*;
 
 /**
 	A configuration for a title bar.
@@ -23,11 +24,16 @@ public class TitleBarConfiguration
 	extends TitleBarLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State titleBarState;
-	private final @NotNull State closeButtonState;
-	private final @NotNull State minimizeButtonState;
-	private final @NotNull State resizeButtonState;
-	private final @NotNull ResizeAction resizeAction;
+	private final @Nonnull
+	State titleBarState;
+	private final @Nonnull
+	State closeButtonState;
+	private final @Nonnull
+	State minimizeButtonState;
+	private final @Nonnull
+	State resizeButtonState;
+	private final @Nonnull
+	ResizeAction resizeAction;
 	private final boolean isDirty;
 
 	/**
@@ -41,12 +47,12 @@ public class TitleBarConfiguration
 		ZOOM_EXIT
 	}
 
-	public TitleBarConfiguration(@NotNull TitleBarWidget tw,
-															 @NotNull State titleBarState,
-															 @NotNull State closeButtonState,
-															 @NotNull State minimizeButtonState,
-															 @NotNull State resizeButtonState,
-															 @NotNull ResizeAction resizeAction,
+	public TitleBarConfiguration(@Nonnull TitleBarWidget tw,
+															 @Nonnull State titleBarState,
+															 @Nonnull State closeButtonState,
+															 @Nonnull State minimizeButtonState,
+															 @Nonnull State resizeButtonState,
+															 @Nonnull ResizeAction resizeAction,
 															 boolean isDirty)
 	{
 		super(tw);
@@ -81,27 +87,32 @@ public class TitleBarConfiguration
 		this.isDirty = isDirty;
 	}
 
-	public @NotNull State getTitleBarState()
+	public @Nonnull
+	State getTitleBarState()
 	{
 		return titleBarState;
 	}
 
-	public @NotNull State getCloseButtonState()
+	public @Nonnull
+	State getCloseButtonState()
 	{
 		return closeButtonState;
 	}
 
-	public @NotNull State getMinimizeButtonState()
+	public @Nonnull
+	State getMinimizeButtonState()
 	{
 		return minimizeButtonState;
 	}
 
-	public @NotNull State getResizeButtonState()
+	public @Nonnull
+	State getResizeButtonState()
 	{
 		return resizeButtonState;
 	}
 
-	public @NotNull ResizeAction getResizeAction()
+	public @Nonnull
+	ResizeAction getResizeAction()
 	{
 		return resizeAction;
 	}
@@ -133,7 +144,8 @@ public class TitleBarConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String ds = isDirty ? " dirty" : "";
 		return super.toString() + " " + titleBarState + ds + " close:" + closeButtonState + " minimize:" + minimizeButtonState

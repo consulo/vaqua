@@ -11,7 +11,7 @@ package org.violetlib.geom;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	An expandable outline in the form of a rounded rectangle.
@@ -37,7 +37,7 @@ public final class ExpandableRoundRectOutline
 		this.arcHeight = arcHeight;
 	}
 
-	public ExpandableRoundRectOutline(@NotNull RoundRectangle2D source)
+	public ExpandableRoundRectOutline(@Nonnull RoundRectangle2D source)
 	{
 		this.x = source.getX();
 		this.y = source.getY();
@@ -48,7 +48,8 @@ public final class ExpandableRoundRectOutline
 	}
 
 	@Override
-	public @NotNull Shape getShape(float offset) {
+	public @Nonnull
+	Shape getShape(float offset) {
 		double nx = x - offset;
 		double ny = y - offset;
 		double nwidth = width + 2 * offset;

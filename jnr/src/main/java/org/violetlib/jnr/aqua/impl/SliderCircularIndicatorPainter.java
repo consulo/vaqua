@@ -13,9 +13,10 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-import org.violetlib.vappearances.VAppearance;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import org.jetbrains.annotations.*;
+import org.violetlib.vappearances.VAppearance;
 
 /**
 	Paint tick marks for a horizontal slider.
@@ -23,9 +24,12 @@ import org.jetbrains.annotations.*;
 
 public class SliderCircularIndicatorPainter
 {
-	protected final @NotNull Color DIMPLE_COLOR = new Color(160, 160, 160);
-	protected final @NotNull Color DIMPLE_TOP = new Color(105, 105, 105);
-	protected final @NotNull Color DARK_DIMPLE_COLOR = new Color(231, 231, 231);
+	protected final @Nonnull
+	Color DIMPLE_COLOR = new Color(160, 160, 160);
+	protected final @Nonnull
+	Color DIMPLE_TOP = new Color(105, 105, 105);
+	protected final @Nonnull
+	Color DARK_DIMPLE_COLOR = new Color(231, 231, 231);
 
 	protected final double x;
 	protected final double y;
@@ -50,7 +54,7 @@ public class SliderCircularIndicatorPainter
 		this.isDark = appearance != null && appearance.isDark();
 	}
 
-	public void paint(@NotNull Graphics2D g)
+	public void paint(@Nonnull Graphics2D g)
 	{
 		double d = 5;
 		double angle = zeroAngle - p * 2 * Math.PI;

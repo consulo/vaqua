@@ -8,7 +8,8 @@
 
 package org.violetlib.aqua;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 /**
@@ -17,8 +18,10 @@ import org.violetlib.jnr.aqua.AquaUIPainter;
 
 public class AppearanceContext {
 
-    private final @NotNull AquaAppearance appearance;
-    private final @NotNull AquaUIPainter.State state;
+    private final @Nonnull
+	AquaAppearance appearance;
+    private final @Nonnull
+	AquaUIPainter.State state;
     private final boolean isSelected;
     private final boolean isIcon;
 
@@ -31,8 +34,8 @@ public class AppearanceContext {
      * @param isIcon If true, use a color appropriate for an icon label, if one is defined.
      */
 
-    public AppearanceContext(@NotNull AquaAppearance appearance,
-                             @NotNull AquaUIPainter.State state,
+    public AppearanceContext(@Nonnull AquaAppearance appearance,
+                             @Nonnull AquaUIPainter.State state,
                              boolean isSelected,
                              boolean isIcon) {
         this.appearance = appearance;
@@ -41,11 +44,13 @@ public class AppearanceContext {
         this.isIcon = isIcon;
     }
 
-    public @NotNull AquaAppearance getAppearance() {
+    public @Nonnull
+	AquaAppearance getAppearance() {
         return appearance;
     }
 
-    public @NotNull AquaUIPainter.State getState() {
+    public @Nonnull
+	AquaUIPainter.State getState() {
         return state;
     }
 
@@ -57,16 +62,19 @@ public class AppearanceContext {
         return isIcon;
     }
 
-    public @NotNull AppearanceContext withSelected(boolean b) {
+    public @Nonnull
+	AppearanceContext withSelected(boolean b) {
         return b == isSelected ? this : new AppearanceContext(appearance, state, b, isIcon);
     }
 
-    public @NotNull AppearanceContext withState(@NotNull AquaUIPainter.State state) {
+    public @Nonnull
+	AppearanceContext withState(@Nonnull AquaUIPainter.State state) {
         return state == this.state ? this : new AppearanceContext(appearance, state, isSelected, isIcon);
     }
 
     @Override
-    public @NotNull String toString() {
+    public @Nonnull
+	String toString() {
         String s = "[" + appearance.getName() + " " + state;
         if (isSelected) {
             s += " Selected";

@@ -37,12 +37,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyVetoException;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.*;
 import javax.swing.plaf.basic.BasicDesktopPaneUI;
-
-import org.jetbrains.annotations.NotNull;
 
 public class AquaInternalFramePaneUI extends BasicDesktopPaneUI implements MouseListener, AquaComponentUI {
 
@@ -82,11 +81,11 @@ public class AquaInternalFramePaneUI extends BasicDesktopPaneUI implements Mouse
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
     }
 
     // Our superclass hardcodes DefaultDesktopManager - how rude!

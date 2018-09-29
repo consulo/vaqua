@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua.impl;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.Configuration;
 import org.violetlib.jnr.aqua.LayoutConfiguration;
@@ -24,14 +25,16 @@ public class SearchFieldFindButtonConfiguration
 	extends LayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull TextFieldConfiguration g;
+	private final @Nonnull
+	TextFieldConfiguration g;
 
-	public SearchFieldFindButtonConfiguration(@NotNull TextFieldConfiguration g)
+	public SearchFieldFindButtonConfiguration(@Nonnull TextFieldConfiguration g)
 	{
 		this.g = g;
 	}
 
-	public @NotNull TextFieldConfiguration getTextFieldConfiguration()
+	public @Nonnull
+	TextFieldConfiguration getTextFieldConfiguration()
 	{
 		return g;
 	}

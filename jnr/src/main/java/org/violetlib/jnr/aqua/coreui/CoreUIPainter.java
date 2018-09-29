@@ -28,9 +28,10 @@ import org.violetlib.jnr.impl.Renderer;
 import org.violetlib.jnr.impl.RendererDescription;
 import org.violetlib.jnr.impl.ReusableCompositor;
 
-import org.jetbrains.annotations.*;
-
 import static org.violetlib.jnr.aqua.coreui.CoreUIKeys.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 	A painter that renders Aqua widgets using the native rendering used by the Aqua look and feel, implemented by the
@@ -66,7 +67,8 @@ public class CoreUIPainter
 		});
 	}
 
-	protected static final @NotNull CoreUIRendererDescriptions rendererDescriptions = new CoreUIRendererDescriptions();
+	protected static final @Nonnull
+	CoreUIRendererDescriptions rendererDescriptions = new CoreUIRendererDescriptions();
 
 	protected boolean useJRS;		// if true, use the Java Runtime Support framework to access Core UI rendering
 
@@ -94,13 +96,15 @@ public class CoreUIPainter
 	}
 
 	@Override
-	public @NotNull CoreUIPainter copy()
+	public @Nonnull
+	CoreUIPainter copy()
 	{
 		return new CoreUIPainter();
 	}
 
 	@Override
-	protected @NotNull Renderer getButtonRenderer(@NotNull ButtonConfiguration g)
+	protected @Nonnull
+	Renderer getButtonRenderer(@Nonnull ButtonConfiguration g)
 	{
 		ButtonWidget bw = toCanonicalButtonStyle(g.getButtonWidget());
 
@@ -261,7 +265,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getScrollColumnSizerRenderer(@NotNull ScrollColumnSizerConfiguration g)
+	protected @Nonnull
+	Renderer getScrollColumnSizerRenderer(@Nonnull ScrollColumnSizerConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getScrollColumnSizerRendererDescription(g);
 		String widget = CoreUIWidgets.SCROLL_COLUMN_SIZER;
@@ -275,7 +280,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getScrollBarRenderer(@NotNull ScrollBarConfiguration g)
+	protected @Nonnull
+	Renderer getScrollBarRenderer(@Nonnull ScrollBarConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getScrollBarRendererDescription(g);
 		RendererDescription trd = rendererDescriptions.getScrollBarThumbRendererDescription(g);
@@ -391,7 +397,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getToolBarItemWellRenderer(@NotNull ToolBarItemWellConfiguration g)
+	protected @Nonnull
+	Renderer getToolBarItemWellRenderer(@Nonnull ToolBarItemWellConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getToolBarItemWellRendererDescription(g);
 		String widget = CoreUIWidgets.TOOL_BAR_ITEM_WELL;
@@ -407,7 +414,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getGroupBoxRenderer(@NotNull GroupBoxConfiguration g)
+	protected @Nonnull
+	Renderer getGroupBoxRenderer(@Nonnull GroupBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getGroupBoxRendererDescription(g);
 		String widget = CoreUIWidgets.FRAME_GROUP_BOX;
@@ -420,7 +428,8 @@ public class CoreUIPainter
 		return Renderer.create(r, rd);
 	}
 
-	protected @NotNull Renderer getGroupBoxMaskRenderer(@NotNull GroupBoxConfiguration g)
+	protected @Nonnull
+	Renderer getGroupBoxMaskRenderer(@Nonnull GroupBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getGroupBoxRendererDescription(g);
 		String widget = CoreUIWidgets.FRAME_GROUP_BOX;
@@ -435,7 +444,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getListBoxRenderer(@NotNull ListBoxConfiguration g)
+	protected @Nonnull
+	Renderer getListBoxRenderer(@Nonnull ListBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getListBoxRendererDescription(g);
 		String widget = CoreUIWidgets.FRAME_LIST_BOX;
@@ -450,7 +460,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getTextFieldRenderer(@NotNull TextFieldConfiguration g)
+	protected @Nonnull
+	Renderer getTextFieldRenderer(@Nonnull TextFieldConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTextFieldRendererDescription(g);
 		TextFieldWidget tw = g.getWidget();
@@ -476,7 +487,8 @@ public class CoreUIPainter
 		}
 	}
 
-	private @Nullable String getWidget(@NotNull TextFieldWidget tw)
+	private @Nullable
+	String getWidget(@Nonnull TextFieldWidget tw)
 	{
 		switch (tw) {
 			case TEXT_FIELD_ROUND:
@@ -489,7 +501,8 @@ public class CoreUIPainter
 		}
 	}
 
-	private @Nullable String getVariant(@NotNull TextFieldWidget tw)
+	private @Nullable
+	String getVariant(@Nonnull TextFieldWidget tw)
 	{
 		return tw.isToolbar() ? CoreUIWidgets.VARIANT_TEXT_FIELD_ROUND_TOOLBAR : null;
 	}
@@ -497,13 +510,17 @@ public class CoreUIPainter
 	private class SearchFieldRenderer
 		extends Renderer
 	{
-		private final @NotNull TextFieldConfiguration g;
-		private final @NotNull RendererDescription rd;
-		private final @Nullable Insetter searchButtonInsets;
-		private final @Nullable Insetter cancelButtonInsets;
+		private final @Nonnull
+		TextFieldConfiguration g;
+		private final @Nonnull
+		RendererDescription rd;
+		private final @Nullable
+		Insetter searchButtonInsets;
+		private final @Nullable
+		Insetter cancelButtonInsets;
 
-		public SearchFieldRenderer(@NotNull TextFieldConfiguration g,
-															 @NotNull RendererDescription rd,
+		public SearchFieldRenderer(@Nonnull TextFieldConfiguration g,
+															 @Nonnull RendererDescription rd,
 															 @Nullable Insetter searchButtonInsets,
 															 @Nullable Insetter cancelButtonInsets)
 		{
@@ -514,7 +531,7 @@ public class CoreUIPainter
 		}
 
 		@Override
-		public void composeTo(@NotNull ReusableCompositor compositor)
+		public void composeTo(@Nonnull ReusableCompositor compositor)
 		{
 			float w = compositor.getWidth();
 			float h = compositor.getHeight();
@@ -550,7 +567,8 @@ public class CoreUIPainter
 
 	// This method is public to support evaluation
 	@Override
-	public @NotNull Renderer getSearchFieldFindButtonRenderer(@NotNull TextFieldConfiguration g)
+	public @Nonnull
+	Renderer getSearchFieldFindButtonRenderer(@Nonnull TextFieldConfiguration g)
 	{
 		TextFieldWidget widget = g.getWidget();
 		boolean hasMenu = widget.hasMenu();
@@ -565,14 +583,16 @@ public class CoreUIPainter
 		return Renderer.create(r, rd);
 	}
 
-	protected @NotNull RendererDescription getSearchFieldFindButtonRendererDescription(@NotNull TextFieldConfiguration g)
+	protected @Nonnull
+	RendererDescription getSearchFieldFindButtonRendererDescription(@Nonnull TextFieldConfiguration g)
 	{
 		return getSearchButtonRendererDescription(g);
 	}
 
 	// This method is public to support evaluation
 	@Override
-	public @NotNull Renderer getSearchFieldCancelButtonRenderer(@NotNull TextFieldConfiguration g)
+	public @Nonnull
+	Renderer getSearchFieldCancelButtonRenderer(@Nonnull TextFieldConfiguration g)
 	{
 		BasicRenderer r = getRenderer(
 			WIDGET_KEY, CoreUIWidgets.BUTTON_SEARCH_FIELD_CANCEL,
@@ -585,13 +605,15 @@ public class CoreUIPainter
 		return Renderer.create(r, rd);
 	}
 
-	protected @NotNull RendererDescription getSearchFieldCancelButtonRendererDescription(@NotNull TextFieldConfiguration g)
+	protected @Nonnull
+	RendererDescription getSearchFieldCancelButtonRendererDescription(@Nonnull TextFieldConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	protected @NotNull Renderer getComboBoxButtonRenderer(@NotNull ComboBoxConfiguration g)
+	protected @Nonnull
+	Renderer getComboBoxButtonRenderer(@Nonnull ComboBoxConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getComboBoxRendererDescription(g);
 		ComboBoxWidget bw = g.getWidget();
@@ -627,7 +649,8 @@ public class CoreUIPainter
 		return Renderer.create(r, rd);
 	}
 
-	private @NotNull String getWidget(@NotNull ComboBoxWidget w)
+	private @Nonnull
+	String getWidget(@Nonnull ComboBoxWidget w)
 	{
 		int platformVersion = JNRPlatformUtils.getPlatformVersion();
 		switch (w) {
@@ -641,7 +664,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getPopupButtonRenderer(@NotNull PopupButtonConfiguration g)
+	protected @Nonnull
+	Renderer getPopupButtonRenderer(@Nonnull PopupButtonConfiguration g)
 	{
 		Renderer basicRenderer = getBasicPopupButtonRenderer(g);
 		Renderer arrowsRenderer = getPopupArrowRenderer(g);
@@ -653,7 +677,8 @@ public class CoreUIPainter
 		Return the renderer used to draw the button part of a pop up button.
 	*/
 
-	public @Nullable Renderer getBasicPopupButtonRenderer(@NotNull PopupButtonConfiguration g)
+	public @Nullable
+	Renderer getBasicPopupButtonRenderer(@Nonnull PopupButtonConfiguration g)
 	{
 		if (g.isCell()) {
 			return null;
@@ -762,7 +787,8 @@ public class CoreUIPainter
 		Return the renderer used to draw the arrows of pop up button.
 	*/
 
-	public @Nullable Renderer getPopupArrowRenderer(@NotNull PopupButtonConfiguration g)
+	public @Nullable
+	Renderer getPopupArrowRenderer(@Nonnull PopupButtonConfiguration g)
 	{
 		PopupButtonWidget w = g.getPopupButtonWidget();
 		State state = g.getState();
@@ -828,7 +854,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getTitleBarRenderer(@NotNull TitleBarConfiguration g)
+	protected @Nonnull
+	Renderer getTitleBarRenderer(@Nonnull TitleBarConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTitleBarRendererDescription(g);
 		Insetter closeButtonInsets = uiLayout.getTitleBarButtonInsets(g, TitleBarButtonWidget.CLOSE_BOX);
@@ -840,10 +867,11 @@ public class CoreUIPainter
 	protected class TitleBarRenderer
 		extends TitleBarRendererBase
 	{
-		private final @NotNull Object windowType;
+		private final @Nonnull
+		Object windowType;
 
-		public TitleBarRenderer(@NotNull TitleBarConfiguration g,
-														@NotNull RendererDescription rd,
+		public TitleBarRenderer(@Nonnull TitleBarConfiguration g,
+														@Nonnull RendererDescription rd,
 														@Nullable Insetter closeButtonInsets,
 														@Nullable Insetter minimizeButtonInsets,
 														@Nullable Insetter resizeButtonInsets)
@@ -860,7 +888,8 @@ public class CoreUIPainter
 			}
 		}
 
-		protected @NotNull BasicRenderer getBasicTitleBarRenderer(float w, float h)
+		protected @Nonnull
+		BasicRenderer getBasicTitleBarRenderer(float w, float h)
 		{
 			String widget = CoreUIWidgets.WINDOW_FRAME;
 			String state = toActiveState(g.getTitleBarState());
@@ -876,7 +905,8 @@ public class CoreUIPainter
 			);
 		}
 
-		protected @NotNull Renderer getButtonRenderer(@NotNull TitleBarButtonWidget bw)
+		protected @Nonnull
+		Renderer getButtonRenderer(@Nonnull TitleBarButtonWidget bw)
 		{
 			String widget;
 			State st;
@@ -935,7 +965,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getIndeterminateProgressIndicatorRenderer(@NotNull IndeterminateProgressIndicatorConfiguration g)
+	protected @Nonnull
+	Renderer getIndeterminateProgressIndicatorRenderer(@Nonnull IndeterminateProgressIndicatorConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getIndeterminateProgressIndicatorRendererDescription(g);
 		Size sz = g.getSize();
@@ -975,7 +1006,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getProgressIndicatorRenderer(@NotNull ProgressIndicatorConfiguration g)
+	protected @Nonnull
+	Renderer getProgressIndicatorRenderer(@Nonnull ProgressIndicatorConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getProgressIndicatorRendererDescription(g);
 
@@ -1011,7 +1043,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSliderRenderer(@NotNull SliderConfiguration g)
+	protected @Nonnull
+	Renderer getSliderRenderer(@Nonnull SliderConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSliderRendererDescription(g);
 
@@ -1045,12 +1078,14 @@ public class CoreUIPainter
 		return new LinearSliderRenderer(g, trackRenderer, trackInsets, tickMarkRenderer, thumbRenderer, thumbInsets, isThumbTranslucent);
 	}
 
-	protected @Nullable Renderer getSliderTickMarkRenderer(@NotNull SliderConfiguration g)
+	protected @Nullable
+	Renderer getSliderTickMarkRenderer(@Nonnull SliderConfiguration g)
 	{
 		return null;
 	}
 
-	protected @NotNull Renderer getSliderTrackRenderer(@NotNull SliderConfiguration g)
+	protected @Nonnull
+	Renderer getSliderTrackRenderer(@Nonnull SliderConfiguration g)
 	{
 		SliderWidget sw = g.getWidget();
 		if (sw == SliderWidget.SLIDER_CIRCULAR) {
@@ -1097,7 +1132,8 @@ public class CoreUIPainter
 		return Renderer.create(r, rd);
 	}
 
-	protected @NotNull Renderer getSliderThumbRenderer(@NotNull SliderConfiguration g, boolean isMask)
+	protected @Nonnull
+	Renderer getSliderThumbRenderer(@Nonnull SliderConfiguration g, boolean isMask)
 	{
 		SliderWidget sw = g.getWidget();
 		if (sw == SliderWidget.SLIDER_CIRCULAR) {
@@ -1124,18 +1160,21 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSliderThumbRenderer(@NotNull SliderConfiguration g)
+	protected @Nonnull
+	Renderer getSliderThumbRenderer(@Nonnull SliderConfiguration g)
 	{
 		return getSliderThumbRenderer(g, false);
 	}
 
-	protected @NotNull Renderer getSliderThumbMaskRenderer(@NotNull SliderConfiguration g)
+	protected @Nonnull
+	Renderer getSliderThumbMaskRenderer(@Nonnull SliderConfiguration g)
 	{
 		return getSliderThumbRenderer(g, true);
 	}
 
 	@Override
-	protected @NotNull Renderer getSpinnerArrowsRenderer(@NotNull SpinnerArrowsConfiguration g)
+	protected @Nonnull
+	Renderer getSpinnerArrowsRenderer(@Nonnull SpinnerArrowsConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSpinnerArrowsRendererDescription(g);
 		State st = g.getState();
@@ -1158,7 +1197,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSplitPaneDividerRenderer(@NotNull SplitPaneDividerConfiguration g)
+	protected @Nonnull
+	Renderer getSplitPaneDividerRenderer(@Nonnull SplitPaneDividerConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSplitPaneDividerRendererDescription(g);
 		String widget = CoreUIWidgets.SPLITTER;
@@ -1188,21 +1228,24 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getSegmentedButtonRenderer(@NotNull SegmentedButtonConfiguration g)
+	protected @Nonnull
+	Renderer getSegmentedButtonRenderer(@Nonnull SegmentedButtonConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSegmentedButtonRendererDescription(g);
 		BasicRenderer r = getSegmentedButtonBasicRenderer(g, false);
 		return Renderer.create(r, rd);
 	}
 
-	protected @NotNull Renderer getSegmentedButtonMaskRenderer(@NotNull SegmentedButtonConfiguration g)
+	protected @Nonnull
+	Renderer getSegmentedButtonMaskRenderer(@Nonnull SegmentedButtonConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getSegmentedButtonRendererDescription(g);
 		BasicRenderer r = getSegmentedButtonBasicRenderer(g, true);
 		return Renderer.create(r, rd);
 	}
 
-	protected @NotNull BasicRenderer getSegmentedButtonBasicRenderer(@NotNull SegmentedButtonConfiguration g, boolean isMask)
+	protected @Nonnull
+	BasicRenderer getSegmentedButtonBasicRenderer(@Nonnull SegmentedButtonConfiguration g, boolean isMask)
 	{
 		boolean isSelected = g.isSelected();
 		boolean isLeftNeighborSelected = g.getLeftDividerState() == SegmentedButtonConfiguration.DividerState.SELECTED;
@@ -1272,7 +1315,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getTableColumnHeaderRenderer(@NotNull TableColumnHeaderConfiguration g)
+	protected @Nonnull
+	Renderer getTableColumnHeaderRenderer(@Nonnull TableColumnHeaderConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getTableColumnHeaderRendererDescription(g);
 		// Aqua look and feel:
@@ -1309,7 +1353,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	protected @NotNull Renderer getGradientRenderer(@NotNull GradientConfiguration g)
+	protected @Nonnull
+	Renderer getGradientRenderer(@Nonnull GradientConfiguration g)
 	{
 		RendererDescription rd = rendererDescriptions.getGradientRendererDescription(g);
 		// In Yosemite, FREE_FORM does nothing, and the state has no effect.
@@ -1324,7 +1369,7 @@ public class CoreUIPainter
 		return Renderer.create(r, rd);
 	}
 
-	protected boolean getFocused(@NotNull Configuration g, boolean b)
+	protected boolean getFocused(@Nonnull Configuration g, boolean b)
 	{
 		// This may be a temporary workaround. Since the introduction of focus rings, CoreUI has not drawn focused
 		// widgets differently. However, in the 10.14 beta, it draws focus borders, which are unwanted.
@@ -1332,7 +1377,8 @@ public class CoreUIPainter
 		return false;
 	}
 
-	protected @NotNull Object toSize(@NotNull Size sz)
+	protected @Nonnull
+	Object toSize(@Nonnull Size sz)
 	{
 		switch (sz)
 		{
@@ -1352,7 +1398,8 @@ public class CoreUIPainter
 		Map the specified state to the encoding used by native code. All states are supported.
 	*/
 
-	protected @NotNull String toState(@NotNull State st)
+	protected @Nonnull
+	String toState(@Nonnull State st)
 	{
 		switch (st)
 		{
@@ -1379,7 +1426,8 @@ public class CoreUIPainter
 		supported.
 	*/
 
-	protected @NotNull String toActiveState(@NotNull State st)
+	protected @Nonnull
+	String toActiveState(@Nonnull State st)
 	{
 		switch (st)
 		{
@@ -1395,7 +1443,8 @@ public class CoreUIPainter
 		Map the specified state to the encoding used by native code. All non-active states are mapped to disabled.
 	*/
 
-	protected @NotNull String toActiveDisabledState(@NotNull State st)
+	protected @Nonnull
+	String toActiveDisabledState(@Nonnull State st)
 	{
 		switch (st)
 		{
@@ -1412,7 +1461,7 @@ public class CoreUIPainter
 		supported.
 	*/
 
-	protected int toActiveStateCode(@NotNull State st)
+	protected int toActiveStateCode(@Nonnull State st)
 	{
 		switch (st)
 		{
@@ -1424,7 +1473,8 @@ public class CoreUIPainter
 		return 0;
 	}
 
-	protected @NotNull Object toPresentationState(@NotNull State st)
+	protected @Nonnull
+	Object toPresentationState(@Nonnull State st)
 	{
 		switch (st)
 		{
@@ -1446,7 +1496,7 @@ public class CoreUIPainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected int toButtonState(@NotNull ButtonState s)
+	protected int toButtonState(@Nonnull ButtonState s)
 	{
 		switch (s) {
 			case OFF:
@@ -1460,7 +1510,8 @@ public class CoreUIPainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NotNull Object toHorizontalAlignment(@NotNull HorizontalAlignment ha)
+	protected @Nonnull
+	Object toHorizontalAlignment(@Nonnull HorizontalAlignment ha)
 	{
 		switch (ha)
 		{
@@ -1474,7 +1525,8 @@ public class CoreUIPainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NotNull Object toVerticalAlignment(@NotNull VerticalAlignment va)
+	protected @Nonnull
+	Object toVerticalAlignment(@Nonnull VerticalAlignment va)
 	{
 		switch (va)
 		{
@@ -1488,7 +1540,8 @@ public class CoreUIPainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NotNull String toOrientation(@NotNull Orientation o)
+	protected @Nonnull
+	String toOrientation(@Nonnull Orientation o)
 	{
 		switch (o)
 		{
@@ -1500,7 +1553,8 @@ public class CoreUIPainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NotNull Object toDirection(@NotNull ColumnSortArrowDirection d)
+	protected @Nonnull
+	Object toDirection(@Nonnull ColumnSortArrowDirection d)
 	{
 		switch (d)
 		{
@@ -1514,7 +1568,8 @@ public class CoreUIPainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NotNull Object toDirection(@NotNull Direction d)
+	protected @Nonnull
+	Object toDirection(@Nonnull Direction d)
 	{
 		switch (d)
 		{
@@ -1532,7 +1587,8 @@ public class CoreUIPainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NotNull Object toDirection(@NotNull TickMarkPosition p)
+	protected @Nonnull
+	Object toDirection(@Nonnull TickMarkPosition p)
 	{
 		switch (p)
 		{
@@ -1548,7 +1604,8 @@ public class CoreUIPainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NotNull Object toLayoutDirection(@NotNull UILayoutDirection ld)
+	protected @Nonnull
+	Object toLayoutDirection(@Nonnull UILayoutDirection ld)
 	{
 		switch (ld)
 		{
@@ -1561,7 +1618,8 @@ public class CoreUIPainter
 		}
 	}
 
-	protected @NotNull Object toSegmentPosition(@NotNull Position sp)
+	protected @Nonnull
+	Object toSegmentPosition(@Nonnull Position sp)
 	{
 		switch (sp)
 		{
@@ -1577,7 +1635,8 @@ public class CoreUIPainter
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NotNull String toVariant(@NotNull GradientWidget gw)
+	protected @Nonnull
+	String toVariant(@Nonnull GradientWidget gw)
 	{
 		switch (gw) {
 			case GRADIENT_FIND_BAR:
@@ -1609,7 +1668,8 @@ public class CoreUIPainter
 		}
 	}
 
-	protected @NotNull BasicRenderer getRenderer(Object... args)
+	protected @Nonnull
+	BasicRenderer getRenderer(Object... args)
 	{
 		if ((args.length % 2) != 0) {
 			throw new IllegalArgumentException("getRenderer requires an even number of parameters");
@@ -1641,7 +1701,8 @@ public class CoreUIPainter
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return useJRS ? "Core UI via JRS" : "Core UI";
 	}

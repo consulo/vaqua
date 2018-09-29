@@ -8,8 +8,8 @@
 
 package org.violetlib.aqua;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.accessibility.AccessibleContext;
 import javax.swing.*;
@@ -46,7 +46,7 @@ public class VSheet {
      * @throws HeadlessException if the graphics environment is headless.
      */
     public static void showOptionPane(@Nullable Component parent,
-                                      @NotNull JOptionPane pane,
+                                      @Nonnull JOptionPane pane,
                                       @Nullable String title,
                                       @Nullable Consumer<Integer> resultConsumer)
             throws HeadlessException {
@@ -72,8 +72,8 @@ public class VSheet {
         }
     }
 
-    private static void tryShowOptionPane(@NotNull JDialog d,
-                                          @NotNull JOptionPane pane,
+    private static void tryShowOptionPane(@Nonnull JDialog d,
+                                          @Nonnull JOptionPane pane,
                                           @Nullable Consumer<Integer> resultConsumer)
             throws HeadlessException {
 
@@ -113,7 +113,7 @@ public class VSheet {
         }
     }
 
-    private static int getOption(@NotNull JOptionPane pane) {
+    private static int getOption(@Nonnull JOptionPane pane) {
         Object selectedValue = pane.getValue();
 
         if (selectedValue == null) {
@@ -147,7 +147,7 @@ public class VSheet {
      * @throws HeadlessException if the graphics environment is headless.
      */
     public static void showOpenDialog(@Nullable Component parent,
-                                      @NotNull JFileChooser fc,
+                                      @Nonnull JFileChooser fc,
                                       @Nullable Consumer<Integer> resultConsumer)
             throws HeadlessException {
         fc.setDialogType(JFileChooser.OPEN_DIALOG);
@@ -166,7 +166,7 @@ public class VSheet {
      * @throws HeadlessException if the graphics environment is headless.
      */
     public static void showSaveDialog(@Nullable Component parent,
-                                      @NotNull JFileChooser fc,
+                                      @Nonnull JFileChooser fc,
                                       @Nullable Consumer<Integer> resultConsumer)
             throws HeadlessException {
         fc.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -185,7 +185,7 @@ public class VSheet {
      * @throws HeadlessException if the graphics environment is headless.
      */
     public static void showFileChooserDialog(@Nullable Component parent,
-                                             @NotNull JFileChooser fc,
+                                             @Nonnull JFileChooser fc,
                                              @Nullable Consumer<Integer> resultConsumer)
             throws HeadlessException {
 
@@ -216,7 +216,7 @@ public class VSheet {
      * @throws UnsupportedOperationException if it is not possible to display a sheet.
      */
     private static void tryShowFileChooserAsSheet(@Nullable Component parent,
-                                                  @NotNull JFileChooser fc,
+                                                  @Nonnull JFileChooser fc,
                                                   @Nullable Consumer<Integer> resultConsumer)
             throws HeadlessException, UnsupportedOperationException {
 
@@ -336,7 +336,7 @@ public class VSheet {
      * visible.
      * @throws HeadlessException if the graphics environment is headless.
      */
-    public static void showDialog(@NotNull JDialog d, @Nullable Runnable closeHandler)
+    public static void showDialog(@Nonnull JDialog d, @Nullable Runnable closeHandler)
             throws IllegalArgumentException, HeadlessException {
         if (d.isVisible()) {
             throw new IllegalArgumentException("Unable to display dialog: the dialog is already visible");
@@ -380,7 +380,7 @@ public class VSheet {
      * @param closeHandler If not null, this object will be invoked when the sheet is dismissed.
      * @throws UnsupportedOperationException if the window could not be displayed as a sheet.
      */
-    public static void displayAsSheet(@NotNull Window w, @Nullable Runnable closeHandler)
+    public static void displayAsSheet(@Nonnull Window w, @Nullable Runnable closeHandler)
             throws UnsupportedOperationException {
         LookAndFeel laf = UIManager.getLookAndFeel();
         if (laf != null) {
@@ -390,7 +390,7 @@ public class VSheet {
         }
     }
 
-    private static void displayAsSheet(@NotNull LookAndFeel laf, @NotNull Window w, @Nullable Runnable closeHandler) {
+    private static void displayAsSheet(@Nonnull LookAndFeel laf, @Nonnull Window w, @Nullable Runnable closeHandler) {
         try {
             Method m = laf.getClass().getMethod("displayAsSheet", Window.class, Runnable.class);
             m.invoke(laf, w, closeHandler);

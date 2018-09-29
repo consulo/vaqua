@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A basic renderer that inverts the output of a specified basic renderer.
@@ -19,7 +19,7 @@ public class InvertRenderer
 {
 	private final float alphaMultiplier;
 
-	public InvertRenderer(@NotNull BasicRenderer r, float alphaMultiplier)
+	public InvertRenderer(@Nonnull BasicRenderer r, float alphaMultiplier)
 	{
 		super(r);
 

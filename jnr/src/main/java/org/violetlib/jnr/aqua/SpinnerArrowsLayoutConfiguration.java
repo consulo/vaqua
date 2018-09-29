@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
 
@@ -21,14 +22,16 @@ import org.violetlib.jnr.aqua.AquaUIPainter.Size;
 public class SpinnerArrowsLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @NotNull Size size;
+	private final @Nonnull
+	Size size;
 
-	public SpinnerArrowsLayoutConfiguration(@NotNull Size size)
+	public SpinnerArrowsLayoutConfiguration(@Nonnull Size size)
 	{
 		this.size = size;
 	}
 
-	public @NotNull Size getSize()
+	public @Nonnull
+	Size getSize()
 	{
 		return size;
 	}
@@ -49,7 +52,8 @@ public class SpinnerArrowsLayoutConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return "Spinner Arrows " + size;
 	}
