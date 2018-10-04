@@ -8,28 +8,18 @@
 
 package org.violetlib.aqua;
 
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.Image;
+import consulo.internal.vaqua.impl.JavaSupportImpl;
+import sun.java2d.opengl.OGLRenderQueue;
+import sun.swing.SwingUtilities2;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
-import java.awt.image.ImageFilter;
-import java.awt.image.ImageObserver;
-import java.awt.image.WritableRaster;
+import java.awt.image.*;
 import java.lang.reflect.Method;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.function.Function;
-
-import javax.swing.JComponent;
-import javax.swing.UIDefaults;
-
-import consulo.internal.vaqua.impl.JavaSupportImpl;
-import sun.java2d.opengl.OGLRenderQueue;
-import sun.swing.SwingUtilities2;
 
 /**
  * Support for Java 8 JetBrains JDK
@@ -41,9 +31,17 @@ public class Java8JBSupport implements JavaSupportImpl
 	{
 		try
 		{
-			return Class.forName("java.lang.Module") == null && Class.forName("java.awt.image.MultiResolutionImage") != null;
+			Class.forName("java.lang.Module");
+			return false;
+		} catch(ClassNotFoundException ignored)
+		{
 		}
-		catch(ClassNotFoundException e)
+
+		try
+		{
+			Class.forName("java.awt.image.MultiResolutionImage");
+			return true;
+		} catch(ClassNotFoundException e)
 		{
 			return false;
 		}
@@ -71,8 +69,7 @@ public class Java8JBSupport implements JavaSupportImpl
 		try
 		{
 			return Boolean.TRUE.equals(method.invoke(c, OPAQUE_SET_FLAG));
-		}
-		catch(final Throwable ignored)
+		} catch(final Throwable ignored)
 		{
 			return false;
 		}
@@ -96,8 +93,7 @@ public class Java8JBSupport implements JavaSupportImpl
 										"getFlag", new Class<?>[]{int.class});
 								method.setAccessible(true);
 								return method;
-							}
-							catch(final Throwable ignored)
+							} catch(final Throwable ignored)
 							{
 								return null;
 							}
@@ -214,8 +210,7 @@ public class Java8JBSupport implements JavaSupportImpl
 						}
 					};
 					m.invoke(image, observer);
-				}
-				catch(Exception ex)
+				} catch(Exception ex)
 				{
 					System.err.println("Unable to preload image: " + ex);
 				}
