@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A render that does nothing.
@@ -18,7 +18,7 @@ public class EmptyRenderer
 	implements BasicRenderer
 {
 	@Override
-	public void render(@NotNull int[] data, int rw, int rh, float w, float h)
+	public void render(@Nonnull int[] data, int rw, int rh, float w, float h)
 	{
 	}
 }

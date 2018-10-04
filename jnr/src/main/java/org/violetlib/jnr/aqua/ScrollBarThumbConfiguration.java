@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 	A configuration for a scroll bar thumb.
@@ -21,7 +22,7 @@ public class ScrollBarThumbConfiguration
 {
 	private final int value;
 
-	public ScrollBarThumbConfiguration(@NotNull ScrollBarConfiguration g, int value)
+	public ScrollBarThumbConfiguration(@Nonnull ScrollBarConfiguration g, int value)
 	{
 		super(g);
 
@@ -50,7 +51,8 @@ public class ScrollBarThumbConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return super.toString() + " " + value;
 	}

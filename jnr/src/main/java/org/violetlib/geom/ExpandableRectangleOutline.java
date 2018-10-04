@@ -11,7 +11,7 @@ package org.violetlib.geom;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	An expandable outline in the form of a rectangle.
@@ -33,7 +33,7 @@ public final class ExpandableRectangleOutline
 		this.height = height;
 	}
 
-	public ExpandableRectangleOutline(@NotNull Rectangle2D source)
+	public ExpandableRectangleOutline(@Nonnull Rectangle2D source)
 	{
 		this.x = source.getX();
 		this.y = source.getY();
@@ -42,7 +42,8 @@ public final class ExpandableRectangleOutline
 	}
 
 	@Override
-	public @NotNull Shape getShape(float offset)
+	public @Nonnull
+	Shape getShape(float offset)
 	{
 		double nx = x - offset;
 		double ny = y - offset;

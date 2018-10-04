@@ -37,6 +37,8 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Enumeration;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.ComponentUI;
@@ -46,8 +48,7 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 public class AquaTableHeaderUI extends BasicTableHeaderUI implements AquaComponentUI {
@@ -60,7 +61,8 @@ public class AquaTableHeaderUI extends BasicTableHeaderUI implements AquaCompone
     private TableCellRenderer prevRenderer = null;
     private PropertyChangeListener propertyChangeListener;
 
-    protected @NotNull BasicContextualColors colors;
+    protected @Nonnull
+	BasicContextualColors colors;
     protected @Nullable AppearanceContext appearanceContext;
     protected @Nullable Color separatorColor;
 
@@ -133,12 +135,12 @@ public class AquaTableHeaderUI extends BasicTableHeaderUI implements AquaCompone
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 
@@ -154,7 +156,8 @@ public class AquaTableHeaderUI extends BasicTableHeaderUI implements AquaCompone
         header.repaint();
     }
 
-    protected @NotNull AquaUIPainter.State getState() {
+    protected @Nonnull
+	AquaUIPainter.State getState() {
         return AquaFocusHandler.isActive(header) ? AquaUIPainter.State.ACTIVE : AquaUIPainter.State.INACTIVE;
     }
 
@@ -184,9 +187,10 @@ public class AquaTableHeaderUI extends BasicTableHeaderUI implements AquaCompone
     }
 
     private class AquaTableHeaderPainter {
-        private final @NotNull Color background;
+        private final @Nonnull
+		Color background;
 
-        public AquaTableHeaderPainter(@NotNull Color background) {
+        public AquaTableHeaderPainter(@Nonnull Color background) {
             this.background = background;
         }
 

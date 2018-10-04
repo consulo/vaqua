@@ -17,7 +17,7 @@ import javax.swing.JRootPane;
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * This object manages a NSVisualEffectView or a collection of NSVisualEffectViews whose bounds tracks the bounds of a
@@ -52,7 +52,8 @@ public class VisualEffectView {
         return style;
     }
 
-    public @NotNull JComponent getComponent() {
+    public @Nonnull
+	JComponent getComponent() {
         return component;
     }
 

@@ -12,12 +12,12 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.JTextComponent;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
 
@@ -137,7 +137,8 @@ public class AquaColors {
     public static final Color MAGIC_ERASER = new ColorUIResource(new Color(0, 0, 0, 0));
 
     private static boolean COLORS_DEBUG = false;
-    private static @Nullable BasicContextualColors COLORS_DEBUG_CHOICE = TEXTURED_SEGMENTED_BUTTON_COLORS;
+    private static @Nullable
+	BasicContextualColors COLORS_DEBUG_CHOICE = TEXTURED_SEGMENTED_BUTTON_COLORS;
     private static boolean currentColorsDebugFlag;
 
     public static void setupDebugging(@Nullable BasicContextualColors colors) {
@@ -168,16 +169,17 @@ public class AquaColors {
     }
 
     public static class GradientColor extends ColorUIResource {
-        private final @NotNull Color finish;
+        private final @Nonnull
+		Color finish;
         private final boolean useMagicEraser;
 
-        public GradientColor(@NotNull Color start, @NotNull Color finish) {
+        public GradientColor(@Nonnull Color start, @Nonnull Color finish) {
             super(start);
             this.finish = finish;
             this.useMagicEraser = false;
         }
 
-        public GradientColor(@NotNull Color start, @NotNull Color finish, boolean useMagicEraser) {
+        public GradientColor(@Nonnull Color start, @Nonnull Color finish, boolean useMagicEraser) {
             super(start);
             this.finish = finish;
             this.useMagicEraser = useMagicEraser;
@@ -187,11 +189,13 @@ public class AquaColors {
             }
         }
 
-        public @NotNull Color getStart() {
+        public @Nonnull
+		Color getStart() {
             return this;
         }
 
-        public @NotNull Color getFinish() {
+        public @Nonnull
+		Color getFinish() {
             return finish;
         }
 
@@ -200,7 +204,8 @@ public class AquaColors {
         }
     }
 
-    public static @NotNull String toString(@Nullable Color c) {
+    public static @Nonnull
+	String toString(@Nullable Color c) {
         if (c == null) {
             return "<null>";
         }
@@ -213,26 +218,31 @@ public class AquaColors {
         return s;
     }
 
-    public static @NotNull BasicContextualColors getMenuColors() {
+    public static @Nonnull
+	BasicContextualColors getMenuColors() {
         return OSXSystemProperties.OSVersion < 1014 ? LEGACY_MENU_COLORS : MENU_COLORS;
     }
 
-    public static @NotNull Color getForeground(@NotNull JComponent c, @NotNull String colorName) {
+    public static @Nonnull
+	Color getForeground(@Nonnull JComponent c, @Nonnull String colorName) {
         Color color = c.getForeground();
         return getDefaultColor(c, color, colorName);
     }
 
-    public static @NotNull Color getForeground(@NotNull JComponent c, @NotNull String colorName, @NotNull EffectName effect) {
+    public static @Nonnull
+	Color getForeground(@Nonnull JComponent c, @Nonnull String colorName, @Nonnull EffectName effect) {
         Color color = c.getForeground();
         return getDefaultColor(c, color, colorName, effect);
     }
 
-    public static @NotNull Color getBackground(@NotNull Component c, @NotNull String colorName) {
+    public static @Nonnull
+	Color getBackground(@Nonnull Component c, @Nonnull String colorName) {
         Color color = c.getBackground();
         return getDefaultColor(c, color, colorName);
     }
 
-    public static @NotNull Color getBackground(@NotNull Component c, @NotNull String colorName, @NotNull EffectName effect) {
+    public static @Nonnull
+	Color getBackground(@Nonnull Component c, @Nonnull String colorName, @Nonnull EffectName effect) {
         Color color = c.getBackground();
         return getDefaultColor(c, color, colorName, effect);
     }
@@ -267,7 +277,8 @@ public class AquaColors {
      *  specified name; otherwise, the system color with the specified name according to the effective appearance
      *  of {@code c}.
      */
-    public static @NotNull Color getDefaultColor(@NotNull Component c, @NotNull Color color, @NotNull String colorName) {
+    public static @Nonnull
+	Color getDefaultColor(@Nonnull Component c, @Nonnull Color color, @Nonnull String colorName) {
         if (isPriority(color)) {
             return color;
         }
@@ -290,10 +301,11 @@ public class AquaColors {
      *  specified name; otherwise, the system color with the specified name according to the effective appearance
      *  of {@code c}.
      */
-    public static @NotNull Color getDefaultColor(@NotNull Component c,
-                                                 @NotNull Color color,
-                                                 @NotNull String colorName,
-                                                 @NotNull EffectName effect) {
+    public static @Nonnull
+	Color getDefaultColor(@Nonnull Component c,
+						  @Nonnull Color color,
+						  @Nonnull String colorName,
+						  @Nonnull EffectName effect) {
         if (isPriority(color)) {
             return color;
         }
@@ -314,7 +326,8 @@ public class AquaColors {
      * @return The system color with the specified name in the effective appearance of {@code c}.
      * @throws UnsupportedOperationException if the specified color is not defined.
      */
-    public static @NotNull Color getSystemColor(@NotNull JComponent c, @NotNull String colorName) {
+    public static @Nonnull
+	Color getSystemColor(@Nonnull JComponent c, @Nonnull String colorName) {
         AquaAppearance appearance = AppearanceManager.getAppearance(c);
         Color appearanceColor = appearance.getColor(colorName);
         if (appearanceColor != null) {
@@ -330,9 +343,10 @@ public class AquaColors {
      * @return The system color with the specified name in the effective appearance of {@code c}.
      * @throws UnsupportedOperationException if the specified color is not defined.
      */
-    public static @NotNull Color getSystemColor(@NotNull JComponent c,
-                                                @NotNull String colorName,
-                                                @NotNull EffectName effect) {
+    public static @Nonnull
+	Color getSystemColor(@Nonnull JComponent c,
+						 @Nonnull String colorName,
+						 @Nonnull EffectName effect) {
         AquaAppearance appearance = AppearanceManager.ensureAppearance(c);
         Color appearanceColor = appearance.getColorForOptionalEffect(colorName, effect);
         if (appearanceColor != null) {
@@ -341,7 +355,8 @@ public class AquaColors {
         throw new UnsupportedOperationException("System color " + colorName + " is not defined in " + appearance.getName());
     }
 
-    private static @NotNull BasicContextualColors createBasicTextColors() {
+    private static @Nonnull
+	BasicContextualColors createBasicTextColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("BasicTextColors.background", "textBackground");
         background.setAllNames();
 
@@ -350,20 +365,23 @@ public class AquaColors {
         return new BasicContextualColorsImpl(background, foreground);
     }
 
-    private static @NotNull ContextualColor createCellForegroundColors() {
+    private static @Nonnull
+	ContextualColor createCellForegroundColors() {
         AquaContextualColorImpl foreground = new AquaContextualColorImpl("CellTextColors.foreground", "cell");
         foreground.setAllNames();
         return foreground;
     }
 
-    private static @NotNull BasicContextualColors createCellTextColors() {
+    private static @Nonnull
+	BasicContextualColors createCellTextColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("CellTextColors.background", "cellBackground");
         background.setAllNames();
         return new BasicContextualColorsImpl(background, CELL_FOREGROUND_COLORS);
     }
 
-    private static @NotNull BasicContextualColors
-        createButtonColors(@NotNull String name, @NotNull String basicColorName) {
+    private static @Nonnull
+	BasicContextualColors
+        createButtonColors(@Nonnull String name, @Nonnull String basicColorName) {
 
         String backgroundName = name + ".background";
         AquaContextualColorImpl background = new AquaContextualColorImpl(backgroundName, "clear");
@@ -376,7 +394,8 @@ public class AquaColors {
         return new BasicContextualColorsImpl(background, foreground);
     }
 
-    private static @NotNull BasicContextualColors createBasicControlColors() {
+    private static @Nonnull
+	BasicContextualColors createBasicControlColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("BasicControlColors.background", "controlBackground");
         background.setSelectedName("selectedContentBackground");
         background.setInactiveSelectedName("unemphasizedSelectedTextBackground");
@@ -387,14 +406,16 @@ public class AquaColors {
         return new BasicContextualColorsImpl(background, foreground);
     }
 
-    private static @NotNull BasicContextualColors createLabeledButtonColors() {
+    private static @Nonnull
+	BasicContextualColors createLabeledButtonColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("LabeledButtonColors.background", "clear");
 
         AquaContextualColorImpl foreground = new AquaContextualColorImpl("LabeledButtonColors.foreground", "controlText");
         return new BasicContextualColorsImpl(background, foreground);
     }
 
-    private static @NotNull BasicContextualColors createBasicClearControlColors() {
+    private static @Nonnull
+	BasicContextualColors createBasicClearControlColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("BasicClearControlColors.background", "clear");
         background.setSelectedName("selectedContentBackground");
         background.setInactiveSelectedName("unemphasizedSelectedTextBackground");
@@ -405,14 +426,16 @@ public class AquaColors {
         return new BasicContextualColorsImpl(background, foreground);
     }
 
-    private static @NotNull BasicContextualColors createToolTipColors() {
+    private static @Nonnull
+	BasicContextualColors createToolTipColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("ToolTipColors.background", "controlBackground");
 
         AquaContextualColorImpl foreground = new AquaContextualColorImpl("ToolTipColors.foreground", "controlText");
         return new BasicContextualColorsImpl(background, foreground);
     }
 
-    private static @NotNull BasicContextualColors createMenuColors() {
+    private static @Nonnull
+	BasicContextualColors createMenuColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("MenuColors.background", "clear");
         background.setSelectedName("selectedContentBackground");
         background.setInactiveSelectedName("unemphasizedSelectedTextBackground");
@@ -423,7 +446,8 @@ public class AquaColors {
         return new BasicContextualColorsImpl(background, foreground);
     }
 
-    private static @NotNull BasicContextualColors createLegacyMenuColors() {
+    private static @Nonnull
+	BasicContextualColors createLegacyMenuColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("LegacyMenuColors.background", "menuBackground");
         background.setSelectedName("menuSelectedBackground");
         background.setInactiveSelectedName("unemphasizedSelectedTextBackground");
@@ -435,20 +459,23 @@ public class AquaColors {
         return new BasicContextualColorsImpl(background, foreground);
     }
 
-    private static @NotNull BasicContextualColorsImpl createSeparatorColors() {
+    private static @Nonnull
+	BasicContextualColorsImpl createSeparatorColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("SeparatorColors.background", "clear");
         AquaContextualColorImpl foreground = new AquaContextualColorImpl("SeparatorColors.foreground", "separator");
         return new BasicContextualColorsImpl(background, foreground);
     }
 
-    private static @NotNull BasicContextualColorsImpl createTableHeaderColors() {
+    private static @Nonnull
+	BasicContextualColorsImpl createTableHeaderColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("TableHeaderColors.background", "tableHeaderBackground");
         AquaContextualColorImpl foreground = new AquaContextualColorImpl("TableHeaderColors.foreground", "tableHeader");
         foreground.setSelectedName("selectedTableHeader");
         return new BasicContextualColorsImpl(background, foreground);
     }
 
-    private static @NotNull ContainerContextualColors createContainerColors() {
+    private static @Nonnull
+	ContainerContextualColors createContainerColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("ContainerColors.background", "controlBackground");
         background.setActiveDefaultSelectedName("selectedContentBackground");
         background.setSelectedName("unemphasizedSelectedTextBackground");
@@ -458,7 +485,8 @@ public class AquaColors {
         return new UniformContainerContextualColors(background, CELL_FOREGROUND_COLORS, grid);
     }
 
-    private static @NotNull ContainerContextualColors createSidebarContainerColors() {
+    private static @Nonnull
+	ContainerContextualColors createSidebarContainerColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("SidebarContainerColors.background", "controlBackground");
         background.setActiveDefaultSelectedName("selectedContentBackground");
         background.setSelectedName("unemphasizedSelectedTextBackground");
@@ -471,7 +499,8 @@ public class AquaColors {
         return new UniformContainerContextualColors(background, foreground, grid);
     }
 
-    private static @NotNull ContainerContextualColors createStripedContainerColors() {
+    private static @Nonnull
+	ContainerContextualColors createStripedContainerColors() {
         AquaContextualColorImpl background = new AquaContextualColorImpl("StripedContainerColors.background", "controlBackground");
         background.setActiveDefaultSelectedName("selectedContentBackground");
         background.setSelectedName("unemphasizedSelectedTextBackground");
@@ -490,7 +519,8 @@ public class AquaColors {
     }
 
     @SuppressWarnings("unchecked")
-    public static @NotNull <T extends BasicContextualColors> T getColors(@NotNull Class<T> clazz, @NotNull Component c, @NotNull T defaultColors) {
+    public static @Nonnull
+	<T extends BasicContextualColors> T getColors(@Nonnull Class<T> clazz, @Nonnull Component c, @Nonnull T defaultColors) {
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             Object o = jc.getClientProperty(COMPONENT_COLORS_KEY);
@@ -501,9 +531,9 @@ public class AquaColors {
         return defaultColors;
     }
 
-    public static void installColors(@NotNull JComponent c,
-                                     @NotNull AppearanceContext context,
-                                     @NotNull BasicContextualColors colors) {
+    public static void installColors(@Nonnull JComponent c,
+                                     @Nonnull AppearanceContext context,
+                                     @Nonnull BasicContextualColors colors) {
         if (c instanceof JTextComponent) {
             JTextComponent tc = (JTextComponent) c;
             installTextColors(tc, context, colors);
@@ -520,19 +550,19 @@ public class AquaColors {
         }
     }
 
-    private static boolean getListStriped(@NotNull JList list) {
+    private static boolean getListStriped(@Nonnull JList list) {
         AquaListUI ui = AquaUtils.getUI(list, AquaListUI.class);
         return ui != null && ui.isStriped();
     }
 
-    private static boolean getTableStriped(@NotNull JTable table) {
+    private static boolean getTableStriped(@Nonnull JTable table) {
         AquaTableUI ui = AquaUtils.getUI(table, AquaTableUI.class);
         return ui != null && ui.isStriped();
     }
 
-    private static void installBasicColors(@NotNull Component c,
-                                           @NotNull AppearanceContext context,
-                                           @NotNull BasicContextualColors colors) {
+    private static void installBasicColors(@Nonnull Component c,
+                                           @Nonnull AppearanceContext context,
+                                           @Nonnull BasicContextualColors colors) {
         Color bg = c.getBackground();
         if (!isPriority(bg)) {
             c.setBackground(colors.getBackground(context));
@@ -544,9 +574,9 @@ public class AquaColors {
         }
     }
 
-    private static void installTextColors(@NotNull JTextComponent editor,
-                                          @NotNull AppearanceContext context,
-                                          @NotNull BasicContextualColors colors) {
+    private static void installTextColors(@Nonnull JTextComponent editor,
+                                          @Nonnull AppearanceContext context,
+                                          @Nonnull BasicContextualColors colors) {
 
         AppearanceContext selectedContext = context.withSelected(true);
 
@@ -581,9 +611,9 @@ public class AquaColors {
         }
     }
 
-    private static void installTableColors(@NotNull JTable c,
-                                           @NotNull AppearanceContext context,
-                                           @NotNull BasicContextualColors colors,
+    private static void installTableColors(@Nonnull JTable c,
+                                           @Nonnull AppearanceContext context,
+                                           @Nonnull BasicContextualColors colors,
                                            boolean isStriped) {
 
         // A striped table must have a clear background, so that a well-behaved table cell renderer will paint a clear
@@ -618,9 +648,9 @@ public class AquaColors {
         }
     }
 
-    private static void installListColors(@NotNull JList c,
-                                          @NotNull AppearanceContext context,
-                                          @NotNull BasicContextualColors colors,
+    private static void installListColors(@Nonnull JList c,
+                                          @Nonnull AppearanceContext context,
+                                          @Nonnull BasicContextualColors colors,
                                           boolean isStriped) {
 
         // A striped list must have a clear background, so that a well-behaved list cell renderer will paint a clear
@@ -648,19 +678,22 @@ public class AquaColors {
         }
     }
 
-    public static @NotNull Color getOrdinaryColor(@NotNull Color c) {
+    public static @Nonnull
+	Color getOrdinaryColor(@Nonnull Color c) {
         if (c.getClass() == Color.class) {
             return c;
         }
         return new Color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
     }
 
-    public static @NotNull List<String> getAllColorSuffixes()
+    public static @Nonnull
+	List<String> getAllColorSuffixes()
     {
         return allColorSuffixes;
     }
 
-    public static @Nullable String withoutInactive(@NotNull String suffix)
+    public static @Nullable
+	String withoutInactive(@Nonnull String suffix)
     {
         if (suffix.equals("_inactive")) {
             return "";
@@ -671,12 +704,14 @@ public class AquaColors {
         return null;
     }
 
-    public static @NotNull String createSelectedColorName(@NotNull String name)
+    public static @Nonnull
+	String createSelectedColorName(@Nonnull String name)
     {
         return "selected" + capitalize(name);
     }
 
-    public static @NotNull String capitalize(@NotNull String s)
+    public static @Nonnull
+	String capitalize(@Nonnull String s)
     {
         if (!s.isEmpty()) {
             char first = s.charAt(0);

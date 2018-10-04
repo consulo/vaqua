@@ -13,8 +13,8 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.violetlib.aqua.AquaAppearance;
 import org.violetlib.aqua.AquaImageFactory;
 
@@ -29,20 +29,26 @@ public class SidebarTreeNode
      * confuses the layout algorithm in JTree.
      */
 
-    private @NotNull OSXFile.SystemItemInfo info;
-    private @NotNull String name;
-    private @Nullable File file;
-    private @NotNull Icon icon;
-    private @Nullable Icon darkIcon;    // cached icon for use in dark mode
+    private @Nonnull
+	OSXFile.SystemItemInfo info;
+    private @Nonnull
+	String name;
+    private @Nullable
+	File file;
+    private @Nonnull
+	Icon icon;
+    private @Nullable
+	Icon darkIcon;    // cached icon for use in dark mode
 
-    public SidebarTreeNode(@NotNull OSXFile.SystemItemInfo info, @Nullable Icon icon) {
+    public SidebarTreeNode(@Nonnull OSXFile.SystemItemInfo info, @Nullable Icon icon) {
         this.info = info;
         this.name = info.getName();
         this.file = new File(info.getPath());
         this.icon = determineIcon(info.getIcon(), icon);
     }
 
-    private static @NotNull Icon determineIcon(@Nullable Icon systemIcon, @Nullable Icon icon) {
+    private static @Nonnull
+	Icon determineIcon(@Nullable Icon systemIcon, @Nullable Icon icon) {
         if (icon != null) {
             return icon;
         }
@@ -62,14 +68,16 @@ public class SidebarTreeNode
     /**
      * Return the name to display.
      */
-    @NotNull String getUserName() {
+    @Nonnull
+	String getUserName() {
         return name;
     }
 
     /**
      * Return the icon to display.
      */
-    @NotNull Icon getIcon(@NotNull AquaAppearance appearance) {
+    @Nonnull
+	Icon getIcon(@Nonnull AquaAppearance appearance) {
         if (appearance.isDark()) {
             if (darkIcon == null) {
                 Image im = AquaImageFactory.getProcessedImage(icon, AquaImageFactory.INVERT_FOR_DARK_MODE);
@@ -88,11 +96,12 @@ public class SidebarTreeNode
     /**
      * Return the basic icon. Used only to identify changes to the basic icon.
      */
-    @NotNull Icon getBasicIcon() {
+    @Nonnull
+	Icon getBasicIcon() {
         return icon;
     }
 
-    public void update(@NotNull OSXFile.SystemItemInfo info) {
+    public void update(@Nonnull OSXFile.SystemItemInfo info) {
         this.info = info;
         if (info.getIcon() != null) {
             this.icon = info.getIcon();

@@ -10,7 +10,7 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Identify contextually determined foreground and background colors.
@@ -18,17 +18,20 @@ import org.jetbrains.annotations.NotNull;
 
 public class BasicContextualColorsImpl implements BasicContextualColors {
 
-    protected @NotNull ContextualColor background;
-    protected @NotNull ContextualColor foreground;
+    protected @Nonnull
+	ContextualColor background;
+    protected @Nonnull
+	ContextualColor foreground;
 
-    public BasicContextualColorsImpl(@NotNull ContextualColor background,
-                                     @NotNull ContextualColor foreground) {
+    public BasicContextualColorsImpl(@Nonnull ContextualColor background,
+                                     @Nonnull ContextualColor foreground) {
         this.background = background;
         this.foreground = foreground;
     }
 
     @Override
-    public @NotNull Color getBackground(@NotNull AppearanceContext context) {
+    public @Nonnull
+	Color getBackground(@Nonnull AppearanceContext context) {
         AquaColors.setupDebugging(this);
         Color color = background.get(context);
         AquaColors.clearDebugging();
@@ -36,7 +39,8 @@ public class BasicContextualColorsImpl implements BasicContextualColors {
     }
 
     @Override
-    public @NotNull Color getForeground(@NotNull AppearanceContext context) {
+    public @Nonnull
+	Color getForeground(@Nonnull AppearanceContext context) {
         AquaColors.setupDebugging(this);
         Color color = foreground.get(context);
         AquaColors.clearDebugging();

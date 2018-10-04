@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A basic renderer that corrects the output of a specified basic renderer for toolbar controls in dark mode.
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.*;
 public class AdjustDarkToolbarButtonRenderer
 	extends PostProcessedRenderer
 {
-	public AdjustDarkToolbarButtonRenderer(@NotNull BasicRenderer r)
+	public AdjustDarkToolbarButtonRenderer(@Nonnull BasicRenderer r)
 	{
 		super(r);
 	}

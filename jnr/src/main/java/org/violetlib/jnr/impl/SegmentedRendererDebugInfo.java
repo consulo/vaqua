@@ -11,7 +11,7 @@ package org.violetlib.jnr.impl;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nullable;
 
 /**
 	Information for debugging a segmented control renderer.
@@ -19,9 +19,12 @@ import org.jetbrains.annotations.*;
 
 public class SegmentedRendererDebugInfo
 {
-	protected final @Nullable Image fullImage;
-	protected final @Nullable Rectangle2D controlBounds;
-	protected final @Nullable Rectangle2D[] segmentBounds;
+	protected final @Nullable
+	Image fullImage;
+	protected final @Nullable
+	Rectangle2D controlBounds;
+	protected final @Nullable
+	Rectangle2D[] segmentBounds;
 
 	public SegmentedRendererDebugInfo(@Nullable Image fullImage,
 																		@Nullable Rectangle2D controlBounds,
@@ -37,7 +40,8 @@ public class SegmentedRendererDebugInfo
 		@return the image, or null if none.
 	*/
 
-	public @Nullable Image getFullImage()
+	public @Nullable
+	Image getFullImage()
 	{
 		return fullImage;
 	}
@@ -47,7 +51,8 @@ public class SegmentedRendererDebugInfo
 		@return the bounds, or null if not known.
 	*/
 
-	public @Nullable Rectangle2D getControlBounds()
+	public @Nullable
+	Rectangle2D getControlBounds()
 	{
 		return controlBounds;
 	}
@@ -56,7 +61,8 @@ public class SegmentedRendererDebugInfo
 		Return the bounds of the individual segments.
 	*/
 
-	public @Nullable Rectangle2D[] getSegmentBounds()
+	public @Nullable
+	Rectangle2D[] getSegmentBounds()
 	{
 		return segmentBounds;
 	}

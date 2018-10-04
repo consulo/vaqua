@@ -18,9 +18,9 @@ import org.violetlib.jnr.impl.JNRUtils;
 import org.violetlib.jnr.impl.MultiResolutionRendererDescription;
 import org.violetlib.jnr.impl.RendererDescription;
 
-import org.jetbrains.annotations.*;
-
 import static org.violetlib.jnr.impl.JNRUtils.*;
+
+import javax.annotation.Nonnull;
 
 /**
 	Renderer descriptions for NSView based rendering on macOS 10.10 and later.
@@ -30,7 +30,8 @@ public class ViewRendererDescriptions
 	extends RendererDescriptionsBase
 {
 	@Override
-	public @NotNull RendererDescription getSegmentedButtonRendererDescription(@NotNull SegmentedButtonConfiguration g)
+	public @Nonnull
+	RendererDescription getSegmentedButtonRendererDescription(@Nonnull SegmentedButtonConfiguration g)
 	{
 		int platformVersion = JNRPlatformUtils.getPlatformVersion();
 
@@ -53,8 +54,9 @@ public class ViewRendererDescriptions
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NotNull RendererDescription getSegmentedButtonRendererDescription13new(@NotNull SegmentedButtonConfiguration g,
-																																										@NotNull RendererDescription rd)
+	protected @Nonnull
+	RendererDescription getSegmentedButtonRendererDescription13new(@Nonnull SegmentedButtonConfiguration g,
+																   @Nonnull RendererDescription rd)
 	{
 		// Adjust renderer descriptions for macOS 10.13 new rendering
 
@@ -97,8 +99,9 @@ public class ViewRendererDescriptions
 		return JNRUtils.changeRendererDescription(rd, NO_CHANGE, y, NO_CHANGE, NO_CHANGE);
 	}
 
-	protected @NotNull RendererDescription getSegmentedButtonRendererDescription13old(@NotNull SegmentedButtonConfiguration g,
-																																										@NotNull RendererDescription rd)
+	protected @Nonnull
+	RendererDescription getSegmentedButtonRendererDescription13old(@Nonnull SegmentedButtonConfiguration g,
+																   @Nonnull RendererDescription rd)
 	{
 		// Adjust renderer descriptions for macOS 10.13 old rendering
 
@@ -147,8 +150,9 @@ public class ViewRendererDescriptions
 		return JNRUtils.changeRendererDescription(rd, NO_CHANGE, y, NO_CHANGE, NO_CHANGE);
 	}
 
-	protected @NotNull RendererDescription getSegmentedButtonRendererDescription14old(@NotNull SegmentedButtonConfiguration g,
-																																										@NotNull RendererDescription rd)
+	protected @Nonnull
+	RendererDescription getSegmentedButtonRendererDescription14old(@Nonnull SegmentedButtonConfiguration g,
+																   @Nonnull RendererDescription rd)
 	{
 		// Adjust renderer descriptions for macOS 10.14 old rendering
 
@@ -197,8 +201,9 @@ public class ViewRendererDescriptions
 		return JNRUtils.changeRendererDescription(rd, NO_CHANGE, y, NO_CHANGE, NO_CHANGE);
 	}
 
-	protected @NotNull RendererDescription getSegmentedButtonRendererDescription14new(@NotNull SegmentedButtonConfiguration g,
-																																										@NotNull RendererDescription rd)
+	protected @Nonnull
+	RendererDescription getSegmentedButtonRendererDescription14new(@Nonnull SegmentedButtonConfiguration g,
+																   @Nonnull RendererDescription rd)
 	{
 		// Adjust renderer descriptions for macOS 10.14 new rendering
 
@@ -242,7 +247,8 @@ public class ViewRendererDescriptions
 	}
 
 	@Override
-	public @NotNull RendererDescription getComboBoxRendererDescription(@NotNull ComboBoxConfiguration g)
+	public @Nonnull
+	RendererDescription getComboBoxRendererDescription(@Nonnull ComboBoxConfiguration g)
 	{
 		AquaUIPainter.ComboBoxWidget bw = g.getWidget();
 		AquaUIPainter.Size sz = g.getSize();
@@ -287,7 +293,8 @@ public class ViewRendererDescriptions
 	}
 
 	@Override
-	public @NotNull RendererDescription getSplitPaneDividerRendererDescription(@NotNull SplitPaneDividerConfiguration g)
+	public @Nonnull
+	RendererDescription getSplitPaneDividerRendererDescription(@Nonnull SplitPaneDividerConfiguration g)
 	{
 		AquaUIPainter.Orientation o = g.getOrientation();
 

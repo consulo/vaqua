@@ -10,8 +10,8 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 import static org.violetlib.aqua.EffectName.*;
@@ -23,9 +23,11 @@ import static org.violetlib.jnr.aqua.AquaUIPainter.State.*;
 
 public class AquaContextualColorImpl implements ContextualColor {
 
-    protected final @NotNull String colorName;
+    protected final @Nonnull
+	String colorName;
 
-    protected @NotNull String basicName;
+    protected @Nonnull
+	String basicName;
     protected @Nullable String rolloverName;
     protected @Nullable String pressedName;
     protected @Nullable String iconPressedName;
@@ -35,30 +37,34 @@ public class AquaContextualColorImpl implements ContextualColor {
     protected @Nullable String activeDefaultName;   // used for default buttons and focused container cells
 
     protected @Nullable String selectedName;
-    protected @Nullable String pressedSelectedName;
+    protected @Nullable
+	String pressedSelectedName;
     protected @Nullable String inactiveSelectedName;
     protected @Nullable String disabledSelectedName;
     protected @Nullable String inactiveDisabledSelectedName;
-    protected @Nullable String activeDefaultSelectedName;
+    protected @Nullable
+	String activeDefaultSelectedName;
 
     // Most components use the same color when inactive or disabled.
     // In this case, either the disabled or inactive color name may be set.
 
-    public AquaContextualColorImpl(@NotNull String colorName, @NotNull String basicName) {
+    public AquaContextualColorImpl(@Nonnull String colorName, @Nonnull String basicName) {
         this.colorName = colorName;
         this.basicName = basicName;
     }
 
     @Override
-    public @NotNull String getColorName() {
+    public @Nonnull
+	String getColorName() {
         return colorName;
     }
 
-    public @NotNull String getBasicName() {
+    public @Nonnull
+	String getBasicName() {
         return basicName;
     }
 
-    public void setBasicName(@NotNull String basicName) {
+    public void setBasicName(@Nonnull String basicName) {
         this.basicName = basicName;
     }
 
@@ -66,7 +72,7 @@ public class AquaContextualColorImpl implements ContextualColor {
         setAllNames(basicName);
     }
 
-    public void setAllNames(@NotNull String name) {
+    public void setAllNames(@Nonnull String name) {
         this.basicName = name;
         this.rolloverName = name + "_rollover";
         this.pressedName = name + "_pressed";
@@ -79,7 +85,7 @@ public class AquaContextualColorImpl implements ContextualColor {
         setAllSelectedNames(selectedName);
     }
 
-    public void setAllSelectedNames(@NotNull String selectedName) {
+    public void setAllSelectedNames(@Nonnull String selectedName) {
         this.selectedName = selectedName;
         this.pressedSelectedName = selectedName + "_pressed";
         this.inactiveSelectedName = selectedName + "_inactive";
@@ -152,7 +158,8 @@ public class AquaContextualColorImpl implements ContextualColor {
         this.disabledName = disabledName;
     }
 
-    public @Nullable String getInactiveSelectedName() {
+    public @Nullable
+	String getInactiveSelectedName() {
         return inactiveSelectedName;
     }
 
@@ -176,7 +183,8 @@ public class AquaContextualColorImpl implements ContextualColor {
         this.selectedName = selectedName;
     }
 
-    public @Nullable String getActiveDefaultName() {
+    public @Nullable
+	String getActiveDefaultName() {
         return activeDefaultName;
     }
 
@@ -193,7 +201,8 @@ public class AquaContextualColorImpl implements ContextualColor {
     }
 
     @Override
-    public @NotNull Color get(@NotNull AppearanceContext context) {
+    public @Nonnull
+	Color get(@Nonnull AppearanceContext context) {
 
         AquaAppearance appearance = context.getAppearance();
         AquaUIPainter.State state = context.getState();

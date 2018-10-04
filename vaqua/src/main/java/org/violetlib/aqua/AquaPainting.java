@@ -8,7 +8,8 @@
 
 package org.violetlib.aqua;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import org.violetlib.jnr.aqua.AquaNativeRendering;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
@@ -17,7 +18,8 @@ import org.violetlib.jnr.aqua.AquaUIPainter;
  */
 public class AquaPainting {
 
-    public static @NotNull AquaUIPainter create() {
+    public static @Nonnull
+	AquaUIPainter create() {
         return AquaNativeRendering.createPainter();
     }
 }

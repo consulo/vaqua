@@ -10,7 +10,7 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Container contextual colors support row specific values. These objects are stateful. They must be configured before
@@ -27,9 +27,12 @@ public interface ContainerContextualColors extends BasicContextualColors {
 
     boolean isStriped();
 
-    @NotNull Color getBackground(@NotNull AppearanceContext context);
+    @Nonnull
+	Color getBackground(@Nonnull AppearanceContext context);
 
-    @NotNull Color getForeground(@NotNull AppearanceContext context);
+    @Nonnull
+	Color getForeground(@Nonnull AppearanceContext context);
 
-    @NotNull Color getGrid(@NotNull AppearanceContext context);
+    @Nonnull
+	Color getGrid(@Nonnull AppearanceContext context);
 }

@@ -9,11 +9,12 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
 /**
  * This policy determines which components should be displayed as cell renderers or editors. A component may display
@@ -48,7 +49,8 @@ public class AquaCellEditorPolicy {
      * Determine whether a given component is being used as a cell renderer or editor.
      * @return the cell status, or null if the component is not being used as a cell renderer or editor.
      */
-    public @Nullable CellStatus getCellStatus(@NotNull JComponent c) {
+    public @Nullable
+	CellStatus getCellStatus(@Nonnull JComponent c) {
 
         Object isSpecifiedCellEditor = c.getClientProperty(IS_CELL_EDITOR_PROPERTY);
         if (Boolean.FALSE.equals(isSpecifiedCellEditor)) {
@@ -58,7 +60,8 @@ public class AquaCellEditorPolicy {
         return getCellStatusFromParent(c.getParent());
     }
 
-    private @Nullable CellStatus getCellStatusFromParent(@Nullable Container parent) {
+    private @Nullable
+	CellStatus getCellStatusFromParent(@Nullable Container parent) {
         if (parent == null) {
             return null;
         }

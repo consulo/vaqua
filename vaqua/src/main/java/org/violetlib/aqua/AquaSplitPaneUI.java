@@ -33,8 +33,8 @@
 
 package org.violetlib.aqua;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.SplitPaneDividerLayoutConfiguration;
@@ -72,8 +72,10 @@ public class AquaSplitPaneUI extends BasicSplitPaneUI
     private boolean ignoreDividerLocationChange;
     private boolean isInLayout;
 
-    protected @NotNull BasicContextualColors colors;
-    protected @Nullable AppearanceContext appearanceContext;
+    protected @Nonnull
+	BasicContextualColors colors;
+    protected @Nullable
+	AppearanceContext appearanceContext;
 
     public AquaSplitPaneUI() {
         colors = AquaColors.CLEAR_CONTROL_COLORS;
@@ -115,16 +117,16 @@ public class AquaSplitPaneUI extends BasicSplitPaneUI
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance, (JSplitPane)c);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         // not active state sensitive
     }
 
-    protected void configureAppearanceContext(@Nullable AquaAppearance appearance, @NotNull JSplitPane s) {
+    protected void configureAppearanceContext(@Nullable AquaAppearance appearance, @Nonnull JSplitPane s) {
         if (appearance == null) {
             appearance = AppearanceManager.ensureAppearance(s);
         }

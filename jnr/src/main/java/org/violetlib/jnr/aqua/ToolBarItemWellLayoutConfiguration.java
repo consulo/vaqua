@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.aqua;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A configuration for a tool bar item well. For internal use.
@@ -18,7 +18,8 @@ public class ToolBarItemWellLayoutConfiguration
 	extends LayoutConfiguration
 {
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return "Tool Bar Item Well";
 	}

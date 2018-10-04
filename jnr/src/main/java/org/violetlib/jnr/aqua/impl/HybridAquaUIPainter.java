@@ -12,7 +12,8 @@ import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.Painter;
 import org.violetlib.jnr.aqua.*;
@@ -26,17 +27,22 @@ import org.violetlib.vappearances.VAppearance;
 public class HybridAquaUIPainter
 	implements AquaUIPainter
 {
-	protected final @NotNull AquaUIPainter viewPainter;
-	protected final @NotNull AquaUIPainter coreUIPainter;
-	protected final @Nullable AquaUIPainter jrsPainter;
+	protected final @Nonnull
+	AquaUIPainter viewPainter;
+	protected final @Nonnull
+	AquaUIPainter coreUIPainter;
+	protected final @Nullable
+	AquaUIPainter jrsPainter;
 
-	private final @NotNull AquaUILayoutInfo layout;
+	private final @Nonnull
+	AquaUILayoutInfo layout;
 	private int w;
 	private int h;
-	private @Nullable VAppearance appearance;
+	private @Nullable
+	VAppearance appearance;
 
-	public HybridAquaUIPainter(@NotNull AquaUIPainter viewPainter,
-														 @NotNull AquaUIPainter coreUIPainter,
+	public HybridAquaUIPainter(@Nonnull AquaUIPainter viewPainter,
+														 @Nonnull AquaUIPainter coreUIPainter,
 														 @Nullable AquaUIPainter jrsPainter)
 	{
 		this.viewPainter = viewPainter;
@@ -47,13 +53,14 @@ public class HybridAquaUIPainter
 	}
 
 	@Override
-	public @NotNull HybridAquaUIPainter copy()
+	public @Nonnull
+	HybridAquaUIPainter copy()
 	{
 		return new HybridAquaUIPainter(viewPainter, coreUIPainter, jrsPainter);
 	}
 
 	@Override
-	public void configureAppearance(@NotNull VAppearance appearance)
+	public void configureAppearance(@Nonnull VAppearance appearance)
 	{
 		this.appearance = appearance;
 	}
@@ -66,7 +73,8 @@ public class HybridAquaUIPainter
 	}
 
 	@Override
-	public @NotNull Painter getPainter(@NotNull Configuration g)
+	public @Nonnull
+	Painter getPainter(@Nonnull Configuration g)
 		throws UnsupportedOperationException
 	{
 		AquaUIPainter p = select(g);
@@ -77,7 +85,8 @@ public class HybridAquaUIPainter
 		return p.getPainter(g);
 	}
 
-	protected @NotNull AquaUIPainter select(@NotNull Configuration g)
+	protected @Nonnull
+	AquaUIPainter select(@Nonnull Configuration g)
 	{
 		// Prefer the JSR painter if defined because it is faster, except where it is not accurate.
 		// Otherwise the core UI painter except where it falls down and the view painter is better.
@@ -164,78 +173,86 @@ public class HybridAquaUIPainter
 	}
 
 	@Override
-	public @NotNull AquaUILayoutInfo getLayoutInfo()
+	public @Nonnull
+	AquaUILayoutInfo getLayoutInfo()
 	{
 		return layout;
 	}
 
 	@Override
-	public @Nullable Shape getOutline(@NotNull LayoutConfiguration g)
+	public @Nullable
+	Shape getOutline(@Nonnull LayoutConfiguration g)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getOutline(g);
 	}
 
 	@Override
-	public @NotNull Rectangle2D getComboBoxEditorBounds(@NotNull ComboBoxLayoutConfiguration g)
+	public @Nonnull
+	Rectangle2D getComboBoxEditorBounds(@Nonnull ComboBoxLayoutConfiguration g)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getComboBoxEditorBounds(g);
 	}
 
 	@Override
-	public @NotNull Rectangle2D getComboBoxIndicatorBounds(@NotNull ComboBoxLayoutConfiguration g)
+	public @Nonnull
+	Rectangle2D getComboBoxIndicatorBounds(@Nonnull ComboBoxLayoutConfiguration g)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getComboBoxIndicatorBounds(g);
 	}
 
 	@Override
-	public @NotNull Rectangle2D getPopupButtonContentBounds(@NotNull PopupButtonLayoutConfiguration g)
+	public @Nonnull
+	Rectangle2D getPopupButtonContentBounds(@Nonnull PopupButtonLayoutConfiguration g)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getPopupButtonContentBounds(g);
 	}
 
 	@Override
-	public @NotNull Rectangle2D getSliderThumbBounds(@NotNull SliderLayoutConfiguration g, double thumbPosition)
+	public @Nonnull
+	Rectangle2D getSliderThumbBounds(@Nonnull SliderLayoutConfiguration g, double thumbPosition)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getSliderThumbBounds(g, thumbPosition);
 	}
 
 	@Override
-	public double getSliderThumbPosition(@NotNull SliderLayoutConfiguration g, int x, int y)
+	public double getSliderThumbPosition(@Nonnull SliderLayoutConfiguration g, int x, int y)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getSliderThumbPosition(g, x, y);
 	}
 
 	@Override
-	public float getScrollBarThumbPosition(@NotNull ScrollBarThumbLayoutConfiguration g, boolean useExtent)
+	public float getScrollBarThumbPosition(@Nonnull ScrollBarThumbLayoutConfiguration g, boolean useExtent)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getScrollBarThumbPosition(g, useExtent);
 	}
 
 	@Override
-	public int getScrollBarThumbHit(@NotNull ScrollBarThumbConfiguration g)
+	public int getScrollBarThumbHit(@Nonnull ScrollBarThumbConfiguration g)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getScrollBarThumbHit(g);
 	}
 
 	@Override
-	public @NotNull Rectangle2D getSliderLabelBounds(@NotNull SliderLayoutConfiguration g,
-																									 double thumbPosition,
-																									 @NotNull Dimension size)
+	public @Nonnull
+	Rectangle2D getSliderLabelBounds(@Nonnull SliderLayoutConfiguration g,
+									 double thumbPosition,
+									 @Nonnull Dimension size)
 	{
 		viewPainter.configure(w, h);
 		return viewPainter.getSliderLabelBounds(g, thumbPosition, size);
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String s = "Hybrid " + viewPainter + "+" + coreUIPainter;
 		if (jrsPainter != null) {

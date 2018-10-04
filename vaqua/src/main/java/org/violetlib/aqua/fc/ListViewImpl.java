@@ -16,6 +16,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -27,7 +29,6 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.*;
 import org.violetlib.treetable.*;
 
@@ -255,9 +256,10 @@ public class ListViewImpl extends ListView {
     }
 
     protected class MyCellRenderer extends DefaultTreeTableCellRenderer {
-        protected @NotNull String textColorName;
+        protected @Nonnull
+		String textColorName;
 
-        public MyCellRenderer(int alignment, @NotNull String textColorName) {
+        public MyCellRenderer(int alignment, @Nonnull String textColorName) {
             this.textColorName = textColorName;
             setHorizontalAlignment(alignment);
             setFont(labelFont);

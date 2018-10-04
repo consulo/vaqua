@@ -38,7 +38,7 @@ import javax.swing.*;
 import javax.swing.plaf.InsetsUIResource;
 import javax.swing.text.JTextComponent;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.aqua.AquaUtils.RecyclableSingletonFromDefaultConstructor;
 import org.violetlib.jnr.*;

@@ -11,7 +11,7 @@ package org.violetlib.vappearances;
 import java.awt.Color;
 import java.util.Map;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
   * An object that represents a particular system appearance along with the system color values at a particular time.
@@ -46,7 +46,8 @@ public interface VAppearance {
       * @return the appearance name.
     */
 
-    @NotNull String getName();
+    @Nonnull
+	String getName();
 
     /**
       * Identify a dark system appearance.
@@ -67,5 +68,6 @@ public interface VAppearance {
       * Return a non-modifiable map that provides the values of known system colors.
     */
 
-    @NotNull Map<String,Color> getColors();
+    @Nonnull
+	Map<String,Color> getColors();
 }

@@ -37,6 +37,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -44,8 +46,7 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicScrollPaneUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 public class AquaScrollPaneUI extends BasicScrollPaneUI implements AquaUtilControlSize.Sizeable, AquaComponentUI {
@@ -90,7 +91,8 @@ public class AquaScrollPaneUI extends BasicScrollPaneUI implements AquaUtilContr
     /** the layout manager used for legacy scroll bars */
     protected LayoutManager legacyLayoutManager;
 
-    protected @Nullable AppearanceContext appearanceContext;
+    protected @Nullable
+	AppearanceContext appearanceContext;
 
     protected PropertyChangeListener propertyChangeListener;
     protected ChangeListener preferenceChangeListener;
@@ -165,12 +167,12 @@ public class AquaScrollPaneUI extends BasicScrollPaneUI implements AquaUtilContr
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(null);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
     }
 
     protected void configureAppearanceContext(@Nullable AquaAppearance appearance) {
@@ -183,7 +185,8 @@ public class AquaScrollPaneUI extends BasicScrollPaneUI implements AquaUtilContr
         scrollpane.repaint();
     }
 
-    protected @NotNull AquaUIPainter.State getState() {
+    protected @Nonnull
+	AquaUIPainter.State getState() {
         return AquaUIPainter.State.ACTIVE;
     }
 

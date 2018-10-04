@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.SegmentedButtonWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -49,12 +50,16 @@ public class SegmentedButtonConfiguration
 	extends SegmentedButtonLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State state;
+	private final @Nonnull
+	State state;
 	private final boolean isSelected;
 	private final boolean isFocused;
-	private final @NotNull Direction d;	// the direction that the "top" of the button faces
-	private final @NotNull DividerState leftDividerState;
-	private final @NotNull DividerState rightDividerState;
+	private final @Nonnull
+	Direction d;	// the direction that the "top" of the button faces
+	private final @Nonnull
+	DividerState leftDividerState;
+	private final @Nonnull
+	DividerState rightDividerState;
 
 	/**
 		The display configuration of a divider between two segments in a segmented control.
@@ -67,15 +72,15 @@ public class SegmentedButtonConfiguration
 		SELECTED
 	}
 
-	public SegmentedButtonConfiguration(@NotNull SegmentedButtonWidget bw,
-																			@NotNull Size size,
-																			@NotNull State state,
+	public SegmentedButtonConfiguration(@Nonnull SegmentedButtonWidget bw,
+																			@Nonnull Size size,
+																			@Nonnull State state,
 																			boolean isSelected,
 																			boolean isFocused,
-																			@NotNull Direction d,
-																			@NotNull Position position,
-																			@NotNull DividerState leftDividerState,
-																			@NotNull DividerState rightDividerState)
+																			@Nonnull Direction d,
+																			@Nonnull Position position,
+																			@Nonnull DividerState leftDividerState,
+																			@Nonnull DividerState rightDividerState)
 	{
 		super(bw, size, position);
 
@@ -87,24 +92,26 @@ public class SegmentedButtonConfiguration
 		this.rightDividerState = rightDividerState;
 	}
 
-	public SegmentedButtonConfiguration(@NotNull SegmentedButtonLayoutConfiguration g,
-																			@NotNull State state,
+	public SegmentedButtonConfiguration(@Nonnull SegmentedButtonLayoutConfiguration g,
+																			@Nonnull State state,
 																			boolean isSelected,
 																			boolean isFocused,
-																			@NotNull Direction d,
-																			@NotNull DividerState leftDividerState,
-																			@NotNull DividerState rightDividerState)
+																			@Nonnull Direction d,
+																			@Nonnull DividerState leftDividerState,
+																			@Nonnull DividerState rightDividerState)
 	{
 		this(g.getWidget(), g.getSize(), state, isSelected, isFocused, d, g.getPosition(), leftDividerState, rightDividerState);
 	}
 
-	public @NotNull SegmentedButtonConfiguration withWidget(@NotNull SegmentedButtonWidget widget)
+	public @Nonnull
+	SegmentedButtonConfiguration withWidget(@Nonnull SegmentedButtonWidget widget)
 	{
 		return new SegmentedButtonConfiguration(widget,
 			getSize(), state, isSelected, isFocused, d, getPosition(), leftDividerState, rightDividerState);
 	}
 
-	public @NotNull State getState()
+	public @Nonnull
+	State getState()
 	{
 		return state;
 	}
@@ -119,17 +126,20 @@ public class SegmentedButtonConfiguration
 		return isFocused;
 	}
 
-	public @NotNull Direction getDirection()
+	public @Nonnull
+	Direction getDirection()
 	{
 		return d;
 	}
 
-	public @NotNull DividerState getLeftDividerState()
+	public @Nonnull
+	DividerState getLeftDividerState()
 	{
 		return leftDividerState;
 	}
 
-	public @NotNull DividerState getRightDividerState()
+	public @Nonnull
+	DividerState getRightDividerState()
 	{
 		return rightDividerState;
 	}
@@ -156,7 +166,8 @@ public class SegmentedButtonConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String fs = isFocused ? " focused" : "";
 		String ss = isSelected ? "S" : "-";

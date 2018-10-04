@@ -11,7 +11,8 @@ package org.violetlib.jnr.eval;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 	A tool that can be useful for determining the layout properties of native rendering. Note that although automatic
@@ -21,7 +22,8 @@ import org.jetbrains.annotations.*;
 
 public class ImageAnalyzer
 {
-	private final @NotNull BufferedImage r;
+	private final @Nonnull
+	BufferedImage r;
 	private final int width;
 	private final int height;
 	private final int minX;
@@ -34,7 +36,7 @@ public class ImageAnalyzer
 		@param r The image.
 	*/
 
-	public ImageAnalyzer(@NotNull BufferedImage r)
+	public ImageAnalyzer(@Nonnull BufferedImage r)
 	{
 		this.r = r;
 
@@ -53,7 +55,8 @@ public class ImageAnalyzer
 		@return the bounds, or null if there are no non-transparent pixels.
 	*/
 
-	public @Nullable Rectangle getEffectiveBounds()
+	public @Nullable
+	Rectangle getEffectiveBounds()
 	{
 		if (width == 0 || height == 0) {
 			return null;

@@ -1,4 +1,4 @@
-# VAqua and JNR library
+# VAqua & JNR & VAppearances libraries [![Build Status](https://travis-ci.org/consulo/vaqua.svg?branch=master)](https://travis-ci.org/consulo/vaqua)
 
 
 Source from https://violetlib.org/vaqua/overview.html
@@ -17,9 +17,3 @@ Author: Alan Snyder (https://github.com/cbfiddle)
 | Before        | After        |
 | ------------- |:-------------:|
 | ![](/images/listui-no-vibrant.png)    | ![](/images/listui-vibrant.png) |
-
-## Transparent title bar allow zero top margin
-
-| Before        | After        |
-| ------------- |:-------------:|
-| ![](/images/transparentTitleBar-no-top-margin.png)    | ![](/images/transparentTitleBar-top-margin-zero.png) |

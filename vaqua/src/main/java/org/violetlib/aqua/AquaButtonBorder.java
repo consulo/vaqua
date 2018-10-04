@@ -34,11 +34,12 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.plaf.UIResource;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.aqua.AquaUtils.RecyclableSingletonFromDefaultConstructor;
 import org.violetlib.aqua.fc.EmptyIcon;
@@ -154,7 +155,7 @@ public abstract class AquaButtonBorder extends AquaBorder implements BackgroundP
         return State.ACTIVE;
     }
 
-    private boolean isTextured(@NotNull Object widget) {
+    private boolean isTextured(@Nonnull Object widget) {
         if (widget instanceof AquaUIPainter.ButtonWidget) {
             AquaUIPainter.ButtonWidget bw = (AquaUIPainter.ButtonWidget) widget;
             return bw.isTextured();
@@ -196,7 +197,8 @@ public abstract class AquaButtonBorder extends AquaBorder implements BackgroundP
         }
     }
 
-    public @NotNull Color getForegroundColor(AbstractButton b, boolean isIcon) {
+    public @Nonnull
+	Color getForegroundColor(AbstractButton b, boolean isIcon) {
         AquaButtonExtendedTypes.WidgetInfo info = getWidgetInfo(b);
         boolean isEnabled = b.getModel().isEnabled();
         boolean useNonexclusive = shouldUseNonexclusiveStyle(b, info);
@@ -222,7 +224,7 @@ public abstract class AquaButtonBorder extends AquaBorder implements BackgroundP
                 && !isButtonInGroup(b);
     }
 
-    protected boolean isButtonInGroup(@NotNull AbstractButton b) {
+    protected boolean isButtonInGroup(@Nonnull AbstractButton b) {
         ButtonModel m = b.getModel();
         if (m instanceof DefaultButtonModel) {
             DefaultButtonModel dm = (DefaultButtonModel) m;
@@ -334,13 +336,15 @@ public abstract class AquaButtonBorder extends AquaBorder implements BackgroundP
     /**
      * Create a special icon to use for a button. The icon rendering may be context dependent.
      */
-    public @Nullable AquaButtonIcon createIcon(AbstractButton b, boolean isTemplate) {
+    public @Nullable
+	AquaButtonIcon createIcon(AbstractButton b, boolean isTemplate) {
         return new AquaButtonIcon(b, isTemplate, keySupplier);
     }
 
     private class MyImageOperatorSupplier implements AquaButtonIcon.ImageOperatorSupplier {
         @Override
-        public @Nullable Object getCurrentImageProcessingOperator(@NotNull AbstractButton b, boolean isTemplate) {
+        public @Nullable
+		Object getCurrentImageProcessingOperator(@Nonnull AbstractButton b, boolean isTemplate) {
             AquaButtonExtendedTypes.WidgetInfo info = getWidgetInfo(b);
             State state = getState(b);
             AquaUIPainter.ButtonState bs = getButtonState(b);
@@ -475,7 +479,7 @@ public abstract class AquaButtonBorder extends AquaBorder implements BackgroundP
         return null;
     }
 
-    private boolean computeIsFocused(@NotNull AquaUIPainter.State state, @NotNull AbstractButton b) {
+    private boolean computeIsFocused(@Nonnull AquaUIPainter.State state, @Nonnull AbstractButton b) {
         if (b.isFocusPainted() && b.hasFocus()) {
             return state != State.DISABLED
                     && state != State.INACTIVE

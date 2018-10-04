@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.ComboBoxWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -25,14 +26,15 @@ public class ComboBoxConfiguration
 	extends ComboBoxLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State state;
+	private final @Nonnull
+	State state;
 	private final boolean isFocused;
 
-	public ComboBoxConfiguration(@NotNull ComboBoxWidget widget,
-															 @NotNull Size size,
-															 @NotNull State state,
+	public ComboBoxConfiguration(@Nonnull ComboBoxWidget widget,
+															 @Nonnull Size size,
+															 @Nonnull State state,
 															 boolean isFocused,
-															 @NotNull UILayoutDirection ld)
+															 @Nonnull UILayoutDirection ld)
 	{
 		super(widget, size, ld);
 
@@ -40,12 +42,13 @@ public class ComboBoxConfiguration
 		this.state = state;
 	}
 
-	public ComboBoxConfiguration(@NotNull ComboBoxLayoutConfiguration g, @NotNull State state, boolean isFocused)
+	public ComboBoxConfiguration(@Nonnull ComboBoxLayoutConfiguration g, @Nonnull State state, boolean isFocused)
 	{
 		this(g.getWidget(), g.getSize(), state, isFocused, g.getLayoutDirection());
 	}
 
-	public @NotNull State getState()
+	public @Nonnull
+	State getState()
 	{
 		return state;
 	}
@@ -72,7 +75,8 @@ public class ComboBoxConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String fs = isFocused ? " focused" : "";
 		return super.toString() + " " + state + fs;

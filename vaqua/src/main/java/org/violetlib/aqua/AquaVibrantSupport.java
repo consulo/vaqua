@@ -11,10 +11,10 @@ package org.violetlib.aqua;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
 
 import static org.violetlib.aqua.AquaUtils.execute;
 
@@ -146,7 +146,7 @@ public class AquaVibrantSupport {
      * Install support for vibrant background styles on a component.
      * @param c The component.
      */
-    public static void installVibrantStyle(@NotNull JComponent c) {
+    public static void installVibrantStyle(@Nonnull JComponent c) {
         c.addPropertyChangeListener(vibrantStylePropertyChangeListener);
         updateVibrantStyle(c);
     }
@@ -155,7 +155,7 @@ public class AquaVibrantSupport {
      * Remove support for vibrant background styles on a component.
      * @param c The component.
      */
-    public static void uninstallVibrantStyle(@NotNull JComponent c) {
+    public static void uninstallVibrantStyle(@Nonnull JComponent c) {
         c.removePropertyChangeListener(vibrantStylePropertyChangeListener);
         internalUninstallVibrantStyle(c);
     }
@@ -164,7 +164,7 @@ public class AquaVibrantSupport {
      * Recognize and implement a change to the component background style client property.
      * @param evt The property change event.
      */
-    private static void processVibrantStyleChange(@NotNull PropertyChangeEvent evt) {
+    private static void processVibrantStyleChange(@Nonnull PropertyChangeEvent evt) {
         String prop = evt.getPropertyName();
         JComponent c = (JComponent) evt.getSource();
         if (BACKGROUND_STYLE_KEY.equals(prop)) {
@@ -176,7 +176,7 @@ public class AquaVibrantSupport {
      * Update the background style for a component to be consistent with its background style client property.
      * @param c The component.
      */
-    private static void updateVibrantStyle(@NotNull JComponent c) {
+    private static void updateVibrantStyle(@Nonnull JComponent c) {
         Object o = c.getClientProperty(BACKGROUND_STYLE_KEY);
         if (o instanceof String) {
             int style = AquaVibrantSupport.parseVibrantStyle(o, true);
@@ -194,7 +194,7 @@ public class AquaVibrantSupport {
      * @param style The vibrant style.
      * @param bt An optional selection bounds tracker, to support regions displaying a vibrant selection background.
      */
-    private static void installVibrantStyle(@NotNull JComponent c, int style, @Nullable SelectionBoundsTracker bt) {
+    private static void installVibrantStyle(@Nonnull JComponent c, int style, @Nullable SelectionBoundsTracker bt) {
         Object o = c.getClientProperty(AquaVibrantSupport.VIBRANT_EFFECTS_KEY);
         if (o != null) {
             if (o instanceof VisualEffectView) {
@@ -215,7 +215,7 @@ public class AquaVibrantSupport {
      * Uninstall the implementation of a vibrant component background.
      * @param c The component.
      */
-    private static void internalUninstallVibrantStyle(@NotNull JComponent c) {
+    private static void internalUninstallVibrantStyle(@Nonnull JComponent c) {
         Object o = c.getClientProperty(AquaVibrantSupport.VIBRANT_EFFECTS_KEY);
         if (o != null) {
             if (o instanceof VisualEffectView) {
@@ -232,7 +232,7 @@ public class AquaVibrantSupport {
      * @param w The window.
      * @param style The vibrant style.
      */
-    public static void addFullWindowVibrantView(@NotNull Window w, int style) {
+    public static void addFullWindowVibrantView(@Nonnull Window w, int style) {
         // If a window can never become active, then we should force visual effect view to display the active state.
         // Otherwise, there is no point to enabling a vibrant style.
 
@@ -259,7 +259,7 @@ public class AquaVibrantSupport {
      * Remove any full window sized visual effect view installed on the specified window.
      * @param w The window.
      */
-    public static void removeFullWindowVibrantView(@NotNull Window w) {
+    public static void removeFullWindowVibrantView(@Nonnull Window w) {
         JRootPane rp = AquaUtils.getRootPane(w);
         if (rp != null) {
             if (rp.getClientProperty(VIBRANT_WINDOW_KEY) != null) {
@@ -283,7 +283,7 @@ public class AquaVibrantSupport {
      * @return a peer that can be used to specify the bounds of the background view and the bounds of the regions
      *         displaying a vibrant selection background.
      */
-    public static VisualEffectViewPeer createVisualEffectView(@NotNull Window w, int style, boolean supportSelections) {
+    public static VisualEffectViewPeer createVisualEffectView(@Nonnull Window w, int style, boolean supportSelections) {
         long ptr = execute(w, wptr -> nativeCreateVisualEffectView(wptr, style, supportSelections));
         if (ptr != 0) {
             AquaUtils.enableTranslucency(w);
@@ -300,10 +300,11 @@ public class AquaVibrantSupport {
     }
 
     private static class VisualEffectViewPeerImpl implements VisualEffectViewPeer {
-        private final @NotNull Window w;
+        private final @Nonnull
+		Window w;
         private long nativeNSViewPointer;
 
-        public VisualEffectViewPeerImpl(@NotNull Window w, long nativeNSViewPointer) {
+        public VisualEffectViewPeerImpl(@Nonnull Window w, long nativeNSViewPointer) {
             this.w = w;
             this.nativeNSViewPointer = nativeNSViewPointer;
         }

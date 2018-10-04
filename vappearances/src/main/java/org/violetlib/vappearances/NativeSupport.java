@@ -16,7 +16,8 @@ import java.io.OutputStream;
 import java.security.AccessControlException;
 import java.util.StringTokenizer;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
   Manages the native support library.
@@ -67,14 +68,15 @@ import org.jetbrains.annotations.*;
         }
     }
 
-    private static void reportError(@NotNull String msg)
+    private static void reportError(@Nonnull String msg)
     {
         String p = System.mapLibraryName(libraryName);
         String s = "Unable to load library " + p + ": " + msg;
         System.err.println(s);
     }
 
-    private static @Nullable String findNativeLibrary(@NotNull Class<?> root, @NotNull String name)
+    private static @Nullable
+	String findNativeLibrary(@Nonnull Class<?> root, @Nonnull String name)
       throws IllegalArgumentException
     {
         File lf = findNativeLibraryOnPath(name);
@@ -124,7 +126,8 @@ import org.jetbrains.annotations.*;
         }
     }
 
-    private static @Nullable File findNativeLibraryOnPath(@NotNull String name)
+    private static @Nullable
+	File findNativeLibraryOnPath(@Nonnull String name)
       throws IllegalArgumentException
     {
         if (name.isEmpty()) {
@@ -154,7 +157,7 @@ import org.jetbrains.annotations.*;
         return null;
     }
 
-    private static void internalInitializeFile(@NotNull InputStream sin, @NotNull OutputStream sout)
+    private static void internalInitializeFile(@Nonnull InputStream sin, @Nonnull OutputStream sout)
       throws IOException
     {
         byte[] buf = new byte[1024];

@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.SliderWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Size;
@@ -23,15 +24,18 @@ import org.violetlib.jnr.aqua.AquaUIPainter.TickMarkPosition;
 public class SliderLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @NotNull SliderWidget sw;
-	private final @NotNull Size size;
+	private final @Nonnull
+	SliderWidget sw;
+	private final @Nonnull
+	Size size;
 	private final int numberOfTickMarks;
-	private final @NotNull TickMarkPosition position;
+	private final @Nonnull
+	TickMarkPosition position;
 
-	public SliderLayoutConfiguration(@NotNull SliderWidget sw,
-																	 @NotNull Size size,
+	public SliderLayoutConfiguration(@Nonnull SliderWidget sw,
+																	 @Nonnull Size size,
 																	 int numberOfTickMarks,
-																	 @NotNull TickMarkPosition position)
+																	 @Nonnull TickMarkPosition position)
 	{
 		// Ensure that the tick mark position is compatible with the type of slider.
 		if (sw == SliderWidget.SLIDER_HORIZONTAL || sw == SliderWidget.SLIDER_HORIZONTAL_RIGHT_TO_LEFT) {
@@ -50,7 +54,7 @@ public class SliderLayoutConfiguration
 		this.position = position;
 	}
 
-	protected SliderLayoutConfiguration(@NotNull SliderLayoutConfiguration g)
+	protected SliderLayoutConfiguration(@Nonnull SliderLayoutConfiguration g)
 	{
 		this.sw = g.getWidget();
 		this.size = g.getSize();
@@ -58,12 +62,14 @@ public class SliderLayoutConfiguration
 		this.position = g.getTickMarkPosition();
 	}
 
-	public @NotNull SliderWidget getWidget()
+	public @Nonnull
+	SliderWidget getWidget()
 	{
 		return sw;
 	}
 
-	public @NotNull Size getSize()
+	public @Nonnull
+	Size getSize()
 	{
 		return size;
 	}
@@ -78,7 +84,8 @@ public class SliderLayoutConfiguration
 		return numberOfTickMarks > 0;
 	}
 
-	public @NotNull TickMarkPosition getTickMarkPosition()
+	public @Nonnull
+	TickMarkPosition getTickMarkPosition()
 	{
 		return position;
 	}
@@ -109,7 +116,8 @@ public class SliderLayoutConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String ts = "";
 		if (numberOfTickMarks > 0) {

@@ -38,6 +38,8 @@ import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
@@ -48,8 +50,7 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.ComboPopup;
 import javax.swing.text.JTextComponent;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.aqua.ClientPropertyApplicator.Property;
 import org.violetlib.geom.ExpandableOutline;
@@ -88,9 +89,12 @@ public class AquaComboBoxUI extends BasicComboBoxUI
     protected Dimension cachedPreferredSize = new Dimension( 0, 0 );
     protected AquaComboBoxButton arrowButton;
     protected HierarchyListener hierarchyListener;
-    protected @NotNull BasicContextualColors colors;
-    protected @Nullable AppearanceContext appearanceContext;
-    protected @NotNull JList currentValueListBox;
+    protected @Nonnull
+	BasicContextualColors colors;
+    protected @Nullable
+	AppearanceContext appearanceContext;
+    protected @Nonnull
+	JList currentValueListBox;
     private final PropertyChangeListener propertyChangeListener = new AquaPropertyChangeListener();
     private final DocumentListener documentListener = new MyDocumentListener();
     private final HierarchyListener popupListener = new MyPopupListener();
@@ -99,7 +103,8 @@ public class AquaComboBoxUI extends BasicComboBoxUI
     protected Size sizeVariant;
     protected boolean isPopDown;
     protected String style;
-    protected @Nullable AquaCellEditorPolicy.CellStatus cellStatus;
+    protected @Nullable
+	AquaCellEditorPolicy.CellStatus cellStatus;
     protected boolean isTextured;
     protected boolean isToolbar;
 
@@ -236,12 +241,12 @@ public class AquaComboBoxUI extends BasicComboBoxUI
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 
@@ -374,7 +379,8 @@ public class AquaComboBoxUI extends BasicComboBoxUI
                 || w == BUTTON_COMBO_BOX_TEXTURED_TOOLBAR;
     }
 
-    private @Nullable AquaCellEditorPolicy.CellStatus determineCellStatus() {
+    private @Nullable
+	AquaCellEditorPolicy.CellStatus determineCellStatus() {
         return AquaCellEditorPolicy.getInstance().getCellStatus(comboBox);
     }
 
@@ -383,7 +389,7 @@ public class AquaComboBoxUI extends BasicComboBoxUI
      * @param icon The supplied icon.
      * @return the icon to use.
      */
-    public Icon getIcon(@NotNull Icon icon) {
+    public Icon getIcon(@Nonnull Icon icon) {
         State st = getState();
 
         if (icon instanceof ImageIcon) {
@@ -584,7 +590,7 @@ public class AquaComboBoxUI extends BasicComboBoxUI
         return false;
     }
 
-    protected void updateListSelectionFromEditor(@NotNull JTextComponent editor) {
+    protected void updateListSelectionFromEditor(@Nonnull JTextComponent editor) {
         String text = editor.getText();
         ListModel<Object> model = listBox.getModel();
         int items = model.getSize();
@@ -605,7 +611,7 @@ public class AquaComboBoxUI extends BasicComboBoxUI
     /**
      * Provide style related information to a cell renderer.
      */
-    protected void updateRendererStyle(@NotNull Component c) {
+    protected void updateRendererStyle(@Nonnull Component c) {
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             BasicContextualColors colors = getRendererStyleColors();
@@ -616,7 +622,7 @@ public class AquaComboBoxUI extends BasicComboBoxUI
     /**
      * Provide style related information to a cell editor.
      */
-    protected void updateEditorStyle(@NotNull Component c) {
+    protected void updateEditorStyle(@Nonnull Component c) {
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             BasicContextualColors colors = getEditorStyleColors();
@@ -627,7 +633,8 @@ public class AquaComboBoxUI extends BasicComboBoxUI
     /**
      * Return style dependent colors for rendering.
      */
-    protected @NotNull BasicContextualColors getRendererStyleColors() {
+    protected @Nonnull
+	BasicContextualColors getRendererStyleColors() {
         if (isToolbar) {
             return AquaColors.TEXTURED_TOOLBAR_COLORS;
         } else if (isTextured) {
@@ -640,7 +647,8 @@ public class AquaComboBoxUI extends BasicComboBoxUI
     /**
      * Return style dependent colors for editing.
      */
-    protected @NotNull BasicContextualColors getEditorStyleColors() {
+    protected @Nonnull
+	BasicContextualColors getEditorStyleColors() {
         if (isToolbar) {
             return AquaColors.TEXTURED_TOOLBAR_COLORS;
         } else if (isTextured) {
@@ -675,7 +683,7 @@ public class AquaComboBoxUI extends BasicComboBoxUI
         }
 
         @Override
-        protected void paintBackgroundSafely(@NotNull Graphics g, @Nullable Color background) {
+        protected void paintBackgroundSafely(@Nonnull Graphics g, @Nullable Color background) {
             int width = editor.getWidth();
             int height = editor.getHeight();
 
@@ -1050,7 +1058,7 @@ public class AquaComboBoxUI extends BasicComboBoxUI
     }
 
     protected static void triggerSelectionEvent(JComboBox<?> comboBox,
-                                                @Nullable AquaCellEditorPolicy.CellStatus cellStatus, ActionEvent e) {
+												@Nullable AquaCellEditorPolicy.CellStatus cellStatus, ActionEvent e) {
         if (!comboBox.isEnabled()) {
             return;
         }

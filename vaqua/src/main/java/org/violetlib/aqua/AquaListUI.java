@@ -33,8 +33,8 @@
 
 package org.violetlib.aqua;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 import javax.swing.*;
@@ -63,7 +63,8 @@ public class AquaListUI extends BasicListUI implements AquaComponentUI {
 
     private boolean isStriped = false;
     private boolean isFocused = false;
-    protected @NotNull ContainerContextualColors colors;
+    protected @Nonnull
+	ContainerContextualColors colors;
     protected @Nullable AppearanceContext appearanceContext;
     protected @Nullable Color actualListBackground;
 
@@ -71,7 +72,7 @@ public class AquaListUI extends BasicListUI implements AquaComponentUI {
         colors = AquaColors.CONTAINER_COLORS;
     }
 
-    public void setColors(@NotNull ContainerContextualColors colors) {
+    public void setColors(@Nonnull ContainerContextualColors colors) {
         if (colors != this.colors) {
             this.colors = colors;
             configureAppearanceContext(null);
@@ -200,17 +201,18 @@ public class AquaListUI extends BasicListUI implements AquaComponentUI {
     //        }*/
     //    }
 
-    public @NotNull ContainerContextualColors getColors() {
+    public @Nonnull
+	ContainerContextualColors getColors() {
         return colors;
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 

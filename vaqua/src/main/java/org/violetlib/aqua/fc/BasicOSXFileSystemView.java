@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * BasicOSXFileSystemView.
@@ -152,7 +152,7 @@ public abstract class BasicOSXFileSystemView extends AquaFileSystemView {
     }
 
     @Override
-    public boolean isHiddenFile(@NotNull File f) {
+    public boolean isHiddenFile(@Nonnull File f) {
         if (OSXFile.isInvisible(f)) {
             return true;
         } else {
@@ -258,7 +258,8 @@ public abstract class BasicOSXFileSystemView extends AquaFileSystemView {
     }
 
     @Override
-    public @NotNull Boolean isTraversable(File f, boolean isPackageTraversable, boolean isApplicationTraversable) {
+    public @Nonnull
+	Boolean isTraversable(File f, boolean isPackageTraversable, boolean isApplicationTraversable) {
         if (OSXFile.isAvailable()) {
             return OSXFile.isTraversable(f, isPackageTraversable, isApplicationTraversable);
         } else {

@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 
@@ -19,9 +19,11 @@ import org.jetbrains.annotations.*;
 public final class TrivialRendererDescription
 	implements RendererDescription
 {
-	private static final @NotNull TrivialRendererDescription INSTANCE = new TrivialRendererDescription();
+	private static final @Nonnull
+	TrivialRendererDescription INSTANCE = new TrivialRendererDescription();
 
-	public static @NotNull TrivialRendererDescription getInstance()
+	public static @Nonnull
+	TrivialRendererDescription getInstance()
 	{
 		return INSTANCE;
 	}
@@ -31,7 +33,8 @@ public final class TrivialRendererDescription
 	}
 
 	@Override
-	public @NotNull RasterDescription getRasterBounds(@NotNull Rectangle2D target, int scaleFactor)
+	public @Nonnull
+	RasterDescription getRasterBounds(@Nonnull Rectangle2D target, int scaleFactor)
 	{
 		float x = (float) target.getX();
 		float y = (float) target.getY();

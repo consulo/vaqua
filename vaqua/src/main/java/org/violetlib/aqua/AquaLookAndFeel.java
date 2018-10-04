@@ -46,7 +46,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Constructor;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -807,7 +806,7 @@ public class AquaLookAndFeel extends BasicLookAndFeel {
                     "MenuBar.font", menuFont,
                     "MenuBar.background", menuBackgroundColor, // not a menu item, not selected
                     "MenuBar.foreground", menuForegroundColor,
-                    "MenuBar.border", createAquaBasedBorder(), // sja make lazy!
+                    "MenuBar.border", new AquaMenuBarBorder(), // sja make lazy!
                     "MenuBar.margin", new InsetsUIResource(0, 8, 0, 8), // sja make lazy!
                     "MenuBar.selectionBackground", menuSelectedBackgroundColor, // not a menu item, is selected
                     "MenuBar.selectionForeground", menuSelectedForegroundColor,
@@ -821,21 +820,6 @@ public class AquaLookAndFeel extends BasicLookAndFeel {
 
         JavaSupport.installAATextInfo(table);
     }
-
-    private static Border createAquaBasedBorder()
-	{
-		try
-		{
-			Class<?> clazz = Class.forName("com.apple.laf.AquaMenuBarBorder");
-			Constructor<?> constructor = clazz.getConstructor();
-			constructor.setAccessible(true);
-			return (Border) constructor.newInstance();
-		}
-		catch(Throwable e)
-		{
-			throw new Error(e);
-		}
-	}
 
     protected void initSystemColorDefaults(UIDefaults table) {
     }

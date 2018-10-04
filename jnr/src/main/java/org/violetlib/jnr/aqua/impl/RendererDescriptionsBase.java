@@ -15,10 +15,11 @@ import org.violetlib.jnr.impl.JNRUtils;
 import org.violetlib.jnr.impl.MultiResolutionRendererDescription;
 import org.violetlib.jnr.impl.RendererDescription;
 
-import org.jetbrains.annotations.*;
-
 import static org.violetlib.jnr.aqua.AquaUIPainter.*;
 import static org.violetlib.jnr.impl.JNRUtils.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
 
@@ -28,7 +29,8 @@ public abstract class RendererDescriptionsBase
 	implements RendererDescriptions
 {
 	@Override
-	public @NotNull RendererDescription getButtonRendererDescription(@NotNull ButtonConfiguration g)
+	public @Nonnull
+	RendererDescription getButtonRendererDescription(@Nonnull ButtonConfiguration g)
 	{
 		AquaUIPainter.ButtonWidget bw = toCanonicalButtonStyle(g.getButtonWidget());
 
@@ -172,7 +174,8 @@ public abstract class RendererDescriptionsBase
 	}
 
 	@Override
-	public @NotNull RendererDescription getSegmentedButtonRendererDescription(@NotNull SegmentedButtonConfiguration g)
+	public @Nonnull
+	RendererDescription getSegmentedButtonRendererDescription(@Nonnull SegmentedButtonConfiguration g)
 	{
 		// The native view renderer renders an entire segmented control but arranges that only one button is rendered into
 		// our buffer. It does not make sense to change the raster width, because the raster width is the only way that the
@@ -260,9 +263,10 @@ public abstract class RendererDescriptionsBase
 		}
 	}
 
-	protected @NotNull RendererDescription adjustSegmentedRendererDescription(
-		@NotNull SegmentedButtonConfiguration g,
-		@NotNull RendererDescription rd,
+	protected @Nonnull
+	RendererDescription adjustSegmentedRendererDescription(
+		@Nonnull SegmentedButtonConfiguration g,
+		@Nonnull RendererDescription rd,
 		float extraWidth,
 		float xOffset,
 		float yOffset,
@@ -314,13 +318,15 @@ public abstract class RendererDescriptionsBase
 	}
 
 	@Override
-	public @Nullable RendererDescription getBasicPopupButtonRendererDescription(@NotNull PopupButtonConfiguration g)
+	public @Nullable
+	RendererDescription getBasicPopupButtonRendererDescription(@Nonnull PopupButtonConfiguration g)
 	{
 		return getPopupButtonRendererDescription(g);
 	}
 
 	@Override
-	public @NotNull RendererDescription getPopupButtonRendererDescription(@NotNull PopupButtonConfiguration g)
+	public @Nonnull
+	RendererDescription getPopupButtonRendererDescription(@Nonnull PopupButtonConfiguration g)
 	{
 		AquaUIPainter.PopupButtonWidget bw = g.getPopupButtonWidget();
 		AquaUIPainter.Size sz = g.getSize();
@@ -434,31 +440,36 @@ public abstract class RendererDescriptionsBase
 	}
 
 	@Override
-	public @NotNull RendererDescription getToolBarItemWellRendererDescription(@NotNull ToolBarItemWellConfiguration g)
+	public @Nonnull
+	RendererDescription getToolBarItemWellRendererDescription(@Nonnull ToolBarItemWellConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	public @NotNull RendererDescription getTitleBarRendererDescription(@NotNull TitleBarConfiguration g)
+	public @Nonnull
+	RendererDescription getTitleBarRendererDescription(@Nonnull TitleBarConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	public @NotNull RendererDescription getSliderRendererDescription(@NotNull SliderConfiguration g)
+	public @Nonnull
+	RendererDescription getSliderRendererDescription(@Nonnull SliderConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	public @NotNull RendererDescription getSliderTrackRendererDescription(@NotNull SliderConfiguration g)
+	public @Nonnull
+	RendererDescription getSliderTrackRendererDescription(@Nonnull SliderConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	public @NotNull RendererDescription getSliderThumbRendererDescription(@NotNull SliderConfiguration g)
+	public @Nonnull
+	RendererDescription getSliderThumbRendererDescription(@Nonnull SliderConfiguration g)
 	{
 		AquaUIPainter.Size sz = g.getSize();
 
@@ -513,43 +524,50 @@ public abstract class RendererDescriptionsBase
 	}
 
 	@Override
-	public @NotNull RendererDescription getSpinnerArrowsRendererDescription(@NotNull SpinnerArrowsConfiguration g)
+	public @Nonnull
+	RendererDescription getSpinnerArrowsRendererDescription(@Nonnull SpinnerArrowsConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	public @NotNull RendererDescription getGroupBoxRendererDescription(@NotNull GroupBoxConfiguration g)
+	public @Nonnull
+	RendererDescription getGroupBoxRendererDescription(@Nonnull GroupBoxConfiguration g)
 	{
 		return new BasicRendererDescription(-3, -2, 6, 6);
 	}
 
 	@Override
-	public @NotNull RendererDescription getListBoxRendererDescription(@NotNull ListBoxConfiguration g)
+	public @Nonnull
+	RendererDescription getListBoxRendererDescription(@Nonnull ListBoxConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	public @NotNull RendererDescription getTextFieldRendererDescription(@NotNull TextFieldConfiguration g)
+	public @Nonnull
+	RendererDescription getTextFieldRendererDescription(@Nonnull TextFieldConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	public @NotNull RendererDescription getScrollBarRendererDescription(@NotNull ScrollBarConfiguration g)
+	public @Nonnull
+	RendererDescription getScrollBarRendererDescription(@Nonnull ScrollBarConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	public @NotNull RendererDescription getScrollColumnSizerRendererDescription(@NotNull ScrollColumnSizerConfiguration g)
+	public @Nonnull
+	RendererDescription getScrollColumnSizerRendererDescription(@Nonnull ScrollColumnSizerConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);	// obsolete
 	}
 
 	@Override
-	public @NotNull RendererDescription getProgressIndicatorRendererDescription(@NotNull ProgressIndicatorConfiguration g)
+	public @Nonnull
+	RendererDescription getProgressIndicatorRendererDescription(@Nonnull ProgressIndicatorConfiguration g)
 	{
 		AquaUIPainter.ProgressWidget pw = g.getWidget();
 		AquaUIPainter.Orientation o = g.getOrientation();
@@ -569,7 +587,8 @@ public abstract class RendererDescriptionsBase
 	}
 
 	@Override
-	public @NotNull RendererDescription getIndeterminateProgressIndicatorRendererDescription(@NotNull IndeterminateProgressIndicatorConfiguration g)
+	public @Nonnull
+	RendererDescription getIndeterminateProgressIndicatorRendererDescription(@Nonnull IndeterminateProgressIndicatorConfiguration g)
 	{
 		AquaUIPainter.ProgressWidget pw = g.getWidget();
 		AquaUIPainter.Orientation o = g.getOrientation();
@@ -589,23 +608,27 @@ public abstract class RendererDescriptionsBase
 	}
 
 	@Override
-	public @NotNull RendererDescription getTableColumnHeaderRendererDescription(@NotNull TableColumnHeaderConfiguration g)
+	public @Nonnull
+	RendererDescription getTableColumnHeaderRendererDescription(@Nonnull TableColumnHeaderConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);
 	}
 
 	@Override
-	public @NotNull RendererDescription getGradientRendererDescription(@NotNull GradientConfiguration g)
+	public @Nonnull
+	RendererDescription getGradientRendererDescription(@Nonnull GradientConfiguration g)
 	{
 		return new BasicRendererDescription(0, 0, 0, 0);	// obsolete
 	}
 
-	protected @NotNull RendererDescription createVertical(float yOffset, float heightAdjustment)
+	protected @Nonnull
+	RendererDescription createVertical(float yOffset, float heightAdjustment)
 	{
 		return new BasicRendererDescription(0, yOffset, 0, heightAdjustment);
 	}
 
-	protected @NotNull RendererDescription createVertical(float yOffset1, float yOffset2, float heightAdjustment)
+	protected @Nonnull
+	RendererDescription createVertical(float yOffset1, float yOffset2, float heightAdjustment)
 	{
 		RendererDescription rd1 = new BasicRendererDescription(0, yOffset1, 0, heightAdjustment);
 		RendererDescription rd2 = new BasicRendererDescription(0, yOffset2, 0, heightAdjustment);
@@ -617,7 +640,8 @@ public abstract class RendererDescriptionsBase
 		obsolete and are best supported by using a similar style.
 	*/
 
-	protected @NotNull AquaUIPainter.ButtonWidget toCanonicalButtonStyle(AquaUIPainter.ButtonWidget bw)
+	protected @Nonnull
+	AquaUIPainter.ButtonWidget toCanonicalButtonStyle(AquaUIPainter.ButtonWidget bw)
 	{
 //		switch (bw) {
 //			case BUTTON_ROUND_INSET:
@@ -628,7 +652,7 @@ public abstract class RendererDescriptionsBase
 		return bw;
 	}
 
-	protected int pos(@NotNull AquaUIPainter.Position pos, int first, int last, int only)
+	protected int pos(@Nonnull AquaUIPainter.Position pos, int first, int last, int only)
 	{
 		switch (pos)
 		{
@@ -643,7 +667,7 @@ public abstract class RendererDescriptionsBase
 		}
 	}
 
-	protected int pos(@NotNull AquaUIPainter.Position pos, int first, int middle, int last, int only)
+	protected int pos(@Nonnull AquaUIPainter.Position pos, int first, int middle, int last, int only)
 	{
 		switch (pos)
 		{
@@ -660,7 +684,7 @@ public abstract class RendererDescriptionsBase
 		}
 	}
 
-	protected float pos(@NotNull AquaUIPainter.Position pos, float first, float last, float only)
+	protected float pos(@Nonnull AquaUIPainter.Position pos, float first, float last, float only)
 	{
 		switch (pos)
 		{
@@ -675,7 +699,7 @@ public abstract class RendererDescriptionsBase
 		}
 	}
 
-	protected float pos(@NotNull AquaUIPainter.Position pos, float first, float middle, float last, float only)
+	protected float pos(@Nonnull AquaUIPainter.Position pos, float first, float middle, float last, float only)
 	{
 		switch (pos)
 		{

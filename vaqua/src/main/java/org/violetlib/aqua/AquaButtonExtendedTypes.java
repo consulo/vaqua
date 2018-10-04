@@ -36,11 +36,12 @@ package org.violetlib.aqua;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.AquaUIPainter.ButtonWidget;
@@ -233,7 +234,8 @@ public class AquaButtonExtendedTypes {
     protected final static WidgetInfo defaultButtonWidgetInfo = new WidgetInfo(AquaColors.CLEAR_CONTROL_COLORS);
     protected final static WidgetInfo defaultSegmentedButtonWidgetInfo = new WidgetInfo(AquaColors.CLEAR_CONTROL_COLORS).withSegmented();
 
-    public static @NotNull WidgetInfo getWidgetInfo(Object widget) {
+    public static @Nonnull
+	WidgetInfo getWidgetInfo(Object widget) {
         WidgetInfo info = widgetDefinitions.get().get(widget);
         if (info != null) {
             return info;
@@ -261,7 +263,8 @@ public class AquaButtonExtendedTypes {
         private boolean isSegmented;
         private boolean isTextured;
 
-        private @NotNull BasicContextualColors colors;
+        private @Nonnull
+		BasicContextualColors colors;
         private @Nullable BasicContextualColors nonExclusiveSelectionColors;
 
         private Font font;
@@ -272,7 +275,7 @@ public class AquaButtonExtendedTypes {
         private int margin;
         private int bottomMenuGap;
 
-        WidgetInfo(@NotNull BasicContextualColors colors) {
+        WidgetInfo(@Nonnull BasicContextualColors colors) {
             this.colors = colors;
         }
 
@@ -295,7 +298,7 @@ public class AquaButtonExtendedTypes {
             return this;
         }
 
-        WidgetInfo withColors(@NotNull BasicContextualColors colors) {
+        WidgetInfo withColors(@Nonnull BasicContextualColors colors) {
             this.colors = colors;
             return this;
         }
@@ -325,7 +328,7 @@ public class AquaButtonExtendedTypes {
             return this;
         }
 
-        WidgetInfo withNonexclusiveSelectionColors(@NotNull BasicContextualColors cs) {
+        WidgetInfo withNonexclusiveSelectionColors(@Nonnull BasicContextualColors cs) {
             this.nonExclusiveSelectionColors = cs;
             return this;
         }
@@ -363,15 +366,17 @@ public class AquaButtonExtendedTypes {
             return font;
         }
 
-        public @NotNull BasicContextualColors getColors() {
+        public @Nonnull
+		BasicContextualColors getColors() {
             return colors;
         }
 
-        public @NotNull Color getForeground(AquaUIPainter.State state,
-                                            AquaUIPainter.ButtonState bs,
-                                            AquaAppearance appearance,
-                                            boolean useNonexclusiveStyle,
-                                            boolean isIcon) {
+        public @Nonnull
+		Color getForeground(AquaUIPainter.State state,
+							AquaUIPainter.ButtonState bs,
+							AquaAppearance appearance,
+							boolean useNonexclusiveStyle,
+							boolean isIcon) {
 
             BasicContextualColors colors;
 

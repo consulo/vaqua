@@ -44,6 +44,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 
+import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JInternalFrame;
@@ -55,7 +56,6 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.DesktopIconUI;
 
-import org.jetbrains.annotations.NotNull;
 import consulo.internal.vaqua.impl.JavaSupport;
 
 /**
@@ -117,11 +117,11 @@ public class AquaInternalFrameDockIconUI extends DesktopIconUI
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
     }
 
     @Override

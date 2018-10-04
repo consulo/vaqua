@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
 import org.violetlib.jnr.aqua.AquaUIPainter.ProgressWidget;
@@ -23,13 +24,16 @@ import org.violetlib.jnr.aqua.AquaUIPainter.Size;
 public class ProgressIndicatorLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @NotNull ProgressWidget pw;
-	private final @NotNull Size size;
-	private final @NotNull Orientation o;
+	private final @Nonnull
+	ProgressWidget pw;
+	private final @Nonnull
+	Size size;
+	private final @Nonnull
+	Orientation o;
 
-	public ProgressIndicatorLayoutConfiguration(@NotNull ProgressWidget pw,
-																							@NotNull Size size,
-																							@NotNull Orientation o)
+	public ProgressIndicatorLayoutConfiguration(@Nonnull ProgressWidget pw,
+																							@Nonnull Size size,
+																							@Nonnull Orientation o)
 	{
 		// progress bars have only one size
 		// spinners can be regular or small
@@ -40,24 +44,27 @@ public class ProgressIndicatorLayoutConfiguration
 		this.pw = pw;
 	}
 
-	protected ProgressIndicatorLayoutConfiguration(@NotNull ProgressIndicatorLayoutConfiguration g)
+	protected ProgressIndicatorLayoutConfiguration(@Nonnull ProgressIndicatorLayoutConfiguration g)
 	{
 		this.size = g.getSize();
 		this.o = g.getOrientation();
 		this.pw = g.getWidget();
 	}
 
-	public @NotNull ProgressWidget getWidget()
+	public @Nonnull
+	ProgressWidget getWidget()
 	{
 		return pw;
 	}
 
-	public @NotNull Size getSize()
+	public @Nonnull
+	Size getSize()
 	{
 		return size;
 	}
 
-	public @NotNull Orientation getOrientation()
+	public @Nonnull
+	Orientation getOrientation()
 	{
 		return o;
 	}
@@ -78,7 +85,8 @@ public class ProgressIndicatorLayoutConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return pw + " " + size + " " + o;
 	}

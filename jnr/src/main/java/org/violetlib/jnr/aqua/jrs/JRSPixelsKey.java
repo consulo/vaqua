@@ -36,11 +36,12 @@ package org.violetlib.jnr.aqua.jrs;
 // Based on com.apple.laf.AquaPainter.AquaPixelsKey
 // replaced GraphicsConfiguration with scaleFactor, removed bounds, added appearance
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.violetlib.jnr.impl.ImageCache;
 import org.violetlib.jnr.impl.jrs.JRSUIState;
 import org.violetlib.vappearances.VAppearance;
-
-import org.jetbrains.annotations.*;
 
 public class JRSPixelsKey
 	implements ImageCache.PixelsKey
@@ -52,10 +53,12 @@ public class JRSPixelsKey
      private final int scaleFactor;
      private final int w;
      private final int h;
-     private final @NotNull JRSUIState state;
-     private final @NotNull VAppearance appearance;
+     private final @Nonnull
+	 JRSUIState state;
+     private final @Nonnull
+	 VAppearance appearance;
 
-		public JRSPixelsKey(int scaleFactor, int w, int h, @NotNull JRSUIState state, @NotNull VAppearance appearance)
+		public JRSPixelsKey(int scaleFactor, int w, int h, @Nonnull JRSUIState state, @Nonnull VAppearance appearance)
 		{
 			this.pixelCount = w * h;
 			this.scaleFactor = scaleFactor;

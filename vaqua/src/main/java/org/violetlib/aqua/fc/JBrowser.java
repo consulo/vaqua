@@ -32,6 +32,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 import javax.accessibility.Accessible;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -40,7 +41,6 @@ import javax.swing.plaf.ListUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.tree.*;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.*;
 
 /**
@@ -1490,7 +1490,7 @@ public class JBrowser extends javax.swing.JComponent implements Scrollable {
      * Appends a new column to the browser.
      * @param path the value
      */
-    protected void addColumn(@NotNull TreePath path) {
+    protected void addColumn(@Nonnull TreePath path) {
         JList l = createColumnList(new ColumnListModel(path, treeModel));
         if (isShowCellTips) {
             l.setToolTipText("cell tip");
@@ -1536,7 +1536,8 @@ public class JBrowser extends javax.swing.JComponent implements Scrollable {
         add(column, getListColumnCount());
     }
 
-    protected @NotNull JList createColumnList(@NotNull ColumnListModel m) {
+    protected @Nonnull
+	JList createColumnList(@Nonnull ColumnListModel m) {
         return new ColumnList(m);
     }
 

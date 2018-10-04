@@ -8,7 +8,7 @@
 
 package org.violetlib.jnr.impl;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A floating insetter defines a region of fixed size that is centered in the component, with an optional offset.
@@ -29,7 +29,8 @@ public class CenteredInsetter1
 		@throws IllegalArgumentException if {@code regionSize} is negative.
 	*/
 
-	public static @NotNull CenteredInsetter1 createCentered(float regionSize)
+	public static @Nonnull
+	CenteredInsetter1 createCentered(float regionSize)
 	{
 		if (regionSize < 0) {
 			throw new IllegalArgumentException("Invalid negative region size");
@@ -46,7 +47,8 @@ public class CenteredInsetter1
 		@throws IllegalArgumentException if {@code regionSize} is negative.
 	*/
 
-	public static @NotNull CenteredInsetter1 createCentered(float regionSize, float offset)
+	public static @Nonnull
+	CenteredInsetter1 createCentered(float regionSize, float offset)
 	{
 		if (regionSize < 0) {
 			throw new IllegalArgumentException("Invalid negative region size");
@@ -64,7 +66,8 @@ public class CenteredInsetter1
 		@throws IllegalArgumentException if {@code regionSize} is negative.
 	*/
 
-	public static @NotNull CenteredInsetter1 createCentered(float regionSize, float alignmentRegionSize, float offset)
+	public static @Nonnull
+	CenteredInsetter1 createCentered(float regionSize, float alignmentRegionSize, float offset)
 	{
 		if (regionSize < 0) {
 			throw new IllegalArgumentException("Invalid negative region size");

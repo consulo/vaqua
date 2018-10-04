@@ -15,13 +15,14 @@ import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
 import javax.swing.plaf.UIResource;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import static org.violetlib.aqua.AquaUtils.*;
 
@@ -225,7 +226,8 @@ public class AquaCustomStyledWindow {
      *  pane is not a JComponent, or a required JToolBar or toolbar panel is not found.
      */
 
-    public @NotNull AquaCustomStyledWindow reconfigure(int style, int top, int bottom) {
+    public @Nonnull
+	AquaCustomStyledWindow reconfigure(int style, int top, int bottom) {
         AquaCustomStyledWindow replacement = new AquaCustomStyledWindow(w, style, top, bottom);
         removeListeners();
         // do not dispose, as that alters the window
@@ -403,7 +405,7 @@ public class AquaCustomStyledWindow {
         tb.addHierarchyListener(toolbarHierarchyListener);
     }
 
-    public void paintMarginBackgrounds(@NotNull Graphics g) {
+    public void paintMarginBackgrounds(@Nonnull Graphics g) {
         // Update the possibly dynamic margin heights
         topMarginHeight = calculateTopMarginHeight();
         bottomMarginHeight = calculateBottomMarginHeight();
@@ -419,7 +421,7 @@ public class AquaCustomStyledWindow {
         }
     }
 
-    protected void paintMarginBackground(@NotNull Graphics g, int y, int height, boolean isTop) {
+    protected void paintMarginBackground(@Nonnull Graphics g, int y, int height, boolean isTop) {
         if (height > 0) {
             Graphics2D gg = (Graphics2D) g.create();
             try {
@@ -526,7 +528,8 @@ public class AquaCustomStyledWindow {
         return c instanceof JComponent ? (JComponent) c : null;
     }
 
-    public @Nullable JComponent getWindowToolbar() {
+    public @Nullable
+	JComponent getWindowToolbar() {
         Container c = rp.getContentPane();
         return getWindowToolbar(c);
     }

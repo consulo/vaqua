@@ -10,7 +10,7 @@ package org.violetlib.jnr.impl;
 
 import java.awt.Color;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	A basic renderer that corrects the output of a specified basic renderer for tab buttons in dark mode.
@@ -19,9 +19,10 @@ import org.jetbrains.annotations.*;
 public class DarkTabButtonRenderer
 	implements BasicRenderer
 {
-	private final @NotNull BasicRenderer compositeRenderer;
+	private final @Nonnull
+	BasicRenderer compositeRenderer;
 
-	public DarkTabButtonRenderer(@NotNull BasicRenderer maskRenderer, @NotNull BasicRenderer tabRenderer)
+	public DarkTabButtonRenderer(@Nonnull BasicRenderer maskRenderer, @Nonnull BasicRenderer tabRenderer)
 	{
 		Color bc = new Color(60, 60, 60);
 		BasicRenderer backgroundRenderer = new PaintUsingMaskRenderer(maskRenderer, bc);
@@ -29,7 +30,7 @@ public class DarkTabButtonRenderer
 	}
 
 	@Override
-	public void render(@NotNull int[] data, int rw, int rh, float w, float h)
+	public void render(@Nonnull int[] data, int rw, int rh, float w, float h)
 	{
 		compositeRenderer.render(data, rw, rh, w, h);
 	}

@@ -13,12 +13,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.plaf.TableUI;
 import javax.swing.tree.TreePath;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.treetable.TreeTable;
 import org.violetlib.treetable.TreeTableCellRenderer;
@@ -34,7 +35,8 @@ import static org.violetlib.aqua.AquaFocusHandler.HAS_FOCUS_DELEGATE_KEY;
 public class AquaTreeTableUI extends BasicTreeTableUI implements AquaComponentUI {
 
     protected MyHandler handler;
-    protected @NotNull ContainerContextualColors colors;
+    protected @Nonnull
+	ContainerContextualColors colors;
     protected @Nullable AppearanceContext appearanceContext;
 
     public AquaTreeTableUI() {
@@ -59,7 +61,7 @@ public class AquaTreeTableUI extends BasicTreeTableUI implements AquaComponentUI
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         JTable table = getTable();
         JTree tree = getTree();
         AppearanceManager.updateAppearancesInSubtree(table);
@@ -68,7 +70,7 @@ public class AquaTreeTableUI extends BasicTreeTableUI implements AquaComponentUI
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         JTable table = getTable();
         JTree tree = getTree();
         AquaFocusHandler.updateComponentTreeUIActivation(table, isActive);

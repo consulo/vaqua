@@ -41,6 +41,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -51,8 +52,7 @@ import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.plaf.basic.BasicLabelUI;
 import javax.swing.text.View;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import consulo.internal.vaqua.impl.JavaSupport;
 
@@ -64,7 +64,8 @@ public class AquaLabelUI extends BasicLabelUI implements AquaComponentUI {
 
     private static AquaCellEditorPolicy cellEditorPolicy = AquaCellEditorPolicy.getInstance();
 
-    protected @NotNull BasicContextualColors colors;
+    protected @Nonnull
+	BasicContextualColors colors;
     protected @Nullable AppearanceContext appearanceContext;
 
     private Rectangle paintIconR = new Rectangle();
@@ -95,16 +96,16 @@ public class AquaLabelUI extends BasicLabelUI implements AquaComponentUI {
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance, (JLabel)c);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         // JLabel is not active state sensitive
     }
 
-    protected void configureAppearanceContext(@Nullable AquaAppearance appearance, @NotNull JLabel label) {
+    protected void configureAppearanceContext(@Nullable AquaAppearance appearance, @Nonnull JLabel label) {
         if (appearance == null) {
             appearance = AppearanceManager.ensureAppearance(label);
         }
@@ -170,7 +171,8 @@ public class AquaLabelUI extends BasicLabelUI implements AquaComponentUI {
         }
     }
 
-    private @NotNull String layout(JLabel label, FontMetrics fm, int width, int height) {
+    private @Nonnull
+	String layout(JLabel label, FontMetrics fm, int width, int height) {
         Insets insets = label.getInsets(null);
         String text = label.getText();
         Icon icon = (label.isEnabled()) ? label.getIcon() : label.getDisabledIcon();
@@ -194,7 +196,7 @@ public class AquaLabelUI extends BasicLabelUI implements AquaComponentUI {
         paintText(l, g, s, textX, textY);
     }
 
-    private void paintText(@NotNull JLabel l, @NotNull Graphics g, @NotNull String s, int textX, int textY) {
+    private void paintText(@Nonnull JLabel l, @Nonnull Graphics g, @Nonnull String s, int textX, int textY) {
         int mnemIndex = l.getDisplayedMnemonicIndex();
         if (AquaMnemonicHandler.isMnemonicHidden()) {
             mnemIndex = -1;

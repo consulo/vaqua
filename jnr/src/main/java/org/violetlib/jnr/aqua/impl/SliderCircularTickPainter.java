@@ -13,7 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	Paint tick marks for a horizontal slider.
@@ -21,7 +21,8 @@ import org.jetbrains.annotations.*;
 
 public class SliderCircularTickPainter
 {
-	protected final @NotNull Color color;
+	protected final @Nonnull
+	Color color;
 	protected final double w;
 	protected final double h;
 	protected final double x;
@@ -32,7 +33,7 @@ public class SliderCircularTickPainter
 	protected final double p0;
 	protected final double p1;
 
-	public SliderCircularTickPainter(@NotNull Color color,
+	public SliderCircularTickPainter(@Nonnull Color color,
 																	 double w, double h,
 																	 double x, double y,
 																	 double radius,
@@ -52,7 +53,7 @@ public class SliderCircularTickPainter
 		this.p1 = p1;
 	}
 
-	public void paint(@NotNull Graphics2D g)
+	public void paint(@Nonnull Graphics2D g)
 	{
 		g.setColor(color);
 
@@ -68,7 +69,7 @@ public class SliderCircularTickPainter
 		}
 	}
 
-	protected void drawTick(@NotNull Graphics2D g, double thumbPosition)
+	protected void drawTick(@Nonnull Graphics2D g, double thumbPosition)
 	{
 		double angle = zeroAngle - thumbPosition * 2 * Math.PI;
 		double x0 = x + Math.cos(angle) * radius - w/2;

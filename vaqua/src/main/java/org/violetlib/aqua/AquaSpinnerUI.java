@@ -44,6 +44,8 @@ import java.text.AttributedCharacterIterator.Attribute;
 import java.text.Format.Field;
 import java.util.Calendar;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.plaf.ActionMapUIResource;
@@ -53,7 +55,6 @@ import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.text.InternationalFormatter;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.aqua.AquaUtils.RecyclableSingletonFromDefaultConstructor;
 import org.violetlib.jnr.LayoutInfo;
@@ -160,11 +161,11 @@ public class AquaSpinnerUI extends SpinnerUI implements AquaComponentUI {
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
     }
 
     @Override

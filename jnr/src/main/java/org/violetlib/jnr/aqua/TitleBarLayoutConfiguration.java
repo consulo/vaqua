@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.TitleBarWidget;
 
@@ -21,14 +22,16 @@ import org.violetlib.jnr.aqua.AquaUIPainter.TitleBarWidget;
 public class TitleBarLayoutConfiguration
 	extends LayoutConfiguration
 {
-	private final @NotNull TitleBarWidget tw;
+	private final @Nonnull
+	TitleBarWidget tw;
 
-	public TitleBarLayoutConfiguration(@NotNull TitleBarWidget tw)
+	public TitleBarLayoutConfiguration(@Nonnull TitleBarWidget tw)
 	{
 		this.tw = tw;
 	}
 
-	public @NotNull TitleBarWidget getWidget()
+	public @Nonnull
+	TitleBarWidget getWidget()
 	{
 		return tw;
 	}
@@ -49,7 +52,8 @@ public class TitleBarLayoutConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return tw.toString();
 	}

@@ -16,9 +16,9 @@ import org.violetlib.jnr.impl.BasicRendererDescription;
 import org.violetlib.jnr.impl.JNRPlatformUtils;
 import org.violetlib.jnr.impl.RendererDescription;
 
-import org.jetbrains.annotations.*;
-
 import static org.violetlib.jnr.impl.JNRUtils.*;
+
+import javax.annotation.Nonnull;
 
 /**
 	Renderer descriptions for rendering on OS X 10.10 and later using the JDK JRS classes.
@@ -28,7 +28,8 @@ public class JRSRendererDescriptions
 	extends CoreUIRendererDescriptions
 {
 	@Override
-	public @NotNull RendererDescription getSegmentedButtonRendererDescription(@NotNull SegmentedButtonConfiguration g)
+	public @Nonnull
+	RendererDescription getSegmentedButtonRendererDescription(@Nonnull SegmentedButtonConfiguration g)
 	{
 		int platformVersion = JNRPlatformUtils.getPlatformVersion();
 		boolean v2 = platformVersion >= 101100;
@@ -118,7 +119,8 @@ public class JRSRendererDescriptions
 		return rd;
 	}
 
-	private @NotNull RendererDescription fix(@NotNull RendererDescription rd, @NotNull SegmentedButtonConfiguration g, float y)
+	private @Nonnull
+	RendererDescription fix(@Nonnull RendererDescription rd, @Nonnull SegmentedButtonConfiguration g, float y)
 	{
 		AquaUIPainter.Size sz = g.getSize();
 		AquaUIPainter.Position position = g.getPosition();

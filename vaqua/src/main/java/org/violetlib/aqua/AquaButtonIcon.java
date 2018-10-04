@@ -9,11 +9,11 @@
 package org.violetlib.aqua;
 
 import java.awt.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.plaf.UIResource;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * An icon for a specific button whose rendering may depend upon the widget, state, button state, and appearance. The
@@ -23,12 +23,15 @@ import org.jetbrains.annotations.Nullable;
 public class AquaButtonIcon implements Icon, UIResource {
 
     public interface ImageOperatorSupplier {
-        @Nullable Object getCurrentImageProcessingOperator(@NotNull AbstractButton b, boolean isTemplate);
+        @Nullable
+		Object getCurrentImageProcessingOperator(@Nonnull AbstractButton b, boolean isTemplate);
     }
 
-    protected final @NotNull AbstractButton b;
+    protected final @Nonnull
+	AbstractButton b;
     protected final boolean isTemplate;
-    protected final @NotNull ImageOperatorSupplier operatorSupplier;
+    protected final @Nonnull
+	ImageOperatorSupplier operatorSupplier;
 
     /**
      * Create a context-sensitive button icon.
@@ -37,9 +40,9 @@ public class AquaButtonIcon implements Icon, UIResource {
      * @param operatorSupplier Determines the image processing operator to apply to the source image when the icon is
      *                         painted.
      */
-    public AquaButtonIcon(@NotNull AbstractButton b,
+    public AquaButtonIcon(@Nonnull AbstractButton b,
                           boolean isTemplate,
-                          @NotNull ImageOperatorSupplier operatorSupplier) {
+                          @Nonnull ImageOperatorSupplier operatorSupplier) {
         this.b = b;
         this.isTemplate = isTemplate;
         this.operatorSupplier = operatorSupplier;

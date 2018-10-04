@@ -36,13 +36,14 @@ package org.violetlib.aqua;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicPanelUI;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.aqua.AquaUtils.RecyclableSingletonFromDefaultConstructor;
 
@@ -88,15 +89,15 @@ public class AquaPanelUI extends BasicPanelUI implements AquaComponentUI {
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
     }
 
     @Override
-    public final void update(@NotNull Graphics g, @NotNull JComponent c) {
+    public final void update(@Nonnull Graphics g, @Nonnull JComponent c) {
         AppearanceManager.ensureAppearance(c);
         AquaAppearance appearance = AppearanceManager.registerCurrentAppearance(c);
         if (c.isOpaque() || AquaVibrantSupport.isVibrant(c)) {
@@ -107,7 +108,7 @@ public class AquaPanelUI extends BasicPanelUI implements AquaComponentUI {
     }
 
     @Override
-    public void paint(@NotNull Graphics g, @NotNull JComponent c) {
+    public void paint(@Nonnull Graphics g, @Nonnull JComponent c) {
         BackgroundPainter p = getBackgroundPainter(c);
         if (p != null) {
             p.paintBackground(c, g, 0, 0, c.getWidth(), c.getHeight());

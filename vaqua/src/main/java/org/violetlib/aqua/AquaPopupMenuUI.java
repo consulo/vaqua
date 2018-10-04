@@ -35,13 +35,14 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPopupMenuUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 import static org.violetlib.aqua.AquaContextualPopup.getContextualMenuBorder;
@@ -67,7 +68,8 @@ public class AquaPopupMenuUI extends BasicPopupMenuUI implements AquaComponentUI
 
     private AquaContextualPopup cp;
     private ScrollingMouseListener scrollingMouseListener = new ScrollingMouseListener();
-    protected @NotNull BasicContextualColors colors;
+    protected @Nonnull
+	BasicContextualColors colors;
     protected @Nullable AppearanceContext appearanceContext;
 
     public AquaPopupMenuUI() {
@@ -100,12 +102,12 @@ public class AquaPopupMenuUI extends BasicPopupMenuUI implements AquaComponentUI
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         configureAppearanceContext(null);
     }
 

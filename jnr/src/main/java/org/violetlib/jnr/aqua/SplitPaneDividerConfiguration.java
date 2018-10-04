@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.DividerWidget;
 import org.violetlib.jnr.aqua.AquaUIPainter.Orientation;
@@ -24,11 +25,12 @@ public class SplitPaneDividerConfiguration
 	extends SplitPaneDividerLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State state;
+	private final @Nonnull
+	State state;
 
-	public SplitPaneDividerConfiguration(@NotNull DividerWidget dw,
-																			 @NotNull State state,
-																			 @NotNull Orientation o,
+	public SplitPaneDividerConfiguration(@Nonnull DividerWidget dw,
+																			 @Nonnull State state,
+																			 @Nonnull Orientation o,
 																			 int thickness)
 	{
 		super(dw, o, thickness);
@@ -36,7 +38,8 @@ public class SplitPaneDividerConfiguration
 		this.state = state;
 	}
 
-	public @NotNull State getState()
+	public @Nonnull
+	State getState()
 	{
 		return state;
 	}
@@ -58,7 +61,8 @@ public class SplitPaneDividerConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		return super.toString() + " " + state;
 	}

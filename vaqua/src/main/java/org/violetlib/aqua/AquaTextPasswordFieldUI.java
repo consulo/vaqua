@@ -37,13 +37,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.*;
 import javax.swing.text.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+
 import org.violetlib.aqua.AquaUtils.RecyclableSingleton;
 import org.violetlib.aqua.AquaUtils.RecyclableSingletonFromDefaultConstructor;
 
@@ -80,7 +81,7 @@ public class AquaTextPasswordFieldUI extends AquaTextFieldUI {
     }
 
     @Override
-    protected void paintBackgroundSafely(@NotNull Graphics g, @Nullable Color background) {
+    protected void paintBackgroundSafely(@Nonnull Graphics g, @Nullable Color background) {
         super.paintBackgroundSafely(g, background);
 
         JTextComponent component = getComponent();

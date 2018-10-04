@@ -35,11 +35,11 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicSeparatorUI;
 
-import org.jetbrains.annotations.NotNull;
 import org.violetlib.aqua.AquaUtils.RecyclableSingletonFromDefaultConstructor;
 
 public class AquaPopupMenuSeparatorUI extends BasicSeparatorUI implements AquaComponentUI {
@@ -50,11 +50,11 @@ public class AquaPopupMenuSeparatorUI extends BasicSeparatorUI implements AquaCo
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
     }
 
     public void update(Graphics g, JComponent c) {

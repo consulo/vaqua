@@ -44,8 +44,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.ScrollBarUI;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.LayoutInfo;
 import org.violetlib.jnr.Painter;
 import org.violetlib.jnr.aqua.*;
@@ -150,11 +150,11 @@ public class AquaScrollBarUI extends ScrollBarUI implements AquaComponentUI {
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
     }
 
     protected void configureScrollBarColors() {
@@ -318,7 +318,7 @@ public class AquaScrollBarUI extends ScrollBarUI implements AquaComponentUI {
         return sz == Size.REGULAR ? Size.REGULAR : Size.SMALL;
     }
 
-    protected State getScrollBarState(@NotNull ScrollBarWidget w) {
+    protected State getScrollBarState(@Nonnull ScrollBarWidget w) {
         if (!fScrollBar.isEnabled()) {
             return State.DISABLED;
         }

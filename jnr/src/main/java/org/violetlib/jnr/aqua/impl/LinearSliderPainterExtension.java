@@ -12,14 +12,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.violetlib.jnr.aqua.AquaUILayoutInfo;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 import org.violetlib.jnr.aqua.SliderConfiguration;
 import org.violetlib.jnr.impl.JNRUtils;
 import org.violetlib.jnr.impl.PainterExtension;
 import org.violetlib.vappearances.VAppearance;
-
-import org.jetbrains.annotations.*;
 
 /**
 	Simulates the rendering of tick marks on linear sliders.
@@ -28,15 +29,20 @@ import org.jetbrains.annotations.*;
 public class LinearSliderPainterExtension
 	implements PainterExtension
 {
-	protected final @NotNull AquaUILayoutInfo uiLayout;
-	protected final @NotNull SliderConfiguration sg;
-	protected final @NotNull Color tickColor;
+	protected final @Nonnull
+	AquaUILayoutInfo uiLayout;
+	protected final @Nonnull
+	SliderConfiguration sg;
+	protected final @Nonnull
+	Color tickColor;
 
-	protected final @NotNull Color LIGHT_TICK_COLOR = new Color(10, 10, 10, 110);
-	protected final @NotNull Color DARK_TICK_COLOR = new Color(255, 255, 255, 64);
+	protected final @Nonnull
+	Color LIGHT_TICK_COLOR = new Color(10, 10, 10, 110);
+	protected final @Nonnull
+	Color DARK_TICK_COLOR = new Color(255, 255, 255, 64);
 
-	public LinearSliderPainterExtension(@NotNull AquaUILayoutInfo uiLayout,
-																			@NotNull SliderConfiguration g,
+	public LinearSliderPainterExtension(@Nonnull AquaUILayoutInfo uiLayout,
+																			@Nonnull SliderConfiguration g,
 																			@Nullable VAppearance appearance)
 	{
 		this.uiLayout = uiLayout;
@@ -45,7 +51,7 @@ public class LinearSliderPainterExtension
 	}
 
 	@Override
-	public void paint(@NotNull Graphics2D g, float width, float height)
+	public void paint(@Nonnull Graphics2D g, float width, float height)
 	{
 		AquaUIPainter.SliderWidget sw = sg.getWidget();
 
@@ -54,7 +60,7 @@ public class LinearSliderPainterExtension
 		}
 	}
 
-	protected void paintLinearTickMarks(@NotNull Graphics2D g, float width, float height)
+	protected void paintLinearTickMarks(@Nonnull Graphics2D g, float width, float height)
 	{
 		AquaUIPainter.SliderWidget sw = sg.getWidget();
 		AquaUIPainter.Size sz = sg.getSize();

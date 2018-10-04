@@ -10,10 +10,9 @@ package org.violetlib.aqua;
 
 import java.awt.*;
 
-import javax.swing.plaf.ColorUIResource;
+import javax.annotation.Nonnull;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 /**
 
@@ -21,7 +20,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class DelegatedContainerContextualColors implements ContainerContextualColors {
 
-    protected @NotNull BasicContextualColors source;
+    protected @Nonnull
+	BasicContextualColors source;
     protected @Nullable ContextualColor grid;
     protected boolean isRowSelected;
 
@@ -29,7 +29,7 @@ public class DelegatedContainerContextualColors implements ContainerContextualCo
      * Create colors for a uniform (not striped) container.
      */
 
-    public DelegatedContainerContextualColors(@NotNull BasicContextualColors source) {
+    public DelegatedContainerContextualColors(@Nonnull BasicContextualColors source) {
         this.source = source;
         this.grid = null;
     }
@@ -38,8 +38,8 @@ public class DelegatedContainerContextualColors implements ContainerContextualCo
      * Create colors for a uniform (not striped) container.
      */
 
-    public DelegatedContainerContextualColors(@NotNull BasicContextualColors source,
-                                              @NotNull ContextualColor grid) {
+    public DelegatedContainerContextualColors(@Nonnull BasicContextualColors source,
+                                              @Nonnull ContextualColor grid) {
         this.source = source;
         this.grid = grid;
     }
@@ -61,18 +61,21 @@ public class DelegatedContainerContextualColors implements ContainerContextualCo
     }
 
     @Override
-    public @NotNull Color getBackground(@NotNull AppearanceContext context) {
+    public @Nonnull
+	Color getBackground(@Nonnull AppearanceContext context) {
         context = context.withSelected(isRowSelected || context.isSelected());
         return source.getBackground(context);
     }
 
     @Override
-    public @NotNull Color getForeground(@NotNull AppearanceContext context) {
+    public @Nonnull
+	Color getForeground(@Nonnull AppearanceContext context) {
         context = context.withSelected(isRowSelected || context.isSelected());
         return source.getForeground(context);
     }
 
-    public @NotNull Color getGrid(@NotNull AppearanceContext context) {
+    public @Nonnull
+	Color getGrid(@Nonnull AppearanceContext context) {
         if (grid != null) {
             context = context.withSelected(isRowSelected || context.isSelected());
             return grid.get(context);

@@ -10,7 +10,8 @@ package org.violetlib.jnr.aqua;
 
 import java.util.Objects;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.violetlib.jnr.aqua.AquaUIPainter.ColumnSortArrowDirection;
 import org.violetlib.jnr.aqua.AquaUIPainter.State;
@@ -24,8 +25,10 @@ public class TableColumnHeaderConfiguration
 	extends TableColumnHeaderLayoutConfiguration
 	implements Configuration
 {
-	private final @NotNull State state;
-	private final @NotNull ColumnSortArrowDirection d;
+	private final @Nonnull
+	State state;
+	private final @Nonnull
+	ColumnSortArrowDirection d;
 	private final boolean isSelected;
 	private final boolean isFocused;
 
@@ -37,11 +40,11 @@ public class TableColumnHeaderConfiguration
 
 	// It appears that the current design also clips away the top row of pixels produced by the renderer.
 
-	public TableColumnHeaderConfiguration(@NotNull State state,
-																				@NotNull ColumnSortArrowDirection d,
+	public TableColumnHeaderConfiguration(@Nonnull State state,
+																				@Nonnull ColumnSortArrowDirection d,
 																				boolean isSelected,
 																				boolean isFocused,
-																				@NotNull UILayoutDirection ld)
+																				@Nonnull UILayoutDirection ld)
 	{
 		super(ld, d != ColumnSortArrowDirection.NONE);
 
@@ -51,11 +54,11 @@ public class TableColumnHeaderConfiguration
 		this.isFocused = isFocused;
 	}
 
-	public TableColumnHeaderConfiguration(@NotNull State state,
+	public TableColumnHeaderConfiguration(@Nonnull State state,
 																				boolean isSortable,
 																				boolean isSelected,
 																				boolean isFocused,
-																				@NotNull UILayoutDirection ld)
+																				@Nonnull UILayoutDirection ld)
 	{
 		super(ld, isSortable);
 
@@ -65,12 +68,14 @@ public class TableColumnHeaderConfiguration
 		this.isFocused = isFocused;
 	}
 
-	public @NotNull State getState()
+	public @Nonnull
+	State getState()
 	{
 		return state;
 	}
 
-	public @NotNull ColumnSortArrowDirection getSortArrowDirection()
+	public @Nonnull
+	ColumnSortArrowDirection getSortArrowDirection()
 	{
 		return d;
 	}
@@ -103,7 +108,8 @@ public class TableColumnHeaderConfiguration
 	}
 
 	@Override
-	public @NotNull String toString()
+	public @Nonnull
+	String toString()
 	{
 		String lds = getLayoutDirection() == UILayoutDirection.RIGHT_TO_LEFT ? " RTL" : "";
 		String ss = d == ColumnSortArrowDirection.NONE && isSortable() ? " - Sortable" : "";

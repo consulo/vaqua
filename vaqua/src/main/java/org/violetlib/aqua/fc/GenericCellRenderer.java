@@ -9,10 +9,10 @@
 package org.violetlib.aqua.fc;
 
 import java.awt.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.violetlib.aqua.AquaAppearance;
 import org.violetlib.aqua.ContainerContextualColors;
 
@@ -21,8 +21,8 @@ import org.violetlib.aqua.ContainerContextualColors;
  */
 public interface GenericCellRenderer {
     Component getCellRendererComponent(JComponent container,
-                                       @NotNull AquaAppearance appearance,
-                                       @NotNull ContainerContextualColors colors,
+                                       @Nonnull AquaAppearance appearance,
+                                       @Nonnull ContainerContextualColors colors,
                                        Object value,
                                        boolean isSelected,
                                        boolean cellHasFocus);

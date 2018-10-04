@@ -8,13 +8,13 @@
 
 package org.violetlib.aqua;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.SeparatorUI;
 import java.awt.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import org.violetlib.jnr.aqua.AquaUIPainter;
 
 /**
@@ -28,8 +28,10 @@ public class AquaSeparatorUI extends SeparatorUI implements AquaComponentUI {
         return new AquaSeparatorUI();
     }
 
-    protected @NotNull BasicContextualColors colors;
-    protected @Nullable AppearanceContext appearanceContext;
+    protected @Nonnull
+	BasicContextualColors colors;
+    protected @Nullable
+	AppearanceContext appearanceContext;
 
     public AquaSeparatorUI() {
         colors = AquaColors.SEPARATOR_COLORS;
@@ -65,16 +67,16 @@ public class AquaSeparatorUI extends SeparatorUI implements AquaComponentUI {
     }
 
     @Override
-    public void appearanceChanged(@NotNull JComponent c, @NotNull AquaAppearance appearance) {
+    public void appearanceChanged(@Nonnull JComponent c, @Nonnull AquaAppearance appearance) {
         configureAppearanceContext(appearance, (JSeparator)c);
     }
 
     @Override
-    public void activeStateChanged(@NotNull JComponent c, boolean isActive) {
+    public void activeStateChanged(@Nonnull JComponent c, boolean isActive) {
         // not active state sensitive
     }
 
-    protected void configureAppearanceContext(@Nullable AquaAppearance appearance, @NotNull JSeparator s) {
+    protected void configureAppearanceContext(@Nullable AquaAppearance appearance, @Nonnull JSeparator s) {
         if (appearance == null) {
             appearance = AppearanceManager.ensureAppearance(s);
         }

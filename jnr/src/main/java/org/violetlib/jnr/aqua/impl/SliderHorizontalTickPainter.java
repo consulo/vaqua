@@ -13,7 +13,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 
-import org.jetbrains.annotations.*;
+import javax.annotation.Nonnull;
 
 /**
 	Paint tick marks for a horizontal slider.
@@ -21,7 +21,8 @@ import org.jetbrains.annotations.*;
 
 public class SliderHorizontalTickPainter
 {
-	protected final @NotNull Color color;
+	protected final @Nonnull
+	Color color;
 	protected final double w;
 	protected final double h;
 	protected final double x0;
@@ -29,7 +30,7 @@ public class SliderHorizontalTickPainter
 	protected final double y;
 	protected final int tickCount;
 
-	public SliderHorizontalTickPainter(@NotNull Color color, double w, double h, double x0, double x1, double y, int tickCount)
+	public SliderHorizontalTickPainter(@Nonnull Color color, double w, double h, double x0, double x1, double y, int tickCount)
 	{
 		this.color = color;
 		this.w = w;
@@ -40,7 +41,7 @@ public class SliderHorizontalTickPainter
 		this.tickCount = tickCount;
 	}
 
-	public void paint(@NotNull Graphics2D g)
+	public void paint(@Nonnull Graphics2D g)
 	{
 		g.setColor(color);
 
@@ -56,7 +57,7 @@ public class SliderHorizontalTickPainter
 		}
 	}
 
-	protected void drawTick(@NotNull Graphics2D g, double x)
+	protected void drawTick(@Nonnull Graphics2D g, double x)
 	{
 		// TBD: the tick marks should be tapered
 		Shape s = new Rectangle2D.Double(x - w/2, y, w, h);
